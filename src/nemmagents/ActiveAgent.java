@@ -8,7 +8,7 @@
 
 package nemmagents;
 
-//Import section
+//Import section for other methods
 import java.util.ArrayList;
 import java.util.List;
 import nemmagents.ParentAgent;
