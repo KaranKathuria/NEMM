@@ -19,7 +19,6 @@ import nemmstmstrategiestactics.TradeStrategy1;
 import nemmcommons.ParameterWrapper;
 import nemmagents.ExternalAnalysisAgent;
 
-//TBD: Implement long term and short term beststrategies.
 
 // Class definition
 public class ActiveAgent extends ParentAgent {
