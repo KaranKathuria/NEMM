@@ -23,6 +23,7 @@ import nemmcommons.ParameterWrapper;
 // yes really no
 public class ActiveAgent extends ParentAgent {
 // comment to remove
+// new comment
 	private String activeagenttypename;
 	private int activeagenttypecode; //1 = ProducerAgent, 2 = ObligatedPurchaserAgent, 3 = TraderAgent
 	private ArrayList<GenericStrategy> allstrategies = new ArrayList<GenericStrategy>();
