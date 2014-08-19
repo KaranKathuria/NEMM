@@ -17,7 +17,6 @@ import nemmstmstrategiestactics.GenericStrategy;
 import nemmstmstrategiestactics.SellStrategy1;
 import nemmstmstrategiestactics.TradeStrategy1;
 import nemmcommons.ParameterWrapper;
-import nemmagents.ExternalAnalysisAgent;
 
 
 // Class definition
@@ -28,12 +27,7 @@ public class ActiveAgent extends ParentAgent {
 	private ArrayList<GenericStrategy> allstrategies = new ArrayList<GenericStrategy>();
 	private int numberofstrategies;
 	private GenericStrategy beststrategy = null;
-	private InternalAnalysisAgent internalanalysisagent;
-	private ExternalAnalysisAgent externalanalysisagent;
-	
 	private int physicalnetposition;
-	 //The price expectation is given by the linked AnalysisAgent`s price expectation.
-	private double stpriceexpectation = nemmcommons.ParameterWrapper.getpriceexpectation();
 	
 	// Null constructor for ActiveAgent. Should not be used as this does not specify type of agent.
 	public ActiveAgent() {
@@ -70,13 +64,10 @@ public class ActiveAgent extends ParentAgent {
 		return physicalnetposition;
 		}
 
-
 	public GenericStrategy getbeststrategy() {
 		return beststrategy;
 		}
-	public double getpriceexpectations() {
-		return stpriceexpectation;
-	}
+
 	
 	//Update methods
 			
@@ -86,10 +77,6 @@ public class ActiveAgent extends ParentAgent {
 	public void monthlyupdateActiveAgent(int certificatessold, int certificatesbought) {
 		physicalnetposition = physicalnetposition + certificatesbought + certificatessold; //Sold and demand are negative numbers. 
 		//totalsold_cp = totalsold_cp + certificatessold;
-		stpriceexpectation = externalanalysisagent.getstpriceexpectation(); 
 		}
-	
-	// ========================================================================
-		// === Public Interface ===================================================
-	
+
 }

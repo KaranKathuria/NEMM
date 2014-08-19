@@ -11,13 +11,11 @@ package nemmcommons;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.lang.Double;
 import java.util.List;
-import javax.measure.quantity.Length;
-import repast.simphony.ui.parameters.Size;
-import nemmagents.ExternalAnalysisAgent;
+
+import nemmagents.CompanyAgent;
+import nemmagents.MarketAnalysisAgent;
 import nemmagents.ActiveAgent;
-import nemmagents.ParentAgent;
 import nemmstmstrategiestactics.BuyOffer;
 import nemmstmstrategiestactics.SellOffer;
 import repast.simphony.engine.environment.RunState;
@@ -25,6 +23,21 @@ import repast.simphony.engine.environment.RunState;
 public class CommonMethods {
 	
 	//Method returning a list of all OPAgents. Usefull for the scheduler. 
+public static List<CompanyAgent> getCompanyAgenList() {
+		
+		@SuppressWarnings("unchecked")
+		
+		final Iterable<CompanyAgent> Agents = RunState.getInstance().getMasterContext().getObjects(CompanyAgent.class);
+		
+		final ArrayList<CompanyAgent> ret = new ArrayList<CompanyAgent>();
+
+		for (final CompanyAgent agent : Agents) {
+			ret.add(agent);
+		}
+
+		return Collections.unmodifiableList(ret);
+	}
+
 	public static List<ActiveAgent> getActiveAgentList() {
 		
 		@SuppressWarnings("unchecked")
@@ -40,15 +53,15 @@ public class CommonMethods {
 		return Collections.unmodifiableList(ret);
 	}
 
-	public static List<ExternalAnalysisAgent> getEAAgentList() {
+	public static List<MarketAnalysisAgent> getMAAgentList() {
 	
 	@SuppressWarnings("unchecked")
 	
-	final Iterable<ExternalAnalysisAgent> Agents = RunState.getInstance().getMasterContext().getObjects(ExternalAnalysisAgent.class);
+	final Iterable<MarketAnalysisAgent> Agents = RunState.getInstance().getMasterContext().getObjects(MarketAnalysisAgent.class);
 	
-	final ArrayList<ExternalAnalysisAgent> ret = new ArrayList<ExternalAnalysisAgent>();
+	final ArrayList<MarketAnalysisAgent> ret = new ArrayList<MarketAnalysisAgent>();
 
-	for (final ExternalAnalysisAgent agent : Agents) {
+	for (final MarketAnalysisAgent agent : Agents) {
 		ret.add(agent);
 	}
 
@@ -56,7 +69,7 @@ public class CommonMethods {
 }
 	
 	public static int getnumberofagents() {
-		int ret = getActiveAgentList().size() + getEAAgentList().size();
+		int ret = getActiveAgentList().size() + getMAAgentList().size();
 		return ret;
 	}
 	//The following two methods makes it possible to compare sell and byoffers by price. 
