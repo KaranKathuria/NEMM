@@ -22,7 +22,7 @@ import nemmagents.ExternalAnalysisAgent;
 
 // Class definition
 public class ActiveAgent extends ParentAgent {
-
+// comment to remove
 	private String activeagenttypename;
 	private int activeagenttypecode; //1 = ProducerAgent, 2 = ObligatedPurchaserAgent, 3 = TraderAgent
 	private ArrayList<GenericStrategy> allstrategies = new ArrayList<GenericStrategy>();
