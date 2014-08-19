@@ -20,6 +20,7 @@ import nemmcommons.ParameterWrapper;
 
 
 // Class definition
+// yes really
 public class ActiveAgent extends ParentAgent {
 // comment to remove
 	private String activeagenttypename;
