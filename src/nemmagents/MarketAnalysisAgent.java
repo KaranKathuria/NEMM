@@ -11,27 +11,22 @@ package nemmagents;
 //Imports
 import nemmcommons.GlobalValues;
 import nemmcommons.ParameterWrapper;
+import nemmcommons.MarketPrognosis;
 import nemmagents.ParentAgent;
 
 //Class definition
-public class ExternalAnalysisAgent extends ParentAgent {
+public class MarketAnalysisAgent extends ParentAgent {
 		
-	private double stpriceexpectation; //The price expectations for next month. 
+	private MarketPrognosis marketprognosis; //The price expectations for next month. 
 	// Could have a prise expectations for future prices that deviates form that of today corrected for cost of holding. 
 	
-	public ExternalAnalysisAgent() {
-	stpriceexpectation = ParameterWrapper.getpriceexpectation();
+	public MarketAnalysisAgent() {
+		marketprognosis = new MarketPrognosis();
 	}
 	
-	public double getstpriceexpectation() {
-		return stpriceexpectation;
-	}
-	public void updatepriceanalysis() {
-		stpriceexpectation = GlobalValues.currentmarketprice;
+	public MarketPrognosis getpriceprognosis() {
+		return marketprognosis;
 	}
 
-	// TBD:
-	// Analysis agents should have different strategies for determining the future cert price. I guess they could use somethink like the arima-regression learning in Elfarol. 
-	
 	
 }

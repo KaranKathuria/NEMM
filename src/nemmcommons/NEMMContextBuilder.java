@@ -12,7 +12,7 @@ import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.engine.schedule.ScheduledMethod;
-import nemmagents.ExternalAnalysisAgent;
+import nemmagents.CompanyAgent;
 import nemmagents.ParentAgent;
 import nemmagents.ActiveAgent;
 import nemmprocesses.ShortTermMarket;
@@ -26,24 +26,21 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	
 	@Override
 	public Context<Object> build(final Context<Object> context) {
-		
+		//
+		//Create World
 		ParameterWrapper.reinit(); //Reads the parametervalues provided
 		GlobalValues.initglobalvalues(); //initiates the global values such as price by giving them the parametervalues from the above method. 
 	
-	// Adds the ExternalAnalysisagents
-for (int i = 0; i < getanalysisagentsnumber();++i) {
-	final ExternalAnalysisAgent aa = new ExternalAnalysisAgent();
-	context.add(aa);
-}
+
 	
 // Adds the supply side agents (ProducerAgent), with one strategy calling PABidstrategy(). 
 for (int i = 0; i < getproduceragentsnumber(); ++i) {
-	final ActiveAgent agent = new ActiveAgent(1);
+	final CompanyAgent agent = new CompanyAgent(true, false, false);
 	context.add(agent);
 }
 // Adds ObligatedPurchaserAgents which is the demand side and calling OPABidstrategy().
 for (int i = 0; i < getobligatedpurchaseragentsnumber(); ++i) {
-	final ActiveAgent agent = new ActiveAgent(2);
+	final CompanyAgent agent = new CompanyAgent(false, true, false);
 	context.add(agent);
 }
 
