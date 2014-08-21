@@ -65,7 +65,6 @@ for (int i = 0; i < getobligatedpurchaseragentsnumber(); ++i) {
 public void monthlymarketschedule() {
 
 	ShortTermMarket.runshorttermmarket();
-	GlobalValues.monthlyglobalvalueupdate();
 	//Some method that updates the analysisagents price expectations
 	//Some method that updates the agents bank, caputal and priceexpectations (from AA). Could also update their preffered strategy and Analysis. 
 	
