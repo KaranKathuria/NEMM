@@ -6,6 +6,7 @@
 </parameter>
 	<parameter defaultValue="4" name="obligatedpurchaseragentsnumber" displayName="Number of ObligatedPurchaserAgents" type="int"></parameter>
 	<parameter defaultValue="1" name="analysisagentsnumber" displayName="Number of AnalysisAgents" type="int"></parameter>
+	<parameter defaultValue="4" type="int" displayName="Number of TraderAgents" name="traderagentsnumber"/>
 	<parameter defaultValue="220" name="priceexpectation" displayName="Price Expectation" type="double"></parameter>
 	<parameter defaultValue="50" name="monthlydemand" displayName="Monthly certificate demand per OPAgent" type="int"></parameter>
 	<parameter defaultValue="50" displayName="Monthly certificate supply per PAgent" name="monthlysupply" type="int"></parameter>

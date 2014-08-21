@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Market Volumes</name>
+  <name>Traded Volume</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
@@ -11,32 +11,14 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>1232088906</hashCode>
+    <hashCode>-71759801</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Cleared demand</string>
+      <string>Traded Volume</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Cleared demand</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>marketdemand</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Cleared supply</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Cleared supply</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>marketsupply</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Traded volume</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Traded volume</id>
+        <id>Traded Volume</id>
         <className>nemmcommons.NEMMContextBuilder</className>
         <methodName>STMtradedvolume</methodName>
         <aggType>SUM</aggType>
