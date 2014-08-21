@@ -16,7 +16,7 @@ import nemmstmstrategiestactics.SellOffer;
 
 public class SellStrategy1Tactic {
 	 
-	private double shareboughtatdiscount;
+	private double sharesoldtatdiscount;
 	private double discount;
 	private SellOffer sellofferone;
 	private SellOffer selloffertwo;
@@ -31,31 +31,33 @@ public class SellStrategy1Tactic {
 	 }
 
 	SellStrategy1Tactic() {
-		shareboughtatdiscount = 0;
+		sharesoldtatdiscount = 0;
 		discount = 0;
 		sellofferone = new SellOffer();
 		selloffertwo = new SellOffer();
 		}
 	//Used constructor
 	SellStrategy1Tactic(double sbd, double d) {
-		shareboughtatdiscount = sbd;
+		sharesoldtatdiscount = sbd;
 		discount = d;	
 	}
 	
 	private SellOffer creatSellOfferone(double expectedprice, int physicalposition) {
 		SellOffer ret = new SellOffer();
-		ret.numberofcert = (int) (shareboughtatdiscount*physicalposition); //
+		ret.numberofcert = (int) (sharesoldtatdiscount*physicalposition); //
 		ret.price = (1-discount)*expectedprice; 
 		return ret;
 		}
 	private SellOffer creatSellOffertwo(double expectedprice, int physicalposition) {
 		SellOffer ret = new SellOffer();
-		ret.numberofcert = physicalposition -( (int) (shareboughtatdiscount*physicalposition)); //rest of the monthly production bought at expected price.
+		ret.numberofcert = physicalposition - ((int) (sharesoldtatdiscount*physicalposition)); //rest of the monthly production sold at expected price.
 		ret.price = expectedprice;
 		return ret;
 		}
 	
 	public void updatetacticselloffers(double expectedprice, int physicalposition) {
+		if (physicalposition < 0){
+			physicalposition = 0;} //To not get crazy selloffers
 		tacticselloffers.clear();
 		sellofferone = creatSellOfferone(expectedprice,physicalposition);
 		selloffertwo = creatSellOffertwo(expectedprice,physicalposition);

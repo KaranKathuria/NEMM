@@ -35,8 +35,8 @@ public class TradeStrategy1 extends GenericStrategy {
 		
 		//Adds four tactics with differen values of discount and premium. This is less sophisticated. 
 		for (int i = 0; i < numberoftactics; ++i) {
-			double randompremium = RandomHelper.nextDoubleFromTo(0, 0.4);
-			double randomdiscount = RandomHelper.nextDoubleFromTo(0, 0.4);
+			double randompremium = RandomHelper.nextDoubleFromTo(-0.1, 0.3);
+			double randomdiscount = RandomHelper.nextDoubleFromTo(-0.1, 0.3);
 			TradeStrategy1Tactic tactic = new TradeStrategy1Tactic(randompremium, randomdiscount);
 			alltactics.add(tactic);
 		}

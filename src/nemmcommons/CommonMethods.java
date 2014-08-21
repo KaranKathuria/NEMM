@@ -9,16 +9,14 @@ package nemmcommons;
 //Imports
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
+import nemmagents.CompanyAgent.ActiveAgent;
 import nemmagents.CompanyAgent;
 import nemmagents.MarketAnalysisAgent;
-import nemmagents.ActiveAgent;
 import nemmstmstrategiestactics.BuyOffer;
 import nemmstmstrategiestactics.SellOffer;
 import repast.simphony.engine.environment.RunState;
@@ -40,17 +38,51 @@ public static List<CompanyAgent> getCompanyAgenList() {
 
 		return Collections.unmodifiableList(ret);
 	}
+	// Her kan du endre til 
 
-	public static List<ActiveAgent> getActiveAgentList() {
+	public static List<ActiveAgent> getPAgentList() {
+			
+			@SuppressWarnings("unchecked")
+			
+			final Iterable<CompanyAgent> Agents = RunState.getInstance().getMasterContext().getObjects(CompanyAgent.class);
+			
+			final ArrayList<ActiveAgent> ret = new ArrayList<ActiveAgent>();
+
+			for (final CompanyAgent agent : Agents) {
+				if (agent.getproduceragent() != null){
+				ret.add(agent.getproduceragent());}
+			}
+
+			return Collections.unmodifiableList(ret);
+		}
+	
+	public static List<ActiveAgent> getOPAgentList() {
 		
 		@SuppressWarnings("unchecked")
 		
-		final Iterable<ActiveAgent> Agents = RunState.getInstance().getMasterContext().getObjects(ActiveAgent.class);
+		final Iterable<CompanyAgent> Agents = RunState.getInstance().getMasterContext().getObjects(CompanyAgent.class);
 		
 		final ArrayList<ActiveAgent> ret = new ArrayList<ActiveAgent>();
 
-		for (final ActiveAgent agent : Agents) {
-			ret.add(agent);
+		for (final CompanyAgent agent : Agents) {
+			if (agent.getobligatedpurchaseragent() != null){
+			ret.add(agent.getobligatedpurchaseragent());}
+		}
+
+		return Collections.unmodifiableList(ret);
+	}
+	
+	public static List<ActiveAgent> getTAgentList() {
+		
+		@SuppressWarnings("unchecked")
+		
+		final Iterable<CompanyAgent> Agents = RunState.getInstance().getMasterContext().getObjects(CompanyAgent.class);
+		
+		final ArrayList<ActiveAgent> ret = new ArrayList<ActiveAgent>();
+
+		for (final CompanyAgent agent : Agents) {
+			if (agent.gettraderagent() != null){
+			ret.add(agent.gettraderagent());}
 		}
 
 		return Collections.unmodifiableList(ret);
@@ -72,7 +104,7 @@ public static List<CompanyAgent> getCompanyAgenList() {
 }
 	
 	public static int getnumberofagents() {
-		int ret = getActiveAgentList().size() + getMAAgentList().size();
+		int ret = getPAgentList().size() + getMAAgentList().size() + getOPAgentList().size();
 		return ret;
 	}
 	//The following two methods makes it possible to compare sell and byoffers by price. 
@@ -85,9 +117,10 @@ public static List<CompanyAgent> getCompanyAgenList() {
 	public static class customselloffercomparator implements Comparator<SellOffer> {
 	    @Override
 	    public int compare(SellOffer o1, SellOffer o2) {
-	        return o1.getSellofferprice().compareTo(o2.getSellofferprice());
+	        return o1.getSellOfferprice().compareTo(o2.getSellOfferprice());
 	    }
 	}
+	
 	
 	// ----------------------------------------------------------------------------
 		
@@ -99,18 +132,7 @@ public static List<CompanyAgent> getCompanyAgenList() {
 	    return TimeUnit.MILLISECONDS.toHours(Math.abs(end - start));
 	}
 	
-	// ----------------------------------------------------------------------------
-				
-	/**
-	 * Returns a pseudo-random number between min and max, inclusive.
-	 * The difference between min and max can be at most
-	 * <code>Integer.MAX_VALUE - 1</code>.
-	 *
-	 * @param min Minimum value
-	 * @param max Maximum value.  Must be greater than min.
-	 * @return Integer between min and max, inclusive.
-	 * @see java.util.Random#nextInt(int)
-	 */
+
 	// Added by GJB 20Aug2014. Source: see
 	// http://stackoverflow.com/questions/363681/generating-random-integers-in-a-range-with-java  and
 	// http://docs.oracle.com/javase/7/docs/api/java/util/Random.html#nextInt%28int%29

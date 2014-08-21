@@ -14,7 +14,6 @@ import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import nemmagents.CompanyAgent;
 import nemmagents.ParentAgent;
-import nemmagents.ActiveAgent;
 import nemmprocesses.ShortTermMarket;
 import static nemmcommons.ParameterWrapper.*;
 
@@ -31,8 +30,6 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 		ParameterWrapper.reinit(); //Reads the parametervalues provided
 		GlobalValues.initglobalvalues(); //initiates the global values such as price by giving them the parametervalues from the above method. 
 	
-
-	
 // Adds the supply side agents (ProducerAgent), with one strategy calling PABidstrategy(). 
 for (int i = 0; i < getproduceragentsnumber(); ++i) {
 	final CompanyAgent agent = new CompanyAgent(true, false, false);
@@ -43,10 +40,14 @@ for (int i = 0; i < getobligatedpurchaseragentsnumber(); ++i) {
 	final CompanyAgent agent = new CompanyAgent(false, true, false);
 	context.add(agent);
 }
+// Adds the trader agents. 
+for (int i = 0; i < gettraderagentsnumber(); ++i) {
+	final CompanyAgent agent = new CompanyAgent(false, false, true);
+	context.add(agent);
+}
 
  	return context;
 }
-
 
 // ========================================================================
 // === Simulation schedule ===========================================================
@@ -63,8 +64,14 @@ for (int i = 0; i < getobligatedpurchaseragentsnumber(); ++i) {
 	//The monthly update. Updates the monthly market, interest rates etc.
 @ScheduledMethod(start = 1, interval = 1, priority = 1)
 public void monthlymarketschedule() {
-
-	ShortTermMarket.runshorttermmarket();
+	//Start with scoring and selecting the best tactic for each strategy and somthing for seleting the best strategy. This is part of the short term market method below. 
+	ShortTermMarket.runshorttermmarket(); //updates all offers for all agents best strategy (including all tactics fro these strategies and reselecting the best tactic the strategy and using this. 
+	ShortTermMarket.updatemarketoutcome();//updates the market outcomes and hence the physical position for all agents based on what they biddded into the market
+	//DemandandProduction.produce(); //Method that runs the powerplant for each company and updates the physicalposition based on demand and production
+	GlobalValues.monthlyglobalvalueupdate();
+	//AnaysisAgent udate their price prognosis
+	//Evalueta strategies and select best strategy. 
+	
 	//Some method that updates the analysisagents price expectations
 	//Some method that updates the agents bank, caputal and priceexpectations (from AA). Could also update their preffered strategy and Analysis. 
 	
@@ -104,6 +111,15 @@ public void projectprocesschedule() {
 	}
 	public int numberofselloffers() {
 		return GlobalValues.numberofselloffersstm;
+	}
+	public int marketdemand() {
+		return ShortTermMarket.getmarketdemand();
+	}
+	public int marketsupply() {
+		return ShortTermMarket.getmarketsupply();
+	}
+	public int STMtradedvolume() {
+		return ShortTermMarket.gettradedvolume();
 	}
 	
 	public double endofyearpluss1() {

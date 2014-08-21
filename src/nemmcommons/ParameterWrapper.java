@@ -18,6 +18,7 @@ public final class ParameterWrapper {
 	private static int produceragentsnumber;
 	private static int obligatedpurchaseragentsnumber;
 	private static int analysisagentsnumber;
+	private static int traderagentsnumber;
 	private static double priceexpectation;
 	private static int monthlydemand;
 	private static int monthlysupply;
@@ -36,6 +37,9 @@ public final class ParameterWrapper {
 	
 	public static int getanalysisagentsnumber() {
 		return analysisagentsnumber;
+	}
+	public static int gettraderagentsnumber() {
+		return traderagentsnumber;
 	}
 
 	public static double getpriceexpectation() {
@@ -63,6 +67,8 @@ public final class ParameterWrapper {
 		obligatedpurchaseragentsnumber = ((Integer) parameters.getValue("obligatedpurchaseragentsnumber")).intValue();
 		
 		analysisagentsnumber = ((Integer) parameters.getValue("analysisagentsnumber")).intValue();
+		
+		traderagentsnumber = ((Integer) parameters.getValue("traderagentsnumber")).intValue();
 
 		priceexpectation = ((Double) parameters.getValue("priceexpectation")).doubleValue();
 

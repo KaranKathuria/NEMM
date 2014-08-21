@@ -10,11 +10,11 @@ package nemmprocesses;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-
-import nemmagents.ActiveAgent;
+import nemmagents.CompanyAgent.ActiveAgent;
 import nemmcommons.CommonMethods;
 import nemmcommons.ParameterWrapper;
 import nemmstmstrategiestactics.BuyOffer;
+import nemmstmstrategiestactics.GenericStrategy;
 import nemmstmstrategiestactics.SellOffer;
 import repast.simphony.random.RandomHelper;
 
@@ -25,30 +25,50 @@ public class ShortTermMarket {
 	
 	//Static means that the market price exist without the object short term market. Hence we can get the market price without having to refer or create a object short term market.
 	private static double currentmarketprice;
+	private static int marketsupply;
+	private static int marketdemand;
+	private static double shareofmarginalbuyofferbought;
+	private static double shareofmarignalselloffersold;
+	private static int tradedvolume;
 	private static double pricestep;
 	private static double initLow;
 	private static double initHigh;
 	private static ArrayList<BuyOffer> Allbuyoffers = new ArrayList<BuyOffer>();
 	private static ArrayList<SellOffer> Allselloffers = new ArrayList<SellOffer>();
 	
-	public ShortTermMarket() {
-		
-	}
+	public ShortTermMarket() {}
 			
 	public static void runshorttermmarket() {
 		//Clears the list of offers from previous iteration
 		pricestep = 0.5;
+
 		Allselloffers.clear();
 		Allbuyoffers.clear();
 		//Update all analysisagents price expectations		
 		//Update and add all sell- and buy-offers.  
-		for (final ActiveAgent agent : CommonMethods.getActiveAgentList()) {
-			agent.getbeststrategy().updatealloffers(agent.getpriceexpectations(), agent.getphysicalnetposition()); //Updates all bids for all agents
+		for (final ActiveAgent agent : CommonMethods.getPAgentList()) {
+			//update their phusical net position
+			
+			agent.getbeststrategy().updatealloffers(agent.getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation(), agent.getphysicalnetposition());
+			//Updates all bids for all agents
+			Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers());
+			//Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers()); For the time being the producer does not have buyoffers.
+		}
+		
+		for (final ActiveAgent agent : CommonMethods.getOPAgentList()) {
+			agent.getbeststrategy().updatealloffers(agent.getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation(), agent.getphysicalnetposition());
+			//Updates all bids for all agents
+			//Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers()); None sell offers from the OP agent list. 
+			//marketsupply = agent.getphysicalnetposition();
+			Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers());
+		}
+		
+		for (final ActiveAgent agent : CommonMethods.getTAgentList()) {
+			agent.getbeststrategy().updatealloffers(agent.getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation(), agent.getphysicalnetposition()); //Updates all bids for all agents
 			Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers());
 			Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers());
 		}
 
-		//TBD likewise implementation for speculator Agents
 		
 		//Time for sorting the buy and selloffers. The comparator for objects sell and buyoffers are implementer in CommonMethods. Sort from lowest to highest. 
 		Collections.sort(Allbuyoffers, new CommonMethods.custombuyoffercomparator());
@@ -60,13 +80,20 @@ public class ShortTermMarket {
 		//Should be changed to something smarter. 
 		//currentmarketprice = Allbuyoffers.get(0).getbuyofferprice();
 		
-		initLow = Math.min(Allbuyoffers.get(0).getBuyOfferprice(), Allselloffers.get(0).getSellofferprice());
-		initHigh = Math.max(Allbuyoffers.get(numberofbuyoffers-1).getBuyOfferprice(), Allselloffers.get(numberofselloffers-1).getSellofferprice());
+		initLow = Math.min(Allbuyoffers.get(0).getBuyOfferprice(), Allselloffers.get(0).getSellOfferprice()); 
+		initHigh = Math.max(Allbuyoffers.get(numberofbuyoffers-1).getBuyOfferprice(), Allselloffers.get(numberofselloffers-1).getSellOfferprice());
 		double certprice = 0;
 		int mindiff = 1000;
+		shareofmarginalbuyofferbought = 1;
+		shareofmarignalselloffersold = 1;
+		marketdemand = 0;
+		marketsupply = 0;
+		tradedvolume = 0;
 		
 		//Finds market price. Iterates thorugh all steps, calculates diffs in demand and supply and set price where diff is minimal
-		for (int i = 0, n = (int) ((initHigh-initLow)/pricestep); i < n; ++i) { //For all price steps
+		//I situasjoner hvor krysset har ulike salgs og kjøpsvillighet. Altså at i den prisen hvor volume maksimeres, så er selgeren villig til å selge billigere enn alle kjøpere er villig til å kjøpe. Dette er en lik situsajon som at to markedspriser gir samme maksimert handlet volum. 
+		//Hva blir prisen da? Foreløpig satt til det laveste. Dette er ok, siden det ikke vil skje så ofte når budene er mange. 
+		for (int i = 0, n = (int) ((initHigh-initLow)/pricestep); i <= n; ++i) { //For all price steps
 			//Get supply
 			// Get price with lowes abs diff in s and d
 			double tempprice;
@@ -75,34 +102,90 @@ public class ShortTermMarket {
 			tempprice = initLow + (i*pricestep);
 			int demand = 0;
 			int supply = 0;
+			
 			for (BuyOffer b : Allbuyoffers) { //Sums all demand for that price (lowest to highest).
 				if (b.getBuyOfferprice()>=tempprice){
 					demand = demand + b.getnumberofcert();}
 			}
 			for (SellOffer s : Allselloffers) { //Sums all supply for that price (lowest to highest).
-				if (s.getSellofferprice()<=tempprice) {
+				if (s.getSellOfferprice()<=tempprice) {
 					supply = supply + s.getnumberofcert();}
 			}
 			diff = Math.abs(demand-supply);
-			if (diff<mindiff) {
+			if (diff<mindiff && supply>0 && demand>0) {
+				//marketsupply = supply;
 				mindiff = diff;
-				certprice = tempprice;} //certprice is when the diff is minimum. 
-			
+				tradedvolume = Math.min(supply, demand);
+				marketsupply = supply;
+				marketdemand = demand;
+				certprice = tempprice;}//certprice is when the diff is minimum. 	
 		}
 		
-		currentmarketprice = certprice; 
-		
+		// The following code takes care of the access demand or supply which is only partly accepted in the market. The code calculate the share of the marginal offer that is accepted. 
+		// Note that if the marginal offer is not larger (volumewise) that the access offered, the share is set to zero, and nothing more is done. 
+		if (marketsupply != marketdemand){
+			int marginalsupply = 0;
+			int marginaldemand = 0;
+			if (marketsupply>marketdemand) {
+				int accessupply = marketsupply - marketdemand;
+				for (SellOffer s : Allselloffers) { //Sums all supply for that price (lowest to highest).
+					if (s.getSellOfferprice()>certprice-pricestep && s.getSellOfferprice()<certprice-pricestep) {
+						marginalsupply = marginalsupply + s.getnumberofcert();}}
+				if (marginalsupply<accessupply) {
+					shareofmarignalselloffersold = 0;}
+				else {
+				shareofmarignalselloffersold = accessupply/marginalsupply;
+				}
+			}
+			else {
+				int accessdemand = marketdemand - marketsupply;
+			for (BuyOffer b : Allbuyoffers) { //Sums all supply for that price (lowest to highest).
+				if (b.getBuyOfferprice()>(certprice-pricestep) && b.getBuyOfferprice()<(certprice-pricestep)) {
+					marginaldemand = marginaldemand + b.getnumberofcert();}}
+			if (marginaldemand<accessdemand) {
+				shareofmarginalbuyofferbought = 0;}
+			else {
+				shareofmarginalbuyofferbought = accessdemand/marginalsupply;
+			}
+		}}
+		marketsupply = (int) shareofmarignalselloffersold;
+		marketdemand = (int) shareofmarginalbuyofferbought;
+		currentmarketprice = certprice;	
+	}
+public static void updatemarketoutcome() {
+	for (final ActiveAgent agent : CommonMethods.getPAgentList()) {
+		int certssold = GenericStrategy.returnsoldvolume(agent.getbeststrategy().getAgentsSellOffers(),currentmarketprice, shareofmarignalselloffersold).getSoldInSTMcert();
+		int certsbought = 0; // GenericStrategy.returnboughtvolume(agent.getbeststrategy().getAgentsBuyOffers(),currentmarketprice, shareofmarginalbuyofferbought).getBoughtInSTMnumberofcert();
+		agent.poststmupdate(certssold, certsbought);
 	}
 	
+	for (final ActiveAgent agent : CommonMethods.getOPAgentList()) {
+		int certssold = 0; //GenericStrategy.returnsoldvolume(agent.getbeststrategy().getAgentsSellOffers(),currentmarketprice, 1.0).getSoldInSTMcert();
+		int certsbought = GenericStrategy.returnboughtvolume(agent.getbeststrategy().getAgentsBuyOffers(),currentmarketprice, shareofmarginalbuyofferbought).getBoughtInSTMnumberofcert();
+		agent.poststmupdate(certssold, certsbought);
+	}
 	
+	for (final ActiveAgent agent : CommonMethods.getTAgentList()) {
+		int certssold = GenericStrategy.returnsoldvolume(agent.getbeststrategy().getAgentsSellOffers(),currentmarketprice, shareofmarignalselloffersold).getSoldInSTMcert();
+		int certsbought = GenericStrategy.returnboughtvolume(agent.getbeststrategy().getAgentsBuyOffers(),currentmarketprice, shareofmarginalbuyofferbought).getBoughtInSTMnumberofcert();
+		agent.poststmupdate(certssold, certsbought);
+	}
+	//method that estimates the volume traded by  taking the price and the bidded price. If lower/higher, that traded is the volume. Should tak in market price, offers and give out nnumber of certs and average price they where sold at. 
+}
+public static double getshareofmarignalselloffersold() {
+	return shareofmarignalselloffersold;
+}
 public static double getcurrentmarketprice() {
 	return currentmarketprice;}
 
-public static void runshorttermmarket1() {
-	currentmarketprice = nemmcommons.ParameterWrapper.getpriceexpectation() + RandomHelper.nextDoubleFromTo(-10.0, +10.0);
-	pricestep = 0.5;
-	initLow = 100;
-	initHigh = 500;	
+public static int getmarketsupply() {
+	return marketsupply;
+}
+public static int getmarketdemand() {
+	return marketdemand;
+}
+public static int gettradedvolume() {
+	return tradedvolume;
 }
 
 public static int getnumberofbuyoffers() {

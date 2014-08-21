@@ -42,10 +42,12 @@ public class BuyStrategy1Tactic {
 	
 	private BuyOffer creatBuyOfferone(double expectedprice, int physicalposition) {
 		BuyOffer ret = new BuyOffer();
-		ret.numberofcert = (int) (shareboughtatdiscount*(-physicalposition)); //As the phisical position of buyer would in most cases be negative, but as the offer only has positive numbers. 
-		ret.price = (1-discount)*expectedprice; 
+		ret.numberofcert = (int) (shareboughtatdiscount*(-physicalposition)); //-As the phisical position of buyer would in most cases be negative, but as the offer only has positive numbers. 
+		ret.price = (1-discount)*expectedprice;
 		return ret;
 		}
+	
+
 	private BuyOffer creatBuyOffertwo(double expectedprice, int physicalposition) {
 		BuyOffer ret = new BuyOffer();
 		ret.numberofcert = (-physicalposition) -( (int) (shareboughtatdiscount*(-physicalposition))); //rest of the monthly production bought at expected price.
@@ -53,10 +55,12 @@ public class BuyStrategy1Tactic {
 		return ret;
 		}
 	
-	public void updatetacticbuyoffers(double expectedprice, int certdemand) {
+	public void updatetacticbuyoffers(double expectedprice, int physicalposition) {
+		if (physicalposition > 0){
+			physicalposition = 0;} //To ensure that we dont get crazy bids.  
 		tacticbuyoffers.clear();
-		buyofferone = creatBuyOfferone(expectedprice,certdemand);
-		buyoffertwo = creatBuyOffertwo(expectedprice,certdemand);
+		buyofferone = creatBuyOfferone(expectedprice,physicalposition);
+		buyoffertwo = creatBuyOffertwo(expectedprice,physicalposition);
 		tacticbuyoffers.add(buyofferone);
 		tacticbuyoffers.add(buyoffertwo);
 		addtactichistory();

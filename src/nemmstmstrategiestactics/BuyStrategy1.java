@@ -52,22 +52,23 @@ public class BuyStrategy1 extends GenericStrategy {
 	}	
 
 	// Clears strategies buyoffers, updates offers from all tactics. set strategys buyoffers to those of the best tactic. 
-	public void updatealloffers(double expectedprice, int certdemand) {
+	public void updatealloffers(double expectedprice, int physicalposition) {
 		//Updates all tactics
 		for (int i = 0; i < numberoftactics; ++i) {
-			alltactics.get(i).updatetacticbuyoffers(expectedprice, certdemand);}
+			alltactics.get(i).updatetacticbuyoffers(expectedprice, physicalposition);}
+		updatebesttactic();
 		// Updates this strategies buyoffers based on the best tactic (which in turn is given from the previous round)
 		agentsbuyoffers.clear();
 		agentsselloffers.clear();
 		buyofferone = besttactic.getbuyofferone();
-		buyoffertwo = besttactic.getbuyofferone();
+		buyoffertwo = besttactic.getbuyoffertwo();
 		agentsbuyoffers.add(buyofferone);
 		agentsbuyoffers.add(buyoffertwo);
 		
 		}
 		
 	public void updatebesttactic() {
-		//TBD. Should be run before the updatebuystrategy
+		besttactic = alltactics.get(RandomHelper.nextIntFromTo(0, (numberoftactics-1)));
 	}
 	
 	public void calculatestrategyutility() {

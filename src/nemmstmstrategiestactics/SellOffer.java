@@ -18,7 +18,7 @@ public class SellOffer {
 		numberofcert = 0;
 		price = 1.0;
 	}
-	public Double getSellofferprice() {
+	public Double getSellOfferprice() {
 		return price;
 	}
 	public int getnumberofcert() {

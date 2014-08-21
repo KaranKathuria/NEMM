@@ -9,9 +9,7 @@
 package nemmstmstrategiestactics;
 
 import static nemmcommons.ParameterWrapper.getproduceragentsnumber;
-
 import java.util.ArrayList;
-
 import repast.simphony.random.RandomHelper;
 import nemmstmstrategiestactics.GenericStrategy.*;
 
@@ -35,9 +33,9 @@ public class SellStrategy1 extends GenericStrategy {
 		
 		//Adds four tactics with differen values of sbd and discount, and stores them in alltactics
 		for (int i = 0; i < numberoftactics; ++i) {
-			double randomshareboughtatdiscount = RandomHelper.nextDoubleFromTo(0, 1);
+			double randomsharesoldtatdiscount = RandomHelper.nextDoubleFromTo(0, 1);
 			double randomdiscount = RandomHelper.nextDoubleFromTo((i*0.2), ((i*0.2)+0.2));
-			SellStrategy1Tactic tactic = new SellStrategy1Tactic(randomshareboughtatdiscount, randomdiscount);
+			SellStrategy1Tactic tactic = new SellStrategy1Tactic(randomsharesoldtatdiscount, randomdiscount);
 			alltactics.add(tactic);
 		}
 		
@@ -55,18 +53,20 @@ public class SellStrategy1 extends GenericStrategy {
 		//Updates all tactics
 		for (int i = 0; i < numberoftactics; ++i) {
 			alltactics.get(i).updatetacticselloffers(expectedprice, physicalposition);}
+		updatebesttactic();
 		// Updates this strategies selloffers based on the best tactic (which in turn is given from the previous round)
+		//Her we could have something that increases creates scores and selects the best tactic
 		agentsbuyoffers.clear();
 		agentsselloffers.clear();
 		sellofferone = besttactic.getsellofferone();
-		selloffertwo = besttactic.getsellofferone();
+		selloffertwo = besttactic.getselloffertwo();
 		agentsselloffers.add(sellofferone);
 		agentsselloffers.add(selloffertwo);
 		
 		}
 		
 	public void updatebesttactic() {
-		//TBD. Should be run before the updatebuystrategy
+		besttactic = alltactics.get(RandomHelper.nextIntFromTo(0, (numberoftactics-1)));
 	}
 	
 	public void calculatestrategyutility() {
