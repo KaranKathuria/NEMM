@@ -9,9 +9,12 @@ package nemmcommons;
 //Imports
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import nemmagents.CompanyAgent;
 import nemmagents.MarketAnalysisAgent;
@@ -85,6 +88,48 @@ public static List<CompanyAgent> getCompanyAgenList() {
 	        return o1.getSellofferprice().compareTo(o2.getSellofferprice());
 	    }
 	}
+	
+	// ----------------------------------------------------------------------------
 		
+	// Calculate the difference between two Calendar dates, in hours
+	// GJB 19Aug2014	
+	public static long HoursBetween(Calendar startDate, Calendar endDate) {
+	    long end = endDate.getTimeInMillis();
+	    long start = startDate.getTimeInMillis();
+	    return TimeUnit.MILLISECONDS.toHours(Math.abs(end - start));
+	}
+	
+	// ----------------------------------------------------------------------------
+				
+	/**
+	 * Returns a pseudo-random number between min and max, inclusive.
+	 * The difference between min and max can be at most
+	 * <code>Integer.MAX_VALUE - 1</code>.
+	 *
+	 * @param min Minimum value
+	 * @param max Maximum value.  Must be greater than min.
+	 * @return Integer between min and max, inclusive.
+	 * @see java.util.Random#nextInt(int)
+	 */
+	// Added by GJB 20Aug2014. Source: see
+	// http://stackoverflow.com/questions/363681/generating-random-integers-in-a-range-with-java  and
+	// http://docs.oracle.com/javase/7/docs/api/java/util/Random.html#nextInt%28int%29
+	public static int randInt(int min, int max) {
+
+	    // NOTE: Usually this should be a field rather than a method
+	    // variable so that it is not re-seeded every call.
+	    Random rand = new Random();
+
+	    // nextInt is normally exclusive of the top value,
+	    // so add 1 to make it inclusive
+	    int randomNum = rand.nextInt((max - min) + 1) + min;
+
+	    return randomNum;
+	}
+	
+	// ----------------------------------------------------------------------------
+		
+
+	
 	}
 	
