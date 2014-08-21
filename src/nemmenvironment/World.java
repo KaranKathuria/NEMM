@@ -4,16 +4,13 @@
 package nemmenvironment;
 
 import static nemmcommons.ParameterWrapper.getobligatedpurchaseragentsnumber;
-
 import java.util.ArrayList;
-
 import nemmcommons.CommonMethods;
 import nemmstmstrategiestactics.GenericStrategy;
 
-/**
- * @author Gavin
- *
- */
+
+ //@author Gavin
+
 public class World {
 
 	// The physical and market environment - plants, demand, prices, regions
@@ -29,7 +26,6 @@ public class World {
 	
 	public void SetUpWorld(){
 		worldCreator.ReadCreateRegions();
-		
 	}
 	
 	 public class IOCreate{
@@ -78,8 +74,8 @@ public class World {
 				int newcap = CommonMethods.randInt(50, 150);
 				double newlf = CommonMethods.randInt(20, 35)/100;
 				// Create the plant and store it in the list
-				PowerPlant newplant = new PowerPlant(newcap, newlf);
-				curRegion.AddNewPowerPlant(newplant);
+				PowerPlant newplant = new PowerPlant(newcap, newlf, curRegion);
+				curRegion.getallpowerplants().add(newplant);
 			}
 		}
 		

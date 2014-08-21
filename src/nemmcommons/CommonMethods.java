@@ -19,6 +19,7 @@ import nemmagents.CompanyAgent;
 import nemmagents.MarketAnalysisAgent;
 import nemmstmstrategiestactics.BuyOffer;
 import nemmstmstrategiestactics.SellOffer;
+import nemmtime.NemmCalendar;
 import repast.simphony.engine.environment.RunState;
 
 public class CommonMethods {
@@ -126,11 +127,11 @@ public static List<CompanyAgent> getCompanyAgenList() {
 		
 	// Calculate the difference between two Calendar dates, in hours
 	// GJB 19Aug2014	
-	public static long HoursBetween(Calendar startDate, Calendar endDate) {
-	    long end = endDate.getTimeInMillis();
-	    long start = startDate.getTimeInMillis();
-	    return TimeUnit.MILLISECONDS.toHours(Math.abs(end - start));
-	}
+	//public static long HoursBetween(NemmCalendar startDate, NemmCalendar endDate) {
+	//    long end = endDate.getTimeInMillis();
+	//    long start = startDate.getTimeInMillis();
+	//    return TimeUnit.MILLISECONDS.toHours(Math.abs(end - start));
+	//}
 	
 
 	// Added by GJB 20Aug2014. Source: see

@@ -40,7 +40,6 @@ public final class TheEnvironment {
 	
 	public void SetUpEnvironment(){
 		ReadCreateRegions();
-		ReadCreateCompanies();
 	}
 	
 	public void ReadCreateRegions() {
@@ -82,10 +81,6 @@ public final class TheEnvironment {
 			curRegion.getMyPowerPrice().setPrice(newPrice, null);
 		}		
 	}	
-	
-	
-	
-	
 	
 	
 /*	public void ReadCreateCompanies() {

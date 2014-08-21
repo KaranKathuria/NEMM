@@ -19,6 +19,8 @@ public class MarketDemand {
 	// of size numTicks. We need to add functionality to generate the power demands etc internally
 	// e.g. allow annual demand and quota numbers to be inputted, and have the class generate tick level demand
 	// and quota arrays. But this will do for now.
+	public MarketDemand() {}; //Required null constructor. 
+	
 	public MarketDemand(double[] powerDem, double[] certPlikt) {
 		// error checking
 		if (powerDem.length != certPlikt.length){

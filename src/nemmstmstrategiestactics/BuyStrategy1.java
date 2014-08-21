@@ -9,9 +9,7 @@
 package nemmstmstrategiestactics;
 
 import static nemmcommons.ParameterWrapper.getproduceragentsnumber;
-
 import java.util.ArrayList;
-
 import repast.simphony.random.RandomHelper;
 import nemmstmstrategiestactics.GenericStrategy.*;
 
