@@ -8,13 +8,14 @@
 package nemmstmstrategiestactics;
 
 import java.util.ArrayList;
+
 import repast.simphony.engine.environment.RunEnvironment;
 import nemmagents.ParentAgent;
 import nemmstmstrategiestactics.SellOffer;
 import nemmstmstrategiestactics.SellOffer;
 
 
-public class SellStrategy1Tactic {
+public class SellStrategy1Tactic extends GenericTactic {
 	 
 	private double sharesoldtatdiscount;
 	private double discount;
@@ -79,7 +80,7 @@ public class SellStrategy1Tactic {
 	public SellOffer getselloffertwo() {
 		return selloffertwo;}
 	
-	public ArrayList<SellOffer> gettacticbuyoffers() {
+	public ArrayList<SellOffer> gettacticselloffers() {
 		return tacticselloffers;}
 	
 	public ArrayList<HistoricTacticValues> gethistorictacticvalues() {

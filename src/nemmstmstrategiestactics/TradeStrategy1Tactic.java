@@ -15,7 +15,7 @@ import nemmstmstrategiestactics.SellOffer;
 import nemmstmstrategiestactics.SellOffer;
 
 
-public class TradeStrategy1Tactic {
+public class TradeStrategy1Tactic extends GenericTactic {
 	 
 	private double premium;
 	private double discount;

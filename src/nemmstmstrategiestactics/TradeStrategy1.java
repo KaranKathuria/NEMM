@@ -21,15 +21,14 @@ public class TradeStrategy1 extends GenericStrategy {
 	private SellOffer sellofferone;
 	private BuyOffer buyofferone;
 	private TradeStrategy1Tactic besttactic = null;
-	private double strategyutilitysore;
-	private ArrayList<TradeStrategy1Tactic> alltactics = new ArrayList<TradeStrategy1Tactic>();
-	
 	
 	//Constructor for TradeStrategy1
 	public TradeStrategy1() {
 		
 		strategyname = "TradeStrategy1";
 		numberoftactics = 4;
+		strategyutilityscore = 0;
+
 		
 		//Adds four tactics with differen values of discount and premium. This is less sophisticated. 
 		for (int i = 0; i < numberoftactics; ++i) {

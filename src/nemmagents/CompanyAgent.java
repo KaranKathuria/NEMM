@@ -82,6 +82,9 @@ public class CompanyAgent extends ParentAgent {
 		public GenericStrategy getbeststrategy() {
 			return beststrategy;
 			}
+		public ArrayList<GenericStrategy> getallstrategies() {
+			return allstrategies;
+		}
 		
 		public void poststmupdate(int certificatessold, int certificatesbought) {
 			physicalnetposition = physicalnetposition + certificatesbought - certificatessold; //Certificates bought and sold are positive numbers.
@@ -93,6 +96,10 @@ public class CompanyAgent extends ParentAgent {
 		public CompanyAnalysisAgent getagentcompanyanalysisagent() {
 			return companyanalysisagent;
 			}
+		
+		public GenericUtilityMethod getutilitymethod() {
+			return utilitymethod;
+		}
 	}
 		
 		public class CompanyAnalysisAgent extends ParentAgent {
@@ -178,5 +185,6 @@ public class CompanyAgent extends ParentAgent {
 	CompanyDemandShare tempDS = new CompanyDemandShare(defaultShare, demRegion);
 	this.myDemandShares.add(tempDS);
 	}
+	
 }
 	

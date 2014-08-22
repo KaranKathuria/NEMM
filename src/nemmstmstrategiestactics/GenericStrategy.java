@@ -22,9 +22,11 @@ public abstract class GenericStrategy {
 	protected ArrayList<BuyOffer> agentsbuyoffers = new ArrayList<BuyOffer>();
 	protected ArrayList<SellOffer> agentsselloffers = new ArrayList<SellOffer>();
 	protected int numberoftactics;
-	protected double strategyutility;
-	protected double[] historicstrategyutility;
+	protected double strategyutilityscore;
+	protected double[] historicstrategyutilityscore;
 	protected String strategyname; 
+	protected ArrayList<GenericTactic> alltactics = new ArrayList<GenericTactic>();
+
 	
 
 	//Constructor for parant class. Not sure about this. This construction will note be used as this class is abstract. 
@@ -79,6 +81,14 @@ public abstract class GenericStrategy {
 			ret.numberofcert = soldcerts;
 		return ret;
 	}
+	//Used when reseting the strategyutility
+	public void setstrategyutilityscore(double t) {
+		strategyutilityscore = t;}
+	//Used when adding/updating to the strategyutility (not setting best strategy).
+	public void updatestrategyutilityscore(double t) {
+		strategyutilityscore = strategyutilityscore + t;}
+	public int getnumberoftactics() {
+		return numberoftactics;}
 	
 	}
 	
