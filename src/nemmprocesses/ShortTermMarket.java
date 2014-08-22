@@ -150,7 +150,7 @@ public class ShortTermMarket {
 		}}
 		marketsupply = (int) shareofmarignalselloffersold;
 		marketdemand = (int) shareofmarginalbuyofferbought;
-		currentmarketprice = certprice;	//My be altered later so that 
+		currentmarketprice = certprice;	
 	}
 public static void updatemarketoutcome() {
 	for (final ActiveAgent agent : CommonMethods.getPAgentList()) {

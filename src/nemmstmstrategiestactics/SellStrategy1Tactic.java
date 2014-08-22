@@ -20,7 +20,6 @@ public class SellStrategy1Tactic {
 	private double discount;
 	private SellOffer sellofferone;
 	private SellOffer selloffertwo;
-	private double tacticscore;
 	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 
 	private ArrayList<HistoricTacticValues> historictacticvalues = new ArrayList<HistoricTacticValues>();  //An array of historic values. 
 	
@@ -72,9 +71,6 @@ public class SellStrategy1Tactic {
 		a.tacticselloffers = tacticselloffers;
 		a.month = (int) RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 	}
-	public void settacticscore(double ts) {
-		tacticscore = ts;
-	}
 	
 	public SellOffer getsellofferone() {
 		return sellofferone;}
@@ -82,7 +78,7 @@ public class SellStrategy1Tactic {
 	public SellOffer getselloffertwo() {
 		return selloffertwo;}
 	
-	public ArrayList<SellOffer> gettacticselloffers() {
+	public ArrayList<SellOffer> gettacticbuyoffers() {
 		return tacticselloffers;}
 	
 	public ArrayList<HistoricTacticValues> gethistorictacticvalues() {

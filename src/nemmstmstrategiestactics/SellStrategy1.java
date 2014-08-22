@@ -52,8 +52,9 @@ public class SellStrategy1 extends GenericStrategy {
 		//Updates all tactics
 		for (int i = 0; i < numberoftactics; ++i) {
 			alltactics.get(i).updatetacticselloffers(expectedprice, physicalposition);}
-		
-		//The strategies offers are based on those of the best tactic. 
+		updatebesttactic();
+		// Updates this strategies selloffers based on the best tactic (which in turn is given from the previous round)
+		//Her we could have something that increases creates scores and selects the best tactic
 		agentsbuyoffers.clear();
 		agentsselloffers.clear();
 		sellofferone = besttactic.getsellofferone();
@@ -63,21 +64,12 @@ public class SellStrategy1 extends GenericStrategy {
 		
 		}
 		
-	public void updatebesttactic(double marketprice, double shareoflastoffersold) {
-		double tempvalue=0;
-		double highest = 0;
-		//Calculates the utility for each tactic. Currenty the are scored according to the value of certs sold. 
-		for (int i = 0; i < numberoftactics; ++i) {
-			tempvalue = returnsoldvolume(alltactics.get(i).gettacticselloffers(), marketprice, shareoflastoffersold).getSoldInSTMvalue();
-			alltactics.get(i).settacticscore(tempvalue);
-			//Determines the best tactics simply by which tactic bought most certificates last round. 
-			if (tempvalue>highest) {
-				besttactic = alltactics.get(i); //If this tactic would have given the highest number of certs sold, this is the besttactics, hence used the next time.
-			}} //If all the tactics give zero certificates, then the best tactics is unchanged.
-		}
+	public void updatebesttactic() {
+		besttactic = alltactics.get(RandomHelper.nextIntFromTo(0, (numberoftactics-1)));
+	}
 	
-	public void setstrategyutility(double su) {
-		strategyutility = su;
+	public void calculatestrategyutility() {
+		// TBD
 	}
 
 	}
