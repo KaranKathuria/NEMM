@@ -20,6 +20,7 @@ public class SellStrategy1Tactic {
 	private double discount;
 	private SellOffer sellofferone;
 	private SellOffer selloffertwo;
+	private double tacticutilityscore;
 	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 
 	private ArrayList<HistoricTacticValues> historictacticvalues = new ArrayList<HistoricTacticValues>();  //An array of historic values. 
 	
@@ -84,5 +85,8 @@ public class SellStrategy1Tactic {
 	public ArrayList<HistoricTacticValues> gethistorictacticvalues() {
 		return historictacticvalues;}
 	
+	public void settacticutilityscore(double s) {
+		tacticutilityscore = s;
+	}
 	
 }

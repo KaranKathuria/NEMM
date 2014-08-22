@@ -16,7 +16,11 @@ import nemmagents.MarketAnalysisAgent;
 import nemmagents.ParentAgent;
 import nemmstmstrategiestactics.BuyStrategy1;
 import nemmstmstrategiestactics.GenericStrategy;
+import nemmstmstrategiestactics.GenericUtilityMethod;
+import nemmstmstrategiestactics.OPAUtilityMethod;
+import nemmstmstrategiestactics.PAUtilityMethod;
 import nemmstmstrategiestactics.SellStrategy1;
+import nemmstmstrategiestactics.TAUtilityMethod;
 import nemmstmstrategiestactics.TradeStrategy1;
 import nemmcommons.ParameterWrapper;
 import nemmcommons.VolumePrognosis;
@@ -34,6 +38,7 @@ public class CompanyAgent extends ParentAgent {
 		private ArrayList<GenericStrategy> allstrategies = new ArrayList<GenericStrategy>();
 		private int numberofstrategies;
 		private GenericStrategy beststrategy = null;
+		private GenericUtilityMethod utilitymethod;
 		private int physicalnetposition;
 		
 		// Null constructor for ActiveAgent. Should not be used as this does not specify type of agent.
@@ -48,18 +53,21 @@ public class CompanyAgent extends ParentAgent {
 			if (type == 1) {
 				activeagenttypename = "ProducerAgent";
 				physicalnetposition = 10;
+				utilitymethod = new PAUtilityMethod();
 				SellStrategy1 sellstrategy = new SellStrategy1();
 				allstrategies.add(sellstrategy);
 									
 			} if (type == 2) {
 				activeagenttypename = "ObligatedPurchaserAgent";
 				physicalnetposition = -10;
+				utilitymethod = new OPAUtilityMethod();
 				BuyStrategy1 buystrategy = new BuyStrategy1();
 				allstrategies.add(buystrategy);
 				
 			} else { //Notice that else is all other added as Trader agents. This is okey for now but should call an expetion later. 
 				activeagenttypename = "TraderAgent";
 				physicalnetposition = 0;
+				utilitymethod = new TAUtilityMethod();
 				TradeStrategy1 tradestrategy = new TradeStrategy1();
 				allstrategies.add(tradestrategy);
 			} 

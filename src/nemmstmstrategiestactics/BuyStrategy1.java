@@ -23,6 +23,7 @@ public class BuyStrategy1 extends GenericStrategy {
 	private BuyOffer buyofferone;
 	private BuyOffer buyoffertwo;
 	private BuyStrategy1Tactic besttactic = null;
+	private double strategyutilityscore;
 	private ArrayList<BuyStrategy1Tactic> alltactics = new ArrayList<BuyStrategy1Tactic>();
 	
 	
@@ -71,6 +72,9 @@ public class BuyStrategy1 extends GenericStrategy {
 	
 	public void calculatestrategyutility() {
 		// TBD
+	}
+	public void setstrategyutilityscore(double t) {
+		strategyutilityscore = t;
 	}
 	
 	

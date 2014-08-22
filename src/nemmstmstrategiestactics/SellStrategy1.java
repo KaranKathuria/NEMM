@@ -21,6 +21,7 @@ public class SellStrategy1 extends GenericStrategy {
 	private SellOffer sellofferone;
 	private SellOffer selloffertwo;
 	private SellStrategy1Tactic besttactic = null;
+	private double strategyutilityscore;
 	private ArrayList<SellStrategy1Tactic> alltactics = new ArrayList<SellStrategy1Tactic>();
 	
 	
@@ -52,9 +53,7 @@ public class SellStrategy1 extends GenericStrategy {
 		//Updates all tactics
 		for (int i = 0; i < numberoftactics; ++i) {
 			alltactics.get(i).updatetacticselloffers(expectedprice, physicalposition);}
-		updatebesttactic();
-		// Updates this strategies selloffers based on the best tactic (which in turn is given from the previous round)
-		//Her we could have something that increases creates scores and selects the best tactic
+
 		agentsbuyoffers.clear();
 		agentsselloffers.clear();
 		sellofferone = besttactic.getsellofferone();
@@ -65,11 +64,15 @@ public class SellStrategy1 extends GenericStrategy {
 		}
 		
 	public void updatebesttactic() {
-		besttactic = alltactics.get(RandomHelper.nextIntFromTo(0, (numberoftactics-1)));
+		
 	}
 	
 	public void calculatestrategyutility() {
 		// TBD
+	}
+	
+	public void setstrategyutilityscore(double t) {
+		strategyutilityscore = t;
 	}
 
 	}

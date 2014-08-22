@@ -21,6 +21,7 @@ public class TradeStrategy1 extends GenericStrategy {
 	private SellOffer sellofferone;
 	private BuyOffer buyofferone;
 	private TradeStrategy1Tactic besttactic = null;
+	private double strategyutilitysore;
 	private ArrayList<TradeStrategy1Tactic> alltactics = new ArrayList<TradeStrategy1Tactic>();
 	
 	
