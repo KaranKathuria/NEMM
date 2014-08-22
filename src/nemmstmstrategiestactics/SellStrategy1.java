@@ -20,7 +20,7 @@ public class SellStrategy1 extends GenericStrategy {
 	
 	private SellOffer sellofferone;
 	private SellOffer selloffertwo;
-	private SellStrategy1Tactic besttactic = null;
+	private GenericTactic besttactic = null;
 	
 	
 	//Constructor for OPABidstrategy adding the four offers to arraylist of offers.

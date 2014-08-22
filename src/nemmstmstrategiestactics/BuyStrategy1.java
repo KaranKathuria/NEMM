@@ -22,7 +22,7 @@ public class BuyStrategy1 extends GenericStrategy {
 
 	private BuyOffer buyofferone;
 	private BuyOffer buyoffertwo;
-	private BuyStrategy1Tactic besttactic = null;
+	private GenericTactic besttactic = null;
 	
 	
 	//Constructor for OPABidstrategy adding the four offers to arraylist of offers.
@@ -54,7 +54,6 @@ public class BuyStrategy1 extends GenericStrategy {
 		//Updates all tactics
 		for (int i = 0; i < numberoftactics; ++i) {
 			alltactics.get(i).updatetacticbuyoffers(expectedprice, physicalposition);}
-		updatebesttactic();
 		// Updates this strategies buyoffers based on the best tactic (which in turn is given from the previous round)
 		agentsbuyoffers.clear();
 		agentsselloffers.clear();
@@ -65,9 +64,6 @@ public class BuyStrategy1 extends GenericStrategy {
 		
 		}
 		
-	public void updatebesttactic() {
-		besttactic = alltactics.get(RandomHelper.nextIntFromTo(0, (numberoftactics-1)));
-	}
 	
 	public void calculatestrategyutility() {
 		// TBD

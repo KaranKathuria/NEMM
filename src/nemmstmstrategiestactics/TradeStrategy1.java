@@ -20,7 +20,7 @@ public class TradeStrategy1 extends GenericStrategy {
 	
 	private SellOffer sellofferone;
 	private BuyOffer buyofferone;
-	private TradeStrategy1Tactic besttactic = null;
+	private GenericTactic besttactic = null;
 	
 	//Constructor for TradeStrategy1
 	public TradeStrategy1() {
