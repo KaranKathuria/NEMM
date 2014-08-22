@@ -40,7 +40,7 @@ public class BuyStrategy1 extends GenericStrategy {
 			alltactics.add(tactic);
 		}
 		
-		besttactic = alltactics.get(0);
+		besttactic = alltactics.get(RandomHelper.nextIntFromTo(0, (numberoftactics-1)));
 		
 		buyofferone = new BuyOffer();
 		buyoffertwo = new BuyOffer();
