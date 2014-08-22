@@ -2,6 +2,7 @@ package nemmenvironment;
 
 import java.util.ArrayList;
 
+import nemmcommons.CommonMethods;
 import nemmtime.NemmCalendar;
 
 public final class TheEnvironment {
@@ -64,6 +65,30 @@ public final class TheEnvironment {
 		this.PopulateMarketDemands();
 		this.PopulatePowerPrices();
 	}
+	
+	private void ReadCreatePowerPlants() {
+		// Reads in the power plant data and creates
+		// power plant objects, populates these, and 
+		// stores them in the power plant list for the
+		// passed region
+		
+		// TEST VERSION: creates the plants randomly (i.e. they
+		// are not read in from anywhere
+		
+		int numplants = 40;
+		for (int i = 0; i < numplants; ++i) {
+			// randomly create capacity and load factor for the 
+			// new plant
+			int newcap = CommonMethods.randInt(50, 150);
+			double newlf = CommonMethods.randInt(20, 35)/100;
+			// randomly choose the region
+			int selectedRegion = CommonMethods.randInt(0, allRegions.size()-1);
+			// Create the plant and store it in the list
+			PowerPlant newplant = new PowerPlant(newcap, newlf, allRegions.get(selectedRegion));
+			this.allPowerPlants.add(newplant);
+		}
+	}
+	
 	
 	private void PopulateMarketDemands(){
 		for (Region curRegion: allRegions){
