@@ -22,6 +22,7 @@ public class BuyStrategy1 extends GenericStrategy {
 
 	private BuyOffer buyofferone;
 	private BuyOffer buyoffertwo;
+	private double strategyutility;
 	private BuyStrategy1Tactic besttactic = null;
 	private ArrayList<BuyStrategy1Tactic> alltactics = new ArrayList<BuyStrategy1Tactic>();
 	
@@ -40,7 +41,7 @@ public class BuyStrategy1 extends GenericStrategy {
 			alltactics.add(tactic);
 		}
 		
-		besttactic = alltactics.get(0);
+		besttactic = alltactics.get(RandomHelper.nextIntFromTo(0, (numberoftactics-1)));
 		
 		buyofferone = new BuyOffer();
 		buyoffertwo = new BuyOffer();
@@ -54,8 +55,7 @@ public class BuyStrategy1 extends GenericStrategy {
 		//Updates all tactics
 		for (int i = 0; i < numberoftactics; ++i) {
 			alltactics.get(i).updatetacticbuyoffers(expectedprice, physicalposition);}
-		updatebesttactic();
-		// Updates this strategies buyoffers based on the best tactic (which in turn is given from the previous round)
+		//Sets the strategies buyoffers equal to those of the best tactic.
 		agentsbuyoffers.clear();
 		agentsselloffers.clear();
 		buyofferone = besttactic.getbuyofferone();
@@ -65,15 +65,22 @@ public class BuyStrategy1 extends GenericStrategy {
 		
 		}
 		
-	public void updatebesttactic() {
-		besttactic = alltactics.get(RandomHelper.nextIntFromTo(0, (numberoftactics-1)));
+	public void updatebesttactic(double marketprice, double shareoflastofferbought) {
+		int tempvalue=0;
+		int highest = 0;
+		//Calculates the utility for each tactics. Currenlty scored by which tactics maximises number of certs bought.
+		for (int i = 0; i < numberoftactics; ++i) {
+			tempvalue = returnboughtvolume(alltactics.get(i).gettacticbuyoffers(), marketprice, shareoflastofferbought).getBoughtInSTMnumberofcert();
+			alltactics.get(i).settacticscore(tempvalue);
+			//Determines the best tactics simply by which tactic bought most certificates last round. 
+			if (tempvalue>highest) {
+				besttactic = alltactics.get(i); //If this tactic would have given the highest number of certs sold, this is the besttactics, hence used the next time.
+			}} //If all the tactics give zero certificates, then the best tactics is unchanged.
+		}
+	
+	public void setstrategyutility(double su) {
+		strategyutility = su;
 	}
-	
-	public void calculatestrategyutility() {
-		// TBD
-	}
-	
-	
 	
 	
 	

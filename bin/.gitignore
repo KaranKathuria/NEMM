@@ -1,7 +1,6 @@
 /nemmstmstrategiestactics
-/.gitignore
 /nemmagents
 /nemmcommons
 /nemmenvironment
-/nemmtime
 /nemmprocesses
+/nemmtime

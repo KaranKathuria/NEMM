@@ -24,4 +24,5 @@ public class BuyOffer {
 	public int getnumberofcert() {
 		return numberofcert;
 	}
+	
 	}

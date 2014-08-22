@@ -20,6 +20,7 @@ public class BuyStrategy1Tactic {
 	private double discount;
 	private BuyOffer buyofferone;
 	private BuyOffer buyoffertwo;
+	private double tacticscore;
 	private ArrayList<BuyOffer> tacticbuyoffers = new ArrayList<BuyOffer>();
 	private ArrayList<HistoricTacticValues> historictacticvalues = new ArrayList<HistoricTacticValues>();
 	
@@ -70,6 +71,10 @@ public class BuyStrategy1Tactic {
 		HistoricTacticValues a = new HistoricTacticValues();
 		a.tacticsbuyoffers = tacticbuyoffers;
 		a.month = (int) RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+	}
+	
+	public void settacticscore(double ts) {
+		tacticscore = ts;
 	}
 	
 	public BuyOffer getbuyofferone() {
