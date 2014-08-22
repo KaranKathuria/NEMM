@@ -36,13 +36,13 @@ public final class GlobalValues {
 	
 	
 	public GlobalValues() {
-		currentmarketprice = nemmcommons.ParameterWrapper.getpriceexpectation();
+		currentmarketprice = ParameterWrapper.getpriceexpectation();
 	}
 	
 	public static void initglobalvalues() {
 		//Initially the global market price is set to that of the price expectations
-		currentmarketprice = nemmcommons.ParameterWrapper.getpriceexpectation();
-		currentinterestrate = nemmcommons.ParameterWrapper.getinitialinterestrate();
+		currentmarketprice = ParameterWrapper.getpriceexpectation();
+		currentinterestrate = ParameterWrapper.getinitialinterestrate();
 		}
 	
 	// Monthly update of current global values

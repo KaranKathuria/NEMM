@@ -34,7 +34,7 @@ public class MarketPrognosis {
 	
 	//Methods
 	public MarketPrognosis() {
-		stpriceexpectation = nemmcommons.ParameterWrapper.getpriceexpectation();
+		stpriceexpectation = ParameterWrapper.getpriceexpectation();
 	}
 	public double getstpriceexpectation() {
 		return stpriceexpectation;
