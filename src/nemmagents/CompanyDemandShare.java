@@ -25,9 +25,6 @@ public class CompanyDemandShare {
 		}
 
 		// Gets and Sets ---------------------------------------------------------------------
-
-		// the NemmTime object is optional (and currently is ignored if used)
-		// Later if not used it will assume the reference is to the current time block
 		
 		public double getDemandShare(int... tickID) {
 			double retShare;
@@ -72,8 +69,5 @@ public class CompanyDemandShare {
 		public Region getMyRegion() {
 			return myRegion;
 		}
-
-		
-
 
 }
