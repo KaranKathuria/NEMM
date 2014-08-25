@@ -13,6 +13,7 @@ import repast.simphony.engine.environment.RunEnvironment;
 import nemmagents.ParentAgent;
 import nemmstmstrategiestactics.SellOffer;
 import nemmstmstrategiestactics.SellOffer;
+import nemmstmstrategiestactics.GenericTactic.HistoricTacticValue;
 
 
 public class SellStrategy1Tactic extends GenericTactic {
@@ -21,16 +22,8 @@ public class SellStrategy1Tactic extends GenericTactic {
 	private double discount;
 	private SellOffer sellofferone;
 	private SellOffer selloffertwo;
-	private double tacticutilityscore;
-	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 
-	private ArrayList<HistoricTacticValues> historictacticvalues = new ArrayList<HistoricTacticValues>();  //An array of historic values. 
+	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 	
 	
-	
-	private class HistoricTacticValues {
-		 
-			private ArrayList<SellOffer> tacticselloffers; //with fixed length given as a parameter. 
-			private int month;
-	 }
 
 	SellStrategy1Tactic() {
 		sharesoldtatdiscount = 0;
@@ -69,10 +62,12 @@ public class SellStrategy1Tactic extends GenericTactic {
 	}
 	
 	public void addtactichistory() {
-		HistoricTacticValues a = new HistoricTacticValues();
+		HistoricTacticValue a = new HistoricTacticValue();
+		a.tacticsbuyoffers = null;
 		a.tacticselloffers = tacticselloffers;
+		a.tacticutilityscore = tacticutilityscore;
 		a.month = (int) RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
-	}
+		historictacticvalues.add(a);}
 	
 	public SellOffer getsellofferone() {
 		return sellofferone;}
@@ -83,11 +78,5 @@ public class SellStrategy1Tactic extends GenericTactic {
 	public ArrayList<SellOffer> gettacticselloffers() {
 		return tacticselloffers;}
 	
-	public ArrayList<HistoricTacticValues> gethistorictacticvalues() {
-		return historictacticvalues;}
-	
-	public void settacticutilityscore(double s) {
-		tacticutilityscore = s;
-	}
 	
 }

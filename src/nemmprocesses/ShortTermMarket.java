@@ -39,7 +39,11 @@ public class ShortTermMarket {
 	public ShortTermMarket() {}
 			
 	public static void runshorttermmarket() {
-		//Clears the list of offers from previous iteration
+		shareofmarginalbuyofferbought = 1;
+		shareofmarignalselloffersold = 1;
+		marketdemand = 0;
+		marketsupply = 0;
+		tradedvolume = 0;
 		pricestep = 0.5;
 
 		Allselloffers.clear();
@@ -84,11 +88,7 @@ public class ShortTermMarket {
 		initHigh = Math.max(Allbuyoffers.get(numberofbuyoffers-1).getBuyOfferprice(), Allselloffers.get(numberofselloffers-1).getSellOfferprice());
 		double certprice = 0;
 		int mindiff = 1000;
-		shareofmarginalbuyofferbought = 1;
-		shareofmarignalselloffersold = 1;
-		marketdemand = 0;
-		marketsupply = 0;
-		tradedvolume = 0;
+		
 		
 		//Finds market price. Iterates thorugh all steps, calculates diffs in demand and supply and set price where diff is minimal
 		//I situasjoner hvor krysset har ulike salgs og kjøpsvillighet. Altså at i den prisen hvor volume maksimeres, så er selgeren villig til å selge billigere enn alle kjøpere er villig til å kjøpe. Dette er en lik situsajon som at to markedspriser gir samme maksimert handlet volum. 
@@ -148,8 +148,7 @@ public class ShortTermMarket {
 				shareofmarginalbuyofferbought = accessdemand/marginalsupply;
 			}
 		}}
-		marketsupply = (int) shareofmarignalselloffersold;
-		marketdemand = (int) shareofmarginalbuyofferbought;
+
 		currentmarketprice = certprice;	
 	}
 public static void updatemarketoutcome() {
@@ -160,20 +159,23 @@ public static void updatemarketoutcome() {
 	}
 	
 	for (final ActiveAgent agent : CommonMethods.getOPAgentList()) {
-		int certssold = 0; //GenericStrategy.returnsoldvolume(agent.getbeststrategy().getAgentsSellOffers(),currentmarketprice, 1.0).getSoldInSTMcert();
-		int certsbought = GenericStrategy.returnboughtvolume(agent.getbeststrategy().getAgentsBuyOffers(),currentmarketprice, shareofmarginalbuyofferbought).getBoughtInSTMnumberofcert();
+		int certssold = 0; //GenericStrategy.returnsoldvolume(agent.getbeststrategy().getAgentsSellOffers(),currentmarketprice, shareofmarignalselloffersold).getSoldInSTMcert();
+		int certsbought = GenericStrategy.returnboughtvolume(agent.getbeststrategy().getAgentsBuyOffers(),currentmarketprice, shareofmarginalbuyofferbought).getBoughtInSTMcert();
 		agent.poststmupdate(certssold, certsbought);
 	}
 	
 	for (final ActiveAgent agent : CommonMethods.getTAgentList()) {
 		int certssold = GenericStrategy.returnsoldvolume(agent.getbeststrategy().getAgentsSellOffers(),currentmarketprice, shareofmarignalselloffersold).getSoldInSTMcert();
-		int certsbought = GenericStrategy.returnboughtvolume(agent.getbeststrategy().getAgentsBuyOffers(),currentmarketprice, shareofmarginalbuyofferbought).getBoughtInSTMnumberofcert();
+		int certsbought = GenericStrategy.returnboughtvolume(agent.getbeststrategy().getAgentsBuyOffers(),currentmarketprice, shareofmarginalbuyofferbought).getBoughtInSTMcert();
 		agent.poststmupdate(certssold, certsbought);
 	}
-	//method that estimates the volume traded by  taking the price and the bidded price. If lower/higher, that traded is the volume. Should tak in market price, offers and give out nnumber of certs and average price they where sold at. 
+	//method that estimates the volume traded by  taking the price and the bidded price. If lower/higher, that traded is the volume. Should take in market price, offers and give out nnumber of certs and average price they where sold at. 
 }
-public static double getshareofmarignalselloffersold() {
+public static double getshareofmarignaloffersold() {
 	return shareofmarignalselloffersold;
+}
+public static double getshareofmarignalofferbought() {
+	return shareofmarginalbuyofferbought;
 }
 public static double getcurrentmarketprice() {
 	return currentmarketprice;}

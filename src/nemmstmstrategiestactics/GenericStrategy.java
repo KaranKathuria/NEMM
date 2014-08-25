@@ -22,10 +22,10 @@ public abstract class GenericStrategy {
 	protected ArrayList<BuyOffer> agentsbuyoffers = new ArrayList<BuyOffer>();
 	protected ArrayList<SellOffer> agentsselloffers = new ArrayList<SellOffer>();
 	protected int numberoftactics;
-	protected double strategyutilityscore;
-	protected double[] historicstrategyutilityscore;
+	protected ArrayList<Double> strategyutilityscore;
 	protected String strategyname; 
 	protected ArrayList<GenericTactic> alltactics = new ArrayList<GenericTactic>();
+	protected GenericTactic besttactic = null;
 
 	
 
@@ -81,18 +81,29 @@ public abstract class GenericStrategy {
 			ret.numberofcert = soldcerts;
 		return ret;
 	}
-	//Used when reseting the strategyutility
-	public void setstrategyutilityscore(double t) {
-		strategyutilityscore = t;}
-	//Used when adding/updating to the strategyutility (not setting best strategy).
-	public void updatestrategyutilityscore(double t) {
-		strategyutilityscore = strategyutilityscore + t;}
+	
+	//Used when adding/updating to the strategyutility ArrayList with the new score. 
+	public void addstrategyutilityscore(double t) {
+		strategyutilityscore.add(t);}
 	
 	public int getnumberoftactics() {
 		return numberoftactics;}
 	
+	public GenericTactic getbesttactic() {return besttactic;}
+	
 	public ArrayList<GenericTactic> getalltactics() {
 		return alltactics;}
-	}
+	
+    public void updatebesttactic(GenericTactic t) {
+    	besttactic = t;}
+	
+	public double getsumofstrategyutility() {
+		double ret = 0;
+		for (int i = 0; i < strategyutilityscore.size(); ++i) {
+			ret = ret + strategyutilityscore.get(i);
+		}
+		return ret;}
+	
+}
 
 	

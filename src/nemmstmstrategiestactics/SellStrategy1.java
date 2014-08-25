@@ -21,7 +21,6 @@ public class SellStrategy1 extends GenericStrategy {
 	
 	private SellOffer sellofferone;
 	private SellOffer selloffertwo;
-	private GenericTactic besttactic = null;
 	
 	
 	//Constructor for OPABidstrategy adding the four offers to arraylist of offers.
@@ -29,7 +28,6 @@ public class SellStrategy1 extends GenericStrategy {
 		
 		strategyname = "SellStrategy1";
 		numberoftactics = 4;
-		strategyutilityscore = 0;
 
 		
 		//Adds four tactics with differen values of sbd and discount, and stores them in alltactics
@@ -65,17 +63,12 @@ public class SellStrategy1 extends GenericStrategy {
 		}
 		
 	public void updatebesttactic() {
-		
 	}
 	
 	public void calculatestrategyutility() {
 		// TBD
 	}
-	
-	public void setstrategyutilityscore(double t) {
-		strategyutilityscore = t;
-	}
-	
+		
 	public ArrayList<GenericTactic> getalltactics() {
 		return alltactics;}
 	}

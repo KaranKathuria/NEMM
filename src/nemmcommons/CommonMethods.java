@@ -39,8 +39,21 @@ public static List<CompanyAgent> getCompanyAgenList() {
 
 		return Collections.unmodifiableList(ret);
 	}
-	// Her kan du endre til 
 
+	public static List<ActiveAgent> getAAgentList() {
+	
+	@SuppressWarnings("unchecked")
+	
+	final Iterable<CompanyAgent> Agents = RunState.getInstance().getMasterContext().getObjects(CompanyAgent.class);
+	
+	final ArrayList<ActiveAgent> ret = new ArrayList<ActiveAgent>();
+
+	for (final CompanyAgent agent : Agents) {
+		ret.add(agent.getproduceragent());}
+
+	return Collections.unmodifiableList(ret);
+}
+	
 	public static List<ActiveAgent> getPAgentList() {
 			
 			@SuppressWarnings("unchecked")

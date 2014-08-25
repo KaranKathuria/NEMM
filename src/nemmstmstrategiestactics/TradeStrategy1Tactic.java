@@ -13,6 +13,7 @@ import repast.simphony.engine.environment.RunEnvironment;
 import nemmagents.ParentAgent;
 import nemmstmstrategiestactics.SellOffer;
 import nemmstmstrategiestactics.SellOffer;
+import nemmstmstrategiestactics.GenericTactic.HistoricTacticValue;
 
 
 public class TradeStrategy1Tactic extends GenericTactic {
@@ -21,18 +22,9 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	private double discount;
 	private SellOffer sellofferone;
 	private BuyOffer buyofferone;
-	private double tacticutilityscore;
 	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 
 	private ArrayList<BuyOffer> tacticbuyoffers = new ArrayList<BuyOffer>(); // This tactics buyoffers.
-	private ArrayList<HistoricTacticValues> historictacticvalues = new ArrayList<HistoricTacticValues>();//An array of historic values. 
-	
-	//Object for storing av tradetactics historical values. Differs form those of buy or sell strategies, as they have just buy or sell. 
-	private class HistoricTacticValues {
-		 
-			private ArrayList<SellOffer> tacticselloffers;
-			private ArrayList<BuyOffer>  tacticbuyoffers;
-			private int month;
-	 }
+
 
 	TradeStrategy1Tactic() {
 		premium = 0;
@@ -69,10 +61,12 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	}
 	
 	public void addtactichistory() {
-		HistoricTacticValues a = new HistoricTacticValues();
+		HistoricTacticValue a = new HistoricTacticValue();
+		a.tacticsbuyoffers = tacticbuyoffers;
 		a.tacticselloffers = tacticselloffers;
-		a.tacticbuyoffers = tacticbuyoffers;
+		a.tacticutilityscore = tacticutilityscore;
 		a.month = (int) RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+		historictacticvalues.add(a);
 	}
 	
 	public SellOffer getsellofferone() {
@@ -80,13 +74,6 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	
 	public BuyOffer getbuyofferone() {
 		return buyofferone;}
-	
-	public void settaticutilityscore(double s) {
-		tacticutilityscore = s;
-	}
-	
-	public ArrayList<HistoricTacticValues> gethistorictacticvalues() {
-		return historictacticvalues;}
 	
 	
 }
