@@ -17,8 +17,8 @@ public class Region {
 	 */
 	public Region(String regionName) {
 		this.regionName = regionName;
-		this.myDemand = new MarketDemand();
-		this.myPowerPrice = new MarketPrice();
+		this.myDemand = new MarketDemand(); // not initialised yet
+		this.myPowerPrice = new MarketPrice(); // not initialised yet
 	}
 	
 

@@ -152,7 +152,20 @@ public static List<CompanyAgent> getCompanyAgenList() {
 	
 	// ----------------------------------------------------------------------------
 		
-
+	// Multiply two equal length arrays element by element
+	
+	public static double[] elArrayMult(double[] Array1, double[] Array2){
+		
+		if (Array1.length != Array2.length){
+			throw new IllegalArgumentException("elArrayMult: Array1 and Array2 are of unequal sizes");				
+		}
+		double[] resultArray = new double[Array1.length];
+		for (int y = 0; y < Array1.length; ++y){
+			resultArray[y] = Array1[y]*Array2[y];
+		}
+		return resultArray;
+	}
+	
 	
 	}
 	
