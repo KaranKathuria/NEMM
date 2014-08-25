@@ -135,7 +135,7 @@ public class CompanyAgent extends ParentAgent {
 		}
 		
 	//Back to CompanyAgent documentation
-	private String companyname;
+	private String companyname = "The Company";
 	private ActiveAgent produceragent;
 	private ActiveAgent obligatedpurchaseragent;
 	private ActiveAgent traderagent;
@@ -154,17 +154,17 @@ public class CompanyAgent extends ParentAgent {
 		if (p==true) {
 			produceragent = new ActiveAgent(1);
 			produceragent.setphysicalnetposition(10);}
-		if (p==false) {
-			produceragent = null;}
+//		if (p==false) {
+//			produceragent = null;}
 		if (op==true) {
 			obligatedpurchaseragent = new ActiveAgent(2);
 			obligatedpurchaseragent.setphysicalnetposition(-10);}
-		if (op==false) {
-			obligatedpurchaseragent = null;}
+//		if (op==false) {
+//			obligatedpurchaseragent = null;}
 		if (t==true) {
 			traderagent = new ActiveAgent(3);}
-		if (t==false) {
-			traderagent = null;}
+//		if (t==false) {
+//			traderagent = null;}
 		
 		companyanalysisagent = new CompanyAnalysisAgent();	
 		}	
