@@ -72,6 +72,8 @@ public class TradeStrategy1 extends GenericStrategy {
 	public ArrayList<GenericTactic> getalltactics() {
 		return alltactics;}
 	}
+
+
 	
 
 	

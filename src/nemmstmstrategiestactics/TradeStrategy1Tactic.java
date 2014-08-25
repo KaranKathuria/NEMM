@@ -75,5 +75,11 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	public BuyOffer getbuyofferone() {
 		return buyofferone;}
 	
+	public ArrayList<SellOffer> gettacticselloffers() {
+		return tacticselloffers;}
+	
+	public ArrayList<BuyOffer> gettacticsbuyoffers() {
+		return tacticbuyoffers;}
+	
 	
 }
