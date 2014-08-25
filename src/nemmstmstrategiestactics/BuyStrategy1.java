@@ -9,7 +9,9 @@
 package nemmstmstrategiestactics;
 
 import static nemmcommons.ParameterWrapper.getproduceragentsnumber;
+
 import java.util.ArrayList;
+
 import repast.simphony.random.RandomHelper;
 import nemmstmstrategiestactics.GenericStrategy.*;
 
@@ -64,7 +66,6 @@ public class BuyStrategy1 extends GenericStrategy {
 		
 		}
 		
-	
 	public void calculatestrategyutility() {
 		// TBD
 	}
@@ -72,10 +73,10 @@ public class BuyStrategy1 extends GenericStrategy {
 		strategyutilityscore = t;
 	}
 	
-	
-	
-	
-	
+	public ArrayList<GenericTactic> getalltactics() {
+		return alltactics;}
 	}
+	
+	
 
 	

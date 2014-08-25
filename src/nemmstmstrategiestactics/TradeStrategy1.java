@@ -9,6 +9,7 @@
 package nemmstmstrategiestactics;
 
 import java.util.ArrayList;
+
 import repast.simphony.random.RandomHelper;
 import nemmstmstrategiestactics.GenericStrategy.*;
 
@@ -71,10 +72,9 @@ public class TradeStrategy1 extends GenericStrategy {
 		// TBD
 	}
 	
-	
-	
-	
-	
+	public ArrayList<GenericTactic> getalltactics() {
+		return alltactics;}
 	}
+	
 
 	

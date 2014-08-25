@@ -87,8 +87,12 @@ public abstract class GenericStrategy {
 	//Used when adding/updating to the strategyutility (not setting best strategy).
 	public void updatestrategyutilityscore(double t) {
 		strategyutilityscore = strategyutilityscore + t;}
+	
 	public int getnumberoftactics() {
 		return numberoftactics;}
 	
+	public ArrayList<GenericTactic> getalltactics() {
+		return alltactics;}
 	}
+
 	
