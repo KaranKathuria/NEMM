@@ -64,21 +64,21 @@ public abstract class GenericStrategy {
 		return ret;
 	}
 	
-	public static BoughtInSTM returnboughtvolume(ArrayList<BuyOffer> aso, double marketprice, double shareoflastofferbought) { //Method calculation the outcome of a selloffers array offered in a STM market
+	public static BoughtInSTM returnboughtvolume(ArrayList<BuyOffer> abo, double marketprice, double shareoflastofferbought) { //Method calculation the outcome of a selloffers array offered in a STM market
 		BoughtInSTM ret = new BoughtInSTM();
-		int soldcerts = 0;
+		int boughtcerts = 0;
 		double averageprice = 0;
-		for (BuyOffer b : aso) {
+		for (BuyOffer b : abo) {
 			if (b.getBuyOfferprice() > marketprice) { //In this case the offers was accepted in the market
-			averageprice = ((averageprice*soldcerts)+(b.getnumberofcert()*b.getBuyOfferprice()))/(soldcerts+b.getnumberofcert()); //The new average price
-			soldcerts = soldcerts + b.getnumberofcert();	//Total number of certs sold is updated
+			averageprice = ((averageprice*boughtcerts)+(b.getnumberofcert()*b.getBuyOfferprice()))/(boughtcerts+b.getnumberofcert()); //The new average price
+			boughtcerts = boughtcerts + b.getnumberofcert();	//Total number of certs sold is updated
 			}
 			if (b.getBuyOfferprice() == marketprice) {
-				averageprice = ((averageprice*soldcerts)+(b.getnumberofcert()*b.getBuyOfferprice()*shareoflastofferbought))/(soldcerts+(b.getnumberofcert()*shareoflastofferbought)); //The new average price
-				soldcerts = soldcerts + b.getnumberofcert();	//Total number of certs sold is updated
+				averageprice = ((averageprice*boughtcerts)+(b.getnumberofcert()*b.getBuyOfferprice()*shareoflastofferbought))/(boughtcerts+(b.getnumberofcert()*shareoflastofferbought)); //The new average price
+				boughtcerts = boughtcerts + b.getnumberofcert();	//Total number of certs sold is updated
 			}}
 			ret.averageprice = averageprice;
-			ret.numberofcert = soldcerts;
+			ret.numberofcert = boughtcerts;
 		return ret;
 	}
 	

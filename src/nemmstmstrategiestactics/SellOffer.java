@@ -16,7 +16,7 @@ public class SellOffer {
 	//when created the class instance is constructed with zero-values.
 	public SellOffer() {
 		numberofcert = 0;
-		price = 1.0;
+		price = 0;
 	}
 	public Double getSellOfferprice() {
 		return price;

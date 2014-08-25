@@ -57,7 +57,6 @@ public class TradeStrategy1Tactic extends GenericTactic {
 		buyofferone = creatBuyOfferone(expectedprice,physicalposition);
 		tacticselloffers.add(sellofferone);
 		tacticbuyoffers.add(buyofferone);
-		addtactichistory(); //Updates the historic values. 
 	}
 	
 	public void addtactichistory() {
@@ -79,7 +78,7 @@ public class TradeStrategy1Tactic extends GenericTactic {
 		return tacticselloffers;}
 	
 	public ArrayList<BuyOffer> gettacticbuyoffers() {
-		return this.tacticbuyoffers;}
+		return tacticbuyoffers;}
 	
 	
 }

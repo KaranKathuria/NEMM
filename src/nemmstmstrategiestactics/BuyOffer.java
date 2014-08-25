@@ -16,7 +16,7 @@ public class BuyOffer {
 	//when created the class instance is constructed with zero-values.
 	public BuyOffer() {
 		numberofcert = 0;
-		price = 1.0;
+		price = 0;
 	}
 	public Double getBuyOfferprice() {
 		return price;

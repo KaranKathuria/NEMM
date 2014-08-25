@@ -58,7 +58,6 @@ public class SellStrategy1Tactic extends GenericTactic {
 		selloffertwo = creatSellOffertwo(expectedprice,physicalposition);
 		tacticselloffers.add(sellofferone);
 		tacticselloffers.add(selloffertwo);
-		addtactichistory();
 	}
 	
 	public void addtactichistory() {

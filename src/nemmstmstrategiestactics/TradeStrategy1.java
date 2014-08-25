@@ -60,14 +60,6 @@ public class TradeStrategy1 extends GenericStrategy {
 
 		
 		}
-		
-	public void updatebesttactic() {
-		//TBD. Should be run before the updatebuystrategy
-	}
-	
-	public void calculatestrategyutility() {
-		// TBD
-	}
 	
 	public ArrayList<GenericTactic> getalltactics() {
 		return alltactics;}
