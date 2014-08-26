@@ -49,7 +49,13 @@ public static List<CompanyAgent> getCompanyAgenList() {
 	final ArrayList<ActiveAgent> ret = new ArrayList<ActiveAgent>();
 
 	for (final CompanyAgent agent : Agents) {
-		ret.add(agent.getproduceragent());}
+		if (agent.getproduceragent() != null){
+			ret.add(agent.getproduceragent());}
+		if (agent.getobligatedpurchaseragent() != null){
+			ret.add(agent.getobligatedpurchaseragent());}
+		if (agent.gettraderagent() != null){
+			ret.add(agent.gettraderagent());}
+	}
 
 	return Collections.unmodifiableList(ret);
 }
@@ -118,7 +124,7 @@ public static List<CompanyAgent> getCompanyAgenList() {
 }
 	
 	public static int getnumberofagents() {
-		int ret = getPAgentList().size() + getMAAgentList().size() + getOPAgentList().size();
+		int ret = getPAgentList().size() + getMAAgentList().size() + getOPAgentList().size() + getTAgentList().size();
 		return ret;
 	}
 	//The following two methods makes it possible to compare sell and byoffers by price. 

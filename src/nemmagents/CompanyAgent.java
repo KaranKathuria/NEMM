@@ -57,7 +57,7 @@ public class CompanyAgent extends ParentAgent {
 				SellStrategy1 sellstrategy = new SellStrategy1();
 				allstrategies.add(sellstrategy);
 									
-			} if (type == 2) {
+			} else if (type == 2) {
 				activeagenttypename = "ObligatedPurchaserAgent";
 				physicalnetposition = -10;
 				utilitymethod = new OPAUtilityMethod();
@@ -152,13 +152,11 @@ public class CompanyAgent extends ParentAgent {
 	
 	public CompanyAgent(boolean p, boolean op, boolean t) {
 		if (p==true) {
-			produceragent = new ActiveAgent(1);
-			produceragent.setphysicalnetposition(10);}
+			produceragent = new ActiveAgent(1);}
 //		if (p==false) {
 //			produceragent = null;}
 		if (op==true) {
-			obligatedpurchaseragent = new ActiveAgent(2);
-			obligatedpurchaseragent.setphysicalnetposition(-10);}
+			obligatedpurchaseragent = new ActiveAgent(2);}
 //		if (op==false) {
 //			obligatedpurchaseragent = null;}
 		if (t==true) {

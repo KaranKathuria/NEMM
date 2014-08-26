@@ -27,6 +27,7 @@ public class SellStrategy1 extends GenericStrategy {
 	public SellStrategy1() {
 		
 		strategyname = "SellStrategy1";
+		this.strategyutilityscore.add(0.0);
 		numberoftactics = 4;
 
 		

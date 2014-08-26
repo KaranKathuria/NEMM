@@ -22,7 +22,7 @@ public abstract class GenericStrategy {
 	protected ArrayList<BuyOffer> agentsbuyoffers = new ArrayList<BuyOffer>();
 	protected ArrayList<SellOffer> agentsselloffers = new ArrayList<SellOffer>();
 	protected int numberoftactics;
-	protected ArrayList<Double> strategyutilityscore;
+	protected ArrayList<Double> strategyutilityscore = new ArrayList<Double>();
 	protected String strategyname; 
 	protected ArrayList<GenericTactic> alltactics = new ArrayList<GenericTactic>();
 	protected GenericTactic besttactic = null;

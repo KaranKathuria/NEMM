@@ -26,6 +26,7 @@ public class TradeStrategy1 extends GenericStrategy {
 	public TradeStrategy1() {
 		
 		strategyname = "TradeStrategy1";
+		strategyutilityscore.add(0.0);
 		numberoftactics = 4;
 		
 		//Adds four tactics with differen values of discount and premium. This is less sophisticated. 

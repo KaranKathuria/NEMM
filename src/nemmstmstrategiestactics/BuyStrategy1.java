@@ -30,6 +30,7 @@ public class BuyStrategy1 extends GenericStrategy {
 	public BuyStrategy1() {
 		
 		strategyname = "BuyStrategy1";
+		strategyutilityscore.add(0.0);
 		numberoftactics = 4;
 		
 		//Adds four tactics with differen values of sbd and discount, and stores them in alltactics
