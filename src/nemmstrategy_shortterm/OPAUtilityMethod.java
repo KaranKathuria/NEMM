@@ -9,7 +9,7 @@
 package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
-
+import nemmprocesses.UpdatePhysicalPosition;
 import nemmstrategy_shortterm.BoughtInSTM;
 import nemmstrategy_shortterm.SoldInSTM;
 
@@ -24,8 +24,8 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 		int soldcert;
 		double avrbidprice;
 		double ret;
-		soldcert = GenericStrategy.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMcert();
-		avrbidprice = GenericStrategy.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughInSTMprice();
+		soldcert = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMcert();
+		avrbidprice = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughInSTMprice();
 		ret = ( 0.7 * soldcert ) - (soldcert * 0.5 * (avrbidprice/marketprice)); //Buy as many as possible but with an average bid price as low as possible.
 		return ret;}
 

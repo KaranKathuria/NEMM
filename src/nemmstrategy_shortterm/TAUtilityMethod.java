@@ -10,6 +10,7 @@ package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
 
+import nemmprocesses.UpdatePhysicalPosition;
 import nemmstrategy_shortterm.BoughtInSTM;
 import nemmstrategy_shortterm.SoldInSTM;
 
@@ -25,8 +26,8 @@ public class TAUtilityMethod extends GenericUtilityMethod{
 		double ret;
 		int soldcert;
 		int boughtcert;
-		soldcert = GenericStrategy.returnsoldvolume(s, marketprice, shareofmarginaltoffersold).getSoldInSTMcert();
-		boughtcert = GenericStrategy.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMcert();
+		soldcert = UpdatePhysicalPosition.returnsoldvolume(s, marketprice, shareofmarginaltoffersold).getSoldInSTMcert();
+		boughtcert = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMcert();
 		ret = boughtcert + soldcert; //Maximize volume.
 		return ret;}
 }
