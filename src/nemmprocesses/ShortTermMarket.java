@@ -73,15 +73,16 @@ public class ShortTermMarket {
 			Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers());
 			Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers());
 		}
-
-		
-		//Time for sorting the buy and selloffers. The comparator for objects sell and buyoffers are implementer in CommonMethods. Sort from lowest to highest. 
-		Collections.sort(Allbuyoffers, new CommonMethods.custombuyoffercomparator());
-		Collections.sort(Allselloffers, new CommonMethods.customselloffercomparator());
-		
 		
 		int numberofbuyoffers = Allbuyoffers.size();
 		int numberofselloffers = Allselloffers.size();
+		
+		//Time for sorting the buy and selloffers. The comparator for objects sell and buyoffers are implementer in CommonMethods. Sort from lowest to highest. 
+		Collections.sort(Allselloffers, new CommonMethods.customselloffercomparator());
+		Collections.sort(Allbuyoffers, new CommonMethods.custombuyoffercomparator());
+		
+		
+		
 		//Should be changed to something smarter. 
 		//currentmarketprice = Allbuyoffers.get(0).getbuyofferprice();
 		
