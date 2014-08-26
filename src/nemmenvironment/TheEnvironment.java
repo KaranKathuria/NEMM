@@ -2,6 +2,7 @@ package nemmenvironment;
 
 import java.util.ArrayList;
 
+import nemmcommons.CommonMethods;
 import nemmtime.NemmCalendar;
 
 public final class TheEnvironment {
@@ -21,25 +22,23 @@ public final class TheEnvironment {
 		allRegions = new ArrayList<Region>() ;
 	}
 	
-	// Gets and Sets --------------------------------------------------------------
-
-	public ArrayList<PowerPlant> getAllPowerPlants() {
-		return allPowerPlants;
-	}
-	public void setAllPowerPlants(ArrayList<PowerPlant> allPowerPlants) {
-		this.allPowerPlants = allPowerPlants;
-	}
-	public ArrayList<Region> getAllRegions() {
-		return allRegions;
-	}
-	public void setAllRegions(ArrayList<Region> allRegions) {
-		this.allRegions = allRegions;
-	}
 	
 	// Creation methods ------------------------------------------------------------
 	
 	public void SetUpEnvironment(){
+		
+		// This could be added to the constructor, or can be run immediately after
+		ReadCreateTime();
 		ReadCreateRegions();
+		ReadCreatePowerPlants();
+	}
+	
+	public void ReadCreateTime(){
+		int startYear = 2012;
+		int endYear = 2014;
+		int numObPdsInYear = 1;
+		int numTradePdsInObPd = 12;
+		this.theCalendar = new NemmCalendar(startYear, endYear, numObPdsInYear, numTradePdsInObPd);
 	}
 	
 	public void ReadCreateRegions() {
@@ -65,10 +64,43 @@ public final class TheEnvironment {
 		this.PopulatePowerPrices();
 	}
 	
+	private void ReadCreatePowerPlants() {
+		// Reads in the power plant data and creates
+		// power plant objects, populates these, and 
+		// stores them in the power plant list for the
+		// passed region
+		
+		// TEST VERSION: creates the plants randomly (i.e. they
+		// are not read in from anywhere
+		
+		int numplants = 40;
+		for (int i = 0; i < numplants; ++i) {
+			// randomly create capacity and load factor for the 
+			// new plant
+			// REPLACE random method with repast random stream
+			int newcap = CommonMethods.randInt(50, 150);
+			double newlf = CommonMethods.randInt(20, 35)/100;
+			// randomly choose the region
+			int selectedRegion = CommonMethods.randInt(0, allRegions.size()-1);
+			// Create the plant and store it in the list
+			PowerPlant newplant = new PowerPlant(newcap, newlf, allRegions.get(selectedRegion));
+			double[] defProd = new double[0];
+			defProd[0] = 50;
+			newplant.setAllProduction(defProd); //  production in each tick set to a default
+			this.allPowerPlants.add(newplant);
+		}
+	}
+	
+	
 	private void PopulateMarketDemands(){
 		for (Region curRegion: allRegions){
 			// code to come here to set up the regions power
 			// demand and certificate obligation
+			double[] newDem = new double[1];
+			double[] newObl = new double[1];
+			newDem[0] = 2000;
+			newObl[0] = 0.10;
+			curRegion.getMyDemand().initMarketDemand(newDem, newObl);			
 		}
 	}
 	
@@ -77,8 +109,9 @@ public final class TheEnvironment {
 			// code to come here to set up the regions power
 			// prices
 			// currently these are just fixed at 200 whatevers
-			double newPrice = 200;
-			curRegion.getMyPowerPrice().setPrice(newPrice, null);
+			double[] newPrice = new double[1];
+			newPrice[0] = 200;
+			curRegion.getMyPowerPrice().initMarketPrice(newPrice);
 		}		
 	}	
 	

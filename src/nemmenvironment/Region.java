@@ -8,7 +8,6 @@ public class Region {
 	
 	// In the world, there are regions
 	private String regionName;
-	private ArrayList<PowerPlant> allpowerplants;
 	private MarketDemand myDemand;
 	private MarketPrice myPowerPrice;
 	
@@ -17,14 +16,14 @@ public class Region {
 	 * @param regionName
 	 */
 	public Region(String regionName) {
-		regionName = regionName;
-		myDemand = new MarketDemand();
-		myPowerPrice = new MarketPrice();
+		this.regionName = regionName;
+		this.myDemand = new MarketDemand(); // not initialised yet
+		this.myPowerPrice = new MarketPrice(); // not initialised yet
 	}
 	
 
 	public String getRegionName() {
-		return regionName;
+		return this.regionName;
 	}
 
 	public void setRegionName(String regionName) {
@@ -35,8 +34,6 @@ public class Region {
 		return myDemand;
 	}
 	
-	public ArrayList<PowerPlant> getallpowerplants() {
-		return allpowerplants;}
 	// commented out as you should not need to set a new demand object
 /*	public void setMyDemand(MarketDemand myDemand) {
 		this.myDemand = myDemand;

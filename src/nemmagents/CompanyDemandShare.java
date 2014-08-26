@@ -1,5 +1,6 @@
 package nemmagents;
 
+import nemmcommons.TickArray;
 import nemmenvironment.Region;
 import nemmenvironment.TheEnvironment;
 import nemmtime.NemmTime;
@@ -7,35 +8,28 @@ import nemmtime.NemmTime;
 
 public class CompanyDemandShare {
 
-		private double[] demandShare; // demand share (between 0 and 1)
+		private TickArray demandShare; // demand share (between 0 and 1)
 		private double defaultDemandShare;
 		private Region myRegion;
 		private int numTicks;
 
-		// Currently the code ignores the NemmTime - that is, the demand share
-		// recored here is effectively the current demand share. However
-		// we could change this to maintain a record of previous demand shares
+		// The code records the demand shares in the demandShare TickArray
 		
-		// constructor is empty - need to set shares and regions explicitly
 		public CompanyDemandShare(double defaultDS, Region demRegion){
 			defaultDemandShare = defaultDS;
 			myRegion = demRegion;
 			numTicks = TheEnvironment.theCalendar.getNumTicks();
-			demandShare = new double[numTicks-1];
-			for (int y = 0; y < numTicks; ++y){
-				demandShare[y] = defaultDemandShare;
-			}
+			demandShare = new TickArray();
+			double[] tmpDem = new double[]{defaultDemandShare};
+			demandShare.setArray(tmpDem);
 		}
 
 		// Gets and Sets ---------------------------------------------------------------------
-
-		// the NemmTime object is optional (and currently is ignored if used)
-		// Later if not used it will assume the reference is to the current time block
 		
 		public double getDemandShare(int... tickID) {
 			double retShare;
 			if (tickID.length > 0 ) {
-				retShare = demandShare[tickID[0]];
+				retShare = demandShare.getElement(tickID[0]);
 			}
 			else {
 				retShare = this.defaultDemandShare;
@@ -44,8 +38,12 @@ public class CompanyDemandShare {
 		}
 
 		public void setDemandShare(double demandShare, int... tickID) {
+			// Allows external overwriting of the demand share
+			// to be used if and when there is an external function that
+			// re-calculates demand shares for all the companies (e.g. each
+			// year or each tick).
 			if (tickID.length > 0) {
-				this.demandShare[tickID[0]] = demandShare;
+				this.demandShare.setElement(demandShare, tickID[0]);
 			}
 			else {
 				this.defaultDemandShare = demandShare;
@@ -57,20 +55,19 @@ public class CompanyDemandShare {
 			double calcDemand;
 			double curShare;
 			if (tickID.length > 0) {
-				curShare = demandShare[tickID[0]];
+				curShare = demandShare.getElement(tickID[0]);
+				calcDemand = curShare*myRegion.getMyDemand().getCertDemand(tickID[0]);
+
 			}
 			else {
 				curShare = this.defaultDemandShare;
+				calcDemand = curShare*myRegion.getMyDemand().getCertDemand();
 			}				
-			calcDemand = curShare*myRegion.getMyDemand().CertDemand(tickID);
 			return calcDemand;
 		}
 		
 		public Region getMyRegion() {
 			return myRegion;
 		}
-
-		
-
 
 }
