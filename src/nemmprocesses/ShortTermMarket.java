@@ -13,9 +13,9 @@ import java.util.Collections;
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmcommons.CommonMethods;
 import nemmcommons.ParameterWrapper;
-import nemmstmstrategiestactics.BuyOffer;
-import nemmstmstrategiestactics.GenericStrategy;
-import nemmstmstrategiestactics.SellOffer;
+import nemmstrategy_shortterm.BuyOffer;
+import nemmstrategy_shortterm.GenericStrategy;
+import nemmstrategy_shortterm.SellOffer;
 import repast.simphony.random.RandomHelper;
 
 

@@ -1,3 +1,4 @@
+package nemmstrategy_shortterm;
 /*
  * Version info:
  *     File defining a buy strategy

@@ -6,14 +6,14 @@
  *     Last altered data: 20140811
  *     Made by: Karan Kathuria
  */
-package nemmstmstrategiestactics;
+package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
 
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmcommons.CommonMethods;
-import nemmstmstrategiestactics.BuyOffer;
-import nemmstmstrategiestactics.SellOffer;
+import nemmstrategy_shortterm.BuyOffer;
+import nemmstrategy_shortterm.SellOffer;
 
 // 
 public abstract class GenericStrategy {
@@ -22,9 +22,11 @@ public abstract class GenericStrategy {
 	protected ArrayList<BuyOffer> agentsbuyoffers = new ArrayList<BuyOffer>();
 	protected ArrayList<SellOffer> agentsselloffers = new ArrayList<SellOffer>();
 	protected int numberoftactics;
-	protected double strategyutility;
-	protected double[] historicstrategyutility;
+	protected ArrayList<Double> strategyutilityscore = new ArrayList<Double>();
 	protected String strategyname; 
+	protected ArrayList<GenericTactic> alltactics = new ArrayList<GenericTactic>();
+	protected GenericTactic besttactic = null;
+
 	
 
 	//Constructor for parant class. Not sure about this. This construction will note be used as this class is abstract. 
@@ -62,23 +64,46 @@ public abstract class GenericStrategy {
 		return ret;
 	}
 	
-	public static BoughtInSTM returnboughtvolume(ArrayList<BuyOffer> aso, double marketprice, double shareoflastofferbought) { //Method calculation the outcome of a selloffers array offered in a STM market
+	public static BoughtInSTM returnboughtvolume(ArrayList<BuyOffer> abo, double marketprice, double shareoflastofferbought) { //Method calculation the outcome of a selloffers array offered in a STM market
 		BoughtInSTM ret = new BoughtInSTM();
-		int soldcerts = 0;
+		int boughtcerts = 0;
 		double averageprice = 0;
-		for (BuyOffer b : aso) {
+		for (BuyOffer b : abo) {
 			if (b.getBuyOfferprice() > marketprice) { //In this case the offers was accepted in the market
-			averageprice = ((averageprice*soldcerts)+(b.getnumberofcert()*b.getBuyOfferprice()))/(soldcerts+b.getnumberofcert()); //The new average price
-			soldcerts = soldcerts + b.getnumberofcert();	//Total number of certs sold is updated
+			averageprice = ((averageprice*boughtcerts)+(b.getnumberofcert()*b.getBuyOfferprice()))/(boughtcerts+b.getnumberofcert()); //The new average price
+			boughtcerts = boughtcerts + b.getnumberofcert();	//Total number of certs sold is updated
 			}
 			if (b.getBuyOfferprice() == marketprice) {
-				averageprice = ((averageprice*soldcerts)+(b.getnumberofcert()*b.getBuyOfferprice()*shareoflastofferbought))/(soldcerts+(b.getnumberofcert()*shareoflastofferbought)); //The new average price
-				soldcerts = soldcerts + b.getnumberofcert();	//Total number of certs sold is updated
+				averageprice = ((averageprice*boughtcerts)+(b.getnumberofcert()*b.getBuyOfferprice()*shareoflastofferbought))/(boughtcerts+(b.getnumberofcert()*shareoflastofferbought)); //The new average price
+				boughtcerts = boughtcerts + b.getnumberofcert();	//Total number of certs sold is updated
 			}}
 			ret.averageprice = averageprice;
-			ret.numberofcert = soldcerts;
+			ret.numberofcert = boughtcerts;
 		return ret;
 	}
 	
-	}
+	//Used when adding/updating to the strategyutility ArrayList with the new score. 
+	public void addstrategyutilityscore(double t) {
+		strategyutilityscore.add(t);}
+	
+	public int getnumberoftactics() {
+		return numberoftactics;}
+	
+	public GenericTactic getbesttactic() {return besttactic;}
+	
+	public ArrayList<GenericTactic> getalltactics() {
+		return alltactics;}
+	
+    public void updatebesttactic(GenericTactic t) {
+    	besttactic = t;}
+	
+	public double getsumofstrategyutility() {
+		double ret = 0;
+		for (int i = 0; i < strategyutilityscore.size(); ++i) {
+			ret = ret + strategyutilityscore.get(i);
+		}
+		return ret;}
+	
+}
+
 	

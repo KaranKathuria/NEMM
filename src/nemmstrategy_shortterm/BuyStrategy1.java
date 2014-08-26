@@ -6,12 +6,14 @@
  *     Last altered data: 20140811
  *     Made by: Karan Kathuria
  */
-package nemmstmstrategiestactics;
+package nemmstrategy_shortterm;
 
 import static nemmcommons.ParameterWrapper.getproduceragentsnumber;
+
 import java.util.ArrayList;
+
 import repast.simphony.random.RandomHelper;
-import nemmstmstrategiestactics.GenericStrategy.*;
+import nemmstrategy_shortterm.GenericStrategy.*;
 
 
 public class BuyStrategy1 extends GenericStrategy {
@@ -22,14 +24,13 @@ public class BuyStrategy1 extends GenericStrategy {
 
 	private BuyOffer buyofferone;
 	private BuyOffer buyoffertwo;
-	private BuyStrategy1Tactic besttactic = null;
-	private ArrayList<BuyStrategy1Tactic> alltactics = new ArrayList<BuyStrategy1Tactic>();
 	
 	
 	//Constructor for OPABidstrategy adding the four offers to arraylist of offers.
 	public BuyStrategy1() {
 		
 		strategyname = "BuyStrategy1";
+		strategyutilityscore.add(0.0);
 		numberoftactics = 4;
 		
 		//Adds four tactics with differen values of sbd and discount, and stores them in alltactics
@@ -40,7 +41,7 @@ public class BuyStrategy1 extends GenericStrategy {
 			alltactics.add(tactic);
 		}
 		
-		besttactic = alltactics.get(0);
+		besttactic = alltactics.get(RandomHelper.nextIntFromTo(0, (numberoftactics-1)));
 		
 		buyofferone = new BuyOffer();
 		buyoffertwo = new BuyOffer();
@@ -54,7 +55,6 @@ public class BuyStrategy1 extends GenericStrategy {
 		//Updates all tactics
 		for (int i = 0; i < numberoftactics; ++i) {
 			alltactics.get(i).updatetacticbuyoffers(expectedprice, physicalposition);}
-		updatebesttactic();
 		// Updates this strategies buyoffers based on the best tactic (which in turn is given from the previous round)
 		agentsbuyoffers.clear();
 		agentsselloffers.clear();
@@ -64,19 +64,11 @@ public class BuyStrategy1 extends GenericStrategy {
 		agentsbuyoffers.add(buyoffertwo);
 		
 		}
-		
-	public void updatebesttactic() {
-		besttactic = alltactics.get(RandomHelper.nextIntFromTo(0, (numberoftactics-1)));
-	}
 	
-	public void calculatestrategyutility() {
-		// TBD
+	public ArrayList<GenericTactic> getalltactics() {
+		return alltactics;}
 	}
 	
 	
-	
-	
-	
-	}
 
 	

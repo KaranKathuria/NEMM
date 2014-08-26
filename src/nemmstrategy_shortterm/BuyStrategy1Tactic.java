@@ -5,30 +5,24 @@
  *     Last altered data: 20140811
  *     Made by: Karan Kathuria
  */
-package nemmstmstrategiestactics;
+package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
+
 import repast.simphony.engine.environment.RunEnvironment;
 import nemmagents.ParentAgent;
-import nemmstmstrategiestactics.BuyOffer;
-import nemmstmstrategiestactics.SellOffer;
+import nemmstrategy_shortterm.BuyOffer;
+import nemmstrategy_shortterm.SellOffer;
 
 
-public class BuyStrategy1Tactic {
+public class BuyStrategy1Tactic extends GenericTactic {
 	 
 	private double shareboughtatdiscount;
 	private double discount;
 	private BuyOffer buyofferone;
 	private BuyOffer buyoffertwo;
 	private ArrayList<BuyOffer> tacticbuyoffers = new ArrayList<BuyOffer>();
-	private ArrayList<HistoricTacticValues> historictacticvalues = new ArrayList<HistoricTacticValues>();
-	
-	
-	private class HistoricTacticValues {
-		 
-			private ArrayList<BuyOffer> tacticsbuyoffers; //with fixed length given as a parameter. 
-			private int month;
-	 }
+
 
 	BuyStrategy1Tactic() {
 		shareboughtatdiscount = 0;
@@ -63,13 +57,15 @@ public class BuyStrategy1Tactic {
 		buyoffertwo = creatBuyOffertwo(expectedprice,physicalposition);
 		tacticbuyoffers.add(buyofferone);
 		tacticbuyoffers.add(buyoffertwo);
-		addtactichistory();
 	}
 	
 	public void addtactichistory() {
-		HistoricTacticValues a = new HistoricTacticValues();
+		HistoricTacticValue a = new HistoricTacticValue();
 		a.tacticsbuyoffers = tacticbuyoffers;
+		a.tacticselloffers = null;
+		a.tacticutilityscore = tacticutilityscore;
 		a.month = (int) RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+		historictacticvalues.add(a);
 	}
 	
 	public BuyOffer getbuyofferone() {
@@ -81,8 +77,7 @@ public class BuyStrategy1Tactic {
 	public ArrayList<BuyOffer> gettacticbuyoffers() {
 		return tacticbuyoffers;}
 	
-	public ArrayList<HistoricTacticValues> gethistorictacticvalues() {
+	public ArrayList<HistoricTacticValue> gethistorictacticvalues() {
 		return historictacticvalues;}
-	
-	
+		
 }

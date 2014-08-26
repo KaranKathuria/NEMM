@@ -14,10 +14,14 @@ import java.util.List;
 
 import nemmagents.MarketAnalysisAgent;
 import nemmagents.ParentAgent;
-import nemmstmstrategiestactics.BuyStrategy1;
-import nemmstmstrategiestactics.GenericStrategy;
-import nemmstmstrategiestactics.SellStrategy1;
-import nemmstmstrategiestactics.TradeStrategy1;
+import nemmstrategy_shortterm.GenericUtilityMethod;
+import nemmstrategy_shortterm.OPAUtilityMethod;
+import nemmstrategy_shortterm.PAUtilityMethod;
+import nemmstrategy_shortterm.TAUtilityMethod;
+import nemmstrategy_shortterm.BuyStrategy1;
+import nemmstrategy_shortterm.GenericStrategy;
+import nemmstrategy_shortterm.SellStrategy1;
+import nemmstrategy_shortterm.TradeStrategy1;
 import nemmcommons.ParameterWrapper;
 import nemmcommons.VolumePrognosis;
 import nemmenvironment.Region;
@@ -34,6 +38,7 @@ public class CompanyAgent extends ParentAgent {
 		private ArrayList<GenericStrategy> allstrategies = new ArrayList<GenericStrategy>();
 		private int numberofstrategies;
 		private GenericStrategy beststrategy = null;
+		private GenericUtilityMethod utilitymethod;
 		private int physicalnetposition;
 		
 		// Null constructor for ActiveAgent. Should not be used as this does not specify type of agent.
@@ -48,18 +53,21 @@ public class CompanyAgent extends ParentAgent {
 			if (type == 1) {
 				activeagenttypename = "ProducerAgent";
 				physicalnetposition = 10;
+				utilitymethod = new PAUtilityMethod();
 				SellStrategy1 sellstrategy = new SellStrategy1();
 				allstrategies.add(sellstrategy);
 									
-			} if (type == 2) {
+			} else if (type == 2) {
 				activeagenttypename = "ObligatedPurchaserAgent";
 				physicalnetposition = -10;
+				utilitymethod = new OPAUtilityMethod();
 				BuyStrategy1 buystrategy = new BuyStrategy1();
 				allstrategies.add(buystrategy);
 				
 			} else { //Notice that else is all other added as Trader agents. This is okey for now but should call an expetion later. 
 				activeagenttypename = "TraderAgent";
 				physicalnetposition = 0;
+				utilitymethod = new TAUtilityMethod();
 				TradeStrategy1 tradestrategy = new TradeStrategy1();
 				allstrategies.add(tradestrategy);
 			} 
@@ -74,6 +82,12 @@ public class CompanyAgent extends ParentAgent {
 		public GenericStrategy getbeststrategy() {
 			return beststrategy;
 			}
+		public void setbeststrategy(GenericStrategy s) {
+			beststrategy = s;
+			}
+		public ArrayList<GenericStrategy> getallstrategies() {
+			return allstrategies;
+		}
 		
 		public void poststmupdate(int certificatessold, int certificatesbought) {
 			physicalnetposition = physicalnetposition + certificatesbought - certificatessold; //Certificates bought and sold are positive numbers.
@@ -85,6 +99,10 @@ public class CompanyAgent extends ParentAgent {
 		public CompanyAnalysisAgent getagentcompanyanalysisagent() {
 			return companyanalysisagent;
 			}
+		
+		public GenericUtilityMethod getutilitymethod() {
+			return utilitymethod;
+		}
 	}
 		
 		public class CompanyAnalysisAgent extends ParentAgent {
@@ -117,7 +135,7 @@ public class CompanyAgent extends ParentAgent {
 		}
 		
 	//Back to CompanyAgent documentation
-	private String companyname;
+	private String companyname = "The Company";
 	private ActiveAgent produceragent;
 	private ActiveAgent obligatedpurchaseragent;
 	private ActiveAgent traderagent;
@@ -134,19 +152,17 @@ public class CompanyAgent extends ParentAgent {
 	
 	public CompanyAgent(boolean p, boolean op, boolean t) {
 		if (p==true) {
-			produceragent = new ActiveAgent(1);
-			produceragent.setphysicalnetposition(10);}
-		if (p==false) {
-			produceragent = null;}
+			produceragent = new ActiveAgent(1);}
+//		if (p==false) {
+//			produceragent = null;}
 		if (op==true) {
-			obligatedpurchaseragent = new ActiveAgent(2);
-			obligatedpurchaseragent.setphysicalnetposition(-10);}
-		if (op==false) {
-			obligatedpurchaseragent = null;}
+			obligatedpurchaseragent = new ActiveAgent(2);}
+//		if (op==false) {
+//			obligatedpurchaseragent = null;}
 		if (t==true) {
 			traderagent = new ActiveAgent(3);}
-		if (t==false) {
-			traderagent = null;}
+//		if (t==false) {
+//			traderagent = null;}
 		
 		companyanalysisagent = new CompanyAnalysisAgent();	
 		}	
@@ -170,5 +186,6 @@ public class CompanyAgent extends ParentAgent {
 	CompanyDemandShare tempDS = new CompanyDemandShare(defaultShare, demRegion);
 	this.myDemandShares.add(tempDS);
 	}
+	
 }
 	

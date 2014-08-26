@@ -6,11 +6,12 @@
  *     Last altered data: 20140813
  *     Made by: Karan Kathuria
  */
-package nemmstmstrategiestactics;
+package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
+
 import repast.simphony.random.RandomHelper;
-import nemmstmstrategiestactics.GenericStrategy.*;
+import nemmstrategy_shortterm.GenericStrategy.*;
 
 
 public class SellStrategy1 extends GenericStrategy {
@@ -20,15 +21,15 @@ public class SellStrategy1 extends GenericStrategy {
 	
 	private SellOffer sellofferone;
 	private SellOffer selloffertwo;
-	private SellStrategy1Tactic besttactic = null;
-	private ArrayList<SellStrategy1Tactic> alltactics = new ArrayList<SellStrategy1Tactic>();
 	
 	
 	//Constructor for OPABidstrategy adding the four offers to arraylist of offers.
 	public SellStrategy1() {
 		
 		strategyname = "SellStrategy1";
+		this.strategyutilityscore.add(0.0);
 		numberoftactics = 4;
+
 		
 		//Adds four tactics with differen values of sbd and discount, and stores them in alltactics
 		for (int i = 0; i < numberoftactics; ++i) {
@@ -52,9 +53,7 @@ public class SellStrategy1 extends GenericStrategy {
 		//Updates all tactics
 		for (int i = 0; i < numberoftactics; ++i) {
 			alltactics.get(i).updatetacticselloffers(expectedprice, physicalposition);}
-		updatebesttactic();
-		// Updates this strategies selloffers based on the best tactic (which in turn is given from the previous round)
-		//Her we could have something that increases creates scores and selects the best tactic
+
 		agentsbuyoffers.clear();
 		agentsselloffers.clear();
 		sellofferone = besttactic.getsellofferone();
@@ -65,13 +64,15 @@ public class SellStrategy1 extends GenericStrategy {
 		}
 		
 	public void updatebesttactic() {
-		besttactic = alltactics.get(RandomHelper.nextIntFromTo(0, (numberoftactics-1)));
 	}
 	
 	public void calculatestrategyutility() {
 		// TBD
 	}
-
+		
+	public ArrayList<GenericTactic> getalltactics() {
+		return alltactics;}
 	}
+
 
 	

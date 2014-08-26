@@ -1,27 +1,27 @@
 /*
  * Version info:
- *     Object BuyOffer
+ *     Object SellOffer
  *     
  *     Last altered data: 20140811
  *     Made by: Karan Kathuria
  */
 
-package nemmstmstrategiestactics;
+package nemmstrategy_shortterm;
 
-public class BuyOffer {
+public class SellOffer {
 	
-	public int numberofcert; //Needs to be public so this class can be reused.
+	public int numberofcert;
 	public double price;
 	
 	//when created the class instance is constructed with zero-values.
-	public BuyOffer() {
+	public SellOffer() {
 		numberofcert = 0;
-		price = 1.0;
+		price = 0;
 	}
-	public Double getBuyOfferprice() {
+	public Double getSellOfferprice() {
 		return price;
 	}
 	public int getnumberofcert() {
 		return numberofcert;
 	}
-	}
+}

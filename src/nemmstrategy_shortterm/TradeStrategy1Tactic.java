@@ -5,17 +5,17 @@
  *     Last altered data: 20140813
  *     Made by: Karan Kathuria
  */
-package nemmstmstrategiestactics;
+package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
 
 import repast.simphony.engine.environment.RunEnvironment;
 import nemmagents.ParentAgent;
-import nemmstmstrategiestactics.SellOffer;
-import nemmstmstrategiestactics.SellOffer;
+import nemmstrategy_shortterm.GenericTactic.HistoricTacticValue;
+import nemmstrategy_shortterm.SellOffer;
 
 
-public class TradeStrategy1Tactic {
+public class TradeStrategy1Tactic extends GenericTactic {
 	 
 	private double premium;
 	private double discount;
@@ -23,15 +23,7 @@ public class TradeStrategy1Tactic {
 	private BuyOffer buyofferone;
 	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 
 	private ArrayList<BuyOffer> tacticbuyoffers = new ArrayList<BuyOffer>(); // This tactics buyoffers.
-	private ArrayList<HistoricTacticValues> historictacticvalues = new ArrayList<HistoricTacticValues>();//An array of historic values. 
-	
-	//Object for storing av tradetactics historical values. Differs form those of buy or sell strategies, as they have just buy or sell. 
-	private class HistoricTacticValues {
-		 
-			private ArrayList<SellOffer> tacticselloffers;
-			private ArrayList<BuyOffer>  tacticbuyoffers;
-			private int month;
-	 }
+
 
 	TradeStrategy1Tactic() {
 		premium = 0;
@@ -64,14 +56,15 @@ public class TradeStrategy1Tactic {
 		buyofferone = creatBuyOfferone(expectedprice,physicalposition);
 		tacticselloffers.add(sellofferone);
 		tacticbuyoffers.add(buyofferone);
-		addtactichistory(); //Updates the historic values. 
 	}
 	
 	public void addtactichistory() {
-		HistoricTacticValues a = new HistoricTacticValues();
+		HistoricTacticValue a = new HistoricTacticValue();
+		a.tacticsbuyoffers = tacticbuyoffers;
 		a.tacticselloffers = tacticselloffers;
-		a.tacticbuyoffers = tacticbuyoffers;
+		a.tacticutilityscore = tacticutilityscore;
 		a.month = (int) RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+		historictacticvalues.add(a);
 	}
 	
 	public SellOffer getsellofferone() {
@@ -80,9 +73,11 @@ public class TradeStrategy1Tactic {
 	public BuyOffer getbuyofferone() {
 		return buyofferone;}
 	
+	public ArrayList<SellOffer> gettacticselloffers() {
+		return tacticselloffers;}
 	
-	public ArrayList<HistoricTacticValues> gethistorictacticvalues() {
-		return historictacticvalues;}
+	public ArrayList<BuyOffer> gettacticbuyoffers() {
+		return tacticbuyoffers;}
 	
 	
 }

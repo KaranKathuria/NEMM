@@ -17,8 +17,8 @@ import java.util.Random;
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmagents.CompanyAgent;
 import nemmagents.MarketAnalysisAgent;
-import nemmstmstrategiestactics.BuyOffer;
-import nemmstmstrategiestactics.SellOffer;
+import nemmstrategy_shortterm.BuyOffer;
+import nemmstrategy_shortterm.SellOffer;
 import nemmtime.NemmCalendar;
 import repast.simphony.engine.environment.RunState;
 

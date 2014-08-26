@@ -5,30 +5,24 @@
  *     Last altered data: 20140811
  *     Made by: Karan Kathuria
  */
-package nemmstmstrategiestactics;
+package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
+
 import repast.simphony.engine.environment.RunEnvironment;
 import nemmagents.ParentAgent;
-import nemmstmstrategiestactics.SellOffer;
-import nemmstmstrategiestactics.SellOffer;
+import nemmstrategy_shortterm.GenericTactic.HistoricTacticValue;
+import nemmstrategy_shortterm.SellOffer;
 
 
-public class SellStrategy1Tactic {
+public class SellStrategy1Tactic extends GenericTactic {
 	 
 	private double sharesoldtatdiscount;
 	private double discount;
 	private SellOffer sellofferone;
 	private SellOffer selloffertwo;
-	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 
-	private ArrayList<HistoricTacticValues> historictacticvalues = new ArrayList<HistoricTacticValues>();  //An array of historic values. 
+	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 	
 	
-	
-	private class HistoricTacticValues {
-		 
-			private ArrayList<SellOffer> tacticselloffers; //with fixed length given as a parameter. 
-			private int month;
-	 }
 
 	SellStrategy1Tactic() {
 		sharesoldtatdiscount = 0;
@@ -63,14 +57,15 @@ public class SellStrategy1Tactic {
 		selloffertwo = creatSellOffertwo(expectedprice,physicalposition);
 		tacticselloffers.add(sellofferone);
 		tacticselloffers.add(selloffertwo);
-		addtactichistory();
 	}
 	
 	public void addtactichistory() {
-		HistoricTacticValues a = new HistoricTacticValues();
+		HistoricTacticValue a = new HistoricTacticValue();
+		a.tacticsbuyoffers = null;
 		a.tacticselloffers = tacticselloffers;
+		a.tacticutilityscore = tacticutilityscore;
 		a.month = (int) RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
-	}
+		historictacticvalues.add(a);}
 	
 	public SellOffer getsellofferone() {
 		return sellofferone;}
@@ -78,11 +73,8 @@ public class SellStrategy1Tactic {
 	public SellOffer getselloffertwo() {
 		return selloffertwo;}
 	
-	public ArrayList<SellOffer> gettacticbuyoffers() {
+	public ArrayList<SellOffer> gettacticselloffers() {
 		return tacticselloffers;}
-	
-	public ArrayList<HistoricTacticValues> gethistorictacticvalues() {
-		return historictacticvalues;}
 	
 	
 }

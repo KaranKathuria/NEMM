@@ -6,11 +6,12 @@
  *     Last altered data: 20140813
  *     Made by: Karan Kathuria
  */
-package nemmstmstrategiestactics;
+package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
+
 import repast.simphony.random.RandomHelper;
-import nemmstmstrategiestactics.GenericStrategy.*;
+import nemmstrategy_shortterm.GenericStrategy.*;
 
 
 public class TradeStrategy1 extends GenericStrategy {
@@ -19,15 +20,13 @@ public class TradeStrategy1 extends GenericStrategy {
 	
 	
 	private SellOffer sellofferone;
-	private BuyOffer buyofferone;
-	private TradeStrategy1Tactic besttactic = null;
-	private ArrayList<TradeStrategy1Tactic> alltactics = new ArrayList<TradeStrategy1Tactic>();
-	
+	private BuyOffer buyofferone;	
 	
 	//Constructor for TradeStrategy1
 	public TradeStrategy1() {
 		
 		strategyname = "TradeStrategy1";
+		strategyutilityscore.add(0.0);
 		numberoftactics = 4;
 		
 		//Adds four tactics with differen values of discount and premium. This is less sophisticated. 
@@ -62,19 +61,12 @@ public class TradeStrategy1 extends GenericStrategy {
 
 		
 		}
-		
-	public void updatebesttactic() {
-		//TBD. Should be run before the updatebuystrategy
+	
+	public ArrayList<GenericTactic> getalltactics() {
+		return alltactics;}
 	}
+
+
 	
-	public void calculatestrategyutility() {
-		// TBD
-	}
-	
-	
-	
-	
-	
-	}
 
 	
