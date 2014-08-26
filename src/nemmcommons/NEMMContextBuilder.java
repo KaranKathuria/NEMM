@@ -15,6 +15,7 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 import nemmagents.CompanyAgent;
 import nemmagents.ParentAgent;
 import nemmprocesses.ShortTermMarket;
+import nemmprocesses.UtilitiesStrategiesTactics;
 import static nemmcommons.ParameterWrapper.*;
 
 
@@ -67,6 +68,7 @@ public void monthlymarketschedule() {
 	//Start with scoring and selecting the best tactic for each strategy and somthing for seleting the best strategy. This is part of the short term market method below. 
 	ShortTermMarket.runshorttermmarket(); //updates all offers for all agents best strategy (including all tactics fro these strategies and reselecting the best tactic the strategy and using this. 
 	ShortTermMarket.updatemarketoutcome();//updates the market outcomes and hence the physical position for all agents based on what they biddded into the market
+	UtilitiesStrategiesTactics.calculatetilitiesandupdatebesttactics(); //Calculate tactics utilities
 	//DemandandProduction.produce(); //Method that runs the powerplant for each company and updates the physicalposition based on demand and production
 	GlobalValues.monthlyglobalvalueupdate();
 	//AnaysisAgent udate their price prognosis

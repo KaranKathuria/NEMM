@@ -39,8 +39,27 @@ public static List<CompanyAgent> getCompanyAgenList() {
 
 		return Collections.unmodifiableList(ret);
 	}
-	// Her kan du endre til 
 
+	public static List<ActiveAgent> getAAgentList() {
+	
+	@SuppressWarnings("unchecked")
+	
+	final Iterable<CompanyAgent> Agents = RunState.getInstance().getMasterContext().getObjects(CompanyAgent.class);
+	
+	final ArrayList<ActiveAgent> ret = new ArrayList<ActiveAgent>();
+
+	for (final CompanyAgent agent : Agents) {
+		if (agent.getproduceragent() != null){
+			ret.add(agent.getproduceragent());}
+		if (agent.getobligatedpurchaseragent() != null){
+			ret.add(agent.getobligatedpurchaseragent());}
+		if (agent.gettraderagent() != null){
+			ret.add(agent.gettraderagent());}
+	}
+
+	return Collections.unmodifiableList(ret);
+}
+	
 	public static List<ActiveAgent> getPAgentList() {
 			
 			@SuppressWarnings("unchecked")
@@ -105,7 +124,7 @@ public static List<CompanyAgent> getCompanyAgenList() {
 }
 	
 	public static int getnumberofagents() {
-		int ret = getPAgentList().size() + getMAAgentList().size() + getOPAgentList().size();
+		int ret = getPAgentList().size() + getMAAgentList().size() + getOPAgentList().size() + getTAgentList().size();
 		return ret;
 	}
 	//The following two methods makes it possible to compare sell and byoffers by price. 
