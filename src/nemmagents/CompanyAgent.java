@@ -3,7 +3,7 @@
  *     File defining the Company Agent, which consist of one or none of the following active agents: Producer, Obligated Purchaser or Trader. And a companyanalsysagent. 
  *      *     File defining the Active Agents. These agents are a agents of type Producer, Obligated Purchaser or Trader. 
  *     
- *     Last altered data: 20140819
+ *     Last altered data: 20140826
  *     Made by: Karan Kathuria
  */
 package nemmagents;
@@ -22,7 +22,6 @@ import nemmstrategy_shortterm.BuyStrategy1;
 import nemmstrategy_shortterm.GenericStrategy;
 import nemmstrategy_shortterm.SellStrategy1;
 import nemmstrategy_shortterm.TradeStrategy1;
-import nemmcommons.ParameterWrapper;
 import nemmcommons.VolumePrognosis;
 import nemmenvironment.Region;
 
