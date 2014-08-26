@@ -7,7 +7,6 @@ import nemmtime.NemmTime;
 
 public class MarketDemand {
 	
-//	private double[] powerDemand;
 	private TickArray powerDemand;
 	private TickArray certDemand;
 	private TickArray certKvoteplikt;
