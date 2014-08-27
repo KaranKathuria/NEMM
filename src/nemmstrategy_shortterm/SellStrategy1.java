@@ -11,6 +11,7 @@ package nemmstrategy_shortterm;
 import java.util.ArrayList;
 
 import repast.simphony.random.RandomHelper;
+import nemmcommons.RandomWrapper;
 import nemmstrategy_shortterm.GenericStrategy.*;
 
 
@@ -29,12 +30,14 @@ public class SellStrategy1 extends GenericStrategy {
 		strategyname = "SellStrategy1";
 		this.strategyutilityscore.add(0.0);
 		numberoftactics = 4;
+		int seed = RandomHelper.nextInt();
+		RandomWrapper.setstrategyseed(seed);
 
 		
 		//Adds four tactics with differen values of sbd and discount, and stores them in alltactics
 		for (int i = 0; i < numberoftactics; ++i) {
-			double randomsharesoldtatdiscount = RandomHelper.nextDoubleFromTo(0, 1);
-			double randomdiscount = RandomHelper.nextDoubleFromTo((i*0.2), ((i*0.2)+0.2));
+			double randomsharesoldtatdiscount = RandomWrapper.getstrategyseed().nextDouble();
+			double randomdiscount = RandomWrapper.getstrategyseed().nextDouble(); // RandomHelper.nextDoubleFromTo((i*0.2), ((i*0.2)+0.2));
 			SellStrategy1Tactic tactic = new SellStrategy1Tactic(randomsharesoldtatdiscount, randomdiscount);
 			alltactics.add(tactic);
 		}
