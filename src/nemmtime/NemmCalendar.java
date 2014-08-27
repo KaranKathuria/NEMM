@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import repast.simphony.engine.environment.RunEnvironment;
+
 public class NemmCalendar {
 
 	
@@ -14,6 +16,7 @@ public class NemmCalendar {
 	private int numTradePdsInObligatedPd;
 	private int numTradePdsInYear;
 	private int numTicks;
+	private int currentTick;
 	private ArrayList<NemmTime> timeBlocks;
 	
 	
@@ -26,6 +29,7 @@ public class NemmCalendar {
 	public NemmCalendar(int startYear, int endYear, int numObligatedPdsInYear,
 			int numTradePdsInObligatedPd) {
 		// should throw errors if start year later than end year, other vals <=0 etc
+		this.currentTick=0;
 		this.startYear = startYear;
 		this.endYear = endYear;
 		this.numObligatedPdsInYear = numObligatedPdsInYear;
@@ -48,6 +52,12 @@ public class NemmCalendar {
 		Collections.sort(timeBlocks, new NemmTimeCompare());
 	}
 	
+	public int getCurrentTick() {
+		// will grab this from repast
+		return (int) RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+	}
+
+
 	public NemmTime getTimeBlock(int tickID){
 		return timeBlocks.get(tickID);
 	}

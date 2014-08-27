@@ -10,9 +10,6 @@ public class MarketDemand {
 	private TickArray powerDemand;
 	private TickArray certDemand;
 	private TickArray certKvoteplikt;
-	private double defaultPowerDemand;
-	private double defaultCertDemand;
-	private double defaultCertKvoteplikt;
 	private int numTicks;
 
 	// Each region has a demand for power and certificates
@@ -48,12 +45,7 @@ public class MarketDemand {
 
 		int numPoints = powerDem.length;
 		numTicks = TheEnvironment.theCalendar.getNumTicks();
-		
-		// set the defaults equal to the first data elements
-		defaultPowerDemand = powerDem[0];
-		defaultCertKvoteplikt = certPlikt[0];
-		defaultCertDemand = defaultPowerDemand*defaultCertKvoteplikt;
-		
+				
 		// set the demands and quotas for each tick
 		if(numPoints==1){
 			for (int y = 0; y < numTicks; ++y){
@@ -76,7 +68,8 @@ public class MarketDemand {
 			demandcalc = this.powerDemand.getElement(tickID[0]);
 		}
 		else {
-			demandcalc = defaultPowerDemand;
+			int curTick = TheEnvironment.theCalendar.getCurrentTick();
+			demandcalc = this.powerDemand.getElement(curTick);
 		}				
 
 		return demandcalc;
@@ -88,7 +81,8 @@ public class MarketDemand {
 			demandcalc = this.certDemand.getElement(tickID[0]);
 		}
 		else {
-			demandcalc = defaultCertDemand;
+			int curTick = TheEnvironment.theCalendar.getCurrentTick();
+			demandcalc = this.certDemand.getElement(curTick);
 		}
 		return demandcalc;
 	}

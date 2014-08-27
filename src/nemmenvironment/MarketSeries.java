@@ -4,11 +4,10 @@ import nemmcommons.TickArray;
 import nemmtime.NemmTime;
 
 
-public class MarketPrice {
+public class MarketSeries {
 // A storage class for market prices
 	
-	private double defaultPrice;
-	private TickArray marketPrice;
+	private TickArray seriesValues;
 
 	/*
 	public MarketPrice(double... defaultPrice) {
@@ -28,56 +27,56 @@ public class MarketPrice {
 	// I've implemented in this way to enable the same code to be used for updating the 
 	// market prices if and as desired
 	
-	public MarketPrice() {
-		marketPrice = new TickArray();
+	public MarketSeries() {
+		seriesValues = new TickArray();
 	}
 
-	public void initMarketPrice(double[] mktPrice){
+	public void initMarketSeries(double[] mktPrice){
 		// Currently this just calls the setAllPrices. We can add additional initialisation
 		// stuff here later if desired
-		setAllPrices(mktPrice);		
+		setAllValues(mktPrice);		
 	}
 
 // Methods
 	
-	public void setAllPrices(double[] mktPrice) {
+	public void setAllValues(double[] mktPrice) {
 
 		int numPoints = mktPrice.length;
 		int numTicks = TheEnvironment.theCalendar.getNumTicks();
 
-		// set the defaults equal to the first data elements
-		defaultPrice = mktPrice[0];
 		// set the demands and quotas for each tick
 		if(numPoints==1){
 			for (int y = 0; y < numTicks; ++y){
-				marketPrice.setElement(mktPrice[0], y);
+				seriesValues.setElement(mktPrice[0], y);
 			}			
 		}
 		else {
-			marketPrice.setArray(mktPrice);
+			seriesValues.setArray(mktPrice);
 		}
 	}
 	
 	
-	// Return market price for a given tickID
-	public double getPrice(int... tickID) {
+	// Return market series for a given tickID
+	public double getValue(int... tickID) {
 		double pricecalc;
 		if (tickID.length > 0) {	
-			pricecalc = this.marketPrice.getElement(tickID[0]);
+			pricecalc = this.seriesValues.getElement(tickID[0]);
 		}
 		else {
-			pricecalc = defaultPrice;
+			int curTick = TheEnvironment.theCalendar.getCurrentTick();
+			pricecalc = this.seriesValues.getElement(curTick);
 		}				
 		return pricecalc;
 	}		
 	
-	// Set market price for a given tickID
-	public void setPrice(double newPrice, int... tickID) {
+	// Set market series for a given tickID
+	public void setValue(double newValue, int... tickID) {
 		if (tickID.length > 0) {	
-			this.marketPrice.setElement(newPrice, tickID[0]);
+			this.seriesValues.setElement(newValue, tickID[0]);
 		}
 		else {
-			this.defaultPrice = newPrice;
+			int curTick = TheEnvironment.theCalendar.getCurrentTick();
+			this.seriesValues.setElement(newValue, curTick);
 		}	
 	}
 	

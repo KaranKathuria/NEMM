@@ -2,14 +2,16 @@ package nemmenvironment;
 
 import java.util.ArrayList;
 
+import nemmagents.CompanyAgent;
 import nemmcommons.CommonMethods;
 import nemmtime.NemmCalendar;
 
 public final class TheEnvironment {
 
 	// This class is used to hold all the stuff in the environment
-	private ArrayList<PowerPlant> allPowerPlants;
-	private ArrayList<Region> allRegions;
+	public static ArrayList<PowerPlant> allPowerPlants;
+	public static ArrayList<Region> allRegions;
+	public static ArrayList<CompanyAgent> allCompanies;
 	public static NemmCalendar theCalendar;
 	
 	
@@ -17,31 +19,43 @@ public final class TheEnvironment {
 	/**
 	 * 
 	 */
-	public TheEnvironment() {
+	private TheEnvironment() {
+
+	}
+	
+	// Initialise the environment ------------------------------------------------------------
+	
+	
+	public static void InitEnvironment(){
+		// Create & set up the time calendar and create the lists
+		// to hold the plants, companies, and regions
+		ReadCreateTime();
 		allPowerPlants = new ArrayList<PowerPlant>() ;
 		allRegions = new ArrayList<Region>() ;
+		allCompanies = new ArrayList<CompanyAgent>();		
 	}
-	
-	
-	// Creation methods ------------------------------------------------------------
-	
-	public void SetUpEnvironment(){
-		
-		// This could be added to the constructor, or can be run immediately after
-		ReadCreateTime();
-		ReadCreateRegions();
-		ReadCreatePowerPlants();
-	}
-	
-	public void ReadCreateTime(){
+
+	public static void ReadCreateTime(){
 		int startYear = 2012;
 		int endYear = 2014;
 		int numObPdsInYear = 1;
 		int numTradePdsInObPd = 12;
-		this.theCalendar = new NemmCalendar(startYear, endYear, numObPdsInYear, numTradePdsInObPd);
+		theCalendar = new NemmCalendar(startYear, endYear, numObPdsInYear, numTradePdsInObPd);
 	}
 	
-	public void ReadCreateRegions() {
+	// Populate the Environment ------------------------------------------------------------
+	
+	public static void PopulateEnvironment(){
+		
+		// This could be added to the constructor, or can be run immediately after
+		ReadCreateRegions();
+		ReadCreatePowerPlants();
+		ReadCreateCompanies();
+	}
+	
+
+	
+	public static void ReadCreateRegions() {
 		// this will read in the region info and create the corresponding
 		// objects and populate them with data. 
 		// The regions will be saved in the environments allRegions list.
@@ -60,11 +74,11 @@ public final class TheEnvironment {
 
 		// Population -----------------
 		// Populate the market demand and power price objects with data
-		this.PopulateMarketDemands();
-		this.PopulatePowerPrices();
+		PopulateMarketDemands();
+		PopulatePowerPrices();
 	}
 	
-	private void ReadCreatePowerPlants() {
+	private static void ReadCreatePowerPlants() {
 		// Reads in the power plant data and creates
 		// power plant objects, populates these, and 
 		// stores them in the power plant list for the
@@ -87,12 +101,12 @@ public final class TheEnvironment {
 			double[] defProd = new double[0];
 			defProd[0] = 50;
 			newplant.setAllProduction(defProd); //  production in each tick set to a default
-			this.allPowerPlants.add(newplant);
+			allPowerPlants.add(newplant);
 		}
 	}
 	
 	
-	private void PopulateMarketDemands(){
+	private static void PopulateMarketDemands(){
 		for (Region curRegion: allRegions){
 			// code to come here to set up the regions power
 			// demand and certificate obligation
@@ -104,32 +118,29 @@ public final class TheEnvironment {
 		}
 	}
 	
-	private void PopulatePowerPrices(){
+	private static void PopulatePowerPrices(){
 		for (Region curRegion: allRegions){
 			// code to come here to set up the regions power
 			// prices
 			// currently these are just fixed at 200 whatevers
 			double[] newPrice = new double[1];
 			newPrice[0] = 200;
-			curRegion.getMyPowerPrice().initMarketPrice(newPrice);
+			curRegion.getMyPowerPrice().initMarketSeries(newPrice);
 		}		
 	}	
 	
 	
-/*	public void ReadCreateCompanies() {
+	public static void ReadCreateCompanies() {
 		// this will read in the company info, including
 		// initial demand shares, agent structure and so on
 		
 		// Currently we just hard code the creation of companies
 		int numComps = 10;
-		String baseName = "Company ";
-		String compName;
 		
 		for (int i = 0; i < numComps; ++i) {
-			compName = baseName + numComps;
-			GenericCompany newCompany = new GenericCompany(compName);
+			CompanyAgent newCompany = new CompanyAgent();
 			allCompanies.add(newCompany);
 		}			
-	} */
+	} 
 	
 }

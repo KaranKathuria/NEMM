@@ -9,7 +9,7 @@ public class Region {
 	// In the world, there are regions
 	private String regionName;
 	private MarketDemand myDemand;
-	private MarketPrice myPowerPrice;
+	private MarketSeries myPowerPrice;
 	
 	
 	/**
@@ -18,7 +18,7 @@ public class Region {
 	public Region(String regionName) {
 		this.regionName = regionName;
 		this.myDemand = new MarketDemand(); // not initialised yet
-		this.myPowerPrice = new MarketPrice(); // not initialised yet
+		this.myPowerPrice = new MarketSeries(); // not initialised yet
 	}
 	
 
@@ -39,7 +39,7 @@ public class Region {
 		this.myDemand = myDemand;
 	}
 */
-	public MarketPrice getMyPowerPrice() {
+	public MarketSeries getMyPowerPrice() {
 		return myPowerPrice;
 	}
 	// commented out as you should not need to set a new price object

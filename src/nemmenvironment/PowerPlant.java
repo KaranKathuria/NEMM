@@ -16,7 +16,6 @@ public class PowerPlant {
 	private Region myRegion;
 	private CompanyAgent myCompany;
 	private TickArray myProduction;
-	private double defaultProduction;
 	
 	public PowerPlant(int newcapacity, double newloadfactor, Region newregion) {
 		name = "temp name";
@@ -24,7 +23,6 @@ public class PowerPlant {
 		loadfactor = newloadfactor;
 		myRegion = newregion;
 		myProduction = new TickArray();
-		defaultProduction = 0;
 	}
 
 	// Gets & Sets ------------------------------------------------------------------------
@@ -73,8 +71,9 @@ public class PowerPlant {
 		if (tickID.length > 0) {
 			prodcalc = this.myProduction.getElement(tickID[0]);
 		}
-		else {
-			prodcalc = defaultProduction;
+		else {			
+			int curTick = TheEnvironment.theCalendar.getCurrentTick();
+			prodcalc = this.myProduction.getElement(curTick);
 		}
 
 		return prodcalc;
@@ -88,18 +87,36 @@ public class PowerPlant {
 			prodcalc = this.myProduction.getElement(tickID[0]);
 		}
 		else {
-			prodcalc = defaultProduction;
+			int curTick = TheEnvironment.theCalendar.getCurrentTick();
+			prodcalc = this.myProduction.getElement(curTick);
 		}
 
 		return prodcalc;
 	}
 	
+	public void pushCertstoCompany(int... tickID) {
+		// Deliver produced certificates to my owner
+		double certcalc;
+		int curTick;
+		if (tickID.length > 0) {
+			curTick = tickID[0];
+			certcalc = this.myProduction.getElement(curTick);
+		}
+		else {
+			curTick = TheEnvironment.theCalendar.getCurrentTick();
+			certcalc = this.myProduction.getElement(curTick);
+		}
+		//this.myCompany.addCertificates(certcalc, curTick);
+	}	
+	
 	public void setProduction(double newProd, int... tickID) {
+
 		if (tickID.length > 0) {	
 			this.myProduction.setElement(newProd, tickID[0]);
 		}
 		else {
-			this.defaultProduction = newProd;
+			int curTick = TheEnvironment.theCalendar.getCurrentTick();
+			this.myProduction.setElement(newProd, curTick);
 		}
 	}
 	
@@ -108,8 +125,6 @@ public class PowerPlant {
 		int numPoints = newProd.length;
 		int numTicks = TheEnvironment.theCalendar.getNumTicks();
 
-		// set the defaults equal to the first data elements
-		defaultProduction = newProd[0];
 		// set the demands and quotas for each tick
 		if(numPoints==1){
 			for (int y = 0; y < numTicks; ++y){

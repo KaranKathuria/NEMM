@@ -29,6 +29,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	public Context<Object> build(final Context<Object> context) {
 		//
 		//Create World
+		//
 		ParameterWrapper.reinit(); //Reads the parametervalues provided
 		GlobalValues.initglobalvalues(); //initiates the global values such as price by giving them the parametervalues from the above method. 
 	
@@ -47,7 +48,8 @@ for (int i = 0; i < gettraderagentsnumber(); ++i) {
 	final CompanyAgent agent = new CompanyAgent(false, false, true);
 	context.add(agent);
 }
-
+	//
+//
  	return context;
 }
 
