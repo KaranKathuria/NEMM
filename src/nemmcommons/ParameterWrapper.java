@@ -71,10 +71,6 @@ public final class ParameterWrapper {
 		traderagentsnumber = ((Integer) parameters.getValue("traderagentsnumber")).intValue();
 
 		priceexpectation = ((Double) parameters.getValue("priceexpectation")).doubleValue();
-
-		monthlydemand = ((Integer) parameters.getValue("monthlydemand")).intValue();
-		
-		monthlysupply = ((Integer) parameters.getValue("monthlysupply")).intValue();
 		
 		initialinterestrate = ((Double) parameters.getValue("initialinterestrate")).doubleValue();
 	}

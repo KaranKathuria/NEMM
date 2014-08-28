@@ -30,7 +30,7 @@ public class SellStrategy1 extends GenericStrategy {
 		strategyname = "SellStrategy1";
 		this.strategyutilityscore.add(0.0);
 		numberoftactics = 4;
-		int seed = RandomHelper.nextInt();
+		int seed = RandomHelper.nextInt(); //Is this right Gavin?
 		RandomWrapper.setstrategyseed(seed);
 
 		

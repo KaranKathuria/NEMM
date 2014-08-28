@@ -14,18 +14,9 @@ import repast.simphony.random.RandomHelper;
 public class RandomWrapper  {
 	
 	
-	private static Random strategyseed;
-	private static Random someotherstream;
+	private static Random strategyseed = new Random();
+	private static Random someotherstream = new Random();
 	
-	
-	private RandomWrapper() {}
-	
-	public void initiateseeds() {
-		
-		Random strategyseed = new Random();
-		Random someotherstream = new Random();
-		
-	};
 	
 	public static void setstrategyseed(int i) {
 		strategyseed.setSeed(i);
@@ -34,7 +25,7 @@ public class RandomWrapper  {
 		return strategyseed;
 	}
 	
-	
+	private RandomWrapper() {}
 	
 	
 	

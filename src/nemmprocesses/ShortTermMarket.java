@@ -75,7 +75,7 @@ public class ShortTermMarket {
 		}
 		
 		int numberofbuyoffers = Allbuyoffers.size();
-		int numberofselloffers = Allselloffers.size();
+		int numberofselloffers = Allselloffers.size(); 
 		
 		//Time for sorting the buy and selloffers. The comparator for objects sell and buyoffers are implementer in CommonMethods. Sort from lowest to highest. 
 		Collections.sort(Allselloffers, new CommonMethods.customselloffercomparator());
