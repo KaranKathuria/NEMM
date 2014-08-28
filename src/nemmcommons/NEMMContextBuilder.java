@@ -30,7 +30,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 		//
 		//Create World
 		//
-		ParameterWrapper.reinit();//Reads the parametervalues provided
+		ParameterWrapper.reinit(); //Reads the parametervalues provided
 		GlobalValues.initglobalvalues(); //initiates the global values such as price by giving them the parametervalues from the above method. 
 	
 // Adds the supply side agents (ProducerAgent), with one strategy calling PABidstrategy(). 
