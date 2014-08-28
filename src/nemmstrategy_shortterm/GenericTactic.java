@@ -25,7 +25,7 @@ public class GenericTactic {
 			protected ArrayList<BuyOffer> tacticsbuyoffers;
 			protected ArrayList<SellOffer> tacticselloffers; //with fixed length given as a parameter. 
 			protected double tacticutilityscore;
-			protected int month;
+			protected int tickID;
 	 }
 	 
 	public GenericTactic() {};
