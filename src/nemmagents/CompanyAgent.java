@@ -23,6 +23,7 @@ import nemmstrategy_shortterm.GenericStrategy;
 import nemmstrategy_shortterm.SellStrategy1;
 import nemmstrategy_shortterm.TradeStrategy1;
 import nemmcommons.VolumePrognosis;
+import nemmenvironment.PowerPlant;
 import nemmenvironment.Region;
 
 // Class definition
@@ -92,6 +93,11 @@ public class CompanyAgent extends ParentAgent {
 			physicalnetposition = physicalnetposition + certificatesbought - certificatessold; //Certificates bought and sold are positive numbers.
 			//totalsold_cp = totalsold_cp + certificatessold;
 			}
+		
+		public void addtophysicalposition(int prodordemand) {
+			physicalnetposition = physicalnetposition + prodordemand;
+		}
+		
 		public void setphysicalnetposition(int a) {
 			physicalnetposition = a;
 			}
@@ -139,7 +145,8 @@ public class CompanyAgent extends ParentAgent {
 	private ActiveAgent obligatedpurchaseragent;
 	private ActiveAgent traderagent;
 	private CompanyAnalysisAgent companyanalysisagent;
-	private ArrayList<CompanyDemandShare> myDemandShares;
+	private ArrayList<CompanyDemandShare> myDemandShares = new ArrayList<CompanyDemandShare>();
+	private ArrayList<PowerPlant> myPowerPlants = new ArrayList<PowerPlant>();
 	
 	public CompanyAgent() {
 		companyname = "zeroagent";

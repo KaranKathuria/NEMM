@@ -68,19 +68,12 @@ for (int i = 0; i < gettraderagentsnumber(); ++i) {
 	//The monthly update. Updates the monthly market, interest rates etc.
 @ScheduledMethod(start = 1, interval = 1, priority = 1)
 public void monthlymarketschedule() {
-	//Start with scoring and selecting the best tactic for each strategy and somthing for seleting the best strategy. This is part of the short term market method below. 
-	ShortTermMarket.runshorttermmarket(); //updates all offers for all agents best strategy (including all tactics fro these strategies and reselecting the best tactic the strategy and using this. 
+
+	ShortTermMarket.runshorttermmarket(); //updates all offers for all agents strategies and clears the market based on the best strategies , best tactics offers. 
 	UpdatePhysicalPosition.markettransactions();//updates the market outcomes and hence the physical position for all agents based on what they bid into the market
-	UpdatePhysicalPosition.runproduction();
-	UpdatePhysicalPosition.updatedemand();
-	UtilitiesStrategiesTactics.calculatetilitiesandupdatebesttactics(); //Calculate tactics utilities
-	//DemandandProduction.produce(); //Method that runs the powerplant for each company and updates the physicalposition based on demand and production
-	GlobalValues.monthlyglobalvalueupdate();
-	//AnaysisAgent udate their price prognosis
-	//Evalueta strategies and select best strategy. 
-	
-	//Some method that updates the analysisagents price expectations
-	//Some method that updates the agents bank, caputal and priceexpectations (from AA). Could also update their preffered strategy and Analysis. 
+	UpdatePhysicalPosition.runproduction(); //Loops to all powerplants and adds this ticks prodution to the CompanyAgents producers agents physical position. 
+	UpdatePhysicalPosition.updatedemand(); //Adds demand to the CompanyAgents physicalposition
+	UtilitiesStrategiesTactics.calculatetilitiesandupdatebesttactics(); //Calculates the tactic and strategies utilities and changes the best tactics. 
 	
 }
 	//The annual market update. Updates the long term market, interest rates etc, annually (thats why interval = 12). Notice as this i running in the same "tick" as the montly update
