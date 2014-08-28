@@ -71,8 +71,8 @@ public void monthlymarketschedule() {
 
 	ShortTermMarket.runshorttermmarket(); //updates all offers for all agents strategies and clears the market based on the best strategies , best tactics offers. 
 	UpdatePhysicalPosition.markettransactions();//updates the market outcomes and hence the physical position for all agents based on what they bid into the market
-	UpdatePhysicalPosition.runproduction(); //Loops to all powerplants and adds this ticks prodution to the CompanyAgents producers agents physical position. 
-	UpdatePhysicalPosition.updatedemand(); //Adds demand to the CompanyAgents physicalposition
+	//UpdatePhysicalPosition.runproduction(); //Loops to all powerplants and adds this ticks prodution to the CompanyAgents producers agents physical position. 
+	//UpdatePhysicalPosition.updatedemand(); //Adds demand to the CompanyAgents physicalposition
 	UtilitiesStrategiesTactics.calculatetilitiesandupdatebesttactics(); //Calculates the tactic and strategies utilities and changes the best tactics. 
 	
 }
@@ -101,7 +101,7 @@ public void projectprocesschedule() {
  * @return for exampel the price of certificates  */
 
 	public double currentmarketprice() {
-		return GlobalValues.currentmarketprice;
+		return ShortTermMarket.getcurrentmarketprice();
 }
 	public double currentinterestrate() {
 		return GlobalValues.currentinterestrate;
