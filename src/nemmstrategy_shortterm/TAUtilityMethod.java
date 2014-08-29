@@ -22,10 +22,10 @@ public class TAUtilityMethod extends GenericUtilityMethod{
 	}
 	
 	//Calculates the traders tactic utilities. Overrides the GenericUtilityMethods methods. 
-	public Double calculateutility(double marketprice, ArrayList<BuyOffer> b, ArrayList<SellOffer> s, int physicalposition, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
+	public Double calculateutility(double marketprice, ArrayList<BuyOffer> b, ArrayList<SellOffer> s, double physicalposition, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
 		double ret;
-		int soldcert;
-		int boughtcert;
+		double soldcert;
+		double boughtcert;
 		soldcert = UpdatePhysicalPosition.returnsoldvolume(s, marketprice, shareofmarginaltoffersold).getSoldInSTMcert();
 		boughtcert = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMcert();
 		ret = boughtcert + soldcert; //Maximize volume.

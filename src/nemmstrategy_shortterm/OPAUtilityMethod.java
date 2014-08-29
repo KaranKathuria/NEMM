@@ -20,13 +20,13 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 	}
 	
 	//Takes in the given values and calculates the producers utility just based on what maximizes value of certificates sold. 
-	public Double calculateutility(double marketprice, ArrayList<BuyOffer> b, ArrayList<SellOffer> s, int physicalposition, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
-		int soldcert;
+	public Double calculateutility(double marketprice, ArrayList<BuyOffer> b, ArrayList<SellOffer> s, double physicalposition, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
+		double boughtcerts;
 		double avrbidprice;
 		double ret;
-		soldcert = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMcert();
+		boughtcerts = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMcert();
 		avrbidprice = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughInSTMprice();
-		ret = ( 0.7 * soldcert ) - (soldcert * 0.5 * (avrbidprice/marketprice)); //Buy as many as possible but with an average bid price as low as possible.
+		ret = ( 0.7 * boughtcerts ) - (boughtcerts * 0.5 * (avrbidprice/marketprice)); //Buy as many as possible but with an average bid price as low as possible.
 		return ret;}
 
 }

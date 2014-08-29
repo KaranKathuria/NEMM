@@ -10,7 +10,7 @@ package nemmstrategy_shortterm;
 
 public class BoughtInSTM {
 	
-	public int numberofcert; //Needs to be public so this class can be reused.
+	public double numberofcert; //Needs to be public so this class can be reused.
 	public double averageprice; //Not the average price per say as the price would be the marketprice for all (uniform bidding market). 
 	// Nevertheless this is usefull as the average price of offers bid that where accepted indicates how "close" the bidding is and is futher
 	//used by the utility methods for OPA.
@@ -23,7 +23,7 @@ public class BoughtInSTM {
 	public Double getBoughInSTMprice() {
 		return averageprice;
 	}
-	public int getBoughtInSTMcert() {
+	public double getBoughtInSTMcert() {
 		return numberofcert;}
 
 	//public double getBoughtInSTMvalue() { This method does not make sense as the capture price for certificates is the market price. 

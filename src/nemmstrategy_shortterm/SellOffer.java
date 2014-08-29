@@ -10,7 +10,7 @@ package nemmstrategy_shortterm;
 
 public class SellOffer {
 	
-	public int numberofcert;
+	public double numberofcert;
 	public double price;
 	
 	//when created the class instance is constructed with zero-values.
@@ -21,7 +21,7 @@ public class SellOffer {
 	public Double getSellOfferprice() {
 		return price;
 	}
-	public int getnumberofcert() {
+	public double getnumberofcert() {
 		return numberofcert;
 	}
 }

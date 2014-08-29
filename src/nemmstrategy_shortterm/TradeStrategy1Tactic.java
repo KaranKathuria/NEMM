@@ -37,20 +37,20 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	}
 	
 	//The buy and sell offer of these tactics are extreamly simple and NOT dependent on the capital base of the trader. This must be changed. 
-	private SellOffer creatSellOfferone(double expectedprice, int physicalposition) {
+	private SellOffer creatSellOfferone(double expectedprice, double physicalposition) {
 		SellOffer ret = new SellOffer();
 		ret.numberofcert = 10; //For now, they always buy or sell 10 units, hence physical position is unused. 
 		ret.price = (1+premium)*expectedprice; 
 		return ret;
 		}
-	private BuyOffer creatBuyOfferone(double expectedprice, int physicalposition) {
+	private BuyOffer creatBuyOfferone(double expectedprice, double physicalposition) {
 		BuyOffer ret = new BuyOffer();
 		ret.numberofcert = 10; //int in order to only sell integer values of certs.
 		ret.price = (1-discount)*expectedprice; 
 		return ret;
 		}
 	
-	public void updatetactictradeoffers(double expectedprice, int physicalposition) {
+	public void updatetactictradeoffers(double expectedprice, double physicalposition) {
 		tacticselloffers.clear();
 		tacticbuyoffers.clear();
 		sellofferone = creatSellOfferone(expectedprice,physicalposition);

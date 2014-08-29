@@ -112,13 +112,13 @@ public void projectprocesschedule() {
 	public int numberofselloffers() {
 		return GlobalValues.numberofselloffersstm;
 	}
-	public int marketdemand() {
+	public double marketdemand() {
 		return ShortTermMarket.getmarketdemand();
 	}
-	public int marketsupply() {
+	public double marketsupply() {
 		return ShortTermMarket.getmarketsupply();
 	}
-	public int STMtradedvolume() {
+	public double STMtradedvolume() {
 		return ShortTermMarket.gettradedvolume();
 	}
 	

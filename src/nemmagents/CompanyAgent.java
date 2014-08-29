@@ -39,7 +39,7 @@ public class CompanyAgent extends ParentAgent {
 		private int numberofstrategies;
 		private GenericStrategy beststrategy = null;
 		private GenericUtilityMethod utilitymethod;
-		private int physicalnetposition;
+		private double physicalnetposition;
 		
 		// Null constructor for ActiveAgent. Should not be used as this does not specify type of agent.
 		public ActiveAgent() {
@@ -75,7 +75,7 @@ public class CompanyAgent extends ParentAgent {
 		}
 		
 		//Get methods for the ActiveAgent
-		public int getphysicalnetposition() {
+		public double getphysicalnetposition() {
 			return physicalnetposition;
 			}
 
@@ -89,16 +89,16 @@ public class CompanyAgent extends ParentAgent {
 			return allstrategies;
 		}
 		
-		public void poststmupdate(int certificatessold, int certificatesbought) {
+		public void poststmupdate(double certificatessold, double certificatesbought) {
 			physicalnetposition = physicalnetposition + certificatesbought - certificatessold; //Certificates bought and sold are positive numbers.
 			//totalsold_cp = totalsold_cp + certificatessold;
 			}
 		
-		public void addtophysicalposition(int prodordemand) {
+		public void addtophysicalposition(double prodordemand) {
 			physicalnetposition = physicalnetposition + prodordemand;
 		}
 		
-		public void setphysicalnetposition(int a) {
+		public void setphysicalnetposition(double a) {
 			physicalnetposition = a;
 			}
 		public CompanyAnalysisAgent getagentcompanyanalysisagent() {

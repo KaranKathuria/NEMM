@@ -39,9 +39,9 @@ public class GenericTactic {
 	public ArrayList<BuyOffer> gettacticbuyoffers() {return null;}
 	public ArrayList<SellOffer> gettacticselloffers() {return null;}
 	
-	public void updatetacticselloffers(double expectedprice, int physicalposition) {};
-	public void updatetacticbuyoffers(double expectedprice, int physicalposition) {};
-	public void updatetactictradeoffers(double expectedprice, int physicalposition) {};
+	public void updatetacticselloffers(double expectedprice, double physicalposition) {};
+	public void updatetacticbuyoffers(double expectedprice, double physicalposition) {};
+	public void updatetactictradeoffers(double expectedprice, double physicalposition) {};
 	public void updatetacticutilityscore(double t) {tacticutilityscore = t;};
 	public void addtactichistory() {};
 	public double gettacticutilityscore() {return tacticutilityscore;}

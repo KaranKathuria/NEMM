@@ -29,20 +29,20 @@ public UpdatePhysicalPosition(){};
 //This method could be generalized to just iterate over all AAlist, and used a generic but overriden "postmupdate" method).
 public static void markettransactions() {
 	for (final ActiveAgent agent : CommonMethods.getPAgentList()) {
-		int certssold = returnsoldvolume(agent.getbeststrategy().getAgentsSellOffers(),ShortTermMarket.getcurrentmarketprice(), ShortTermMarket.getshareofmarignaloffersold()).getSoldInSTMcert();
-		int certsbought = 0; // GenericStrategy.returnboughtvolume(agent.getbeststrategy().getAgentsBuyOffers(),currentmarketprice, shareofmarginalbuyofferbought).getBoughtInSTMnumberofcert();
+		double certssold = returnsoldvolume(agent.getbeststrategy().getAgentsSellOffers(),ShortTermMarket.getcurrentmarketprice(), ShortTermMarket.getshareofmarignaloffersold()).getSoldInSTMcert();
+		double certsbought = 0; // GenericStrategy.returnboughtvolume(agent.getbeststrategy().getAgentsBuyOffers(),currentmarketprice, shareofmarginalbuyofferbought).getBoughtInSTMnumberofcert();
 		agent.poststmupdate(certssold, certsbought);
 	}
 	
 	for (final ActiveAgent agent : CommonMethods.getOPAgentList()) {
-		int certssold = 0; //GenericStrategy.returnsoldvolume(agent.getbeststrategy().getAgentsSellOffers(),currentmarketprice, shareofmarignalselloffersold).getSoldInSTMcert();
-		int certsbought = returnboughtvolume(agent.getbeststrategy().getAgentsBuyOffers(),ShortTermMarket.getcurrentmarketprice(), ShortTermMarket.getshareofmarignalofferbought()).getBoughtInSTMcert();
+		double certssold = 0; //GenericStrategy.returnsoldvolume(agent.getbeststrategy().getAgentsSellOffers(),currentmarketprice, shareofmarignalselloffersold).getSoldInSTMcert();
+		double certsbought = returnboughtvolume(agent.getbeststrategy().getAgentsBuyOffers(),ShortTermMarket.getcurrentmarketprice(), ShortTermMarket.getshareofmarignalofferbought()).getBoughtInSTMcert();
 		agent.poststmupdate(certssold, certsbought);
 	}
 	
 	for (final ActiveAgent agent : CommonMethods.getTAgentList()) {
-		int certssold = returnsoldvolume(agent.getbeststrategy().getAgentsSellOffers(),ShortTermMarket.getcurrentmarketprice(), ShortTermMarket.getshareofmarignaloffersold()).getSoldInSTMcert();
-		int certsbought = returnboughtvolume(agent.getbeststrategy().getAgentsBuyOffers(),ShortTermMarket.getcurrentmarketprice(), ShortTermMarket.getshareofmarignalofferbought()).getBoughtInSTMcert();
+		double certssold = returnsoldvolume(agent.getbeststrategy().getAgentsSellOffers(),ShortTermMarket.getcurrentmarketprice(), ShortTermMarket.getshareofmarignaloffersold()).getSoldInSTMcert();
+		double certsbought = returnboughtvolume(agent.getbeststrategy().getAgentsBuyOffers(),ShortTermMarket.getcurrentmarketprice(), ShortTermMarket.getshareofmarignalofferbought()).getBoughtInSTMcert();
 		agent.poststmupdate(certssold, certsbought);
 	}
 	//method that estimates the volume traded by  taking the price and the bidded price. If lower/higher, that traded is the volume. Should take in market price, offers and give out nnumber of certs and average price they where sold at. 
@@ -54,7 +54,7 @@ public static void markettransactions() {
 	// highest priced bid on the access side is not enough to balance the market. For now this is not taken care of. 
 	public static SoldInSTM returnsoldvolume(ArrayList<SellOffer> aso, double marketprice, double shareoflastoffersold) { //Method calculation the outcome of a selloffers array offered in a STM market
 		SoldInSTM ret = new SoldInSTM();
-		int soldcerts = 0;
+		double soldcerts = 0;
 		double averageprice = 0;
 		for (SellOffer s : aso) {
 			if (s.getSellOfferprice() < marketprice) { //In this case the offers was accepted in the market
@@ -72,7 +72,7 @@ public static void markettransactions() {
 	
 	public static BoughtInSTM returnboughtvolume(ArrayList<BuyOffer> abo, double marketprice, double shareoflastofferbought) { //Method calculation the outcome of a selloffers array offered in a STM market
 		BoughtInSTM ret = new BoughtInSTM();
-		int boughtcerts = 0;
+		double boughtcerts = 0;
 		double averageprice = 0;
 		for (BuyOffer b : abo) {
 			if (b.getBuyOfferprice() > marketprice) { //In this case the offers was accepted in the market

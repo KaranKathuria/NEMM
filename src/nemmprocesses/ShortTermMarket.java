@@ -26,11 +26,11 @@ public class ShortTermMarket {
 	
 	//Static means that the market price exist without the object short term market. Hence we can get the market price without having to refer or create a object short term market.
 	private static double currentmarketprice;
-	private static int marketsupply;
-	private static int marketdemand;
+	private static double marketsupply;
+	private static double marketdemand;
 	private static double shareofmarginalbuyofferbought;
 	private static double shareofmarignalselloffersold;
-	private static int tradedvolume;
+	private static double tradedvolume;
 	private static double pricestep;
 	private static double initLow;
 	private static double initHigh;
@@ -89,7 +89,7 @@ public class ShortTermMarket {
 		initLow = Math.min(Allbuyoffers.get(0).getBuyOfferprice(), Allselloffers.get(0).getSellOfferprice()); 
 		initHigh = Math.max(Allbuyoffers.get(numberofbuyoffers-1).getBuyOfferprice(), Allselloffers.get(numberofselloffers-1).getSellOfferprice());
 		double certprice = 0;
-		int mindiff = 1000;
+		double mindiff = 1000;
 		
 		
 		//Finds market price. Iterates thorugh all steps, calculates diffs in demand and supply and set price where diff is minimal
@@ -99,11 +99,11 @@ public class ShortTermMarket {
 			//Get supply
 			// Get price with lowes abs diff in s and d
 			double tempprice;
-			int diff;
+			double diff;
 			 //TBD: Find a smarter initialiation for mindiff
 			tempprice = initLow + (i*pricestep);
-			int demand = 0;
-			int supply = 0;
+			double demand = 0;
+			double supply = 0;
 			
 			for (BuyOffer b : Allbuyoffers) { //Sums all demand for that price (lowest to highest).
 				if (b.getBuyOfferprice()>=tempprice){
@@ -126,28 +126,28 @@ public class ShortTermMarket {
 		// The following code takes care of the access demand or supply which is only partly accepted in the market. The code calculate the share of the marginal offer that is accepted. 
 		// Note that if the marginal offer is not larger (volumewise) that the access offered, the share is set to zero, and nothing more is done. 
 		if (marketsupply != marketdemand){
-			int marginalsupply = 0;
-			int marginaldemand = 0;
+			double marginalsupply = 0;
+			double marginaldemand = 0;
 			if (marketsupply>marketdemand) {
-				int accessupply = marketsupply - marketdemand;
+				double accessupply = marketsupply - marketdemand;
 				for (SellOffer s : Allselloffers) { //Sums all supply for that price (lowest to highest).
 					if (s.getSellOfferprice()>certprice-pricestep && s.getSellOfferprice()<certprice-pricestep) {
 						marginalsupply = marginalsupply + s.getnumberofcert();}}
 				if (marginalsupply<accessupply) {
-					shareofmarignalselloffersold = 0;}
+					shareofmarignalselloffersold = 1;}
 				else {
-				shareofmarignalselloffersold = accessupply/marginalsupply;
+				shareofmarignalselloffersold =(marginalsupply - accessupply)/marginalsupply;
 				}
 			}
 			else {
-				int accessdemand = marketdemand - marketsupply;
+				double accessdemand = marketdemand - marketsupply;
 			for (BuyOffer b : Allbuyoffers) { //Sums all supply for that price (lowest to highest).
 				if (b.getBuyOfferprice()>(certprice-pricestep) && b.getBuyOfferprice()<(certprice-pricestep)) {
 					marginaldemand = marginaldemand + b.getnumberofcert();}}
 			if (marginaldemand<accessdemand) {
-				shareofmarginalbuyofferbought = 0;}
+				shareofmarginalbuyofferbought = 1;}
 			else {
-				shareofmarginalbuyofferbought = accessdemand/marginalsupply;
+				shareofmarginalbuyofferbought = (marginaldemand - accessdemand)/marginaldemand;
 			}
 		}}
 
@@ -163,13 +163,13 @@ public static double getshareofmarignalofferbought() {
 public static double getcurrentmarketprice() {
 	return currentmarketprice;}
 
-public static int getmarketsupply() {
+public static double getmarketsupply() {
 	return marketsupply;
 }
-public static int getmarketdemand() {
+public static double getmarketdemand() {
 	return marketdemand;
 }
-public static int gettradedvolume() {
+public static double gettradedvolume() {
 	return tradedvolume;
 }
 

@@ -19,7 +19,7 @@ public class GenericUtilityMethod {
 	public GenericUtilityMethod() {}
 	
 	//Method for scoring utility to be overwritten by subclass methods with same name. 
-	public Double calculateutility(double marketprice, ArrayList<BuyOffer> b, ArrayList<SellOffer> s, int physicalposition, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
+	public Double calculateutility(double marketprice, ArrayList<BuyOffer> b, ArrayList<SellOffer> s, double physicalposition, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
 		double ret = 1000;
 		return ret;
 	}

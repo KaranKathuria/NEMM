@@ -43,7 +43,7 @@ public class SellStrategy1 extends GenericStrategy {
 			alltactics.add(tactic);
 		}
 		
-		besttactic = alltactics.get(0);
+		besttactic = alltactics.get(tacticstream.nextInt(numberoftactics));
 		
 		sellofferone = besttactic.getsellofferone();
 		selloffertwo = besttactic.getsellofferone();
@@ -53,7 +53,7 @@ public class SellStrategy1 extends GenericStrategy {
 	}	
 
 	// Clears strategies selloffers, updates offers from all tactics. set strategys selloffers to those of the best tactic. 
-	public void updatealloffers(double expectedprice, int physicalposition) {
+	public void updatealloffers(double expectedprice, double physicalposition) {
 		//Updates all tactics
 		for (int i = 0; i < numberoftactics; ++i) {
 			alltactics.get(i).updatetacticselloffers(expectedprice, physicalposition);}
