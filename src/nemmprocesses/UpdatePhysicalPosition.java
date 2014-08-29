@@ -43,6 +43,7 @@ public static void markettransactions() {
 	for (final ActiveAgent agent : CommonMethods.getTAgentList()) {
 		double certssold = returnsoldvolume(agent.getbeststrategy().getAgentsSellOffers(),ShortTermMarket.getcurrentmarketprice(), ShortTermMarket.getshareofmarignaloffersold()).getSoldInSTMcert();
 		double certsbought = returnboughtvolume(agent.getbeststrategy().getAgentsBuyOffers(),ShortTermMarket.getcurrentmarketprice(), ShortTermMarket.getshareofmarignalofferbought()).getBoughtInSTMcert();
+		double deltacapitalbase = (certssold-certsbought)*ShortTermMarket.getcurrentmarketprice();
 		agent.poststmupdate(certssold, certsbought);
 	}
 	//method that estimates the volume traded by  taking the price and the bidded price. If lower/higher, that traded is the volume. Should take in market price, offers and give out nnumber of certs and average price they where sold at. 

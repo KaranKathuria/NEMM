@@ -37,24 +37,29 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	}
 	
 	//The buy and sell offer of these tactics are extreamly simple and NOT dependent on the capital base of the trader. This must be changed. 
-	private SellOffer creatSellOfferone(double expectedprice, double physicalposition) {
+	private SellOffer creatSellOfferone(double expectedprice, double physicalposition, double capitalbase) {
 		SellOffer ret = new SellOffer();
-		ret.setselloffervol(10); //For now, they always buy or sell 10 units, hence physical position is unused. 
 		ret.setsellofferprice((1+premium)*expectedprice); 
+		ret.setselloffervol(1000);//For now, they always buy or sell 1000 units, but they cannot go short. 
+		if (physicalposition < 1000) {
+			ret.setselloffervol(physicalposition);
+		}
 		return ret;
 		}
-	private BuyOffer creatBuyOfferone(double expectedprice, double physicalposition) {
+	private BuyOffer creatBuyOfferone(double expectedprice, double physicalposition, double capitalbase) {
 		BuyOffer ret = new BuyOffer();
-		ret.setbuyoffervol(10); //int in order to only sell integer values of certs.
+		ret.setbuyoffervol(1000); //int in order to only sell integer values of certs.
 		ret.setbuyofferprice((1-discount)*expectedprice); 
+		if (capitalbase < 1000*((1+premium)*expectedprice)) {
+		ret.setbuyoffervol(capitalbase/(((1-discount)*expectedprice)));} //If the capitalbase is less than can afford 1000 certs at expected price offered, then reduced the amount to what 
 		return ret;
 		}
 	
-	public void updatetactictradeoffers(double expectedprice, double physicalposition) {
+	public void updatetactictradeoffers(double expectedprice, double physicalposition, double capitalbase) {
 		tacticselloffers.clear();
 		tacticbuyoffers.clear();
-		sellofferone = creatSellOfferone(expectedprice,physicalposition);
-		buyofferone = creatBuyOfferone(expectedprice,physicalposition);
+		sellofferone = creatSellOfferone(expectedprice,physicalposition, capitalbase);
+		buyofferone = creatBuyOfferone(expectedprice,physicalposition, capitalbase);
 		tacticselloffers.add(sellofferone);
 		tacticbuyoffers.add(buyofferone);
 	}

@@ -74,7 +74,7 @@ public void monthlymarketschedule() {
 	//UpdatePhysicalPosition.runproduction(); //Loops to all powerplants and adds this ticks prodution to the CompanyAgents producers agents physical position. 
 	//UpdatePhysicalPosition.updatedemand(); //Adds demand to the CompanyAgents physicalposition
 	UtilitiesStrategiesTactics.calculatetilitiesandupdatebesttactics(); //Calculates the tactic and strategies utilities and changes the best tactics. 
-	
+	GlobalValues.monthlyglobalvalueupdate();
 }
 	//The annual market update. Updates the long term market, interest rates etc, annually (thats why interval = 12). Notice as this i running in the same "tick" as the montly update
 	// the lates monthly update is "hidden" for this update. 

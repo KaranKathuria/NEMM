@@ -1,9 +1,9 @@
 <repast.simphony.chart2.engine.TimeSeriesChartDescriptor>
-  <name>Traded Volume</name>
-  <dataSet>Traded volume</dataSet>
+  <name>Certificate Price</name>
+  <dataSet>Certificate Price</dataSet>
   <xAxisLabel>Tick Count</xAxisLabel>
-  <yAxisLabel>Number of certs</yAxisLabel>
-  <chartTitle>STM Traded Volume</chartTitle>
+  <yAxisLabel>Price</yAxisLabel>
+  <chartTitle>Certificate Price</chartTitle>
   <type>TIME_SERIES</type>
   <background>
     <red>255</red>
@@ -21,9 +21,9 @@
   <showLegend>true</showLegend>
   <seriesIds>
     <entry>
-      <string>Traded Volume</string>
+      <string>Cert price</string>
       <SeriesData>
-        <label>Traded Volume</label>
+        <label>Cert price</label>
         <color>
           <red>0</red>
           <green>0</green>

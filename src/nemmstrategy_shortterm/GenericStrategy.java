@@ -39,7 +39,7 @@ public abstract class GenericStrategy {
 	public ArrayList<SellOffer> getAgentsSellOffers() {
 		return agentsselloffers;
 	}
-	public void updatealloffers(double expectedprice, double physicalposition) {}
+	public void updatealloffers(double expectedprice, double physicalposition, double ...capitalbase) {}
 	
 	//Used when adding/updating to the strategyutility ArrayList with the new score. 
 	public void addstrategyutilityscore(double t) {

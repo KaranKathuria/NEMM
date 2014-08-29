@@ -93,8 +93,10 @@ public class CompanyAgent extends ParentAgent {
 			return allstrategies;
 		}
 		
-		public void poststmupdate(double certificatessold, double certificatesbought) {
+		public void poststmupdate(double certificatessold, double certificatesbought, double ...capitalused) {
 			physicalnetposition = physicalnetposition + certificatesbought - certificatessold; //Certificates bought and sold are positive numbers.
+			if (capitalused.length > 0) {
+			capitalbase = capitalbase + capitalused[0]; }
 			}
 		
 		public void addtophysicalposition(double prodordemand) {
@@ -119,6 +121,9 @@ public class CompanyAgent extends ParentAgent {
 		}
 		public CompanyAgent getmycompany() {
 			return this.companyagent;
+		}
+		public double getcapitalbase() {
+			return capitalbase;
 		}
 	}
 		
