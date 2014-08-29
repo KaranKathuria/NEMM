@@ -111,6 +111,15 @@ public class CompanyAgent extends ParentAgent {
 		public GenericUtilityMethod getutilitymethod() {
 			return utilitymethod;
 		}
+		public ArrayList<PowerPlant> getmypowerplants() {
+			return myPowerPlants;
+		}
+		public void addpowerplant(PowerPlant pp) {
+			myPowerPlants.add(pp);	
+		}
+		public CompanyAgent getmycompany() {
+			return this.companyagent;
+		}
 	}
 		
 		public class CompanyAnalysisAgent extends ParentAgent {
