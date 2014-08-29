@@ -122,25 +122,16 @@ public void projectprocesschedule() {
 		return ShortTermMarket.gettradedvolume();
 	}
 	
-	public double endofyearpluss1() {
-		return GlobalValues.endofyearpluss1;
-}	
-	public double endofyearpluss2() {
-		return GlobalValues.endofyearpluss2;
-}
-	public double endofyearpluss3() {
-		return GlobalValues.endofyearpluss3;
-}	
-	public double endofyearpluss4() {
-		return GlobalValues.endofyearpluss4;
-}
-public double endofyearpluss5() {
-		return GlobalValues.endofyearpluss5;
-}
-	public int numberofAgents() {
-		return CommonMethods.getnumberofagents();
-}
-
+	public double getproducersphysicalposition() {
+		return GlobalValues.producersphysicalposotion;
+	}	
+	
+	public double gettradersphysicalposition() {
+		return GlobalValues.tradersphysicalposotion;
+	}
+	public double getobligatedpurchaserssphysicalposition() {
+		return GlobalValues.obligatedpurchasersobphysiclaposotion;
+	}
 	
 }
 

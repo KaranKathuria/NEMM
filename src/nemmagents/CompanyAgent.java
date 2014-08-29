@@ -40,6 +40,7 @@ public class CompanyAgent extends ParentAgent {
 		private GenericStrategy beststrategy = null;
 		private GenericUtilityMethod utilitymethod;
 		private double physicalnetposition;
+		private double capitalbase;
 		
 		// Null constructor for ActiveAgent. Should not be used as this does not specify type of agent.
 		public ActiveAgent() {
@@ -52,17 +53,19 @@ public class CompanyAgent extends ParentAgent {
 			
 			if (type == 1) {
 				activeagenttypename = "ProducerAgent";
-				physicalnetposition = 10;
+				physicalnetposition = 1000;
 				utilitymethod = new PAUtilityMethod();
 				SellStrategy1 sellstrategy = new SellStrategy1();
 				allstrategies.add(sellstrategy);
+				capitalbase = 0;
 									
 			} else if (type == 2) {
 				activeagenttypename = "ObligatedPurchaserAgent";
-				physicalnetposition = -10;
+				physicalnetposition = -1000;
 				utilitymethod = new OPAUtilityMethod();
 				BuyStrategy1 buystrategy = new BuyStrategy1();
 				allstrategies.add(buystrategy);
+				capitalbase = 0;
 				
 			} else { //Notice that else is all other added as Trader agents. This is okey for now but should call an expetion later. 
 				activeagenttypename = "TraderAgent";
@@ -70,6 +73,7 @@ public class CompanyAgent extends ParentAgent {
 				utilitymethod = new TAUtilityMethod();
 				TradeStrategy1 tradestrategy = new TradeStrategy1();
 				allstrategies.add(tradestrategy);
+				capitalbase = 1000000; 
 			} 
 			beststrategy = allstrategies.get(0); // Choose the first one initially 
 		}
@@ -91,7 +95,6 @@ public class CompanyAgent extends ParentAgent {
 		
 		public void poststmupdate(double certificatessold, double certificatesbought) {
 			physicalnetposition = physicalnetposition + certificatesbought - certificatessold; //Certificates bought and sold are positive numbers.
-			//totalsold_cp = totalsold_cp + certificatessold;
 			}
 		
 		public void addtophysicalposition(double prodordemand) {

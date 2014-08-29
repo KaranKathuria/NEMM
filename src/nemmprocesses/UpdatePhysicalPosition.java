@@ -56,6 +56,7 @@ public static void markettransactions() {
 		SoldInSTM ret = new SoldInSTM();
 		double soldcerts = 0;
 		double averageprice = 0;
+		aso.removeAll(Collections.singleton(null));
 		for (SellOffer s : aso) {
 			if (s.getSellOfferprice() < marketprice) { //In this case the offers was accepted in the market
 			averageprice = ((averageprice*soldcerts)+(s.getnumberofcert()*s.getSellOfferprice()))/(soldcerts+s.getnumberofcert()); //The new average price
@@ -74,6 +75,7 @@ public static void markettransactions() {
 		BoughtInSTM ret = new BoughtInSTM();
 		double boughtcerts = 0;
 		double averageprice = 0;
+		abo.removeAll(Collections.singleton(null)); //Have no idea why there are null-offers in the buyoffers list, but this bug is temporarly corrected her.
 		for (BuyOffer b : abo) {
 			if (b.getBuyOfferprice() > marketprice) { //In this case the offers was accepted in the market
 			averageprice = ((averageprice*boughtcerts)+(b.getnumberofcert()*b.getBuyOfferprice()))/(boughtcerts+b.getnumberofcert()); //The new average price

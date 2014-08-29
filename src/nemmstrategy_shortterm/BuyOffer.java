@@ -10,8 +10,8 @@ package nemmstrategy_shortterm;
 
 public class BuyOffer {
 	
-	public double numberofcert; //Needs to be public so this class can be reused.
-	public double price;
+	private double numberofcert; //Needs to be public so this class can be reused.
+	private double price;
 	
 	//when created the class instance is constructed with zero-values.
 	public BuyOffer() {
@@ -23,5 +23,11 @@ public class BuyOffer {
 	}
 	public double getnumberofcert() {
 		return numberofcert;
+	}
+	public void setbuyofferprice(double d){
+		price = d;
+	}
+	public void setbuyoffervol(double d){
+		numberofcert = d;
 	}
 	}

@@ -9,6 +9,7 @@ package nemmcommons;
 
 // Import
 import repast.simphony.random.RandomHelper;
+import nemmagents.CompanyAgent.ActiveAgent;
 import nemmprocesses.ShortTermMarket;
 
 
@@ -33,8 +34,11 @@ public final class GlobalValues {
 	public static double ppendofyearpluss4;
 	public static double ppendofyearpluss5;
 	
+	public static double producersphysicalposotion;
+	public static double tradersphysicalposotion;
+	public static double obligatedpurchasersobphysiclaposotion;
 	
-	
+		
 	public GlobalValues() {
 		currentmarketprice = ParameterWrapper.getpriceexpectation();
 	}
@@ -51,6 +55,21 @@ public final class GlobalValues {
 		currentinterestrate = currentinterestrate + RandomHelper.nextDoubleFromTo(-0.002, 0.002);
 		numberofbuyoffersstm = ShortTermMarket.getnumberofbuyoffers();
 		numberofselloffersstm = ShortTermMarket.getnumberofselloffers();
+		
+		producersphysicalposotion = 0;
+		tradersphysicalposotion = 0;
+		obligatedpurchasersobphysiclaposotion = 0;
+		
+		for (ActiveAgent pa: CommonMethods.getPAgentList()){
+			producersphysicalposotion = producersphysicalposotion + pa.getphysicalnetposition();	
+		}
+		for (ActiveAgent opa: CommonMethods.getOPAgentList()){
+			producersphysicalposotion = producersphysicalposotion + opa.getphysicalnetposition();	
+		}
+		for (ActiveAgent ta: CommonMethods.getTAgentList()){
+			producersphysicalposotion = producersphysicalposotion + ta.getphysicalnetposition();	
+		}
+		
 	}
 	
 	// Annual update of annual chaning global values

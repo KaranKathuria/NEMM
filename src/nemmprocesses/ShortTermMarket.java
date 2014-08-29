@@ -66,15 +66,22 @@ public class ShortTermMarket {
 			//Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers()); None sell offers from the OP agent list. 
 			//marketsupply = agent.getphysicalnetposition();
 			Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers());
+	
 		}
-		
 		for (final ActiveAgent agent : CommonMethods.getTAgentList()) {
 			agent.getbeststrategy().updatealloffers(agent.getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation(), agent.getphysicalnetposition()); //Updates all bids for all agents
 			Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers());
 			Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers());
 		}
 		
-		int numberofbuyoffers = Allbuyoffers.size();
+		
+		ArrayList<BuyOffer> temp = new ArrayList<BuyOffer>();
+		temp = Allbuyoffers;
+		Allbuyoffers.removeAll(Collections.singleton(null));
+		Allselloffers.removeAll(Collections.singleton(null));
+
+		
+		int numberofbuyoffers = Allbuyoffers.size(); 
 		int numberofselloffers = Allselloffers.size();
 		
 		//Time for sorting the buy and selloffers. The comparator for objects sell and buyoffers are implementer in CommonMethods. Sort from lowest to highest. 

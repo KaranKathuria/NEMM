@@ -10,7 +10,6 @@ package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import repast.simphony.random.RandomHelper;
 import nemmcommons.RandomWrapper;
 import nemmstrategy_shortterm.GenericStrategy.*;
