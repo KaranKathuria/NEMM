@@ -61,7 +61,7 @@ public class ShortTermMarket {
 		}
 		
 		for (final ActiveAgent agent : CommonMethods.getOPAgentList()) {
-			agent.getbeststrategy().updatealloffers(agent.getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation(), agent.getphysicalnetposition());
+			agent.getbeststrategy().updatealloffers(agent.getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation(), agent.getphysicalnetposition(), agent.getcapitalbase());
 			//Updates all bids for all agents
 			//Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers()); None sell offers from the OP agent list. 
 			//marketsupply = agent.getphysicalnetposition();
@@ -69,7 +69,7 @@ public class ShortTermMarket {
 	
 		}
 		for (final ActiveAgent agent : CommonMethods.getTAgentList()) {
-			agent.getbeststrategy().updatealloffers(agent.getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation(), agent.getphysicalnetposition()); //Updates all bids for all agents
+			agent.getbeststrategy().updatealloffers(agent.getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation(), agent.getphysicalnetposition(), agent.getcapitalbase()); //Updates all bids for all agents
 			Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers());
 			Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers());
 		}

@@ -50,7 +50,7 @@ public class TradeStrategy1 extends GenericStrategy {
 	}	
 
 	// Clears strategies buyoffers, updates offers from all tactics. set strategys buyoffers to those of the best tactic. 
-	public void updatealloffers(double expectedprice, double physicalposition, double capitalbase) {
+	public void updatealloffers(double expectedprice, double physicalposition, double ...capitalbase) {
 		//Updates all tactics
 		for (int i = 0; i < numberoftactics; ++i) {
 			alltactics.get(i).updatetactictradeoffers(expectedprice, physicalposition, capitalbase);}

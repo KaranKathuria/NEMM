@@ -53,7 +53,7 @@ public class SellStrategy1 extends GenericStrategy {
 	}	
 
 	// Clears strategies selloffers, updates offers from all tactics. set strategys selloffers to those of the best tactic. 
-	public void updatealloffers(double expectedprice, double physicalposition) {
+	public void updatealloffers(double expectedprice, double physicalposition, double ...capitalbase) {
 		//Updates all tactics
 		for (int i = 0; i < numberoftactics; ++i) {
 			alltactics.get(i).updatetacticselloffers(expectedprice, physicalposition);}

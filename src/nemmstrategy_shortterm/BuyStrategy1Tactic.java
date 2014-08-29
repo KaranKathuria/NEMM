@@ -52,7 +52,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	
 	public void updatetacticbuyoffers(double expectedprice, double physicalposition) {
 		if (physicalposition >= 0){
-			physicalposition = 0.00001;} //To ensure that we dont get crazy bids.  
+			physicalposition = -0.00001;} //To ensure that we dont get crazy bids.  
 		tacticbuyoffers.clear();
 		buyofferone = creatBuyOfferone(expectedprice,physicalposition);
 		buyoffertwo = creatBuyOffertwo(expectedprice,physicalposition);
