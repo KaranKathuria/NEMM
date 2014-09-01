@@ -66,13 +66,7 @@ public class SellStrategy1 extends GenericStrategy {
 		agentsselloffers.add(selloffertwo);
 		
 		}
-		
-	public void updatebesttactic() {
-	}
 	
-	public void calculatestrategyutility() {
-		// TBD
-	}
 		
 	public ArrayList<GenericTactic> getalltactics() {
 		return alltactics;}

@@ -34,9 +34,9 @@ public final class GlobalValues {
 	public static double ppendofyearpluss4;
 	public static double ppendofyearpluss5;
 	
-	public static double producersphysicalposotion;
-	public static double tradersphysicalposotion;
-	public static double obligatedpurchasersobphysiclaposotion;
+	public static double producersphysicalposotion = 0;
+	public static double tradersphysicalposotion = 0;
+	public static double obligatedpurchasersphysiclaposotion = 0;
 	
 		
 	public GlobalValues() {
@@ -58,16 +58,16 @@ public final class GlobalValues {
 		
 		producersphysicalposotion = 0;
 		tradersphysicalposotion = 0;
-		obligatedpurchasersobphysiclaposotion = 0;
+		obligatedpurchasersphysiclaposotion = 0;
 		
 		for (ActiveAgent pa: CommonMethods.getPAgentList()){
 			producersphysicalposotion = producersphysicalposotion + pa.getphysicalnetposition();	
 		}
 		for (ActiveAgent opa: CommonMethods.getOPAgentList()){
-			producersphysicalposotion = producersphysicalposotion + opa.getphysicalnetposition();	
+			obligatedpurchasersphysiclaposotion = obligatedpurchasersphysiclaposotion + opa.getphysicalnetposition();	
 		}
 		for (ActiveAgent ta: CommonMethods.getTAgentList()){
-			producersphysicalposotion = producersphysicalposotion + ta.getphysicalnetposition();	
+			tradersphysicalposotion = tradersphysicalposotion + ta.getphysicalnetposition();	
 		}
 		
 	}

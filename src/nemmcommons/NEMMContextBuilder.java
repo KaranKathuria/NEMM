@@ -125,12 +125,11 @@ public void projectprocesschedule() {
 	public double getproducersphysicalposition() {
 		return GlobalValues.producersphysicalposotion;
 	}	
-	
 	public double gettradersphysicalposition() {
 		return GlobalValues.tradersphysicalposotion;
 	}
 	public double getobligatedpurchaserssphysicalposition() {
-		return GlobalValues.obligatedpurchasersobphysiclaposotion;
+		return GlobalValues.obligatedpurchasersphysiclaposotion;
 	}
 	
 }

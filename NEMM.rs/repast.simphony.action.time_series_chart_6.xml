@@ -2,8 +2,8 @@
   <name>Physical Positions Aggregate</name>
   <dataSet>Aggregate Physical Positions</dataSet>
   <xAxisLabel>Tick Count</xAxisLabel>
-  <yAxisLabel>number of cets</yAxisLabel>
-  <chartTitle>Physical Pos</chartTitle>
+  <yAxisLabel>Aggregate number of certs</yAxisLabel>
+  <chartTitle>Physical Position</chartTitle>
   <type>TIME_SERIES</type>
   <background>
     <red>255</red>

@@ -55,11 +55,13 @@ public class TradeStrategy1Tactic extends GenericTactic {
 		return ret;
 		}
 	
-	public void updatetactictradeoffers(double expectedprice, double physicalposition, double capitalbase) {
+	public void updatetactictradeoffers(double expectedprice, double physicalposition, double ...capitalbase) {
+		if (capitalbase.length<1) {
+			throw new IllegalArgumentException("Now given capitalbase for tradingstrategy");}
 		tacticselloffers.clear();
 		tacticbuyoffers.clear();
-		sellofferone = creatSellOfferone(expectedprice,physicalposition, capitalbase);
-		buyofferone = creatBuyOfferone(expectedprice,physicalposition, capitalbase);
+		sellofferone = creatSellOfferone(expectedprice,physicalposition, capitalbase[0]);
+		buyofferone = creatBuyOfferone(expectedprice,physicalposition, capitalbase[0]);
 		tacticselloffers.add(sellofferone);
 		tacticbuyoffers.add(buyofferone);
 	}
