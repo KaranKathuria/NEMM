@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmagents.CompanyAgent;
 import nemmagents.MarketAnalysisAgent;
@@ -126,7 +127,6 @@ public static List<CompanyAgent> getCompanyAgenList() {
 		int ret = getPAgentList().size() + getMAAgentList().size() + getOPAgentList().size() + getTAgentList().size();
 		return ret;
 	}
-	
 	//The following two methods makes it possible to compare sell and byoffers by price. 
 	public static class custombuyoffercomparator implements Comparator<BuyOffer> {
 	    @Override
