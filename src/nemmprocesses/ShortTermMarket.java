@@ -96,7 +96,7 @@ public class ShortTermMarket {
 		initLow = Math.min(Allbuyoffers.get(0).getBuyOfferprice(), Allselloffers.get(0).getSellOfferprice()); 
 		initHigh = Math.max(Allbuyoffers.get(numberofbuyoffers-1).getBuyOfferprice(), Allselloffers.get(numberofselloffers-1).getSellOfferprice());
 		double certprice = 0;
-		double mindiff = 1000;
+		double mindiff = 1000000000;
 		
 		
 		//Finds market price. Iterates thorugh all steps, calculates diffs in demand and supply and set price where diff is minimal

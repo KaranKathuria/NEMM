@@ -47,6 +47,10 @@ public final class GlobalValues {
 		//Initially the global market price is set to that of the price expectations
 		currentmarketprice = ParameterWrapper.getpriceexpectation();
 		currentinterestrate = ParameterWrapper.getinitialinterestrate();
+		producersphysicalposotion = 10000;
+		tradersphysicalposotion = 0;
+		obligatedpurchasersphysiclaposotion = -10000;
+		
 		}
 	
 	// Monthly update of current global values

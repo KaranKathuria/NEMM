@@ -48,8 +48,7 @@ for (int i = 0; i < gettraderagentsnumber(); ++i) {
 	final CompanyAgent agent = new CompanyAgent(false, false, true);
 	context.add(agent);
 }
-	//
-//
+	
  	return context;
 }
 
