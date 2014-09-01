@@ -179,6 +179,9 @@ public static double getmarketdemand() {
 public static double gettradedvolume() {
 	return tradedvolume;
 }
+public static double getpricestep() {
+	return pricestep;
+}
 
 public static int getnumberofbuyoffers() {
 	return Allbuyoffers.size();
