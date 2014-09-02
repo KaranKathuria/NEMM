@@ -14,55 +14,54 @@ import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import nemmagents.CompanyAgent;
 import nemmagents.ParentAgent;
+import nemmenvironment.TheEnvironment;
 import nemmprocesses.ShortTermMarket;
 import nemmprocesses.UpdatePhysicalPosition;
 import nemmprocesses.UtilitiesStrategiesTactics;
+import nemmprocesses.DistributePowerPlants;
+import nemmprocesses.DistributeDemandShares;
 import static nemmcommons.ParameterWrapper.*;
 
 
+//========================================================================
+//=== Building and initilizing the model =================================
 
-//Class definitions
 public class NEMMContextBuilder extends DefaultContext<Object> 
 		implements ContextBuilder<Object> {
 	
 	@Override
 	public Context<Object> build(final Context<Object> context) {
 		//
-		//Create World
-		//
+		//Initialize parameters
 		ParameterWrapper.reinit(); //Reads the parametervalues provided
+		//Create the Environment
 		GlobalValues.initglobalvalues(); //initiates the global values such as price by giving them the parametervalues from the above method. 
+		TheEnvironment.InitEnvironment();
+		TheEnvironment.PopulateEnvironment();
 	
-// Adds the supply side agents (ProducerAgent), with one strategy calling PABidstrategy(). 
-for (int i = 0; i < getproduceragentsnumber(); ++i) {
-	final CompanyAgent agent = new CompanyAgent(true, false, false);
-	context.add(agent);
-}
-// Adds ObligatedPurchaserAgents which is the demand side and calling OPABidstrategy().
-for (int i = 0; i < getobligatedpurchaseragentsnumber(); ++i) {
-	final CompanyAgent agent = new CompanyAgent(false, true, false);
-	context.add(agent);
-}
-// Adds the trader agents. 
-for (int i = 0; i < gettraderagentsnumber(); ++i) {
-	final CompanyAgent agent = new CompanyAgent(false, false, true);
-	context.add(agent);
-}
+		// Creates the Agents and adds them to context
+		for (int i = 0; i < getproduceragentsnumber(); ++i) {
+			final CompanyAgent agent = new CompanyAgent(true, false, false);
+			context.add(agent);}
+
+		for (int i = 0; i < getobligatedpurchaseragentsnumber(); ++i) {
+			final CompanyAgent agent = new CompanyAgent(false, true, false);
+			context.add(agent);}
+		
+		for (int i = 0; i < gettraderagentsnumber(); ++i) {
+			final CompanyAgent agent = new CompanyAgent(false, false, true);
+			context.add(agent);}
+		
+		//Distributes PowerPlants and Demand Shares among the Agents
+		DistributePowerPlants.distributeallpowerplants();
 	
- 	return context;
+		
+		
+ return context;
 }
 
 // ========================================================================
 // === Simulation schedule ===========================================================
-
-/* Main schedules of the simulation containing the following phases:
- * The monthly market updates and trading in the stm-market
- * The annual ltm market and under values
- * The development market
- * 
- * The priority argument tell Repast how important the function is. If there are lots of methods that can be called at the same iteration, 
- * Repast chooses the ones with the highest priority first. If lots of methods have the same priority then Repast chooses their order randomly.
- */
 
 	//The monthly update. Updates the monthly market, interest rates etc.
 @ScheduledMethod(start = 1, interval = 1, priority = 1)
@@ -95,9 +94,7 @@ public void projectprocesschedule() {
 // === Observer Methods ===================================================
 
 /* Returns the current interesting values to display in a simple
- * time series chart on the Repast GUI.
- * 
- * @return for exampel the price of certificates  */
+ * time series chart on the Repast GUI. */
 
 	public double currentmarketprice() {
 		return ShortTermMarket.getcurrentmarketprice();

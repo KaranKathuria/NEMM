@@ -3,6 +3,7 @@ package nemmenvironment;
 import java.util.ArrayList;
 
 import nemmcommons.CommonMethods;
+import nemmenvironment.MarketDemand;
 
 public class Region {
 	
@@ -16,9 +17,10 @@ public class Region {
 	 * @param regionName
 	 */
 	public Region(String regionName) {
+		
 		this.regionName = regionName;
-		this.myDemand = new MarketDemand(); // not initialised yet
-		this.myPowerPrice = new MarketSeries(); // not initialised yet
+		this.myDemand = new MarketDemand();
+		this.myPowerPrice = new MarketSeries();
 	}
 	
 

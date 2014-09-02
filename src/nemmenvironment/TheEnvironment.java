@@ -14,6 +14,7 @@ public final class TheEnvironment {
 	public static ArrayList<CompanyAgent> allCompanies;
 	public static NemmCalendar theCalendar;
 	
+	//Global Values
 	
 	
 	/**
@@ -29,10 +30,13 @@ public final class TheEnvironment {
 	public static void InitEnvironment(){
 		// Create & set up the time calendar and create the lists
 		// to hold the plants, companies, and regions
+
+		
 		ReadCreateTime();
 		allPowerPlants = new ArrayList<PowerPlant>() ;
-		allRegions = new ArrayList<Region>() ;
-		allCompanies = new ArrayList<CompanyAgent>();		
+		allRegions = new ArrayList<Region>() ;	
+
+		
 	}
 
 	public static void ReadCreateTime(){
@@ -50,7 +54,8 @@ public final class TheEnvironment {
 		// This could be added to the constructor, or can be run immediately after
 		ReadCreateRegions();
 		ReadCreatePowerPlants();
-		ReadCreateCompanies();
+		PopulatePowerPrices();
+		PopulateMarketDemands();
 	}
 	
 
@@ -68,14 +73,14 @@ public final class TheEnvironment {
 		regionNames[1]="Sweden";
 		
 		for (int i = 0; i < numRegions; ++i) {
-			Region newRegion = new Region(regionNames[i]);
+			Region newRegion = new Region(regionNames[i]); //Currently this also creates default power prices, power demand and certplikt.
 			allRegions.add(newRegion);
 		}		
 
 		// Population -----------------
 		// Populate the market demand and power price objects with data
-		PopulateMarketDemands();
-		PopulatePowerPrices();
+		//PopulateMarketDemands();
+		//PopulatePowerPrices();
 	}
 	
 	private static void ReadCreatePowerPlants() {
@@ -87,19 +92,18 @@ public final class TheEnvironment {
 		// TEST VERSION: creates the plants randomly (i.e. they
 		// are not read in from anywhere
 		
-		int numplants = 40;
+		int numplants = 10;
 		for (int i = 0; i < numplants; ++i) {
 			// randomly create capacity and load factor for the 
 			// new plant
-			// REPLACE random method with repast random stream
-			int newcap = CommonMethods.randInt(50, 150);
-			double newlf = CommonMethods.randInt(20, 35)/100;
+			int newcap = 10000; //CommonMethods.randInt(50, 150);
+			double newlf = 0.1; //CommonMethods.randInt(20, 35)/100;
 			// randomly choose the region
 			int selectedRegion = CommonMethods.randInt(0, allRegions.size()-1);
 			// Create the plant and store it in the list
 			PowerPlant newplant = new PowerPlant(newcap, newlf, allRegions.get(selectedRegion));
 			double[] defProd = new double[0];
-			defProd[0] = 50;
+			defProd[0] = 1000;
 			newplant.setAllProduction(defProd); //  production in each tick set to a default
 			allPowerPlants.add(newplant);
 		}
@@ -112,7 +116,7 @@ public final class TheEnvironment {
 			// demand and certificate obligation
 			double[] newDem = new double[1];
 			double[] newObl = new double[1];
-			newDem[0] = 2000;
+			newDem[0] = 50000;
 			newObl[0] = 0.10;
 			curRegion.getMyDemand().initMarketDemand(newDem, newObl);			
 		}
@@ -129,18 +133,5 @@ public final class TheEnvironment {
 		}		
 	}	
 	
-	
-	public static void ReadCreateCompanies() {
-		// this will read in the company info, including
-		// initial demand shares, agent structure and so on
-		
-		// Currently we just hard code the creation of companies
-		int numComps = 10;
-		
-		for (int i = 0; i < numComps; ++i) {
-			CompanyAgent newCompany = new CompanyAgent();
-			allCompanies.add(newCompany);
-		}			
-	} 
 	
 }

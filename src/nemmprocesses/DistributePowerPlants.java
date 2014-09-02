@@ -15,7 +15,7 @@ public class DistributePowerPlants {
 	
 	public DistributePowerPlants() {}
 	
-	public void distributeallpowerplants() {
+	public static void distributeallpowerplants() {
 		int numberofPA = CommonMethods.getPAgentList().size();
 		if (numberofPA <= 0){
 			throw new IllegalArgumentException("Error: Zero CompanyAgents with production");}
