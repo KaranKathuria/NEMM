@@ -39,6 +39,9 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		BuyOffer ret = new BuyOffer();
 		ret.setbuyoffervol((shareboughtatdiscount*(-physicalposition))); //-As the phisical position of buyer would in most cases be negative, but as the offer only has positive numbers. 
 		ret.setbuyofferprice((1-discount)*expectedprice);
+		if (physicalposition == 0) {
+			ret = null;
+		}
 		return ret;
 		}
 	
@@ -47,12 +50,15 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		BuyOffer ret = new BuyOffer();
 		ret.setbuyoffervol((-physicalposition) -( (shareboughtatdiscount*(-physicalposition)))); //rest of the monthly production bought at expected price.
 		ret.setbuyofferprice(expectedprice);
+		if (physicalposition == 0) {
+			ret = null;
+		}
 		return ret;
 		}
 	
 	public void updatetacticbuyoffers(double expectedprice, double physicalposition, double ...capitalbase) {
 		if (physicalposition >= 0){
-			physicalposition = -0.00001;} //To ensure that we dont get crazy bids.  
+			physicalposition = -0.0;} //To ensure that we dont get crazy bids.  
 		tacticbuyoffers.clear();
 		buyofferone = creatBuyOfferone(expectedprice,physicalposition);
 		buyoffertwo = creatBuyOffertwo(expectedprice,physicalposition);

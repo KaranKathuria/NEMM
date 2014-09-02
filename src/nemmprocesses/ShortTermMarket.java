@@ -53,7 +53,6 @@ public class ShortTermMarket {
 		//Update and add all sell- and buy-offers.  
 		for (final ActiveAgent agent : CommonMethods.getPAgentList()) {
 			//update their phusical net position
-			
 			agent.getbeststrategy().updatealloffers(agent.getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation(), agent.getphysicalnetposition());
 			//Updates all bids for all agents
 			Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers());
@@ -75,8 +74,10 @@ public class ShortTermMarket {
 		}
 		
 		
-		ArrayList<BuyOffer> temp = new ArrayList<BuyOffer>();
-		temp = Allbuyoffers;
+		ArrayList<BuyOffer> tempbuy = new ArrayList<BuyOffer>();
+		tempbuy = Allbuyoffers;
+		ArrayList<SellOffer> tempsell = new ArrayList<SellOffer>();
+		tempsell = Allselloffers;
 		Allbuyoffers.removeAll(Collections.singleton(null));
 		Allselloffers.removeAll(Collections.singleton(null));
 
@@ -95,8 +96,10 @@ public class ShortTermMarket {
 		
 		initLow = Math.min(Allbuyoffers.get(0).getBuyOfferprice(), Allselloffers.get(0).getSellOfferprice()); 
 		initHigh = Math.max(Allbuyoffers.get(numberofbuyoffers-1).getBuyOfferprice(), Allselloffers.get(numberofselloffers-1).getSellOfferprice());
+		double low = initLow;
+		double temphigh = initHigh;
 		double certprice = 0;
-		double mindiff = 1000000000;
+		double mindiff = 2000000000;
 		
 		
 		//Finds market price. Iterates thorugh all steps, calculates diffs in demand and supply and set price where diff is minimal
@@ -138,10 +141,10 @@ public class ShortTermMarket {
 			if (marketsupply>marketdemand) {
 				double accessupply = marketsupply - marketdemand;
 				for (SellOffer s : Allselloffers) { //Sums all supply for that price (lowest to highest).
-					if (s.getSellOfferprice()>certprice-pricestep && s.getSellOfferprice()<certprice-pricestep) {
+					if (s.getSellOfferprice()>certprice-pricestep && s.getSellOfferprice()<=certprice) {
 						marginalsupply = marginalsupply + s.getnumberofcert();}}
 				if (marginalsupply<accessupply) {
-					shareofmarignalselloffersold = 1;}
+					shareofmarignalselloffersold = 0;}
 				else {
 				shareofmarignalselloffersold =(marginalsupply - accessupply)/marginalsupply;
 				}
@@ -149,15 +152,16 @@ public class ShortTermMarket {
 			else {
 				double accessdemand = marketdemand - marketsupply;
 			for (BuyOffer b : Allbuyoffers) { //Sums all supply for that price (lowest to highest).
-				if (b.getBuyOfferprice()>(certprice-pricestep) && b.getBuyOfferprice()<(certprice-pricestep)) {
+				if (b.getBuyOfferprice()>=(certprice) && b.getBuyOfferprice()<(certprice+pricestep)) {
 					marginaldemand = marginaldemand + b.getnumberofcert();}}
 			if (marginaldemand<accessdemand) {
-				shareofmarginalbuyofferbought = 1;}
+				shareofmarginalbuyofferbought = 0;}
 			else {
 				shareofmarginalbuyofferbought = (marginaldemand - accessdemand)/marginaldemand;
 			}
 		}}
-
+		double tempshb = shareofmarginalbuyofferbought;
+		double tempshs = shareofmarignalselloffersold;
 		currentmarketprice = certprice;	
 	}
 

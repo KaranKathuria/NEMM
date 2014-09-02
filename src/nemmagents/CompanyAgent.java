@@ -58,7 +58,7 @@ public class CompanyAgent extends ParentAgent {
 				SellStrategy1 sellstrategy = new SellStrategy1();
 				allstrategies.add(sellstrategy);
 				capitalbase = 0;
-									
+												
 			} else if (type == 2) {
 				activeagenttypename = "ObligatedPurchaserAgent";
 				physicalnetposition = -1000;
@@ -76,6 +76,7 @@ public class CompanyAgent extends ParentAgent {
 				capitalbase = 1000000; 
 			} 
 			beststrategy = allstrategies.get(0); // Choose the first one initially 
+			numberofstrategies = allstrategies.size();
 		}
 		
 		//Get methods for the ActiveAgent

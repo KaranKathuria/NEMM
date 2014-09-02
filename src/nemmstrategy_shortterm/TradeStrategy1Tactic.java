@@ -44,6 +44,9 @@ public class TradeStrategy1Tactic extends GenericTactic {
 		if (physicalposition < 1000) {
 			ret.setselloffervol(physicalposition);
 		}
+		if (physicalposition <= 0) {
+			ret = null;
+		}
 		return ret;
 		}
 	private BuyOffer creatBuyOfferone(double expectedprice, double physicalposition, double capitalbase) {

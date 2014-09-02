@@ -40,19 +40,25 @@ public class SellStrategy1Tactic extends GenericTactic {
 	private SellOffer creatSellOfferone(double expectedprice, double physicalposition, double ...capitalbase) {
 		SellOffer ret = new SellOffer();
 		ret.setselloffervol((sharesoldtatdiscount*physicalposition)); //
-		ret.setsellofferprice((1-discount)*expectedprice); 
+		ret.setsellofferprice((1-discount)*expectedprice);
+		if (physicalposition == 0) {
+			ret = null;
+		}
 		return ret;
 		}
 	private SellOffer creatSellOffertwo(double expectedprice, double physicalposition, double ...capitalbase) {
 		SellOffer ret = new SellOffer();
 		ret.setselloffervol(physicalposition - ((sharesoldtatdiscount*physicalposition))); //rest of the monthly production sold at expected price.
 		ret.setsellofferprice(expectedprice);
+		if (physicalposition == 0) {
+			ret = null;
+		}
 		return ret;
 		}
 	
 	public void updatetacticselloffers(double expectedprice, double physicalposition, double ...capitalbase) {
 		if (physicalposition <= 0){
-			physicalposition = 0.00001;} //To not get crazy selloffers
+			physicalposition = 0.0;} //To not get crazy selloffers
 		tacticselloffers.clear();
 		sellofferone = creatSellOfferone(expectedprice,physicalposition);
 		selloffertwo = creatSellOffertwo(expectedprice,physicalposition);

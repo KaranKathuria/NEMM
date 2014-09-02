@@ -59,11 +59,11 @@ public static void markettransactions() {
 		double averageprice = 0;
 		aso.removeAll(Collections.singleton(null));
 		for (SellOffer s : aso) {
-			if (s.getSellOfferprice() < (marketprice-ShortTermMarket.getpricestep())) { //In this case the offers was accepted in the market
+			if (s.getSellOfferprice() <= (marketprice-ShortTermMarket.getpricestep())) { //In this case the offers was accepted in the market
 			averageprice = ((averageprice*soldcerts)+(s.getnumberofcert()*s.getSellOfferprice()))/(soldcerts+s.getnumberofcert()); //The new average price
 			soldcerts = soldcerts + s.getnumberofcert();	//Total number of certs sold is updated
 			}
-			if (s.getSellOfferprice() > marketprice-ShortTermMarket.getpricestep() && s.getSellOfferprice() < marketprice+ShortTermMarket.getpricestep()) {
+			if (s.getSellOfferprice() > marketprice-ShortTermMarket.getpricestep() && s.getSellOfferprice() <= marketprice) {
 				averageprice = ((averageprice*soldcerts)+(s.getnumberofcert()*s.getSellOfferprice()*shareoflastoffersold))/(soldcerts+(s.getnumberofcert()*shareoflastoffersold)); //The new average price
 				soldcerts = soldcerts + s.getnumberofcert();	//Total number of certs sold is updated
 			}}
@@ -78,11 +78,11 @@ public static void markettransactions() {
 		double averageprice = 0;
 		abo.removeAll(Collections.singleton(null)); //Have no idea why there are null-offers in the buyoffers list, but this bug is temporarly corrected her.
 		for (BuyOffer b : abo) {
-			if (b.getBuyOfferprice() > (marketprice+ShortTermMarket.getpricestep())) { //In this case the offers was accepted in the market
+			if (b.getBuyOfferprice() >= (marketprice+ShortTermMarket.getpricestep())) { //In this case the offers was accepted in the market
 			averageprice = ((averageprice*boughtcerts)+(b.getnumberofcert()*b.getBuyOfferprice()))/(boughtcerts+b.getnumberofcert()); //The new average price
 			boughtcerts = boughtcerts + b.getnumberofcert();	//Total number of certs sold is updated
 			}
-			if (b.getBuyOfferprice() > (marketprice-ShortTermMarket.getpricestep()) && b.getBuyOfferprice() < (marketprice+ShortTermMarket.getpricestep())) {
+			if (b.getBuyOfferprice() >= (marketprice) && b.getBuyOfferprice() < (marketprice+ShortTermMarket.getpricestep())) {
 				averageprice = ((averageprice*boughtcerts)+(b.getnumberofcert()*b.getBuyOfferprice()*shareoflastofferbought))/(boughtcerts+(b.getnumberofcert()*shareoflastofferbought)); //The new average price
 				boughtcerts = boughtcerts + b.getnumberofcert();	//Total number of certs sold is updated
 			}}
