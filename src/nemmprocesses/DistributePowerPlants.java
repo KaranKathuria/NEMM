@@ -26,7 +26,7 @@ public class DistributePowerPlants {
 			pp.setMyCompany(CommonMethods.getPAgentList().get(i).getmycompany()); //Sets the powerplants company to the first company
 			CommonMethods.getPAgentList().get(i).addpowerplant(pp); //Adds the power plant to this agents list. 
 			i = i+1;
-			if (i == (numberofPA-1) ){
+			if (i == (numberofPA) ){
 				i = 0;}
 			}
 

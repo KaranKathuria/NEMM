@@ -52,21 +52,22 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 			final CompanyAgent agent = new CompanyAgent(false, false, true);
 			context.add(agent);}
 		
-		//Distributes PowerPlants and Demand Shares among the Agents
-		DistributePowerPlants.distributeallpowerplants();
+		//Distributing of Power Plants and Demand Shares among the Agents are taken in the annual schedual
+			
+ return context;}
 	
-		
-		
- return context;
-}
-
 // ========================================================================
 // === Simulation schedule ===========================================================
 
-	//The monthly update. Updates the monthly market, interest rates etc.
+	//The annual update of the project process as descried in the model specification. 
+@ScheduledMethod(start = 1, priority = 3)
+	public void Distributions() {
+	DistributePowerPlants.distributeallpowerplants();
+}
+	//The monthly update
 @ScheduledMethod(start = 1, interval = 1, priority = 1)
 public void monthlymarketschedule() {
-
+	
 	ShortTermMarket.runshorttermmarket(); //updates all offers for all agents strategies and clears the market based on the best strategies , best tactics offers. 
 	UpdatePhysicalPosition.markettransactions();//updates the market outcomes and hence the physical position for all agents based on what they bid into the market
 	//UpdatePhysicalPosition.runproduction(); //Loops to all powerplants and adds this ticks prodution to the CompanyAgents producers agents physical position. 
@@ -74,7 +75,7 @@ public void monthlymarketschedule() {
 	UtilitiesStrategiesTactics.calculatetilitiesandupdatebesttactics(); //Calculates the tactic and strategies utilities and changes the best tactics. 
 	GlobalValues.monthlyglobalvalueupdate();
 }
-	//The annual market update. Updates the long term market, interest rates etc, annually (thats why interval = 12). Notice as this i running in the same "tick" as the montly update
+
 	// the lates monthly update is "hidden" for this update. 
 @ScheduledMethod(start = 1, interval = 12, priority = 2)
 public void annualmarketschedule() {
@@ -83,10 +84,10 @@ public void annualmarketschedule() {
 		
 }
 
-	//The annual update of the project process as descried in the model specification. 
+	//Distributing of Power Plants and Demand Shares
 @ScheduledMethod(start = 1, interval = 12, priority = 0)
 public void projectprocesschedule() {
-				// For updating the project process. Values form this can be displayed in a histogram-chart.
+		
 
 	}
 

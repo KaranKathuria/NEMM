@@ -75,6 +75,7 @@ public class CompanyAgent extends ParentAgent {
 				allstrategies.add(tradestrategy);
 				capitalbase = 1000000; 
 			} 
+			companyagent = CompanyAgent.this;
 			beststrategy = allstrategies.get(0); // Choose the first one initially 
 			numberofstrategies = allstrategies.size();
 		}
@@ -158,7 +159,7 @@ public class CompanyAgent extends ParentAgent {
 		}
 		
 	//Back to CompanyAgent documentation
-	private String companyname = "The Company";
+	private String companyname;
 	private ActiveAgent produceragent;
 	private ActiveAgent obligatedpurchaseragent;
 	private ActiveAgent traderagent;
@@ -187,7 +188,7 @@ public class CompanyAgent extends ParentAgent {
 			traderagent = new ActiveAgent(3);}
 //		if (t==false) {
 //			traderagent = null;}
-		
+		companyname = "Company " + this.getID();
 		companyanalysisagent = new CompanyAnalysisAgent();	
 		}	
 	//CompanyAgents methods

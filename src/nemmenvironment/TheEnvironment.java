@@ -102,7 +102,7 @@ public final class TheEnvironment {
 			int selectedRegion = CommonMethods.randInt(0, allRegions.size()-1);
 			// Create the plant and store it in the list
 			PowerPlant newplant = new PowerPlant(newcap, newlf, allRegions.get(selectedRegion));
-			double[] defProd = new double[0];
+			double[] defProd = new double[1];
 			defProd[0] = 1000;
 			newplant.setAllProduction(defProd); //  production in each tick set to a default
 			allPowerPlants.add(newplant);

@@ -11,18 +11,27 @@ import nemmtime.NemmTime;
 public class PowerPlant {
 
 	private int capacity;
+	private static int nextid = 1;
+	private final int id;
 	private double loadfactor;
 	private String name;
 	private Region myRegion;
 	private CompanyAgent myCompany;
 	private TickArray myProduction;
 	
+	public PowerPlant() {
+		id = nextid++;
+	}
+	
 	public PowerPlant(int newcapacity, double newloadfactor, Region newregion) {
-		name = "temp name";
+		id = nextid++;
+		name = "PowerPlant " + id;
 		capacity = newcapacity;
 		loadfactor = newloadfactor;
 		myRegion = newregion;
 		myProduction = new TickArray();
+		
+		
 	}
 
 	// Gets & Sets ------------------------------------------------------------------------
