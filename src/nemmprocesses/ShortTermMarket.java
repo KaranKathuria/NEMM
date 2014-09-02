@@ -84,7 +84,9 @@ public class ShortTermMarket {
 		
 		int numberofbuyoffers = Allbuyoffers.size(); 
 		int numberofselloffers = Allselloffers.size();
-		
+		if (numberofbuyoffers == 0 || numberofselloffers == 0){ //Sets price to null, and stops the execution in case one side of the market is null.
+			currentmarketprice = 0;
+			return;}
 		//Time for sorting the buy and selloffers. The comparator for objects sell and buyoffers are implementer in CommonMethods. Sort from lowest to highest. 
 		Collections.sort(Allselloffers, new CommonMethods.customselloffercomparator());
 		Collections.sort(Allbuyoffers, new CommonMethods.custombuyoffercomparator());
