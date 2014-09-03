@@ -63,6 +63,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 @ScheduledMethod(start = 1, priority = 3)
 	public void Distributions() {
 	DistributePowerPlants.distributeallpowerplants();
+	DistributeDemandShares.Uniformdemanddistribution(5, 5);
 }
 	//The monthly update
 @ScheduledMethod(start = 1, interval = 1, priority = 1)

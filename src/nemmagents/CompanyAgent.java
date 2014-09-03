@@ -121,6 +121,10 @@ public class CompanyAgent extends ParentAgent {
 		public void addpowerplant(PowerPlant pp) {
 			myPowerPlants.add(pp);	
 		}
+		public void AddDemandShare(double defaultShare, Region demRegion){
+			CompanyDemandShare tempDS = new CompanyDemandShare(defaultShare, demRegion);
+			myDemandShares.add(tempDS);
+		}
 		public CompanyAgent getmycompany() {
 			return this.companyagent;
 		}
