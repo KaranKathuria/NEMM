@@ -689,3 +689,398 @@ java.lang.NullPointerException
 	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
 	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
 	at java.awt.EventDispatchThread.run(Unknown Source)
+FATAL [Thread-5] 2014-09-03 16:23:43,783 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (1.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.NullPointerException
+	at nemmprocesses.UpdatePhysicalPosition.updatedemand(UpdatePhysicalPosition.java:115)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:75)
+	... 9 more
+FATAL [Thread-5] 2014-09-03 16:31:31,057 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (1.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.NullPointerException
+	at nemmprocesses.UpdatePhysicalPosition.updatedemand(UpdatePhysicalPosition.java:115)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:75)
+	... 9 more
+FATAL [Thread-8] 2014-09-03 16:38:39,518 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Tick ID: 36 passed to getElement is too large
+	at nemmcommons.TickArray.getElement(TickArray.java:48)
+	at nemmenvironment.PowerPlant.getProduction(PowerPlant.java:85)
+	at nemmprocesses.UpdatePhysicalPosition.runproduction(UpdatePhysicalPosition.java:105)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:74)
+	... 9 more
+FATAL [Thread-9] 2014-09-03 16:39:56,581 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Tick ID: 36 passed to getElement is too large
+	at nemmcommons.TickArray.getElement(TickArray.java:48)
+	at nemmenvironment.PowerPlant.getProduction(PowerPlant.java:85)
+	at nemmprocesses.UpdatePhysicalPosition.runproduction(UpdatePhysicalPosition.java:105)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:74)
+	... 9 more
+FATAL [Thread-10] 2014-09-03 16:40:22,634 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Tick ID: 36 passed to getElement is too large
+	at nemmcommons.TickArray.getElement(TickArray.java:48)
+	at nemmenvironment.PowerPlant.getProduction(PowerPlant.java:85)
+	at nemmprocesses.UpdatePhysicalPosition.runproduction(UpdatePhysicalPosition.java:105)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:74)
+	... 9 more
+FATAL [Thread-11] 2014-09-03 16:40:50,697 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Tick ID: 36 passed to getElement is too large
+	at nemmcommons.TickArray.getElement(TickArray.java:48)
+	at nemmenvironment.PowerPlant.getProduction(PowerPlant.java:85)
+	at nemmprocesses.UpdatePhysicalPosition.runproduction(UpdatePhysicalPosition.java:105)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:74)
+	... 9 more
+FATAL [Thread-12] 2014-09-03 16:41:12,641 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Tick ID: 36 passed to getElement is too large
+	at nemmcommons.TickArray.getElement(TickArray.java:48)
+	at nemmenvironment.PowerPlant.getProduction(PowerPlant.java:85)
+	at nemmprocesses.UpdatePhysicalPosition.runproduction(UpdatePhysicalPosition.java:105)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:74)
+	... 9 more
+FATAL [Thread-13] 2014-09-03 16:41:35,529 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Tick ID: 36 passed to getElement is too large
+	at nemmcommons.TickArray.getElement(TickArray.java:48)
+	at nemmenvironment.PowerPlant.getProduction(PowerPlant.java:85)
+	at nemmprocesses.UpdatePhysicalPosition.runproduction(UpdatePhysicalPosition.java:105)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:74)
+	... 9 more
+FATAL [Thread-14] 2014-09-03 16:42:02,007 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Tick ID: 36 passed to getElement is too large
+	at nemmcommons.TickArray.getElement(TickArray.java:48)
+	at nemmenvironment.PowerPlant.getProduction(PowerPlant.java:85)
+	at nemmprocesses.UpdatePhysicalPosition.runproduction(UpdatePhysicalPosition.java:105)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:74)
+	... 9 more
+FATAL [Thread-15] 2014-09-03 16:42:32,381 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Tick ID: 36 passed to getElement is too large
+	at nemmcommons.TickArray.getElement(TickArray.java:48)
+	at nemmenvironment.PowerPlant.getProduction(PowerPlant.java:85)
+	at nemmprocesses.UpdatePhysicalPosition.runproduction(UpdatePhysicalPosition.java:105)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:74)
+	... 9 more
+FATAL [Thread-16] 2014-09-03 16:42:58,322 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Tick ID: 36 passed to getElement is too large
+	at nemmcommons.TickArray.getElement(TickArray.java:48)
+	at nemmenvironment.PowerPlant.getProduction(PowerPlant.java:85)
+	at nemmprocesses.UpdatePhysicalPosition.runproduction(UpdatePhysicalPosition.java:105)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:74)
+	... 9 more
+FATAL [Thread-17] 2014-09-03 16:44:25,747 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Tick ID: 36 passed to getElement is too large
+	at nemmcommons.TickArray.getElement(TickArray.java:48)
+	at nemmenvironment.PowerPlant.getProduction(PowerPlant.java:85)
+	at nemmprocesses.UpdatePhysicalPosition.runproduction(UpdatePhysicalPosition.java:105)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:74)
+	... 9 more
+FATAL [Thread-18] 2014-09-03 16:44:33,261 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Tick ID: 36 passed to getElement is too large
+	at nemmcommons.TickArray.getElement(TickArray.java:48)
+	at nemmenvironment.PowerPlant.getProduction(PowerPlant.java:85)
+	at nemmprocesses.UpdatePhysicalPosition.runproduction(UpdatePhysicalPosition.java:105)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:74)
+	... 9 more
+FATAL [Thread-19] 2014-09-03 16:44:41,413 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Tick ID: 36 passed to getElement is too large
+	at nemmcommons.TickArray.getElement(TickArray.java:48)
+	at nemmenvironment.PowerPlant.getProduction(PowerPlant.java:85)
+	at nemmprocesses.UpdatePhysicalPosition.runproduction(UpdatePhysicalPosition.java:105)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:74)
+	... 9 more
+FATAL [Thread-20] 2014-09-03 16:45:00,663 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Tick ID: 36 passed to getElement is too large
+	at nemmcommons.TickArray.getElement(TickArray.java:48)
+	at nemmenvironment.PowerPlant.getProduction(PowerPlant.java:85)
+	at nemmprocesses.UpdatePhysicalPosition.runproduction(UpdatePhysicalPosition.java:105)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:74)
+	... 9 more
+FATAL [Thread-21] 2014-09-03 16:45:39,691 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Tick ID: 36 passed to getElement is too large
+	at nemmcommons.TickArray.getElement(TickArray.java:48)
+	at nemmenvironment.PowerPlant.getProduction(PowerPlant.java:85)
+	at nemmprocesses.UpdatePhysicalPosition.runproduction(UpdatePhysicalPosition.java:105)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:74)
+	... 9 more
+FATAL [Thread-22] 2014-09-03 16:46:07,764 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Tick ID: 36 passed to getElement is too large
+	at nemmcommons.TickArray.getElement(TickArray.java:48)
+	at nemmenvironment.PowerPlant.getProduction(PowerPlant.java:85)
+	at nemmprocesses.UpdatePhysicalPosition.runproduction(UpdatePhysicalPosition.java:105)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:74)
+	... 9 more
+FATAL [Thread-23] 2014-09-03 16:46:32,241 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Tick ID: 36 passed to getElement is too large
+	at nemmcommons.TickArray.getElement(TickArray.java:48)
+	at nemmenvironment.PowerPlant.getProduction(PowerPlant.java:85)
+	at nemmprocesses.UpdatePhysicalPosition.runproduction(UpdatePhysicalPosition.java:105)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:74)
+	... 9 more
+FATAL [Thread-24] 2014-09-03 16:48:23,591 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Tick ID: 36 passed to getElement is too large
+	at nemmcommons.TickArray.getElement(TickArray.java:48)
+	at nemmenvironment.PowerPlant.getProduction(PowerPlant.java:85)
+	at nemmprocesses.UpdatePhysicalPosition.runproduction(UpdatePhysicalPosition.java:105)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:74)
+	... 9 more

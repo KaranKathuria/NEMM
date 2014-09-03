@@ -102,17 +102,17 @@ public static void markettransactions() {
 public static void runproduction() {
 	
 	for (PowerPlant pp : TheEnvironment.allPowerPlants) {
-		pp.getMyCompany().getproduceragent().addtophysicalposition((int) pp.getProduction()); //Cased as int temporarly. Pushes this ticks production to agents physical position.
+		pp.getMyCompany().getproduceragent().addtophysicalposition(pp.getProduction()); //Cased as int temporarly. Pushes this ticks production to agents physical position.
 	}
 }
 
 public static void updatedemand() {
-	for (CompanyAgent CA : CommonMethods.getCompanyAgenList()) { //For all companyagents
+	for (ActiveAgent AA : CommonMethods.getOPAgentList()) { //For all activeagents type obligatedpurchaser. THis could have been done for the Companyagent also, but this is faster.
 		double tempdemand = 0; //tempvalue
-		for (CompanyDemandShare CDS : CA.getMyDemandShares()) { //Go through all demandshares (which consists of a region and a share. 
+		for (CompanyDemandShare CDS : AA.getMyDemandShares()) { //Go through all demandshares (which consists of a region and a share. 
 			tempdemand = tempdemand + CDS.getMyRegion().getMyDemand().getCertDemand() * CDS.getDemandShare(); //Sum the product of that regions demandshare with that regions demand, for current tick. 
 		}
-		CA.getobligatedpurchaseragent().addtophysicalposition(-(int) tempdemand); //Note sure if you want to define a demand as a negative or positive number. 
+		AA.addtophysicalposition(-tempdemand); //Note sure if you want to define a demand as a negative or positive number. 
 	}
 }
 

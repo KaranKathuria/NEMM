@@ -40,8 +40,8 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	private SellOffer creatSellOfferone(double expectedprice, double physicalposition, double capitalbase) {
 		SellOffer ret = new SellOffer();
 		ret.setsellofferprice((1+premium)*expectedprice); 
-		ret.setselloffervol(1000);//For now, they always buy or sell 1000 units, but they cannot go short. 
-		if (physicalposition < 1000) {
+		ret.setselloffervol(100);//For now, they always buy or sell 1000 units, but they cannot go short. 
+		if (physicalposition < 100) {
 			ret.setselloffervol(physicalposition);
 		}
 		if (physicalposition <= 0) {
@@ -51,9 +51,9 @@ public class TradeStrategy1Tactic extends GenericTactic {
 		}
 	private BuyOffer creatBuyOfferone(double expectedprice, double physicalposition, double capitalbase) {
 		BuyOffer ret = new BuyOffer();
-		ret.setbuyoffervol(1000); //int in order to only sell integer values of certs.
+		ret.setbuyoffervol(100); //int in order to only sell integer values of certs.
 		ret.setbuyofferprice((1-discount)*expectedprice); 
-		if (capitalbase < 1000*((1+premium)*expectedprice)) {
+		if (capitalbase < 100*((1+premium)*expectedprice)) {
 		ret.setbuyoffervol(capitalbase/(((1-discount)*expectedprice)));} //If the capitalbase is less than can afford 1000 certs at expected price offered, then reduced the amount to what 
 		return ret;
 		}

@@ -73,7 +73,7 @@ public class CompanyAgent extends ParentAgent {
 				utilitymethod = new TAUtilityMethod();
 				TradeStrategy1 tradestrategy = new TradeStrategy1();
 				allstrategies.add(tradestrategy);
-				capitalbase = 1000000; 
+				capitalbase = 100000; 
 			} 
 			companyagent = CompanyAgent.this;
 			beststrategy = allstrategies.get(0); // Choose the first one initially 
@@ -125,6 +125,9 @@ public class CompanyAgent extends ParentAgent {
 			CompanyDemandShare tempDS = new CompanyDemandShare(defaultShare, demRegion);
 			myDemandShares.add(tempDS);
 		}
+		public ArrayList<CompanyDemandShare> getMyDemandShares() {
+			return myDemandShares;
+		}	
 		public CompanyAgent getmycompany() {
 			return this.companyagent;
 		}
@@ -207,10 +210,6 @@ public class CompanyAgent extends ParentAgent {
 	}
 	public CompanyAnalysisAgent getcompanyanalysisagent() {
 		return companyanalysisagent;}
-	
-	public ArrayList<CompanyDemandShare> getMyDemandShares() {
-	return this.myDemandShares;
-	}	
 	
 }
 	
