@@ -65,7 +65,7 @@ public static void markettransactions() {
 			}
 			if (s.getSellOfferprice() > marketprice-ShortTermMarket.getpricestep() && s.getSellOfferprice() <= marketprice) {
 				averageprice = ((averageprice*soldcerts)+(s.getnumberofcert()*s.getSellOfferprice()*shareoflastoffersold))/(soldcerts+(s.getnumberofcert()*shareoflastoffersold)); //The new average price
-				soldcerts = soldcerts + s.getnumberofcert();	//Total number of certs sold is updated
+				soldcerts = soldcerts + (s.getnumberofcert()*shareoflastoffersold);	//Total number of certs sold is updated
 			}}
 			ret.averageprice = averageprice;
 			ret.numberofcert = soldcerts;
@@ -90,7 +90,7 @@ public static void markettransactions() {
 			}
 			if (b.getBuyOfferprice() >= (marketprice) && b.getBuyOfferprice() < (marketprice+ShortTermMarket.getpricestep())) {
 				averageprice = ((averageprice*boughtcerts)+(b.getnumberofcert()*b.getBuyOfferprice()*shareoflastofferbought))/(boughtcerts+(b.getnumberofcert()*shareoflastofferbought)); //The new average price
-				boughtcerts = boughtcerts + b.getnumberofcert();	//Total number of certs sold is updated
+				boughtcerts = boughtcerts + (b.getnumberofcert()*shareoflastofferbought);	//Total number of certs sold is updated
 			}}
 			ret.averageprice = averageprice;
 			ret.numberofcert = boughtcerts;

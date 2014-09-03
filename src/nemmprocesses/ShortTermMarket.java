@@ -126,7 +126,7 @@ public class ShortTermMarket {
 					supply = supply + s.getnumberofcert();}
 			}
 			diff = Math.abs(demand-supply);
-			if (diff<mindiff && supply>0 && demand>0) {
+			if (diff<=mindiff && supply>0 && demand>0) {
 				//marketsupply = supply;
 				mindiff = diff;
 				tradedvolume = Math.min(supply, demand);
@@ -148,7 +148,7 @@ public class ShortTermMarket {
 				if (marginalsupply<accessupply) {
 					shareofmarignalselloffersold = 0;}
 				else {
-				shareofmarignalselloffersold =(marginalsupply - accessupply)/marginalsupply;
+				shareofmarignalselloffersold = (marginalsupply - accessupply)/marginalsupply;
 				}
 			}
 			else {
