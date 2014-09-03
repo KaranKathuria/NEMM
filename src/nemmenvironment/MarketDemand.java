@@ -51,15 +51,16 @@ public class MarketDemand {
 			for (int y = 0; y < numTicks; ++y){
 				powerDemand.setElement(powerDem[0], y);
 				certKvoteplikt.setElement(certPlikt[0], y);
+				certDemand.setElement(powerDem[0]*certPlikt[0] , y);
 			}
 		}
 		else {
 			powerDemand.setArray(powerDem);
 			certKvoteplikt.setArray(certPlikt);
-		}
+		
 		// calculate the certificate demand
 		certDemand.setArray(CommonMethods.elArrayMult(powerDemand.getArray(),certKvoteplikt.getArray()));
-		
+		}
 	}
 		
 	public double getPowerDemand(int... tickID) {

@@ -17,8 +17,8 @@ public class DistributeDemandShares {
 	
 	public static void Uniformdemanddistribution(int agentsregion1, int agentsregion2) {
 		if (TheEnvironment.allRegions.size() == 2){
-		double demandshareregion1 = (1/agentsregion1);
-		double demandshareregion2 = (1/agentsregion2);
+		double demandshareregion1 = (double) (1/(double) agentsregion1);
+		double demandshareregion2 = (double) (1/(double) agentsregion2);
 		int numberofregions;
 		int numberofOPAgents = CommonMethods.getOPAgentList().size();
 		Region region1 = TheEnvironment.allRegions.get(0);
@@ -34,6 +34,7 @@ public class DistributeDemandShares {
 		
 		for (int j = 0; j < agentsregion2; ++j) { //Likewise for region2
 			CommonMethods.getOPAgentList().get(agentcount).AddDemandShare(demandshareregion2, region2);
+			agentcount = agentcount+1;
 			if (agentcount == numberofOPAgents){ 
 				agentcount = 0;}} //Starts share to agents all over if all agents have recived a share.
 			

@@ -211,10 +211,6 @@ public class CompanyAgent extends ParentAgent {
 	public ArrayList<CompanyDemandShare> getMyDemandShares() {
 	return this.myDemandShares;
 	}	
-	public void AddNewDemandShare(double defaultShare, Region demRegion){
-	CompanyDemandShare tempDS = new CompanyDemandShare(defaultShare, demRegion);
-	this.myDemandShares.add(tempDS);
-	}
 	
 }
 	
