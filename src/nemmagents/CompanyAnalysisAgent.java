@@ -7,7 +7,6 @@
  */
 package nemmagents;
 //Imports
-import nemmcommons.GlobalValues;
 import nemmcommons.ParameterWrapper;
 import nemmagents.ParentAgent;
 

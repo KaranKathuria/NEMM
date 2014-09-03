@@ -2,8 +2,12 @@ package nemmenvironment;
 
 import java.util.ArrayList;
 
+import repast.simphony.random.RandomHelper;
 import nemmagents.CompanyAgent;
+import nemmagents.CompanyAgent.ActiveAgent;
 import nemmcommons.CommonMethods;
+import nemmcommons.ParameterWrapper;
+import nemmprocesses.ShortTermMarket;
 import nemmtime.NemmCalendar;
 
 public final class TheEnvironment {
@@ -14,28 +18,15 @@ public final class TheEnvironment {
 	public static ArrayList<CompanyAgent> allCompanies;
 	public static NemmCalendar theCalendar;
 	
-	//Global Values
-	
-	
-	/**
-	 * 
-	 */
-	private TheEnvironment() {
-
-	}
+	private TheEnvironment() {}
 	
 	// Initialise the environment ------------------------------------------------------------
-	
-	
 	public static void InitEnvironment(){
 		// Create & set up the time calendar and create the lists
 		// to hold the plants, companies, and regions
-
-		
 		ReadCreateTime();
 		allPowerPlants = new ArrayList<PowerPlant>() ;
 		allRegions = new ArrayList<Region>() ;	
-
 		
 	}
 
@@ -57,9 +48,7 @@ public final class TheEnvironment {
 		PopulatePowerPrices();
 		PopulateMarketDemands();
 	}
-	
 
-	
 	public static void ReadCreateRegions() {
 		// this will read in the region info and create the corresponding
 		// objects and populate them with data. 
@@ -131,7 +120,80 @@ public final class TheEnvironment {
 			newPrice[0] = 200;
 			curRegion.getMyPowerPrice().initMarketSeries(newPrice);
 		}		
-	}	
+	}
+	
+	public static class GlobalValues {
+		
+		public static double currentmarketprice;
+		public static double currentinterestrate;
+		public static int numberofbuyoffersstm;
+		public static int numberofselloffersstm;
+		// Future cert prices
+		public static double endofyearpluss1;
+		public static double endofyearpluss2;
+		public static double endofyearpluss3;
+		public static double endofyearpluss4;
+		public static double endofyearpluss5;
+		// Power prices (pp), current and future. 
+		public static double powerprice;
+		public static double ppendofyearpluss1;
+		public static double ppendofyearpluss2;
+		public static double ppendofyearpluss3;
+		public static double ppendofyearpluss4;
+		public static double ppendofyearpluss5;
+		
+		public static double producersphysicalposition = 0;
+		public static double tradersphysicalposition = 0;
+		public static double obligatedpurchasersphysiclaposition = 0;
+		public static double totalmarketphysicalposition = 0;
+		
+		public GlobalValues() {
+			currentmarketprice = ParameterWrapper.getpriceexpectation();
+		}
+		public static void initglobalvalues() {
+			//Initially the global market price is set to that of the price expectations
+			currentmarketprice = ParameterWrapper.getpriceexpectation();
+			currentinterestrate = ParameterWrapper.getinitialinterestrate();
+			producersphysicalposition = 10000;
+			tradersphysicalposition = 0;
+			obligatedpurchasersphysiclaposition = -10000;
+			totalmarketphysicalposition = 0;
+			}
+		public static void marketshock() {
+			//Modelling the effect of resetting the market price
+			currentmarketprice = ParameterWrapper.getpriceexpectation();
+			}
+		// Monthly update of current global values
+		public static void monthlyglobalvalueupdate() {
+			currentmarketprice = ShortTermMarket.getcurrentmarketprice();
+			currentinterestrate = currentinterestrate + RandomHelper.nextDoubleFromTo(-0.002, 0.002);
+			numberofbuyoffersstm = ShortTermMarket.getnumberofbuyoffers();
+			numberofselloffersstm = ShortTermMarket.getnumberofselloffers();
+			
+			producersphysicalposition = 0;
+			tradersphysicalposition = 0;
+			obligatedpurchasersphysiclaposition = 0;
+			
+			for (ActiveAgent pa: CommonMethods.getPAgentList()){
+				producersphysicalposition = producersphysicalposition + pa.getphysicalnetposition();	
+			}
+			for (ActiveAgent opa: CommonMethods.getOPAgentList()){
+				obligatedpurchasersphysiclaposition = obligatedpurchasersphysiclaposition + opa.getphysicalnetposition();	
+			}
+			for (ActiveAgent ta: CommonMethods.getTAgentList()){
+				totalmarketphysicalposition = totalmarketphysicalposition + ta.getphysicalnetposition();	
+			}
+			totalmarketphysicalposition = totalmarketphysicalposition + obligatedpurchasersphysiclaposition + producersphysicalposition;
+		}
+		// Annual update of annual chaning global values
+		public static void annualglobalvalueupdate() {
+			endofyearpluss1 = currentmarketprice*(1+currentinterestrate);
+			endofyearpluss2 = currentmarketprice*Math.pow((1+currentinterestrate), 2);
+			endofyearpluss3 = currentmarketprice*Math.pow((1+currentinterestrate), 3);
+			endofyearpluss4 = currentmarketprice*Math.pow((1+currentinterestrate), 4);
+			endofyearpluss5 = currentmarketprice*Math.pow((1+currentinterestrate), 5);
+		}
+	}
 	
 	
 }

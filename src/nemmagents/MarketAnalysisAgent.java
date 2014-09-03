@@ -9,8 +9,8 @@
  */
 package nemmagents;
 //Imports
-import nemmcommons.GlobalValues;
-import nemmcommons.ParameterWrapper;
+
+
 import nemmcommons.MarketPrognosis;
 import nemmagents.ParentAgent;
 

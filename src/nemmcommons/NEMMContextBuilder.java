@@ -35,7 +35,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 		//Initialize parameters
 		ParameterWrapper.reinit(); //Reads the parametervalues provided
 		//Create the Environment
-		GlobalValues.initglobalvalues(); //initiates the global values such as price by giving them the parametervalues from the above method. 
+		TheEnvironment.GlobalValues.initglobalvalues(); //initiates the global values such as price by giving them the parametervalues from the above method. 
 		TheEnvironment.InitEnvironment();
 		TheEnvironment.PopulateEnvironment();
 	
@@ -74,20 +74,21 @@ public void monthlymarketschedule() {
 	//UpdatePhysicalPosition.runproduction(); //Loops to all powerplants and adds this ticks prodution to the CompanyAgents producers agents physical position. 
 	//UpdatePhysicalPosition.updatedemand(); //Adds demand to the CompanyAgents physicalposition
 	UtilitiesStrategiesTactics.calculatetilitiesandupdatebesttactics(); //Calculates the tactic and strategies utilities and changes the best tactics. 
-	GlobalValues.monthlyglobalvalueupdate();
+	TheEnvironment.GlobalValues.monthlyglobalvalueupdate();
 }
 
 	// the lates monthly update is "hidden" for this update. 
 @ScheduledMethod(start = 1, interval = 12, priority = 2)
 public void annualmarketschedule() {
 	//Priority 2 means that whenever the tick is 12 (annual tick) this will be ran first. If the priority is the same, the order is random. 
-		GlobalValues.annualglobalvalueupdate();
+		TheEnvironment.GlobalValues.annualglobalvalueupdate();
 		
 }
 
 	//Distributing of Power Plants and Demand Shares
-@ScheduledMethod(start = 1, interval = 12, priority = 0)
+@ScheduledMethod(start = 1, interval = 36, priority = 0)
 public void projectprocesschedule() {
+	
 		
 
 	}
@@ -102,13 +103,13 @@ public void projectprocesschedule() {
 		return ShortTermMarket.getcurrentmarketprice();
 }
 	public double currentinterestrate() {
-		return GlobalValues.currentinterestrate;
+		return TheEnvironment.GlobalValues.currentinterestrate;
 }	
 	public int numberofbuyoffers() {
-		return GlobalValues.numberofbuyoffersstm;
+		return TheEnvironment.GlobalValues.numberofbuyoffersstm;
 	}
 	public int numberofselloffers() {
-		return GlobalValues.numberofselloffersstm;
+		return TheEnvironment.GlobalValues.numberofselloffersstm;
 	}
 	public double marketdemand() {
 		return ShortTermMarket.getmarketdemand();
@@ -121,13 +122,16 @@ public void projectprocesschedule() {
 	}
 	
 	public double getproducersphysicalposition() {
-		return GlobalValues.producersphysicalposotion;
+		return TheEnvironment.GlobalValues.producersphysicalposition;
 	}	
 	public double gettradersphysicalposition() {
-		return GlobalValues.tradersphysicalposotion;
+		return TheEnvironment.GlobalValues.tradersphysicalposition;
 	}
 	public double getobligatedpurchaserssphysicalposition() {
-		return GlobalValues.obligatedpurchasersphysiclaposotion;
+		return TheEnvironment.GlobalValues.obligatedpurchasersphysiclaposition;
+	}
+	public double gettotalmarketphysicalposition() {
+		return TheEnvironment.GlobalValues.totalmarketphysicalposition;
 	}
 	
 }
