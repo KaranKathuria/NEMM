@@ -173,6 +173,7 @@ public final class TheEnvironment {
 			producersphysicalposition = 0;
 			tradersphysicalposition = 0;
 			obligatedpurchasersphysiclaposition = 0;
+			totalmarketphysicalposition = 0;
 			
 			for (ActiveAgent pa: CommonMethods.getPAgentList()){
 				producersphysicalposition = producersphysicalposition + pa.getphysicalnetposition();	
@@ -181,9 +182,9 @@ public final class TheEnvironment {
 				obligatedpurchasersphysiclaposition = obligatedpurchasersphysiclaposition + opa.getphysicalnetposition();	
 			}
 			for (ActiveAgent ta: CommonMethods.getTAgentList()){
-				totalmarketphysicalposition = totalmarketphysicalposition + ta.getphysicalnetposition();	
+				tradersphysicalposition = tradersphysicalposition + ta.getphysicalnetposition();	
 			}
-			totalmarketphysicalposition = totalmarketphysicalposition + obligatedpurchasersphysiclaposition + producersphysicalposition;
+			totalmarketphysicalposition = tradersphysicalposition + obligatedpurchasersphysiclaposition + producersphysicalposition;
 		}
 		// Annual update of annual chaning global values
 		public static void annualglobalvalueupdate() {

@@ -74,6 +74,12 @@ public static void markettransactions() {
 	
 	public static BoughtInSTM returnboughtvolume(ArrayList<BuyOffer> abo, double marketprice, double shareoflastofferbought) { //Method calculation the outcome of a selloffers array offered in a STM market
 		BoughtInSTM ret = new BoughtInSTM();
+		if (marketprice == 0) { //All would have bought, but the price is zero.
+			ret.averageprice = 0.0;
+			ret.numberofcert = 0.0;
+			return ret;
+		}
+		else {
 		double boughtcerts = 0;
 		double averageprice = 0;
 		abo.removeAll(Collections.singleton(null)); //Have no idea why there are null-offers in the buyoffers list, but this bug is temporarly corrected her.
@@ -89,6 +95,7 @@ public static void markettransactions() {
 			ret.averageprice = averageprice;
 			ret.numberofcert = boughtcerts;
 		return ret;
+		}
 	}
 	
 

@@ -88,9 +88,9 @@ public void annualmarketschedule() {
 	//Distributing of Power Plants and Demand Shares
 @ScheduledMethod(start = 1, interval = 36, priority = 0)
 public void projectprocesschedule() {
+	TheEnvironment.GlobalValues.marketshock();
 	
-		
-
+	
 	}
 
 // ========================================================================

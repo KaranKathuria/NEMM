@@ -99,7 +99,7 @@ public class ShortTermMarket {
 		initLow = Math.min(Allbuyoffers.get(0).getBuyOfferprice(), Allselloffers.get(0).getSellOfferprice()); 
 		initHigh = Math.max(Allbuyoffers.get(numberofbuyoffers-1).getBuyOfferprice(), Allselloffers.get(numberofselloffers-1).getSellOfferprice());
 		double low = initLow;
-		double temphigh = initHigh;
+		double high = initHigh;
 		double certprice = 0;
 		double mindiff = 2000000000;
 		
@@ -107,7 +107,7 @@ public class ShortTermMarket {
 		//Finds market price. Iterates thorugh all steps, calculates diffs in demand and supply and set price where diff is minimal
 		//I situasjoner hvor krysset har ulike salgs og kj�psvillighet. Alts� at i den prisen hvor volume maksimeres, s� er selgeren villig til � selge billigere enn alle kj�pere er villig til � kj�pe. Dette er en lik situsajon som at to markedspriser gir samme maksimert handlet volum. 
 		//Hva blir prisen da? Forel�pig satt til det laveste. Dette er ok, siden det ikke vil skje s� ofte n�r budene er mange. 
-		for (int i = 0, n = (int) ((initHigh-initLow)/pricestep); i <= n; ++i) { //For all price steps
+		for (int i = 0, n = (int) (((initHigh-initLow)/pricestep)+0.5); i <= n; ++i) { //For all price steps
 			//Get supply
 			// Get price with lowes abs diff in s and d
 			double tempprice;
