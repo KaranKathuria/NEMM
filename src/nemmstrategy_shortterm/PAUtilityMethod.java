@@ -27,5 +27,5 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 		return ret;
 		}
 }
-	
+	//Change to sum of vilume wieghted bid price for bids under market pruce 
 	

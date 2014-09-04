@@ -30,14 +30,14 @@ public class SellStrategy1 extends GenericStrategy {
 		
 		strategyname = "SellStrategy1";
 		this.strategyutilityscore.add(0.0);
-		numberoftactics = 4;
+		numberoftactics = 20;
 		int seed = RandomWrapper.getstrategyseed(); //Gets a seed form the strategyseed seedgenerator.
 		Random tacticstream = new Random(seed); //uniq stream for this strategies tactics. 
 
 		
 		//Adds four tactics with differen values of sbd and discount, and stores them in alltactics
 		for (int i = 0; i < numberoftactics; ++i) {
-			double randomsharesoldtatdiscount = tacticstream.nextDouble();
+			double randomsharesoldtatdiscount = (tacticstream.nextDouble())-0.1;
 			double randomdiscount = tacticstream.nextDouble(); // RandomHelper.nextDoubleFromTo((i*0.2), ((i*0.2)+0.2));
 			SellStrategy1Tactic tactic = new SellStrategy1Tactic(randomsharesoldtatdiscount, randomdiscount);
 			alltactics.add(tactic);
