@@ -8,9 +8,11 @@
 package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
+import java.lang.*;
 
-import repast.simphony.engine.environment.RunEnvironment;
 import nemmagents.ParentAgent;
+import nemmenvironment.TheEnvironment;
+
 
 
 public class GenericTactic {
@@ -44,9 +46,34 @@ public class GenericTactic {
 	public void updatetactictradeoffers(double expectedprice, double physicalposition, double ...capitalbase) {};
 	public void updatetacticutilityscore(double t) {tacticutilityscore = t;};
 	public void addtactichistory() {};
-	public double gettacticutilityscore() {return tacticutilityscore;}
+//	public double gettacticutilityscore() {return tacticutilityscore;}
 	public ArrayList<HistoricTacticValue> gethistorictacticvalues() {
 		return historictacticvalues;}
+	public double[][] gettacticutilityscore(int numTicks) {
+		// Returns  a 2-D array of length (numTicks,2). The row (first dim) indexes how many ticks
+		// ago the data comes from (e.g. row 2 indexes the data from tick CurrentTick-2-1 (recall - indexes start
+		// at 0)). The first column is the datapoints tickID, the second column is the utility.
+		double[][] utilityScores;
+		int nowTick = TheEnvironment.theCalendar.getCurrentTick();
+		// ensure that you dont try to get data from ticks before tickID = 0
+		int numTicksToGet = Math.min(nowTick,numTicks);
+		utilityScores = new double[numTicksToGet][2];
+		// return the last numTicksToGet utilities
+		for (int i = 0; i < numTicksToGet; ++i) {
+			int tickID = nowTick-i-1;
+			double curUtil = historictacticvalues.get(tickID).tacticutilityscore;
+			int curTickID = historictacticvalues.get(tickID).tickID;
+			// raise error if the tick IDs do not match (it means that we have incorrectly set up
+			// historictacticvalues
+			if (curTickID != tickID){
+				throw new IllegalArgumentException("Tick IDs do not match when trying to retrieve last tactic utility vals");
+			}
+			utilityScores[i][1]=tickID;
+			utilityScores[i][2]=curUtil;
+		}	
+		
+		return utilityScores;
+	}
 
 	
 }

@@ -52,7 +52,7 @@ public class NemmCalendar {
 		Collections.sort(timeBlocks, new NemmTimeCompare());
 	}
 	
-	public static int getCurrentTick() {
+	public int getCurrentTick() {
 		// will grab this from repast
 		return (int) RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 	}
