@@ -25,7 +25,7 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 		double averageprice;
 		double soldcerts;
 		soldcerts = UpdatePhysicalPosition.returnsoldvolume(s, marketprice, shareofmarginaltoffersold).getSoldInSTMcert();
-		averageprice = UpdatePhysicalPosition.returnsoldvolume(s, marketprice, shareofmarginaltoffersold).averageprice;
+		averageprice = UpdatePhysicalPosition.returnsoldvolume(s, marketprice, shareofmarginaltoffersold).getSoldInSTMprice();
 		return soldcerts*averageprice;
 		}
 }

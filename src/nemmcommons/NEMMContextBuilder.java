@@ -60,13 +60,13 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 // === Simulation schedule ===========================================================
 
 	//The annual update of the project process as descried in the model specification. 
-@ScheduledMethod(start = 1, priority = 3)
+@ScheduledMethod(start = 0, priority = 3)
 	public void Distributions() {
 	DistributePowerPlants.distributeallpowerplants();
 	DistributeDemandShares.Uniformdemanddistribution(5, 5);
 }
 	//The monthly update
-@ScheduledMethod(start = 1, interval = 1, priority = 1)
+@ScheduledMethod(start = 0, interval = 1, priority = 1)
 public void monthlymarketschedule() {
 	
 	ShortTermMarket.runshorttermmarket(); //updates all offers for all agents strategies and clears the market based on the best strategies , best tactics offers. 
@@ -78,7 +78,7 @@ public void monthlymarketschedule() {
 }
 
 	// the lates monthly update is "hidden" for this update. 
-@ScheduledMethod(start = 1, interval = 12, priority = 2)
+@ScheduledMethod(start = 0, interval = 12, priority = 2)
 public void annualmarketschedule() {
 	//Priority 2 means that whenever the tick is 12 (annual tick) this will be ran first. If the priority is the same, the order is random. 
 		TheEnvironment.GlobalValues.annualglobalvalueupdate();
@@ -86,7 +86,7 @@ public void annualmarketschedule() {
 }
 
 	//Distributing of Power Plants and Demand Shares
-@ScheduledMethod(start = 1, interval = 36, priority = 0)
+@ScheduledMethod(start = 0, interval = 36, priority = 0)
 public void projectprocesschedule() {
 	ParameterWrapper.reinit();
 	TheEnvironment.GlobalValues.marketshock();

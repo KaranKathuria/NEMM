@@ -56,11 +56,11 @@ public class GenericTactic {
 		double[][] utilityScores;
 		int nowTick = TheEnvironment.theCalendar.getCurrentTick();
 		// ensure that you dont try to get data from ticks before tickID = 0
-		int numTicksToGet = Math.min(nowTick,numTicks);
+		int numTicksToGet = Math.min(nowTick+1,numTicks);
 		utilityScores = new double[numTicksToGet][2];
 		// return the last numTicksToGet utilities
 		for (int i = 0; i < numTicksToGet; ++i) {
-			int tickID = nowTick-i-1;
+			int tickID = nowTick-i;
 			double curUtil = historictacticvalues.get(tickID).tacticutilityscore;
 			int curTickID = historictacticvalues.get(tickID).tickID;
 			// raise error if the tick IDs do not match (it means that we have incorrectly set up

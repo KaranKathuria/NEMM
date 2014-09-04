@@ -48,7 +48,7 @@ public class UtilitiesStrategiesTactics {
 						tempbesttactic = tactic;
 					}
 				}
-				strategy.addstrategyutilityscore((strategy.getbesttactic().gettacticutilityscore()));
+				strategy.addstrategyutilityscore((strategy.getbesttactic().gettacticutilityscore(1))[0][0]);
 				//Note that the strategy utility is set BEFORE the best tactic is updated! This is form the formerly best tactics utility we want to write. 
 				strategy.updatebesttactic(tempbesttactic);	
 			
