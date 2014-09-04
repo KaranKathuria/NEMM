@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import repast.simphony.engine.environment.RunEnvironment;
 import nemmagents.ParentAgent;
+import nemmenvironment.TheEnvironment;
 import nemmstrategy_shortterm.GenericTactic.HistoricTacticValue;
 import nemmstrategy_shortterm.SellOffer;
 import nemmtime.NemmCalendar;
@@ -74,7 +75,7 @@ public class TradeStrategy1Tactic extends GenericTactic {
 		a.tacticsbuyoffers = tacticbuyoffers;
 		a.tacticselloffers = tacticselloffers;
 		a.tacticutilityscore = tacticutilityscore;
-		a.tickID = NemmCalendar.getCurrentTick();
+		a.tickID = TheEnvironment.theCalendar.getCurrentTick();
 		historictacticvalues.add(a);
 	}
 	
