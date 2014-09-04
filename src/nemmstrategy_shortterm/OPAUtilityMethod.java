@@ -26,7 +26,7 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 		double ret;
 		boughtcerts = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMcert();
 		avrbidprice = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughInSTMprice();
-		ret = ( 0.7 * boughtcerts ) - (boughtcerts * 0.5 * (avrbidprice/marketprice)); //Buy as many as possible but with an average bid price as low as possible.
+		ret = avrbidprice*boughtcerts; //Buy as many as possible but with an average bid price as close to market price as possible. (Avrprice is the avr price for the offers bids that where accepted)
 		return ret;}
 
 }

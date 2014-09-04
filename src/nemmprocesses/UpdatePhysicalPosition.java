@@ -56,7 +56,7 @@ public static void markettransactions() {
 	public static SoldInSTM returnsoldvolume(ArrayList<SellOffer> aso, double marketprice, double shareoflastoffersold) { //Method calculation the outcome of a selloffers array offered in a STM market
 		SoldInSTM ret = new SoldInSTM();
 		double soldcerts = 0;
-		double averageprice = 0;
+		double averageprice = 0; //averageprice is the average price for the bids that where accepted
 		aso.removeAll(Collections.singleton(null));
 		for (SellOffer s : aso) {
 			if (s.getSellOfferprice() <= (marketprice-ShortTermMarket.getpricestep())) { //In this case the offers was accepted in the market
@@ -81,7 +81,7 @@ public static void markettransactions() {
 		}
 		else {
 		double boughtcerts = 0;
-		double averageprice = 0;
+		double averageprice = 0; //averageprice is the average price for the bids that where accepted
 		abo.removeAll(Collections.singleton(null)); //Have no idea why there are null-offers in the buyoffers list, but this bug is temporarly corrected her.
 		for (BuyOffer b : abo) {
 			if (b.getBuyOfferprice() >= (marketprice+ShortTermMarket.getpricestep())) { //In this case the offers was accepted in the market
