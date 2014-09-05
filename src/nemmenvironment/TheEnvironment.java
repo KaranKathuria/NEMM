@@ -245,7 +245,7 @@ public final class TheEnvironment {
 	*/
 	public static class GlobalValues {
 		
-		public static TickArray certificateprice = new TickArray();
+		//public static TickArray certificateprice = new TickArray();
 		public static double currentmarketprice;
 		public static double currentinterestrate;
 		public static int numberofbuyoffersstm;
