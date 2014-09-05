@@ -9,10 +9,7 @@
 package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
-
 import nemmprocesses.UpdatePhysicalPosition;
-import nemmstrategy_shortterm.BoughtInSTM;
-import nemmstrategy_shortterm.SoldInSTM;
 
 //Class definition
 public class PAUtilityMethod extends GenericUtilityMethod{

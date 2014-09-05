@@ -10,8 +10,6 @@ package nemmprocesses;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import nemmagents.CompanyAgent;
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmagents.CompanyDemandShare;
 import nemmcommons.CommonMethods;
@@ -21,7 +19,6 @@ import nemmstrategy_shortterm.*;
 import nemmprocesses.ShortTermMarket;
 
 
-//
 public class UpdatePhysicalPosition {
 	
 public UpdatePhysicalPosition(){};
