@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import repast.simphony.engine.environment.RunEnvironment;
 import nemmagents.ParentAgent;
+import nemmcommons.AllVariables;
 import nemmenvironment.TheEnvironment;
 import nemmstrategy_shortterm.BuyOffer;
 import nemmstrategy_shortterm.SellOffer;
@@ -39,7 +40,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	private BuyOffer creatBuyOfferone(double expectedprice, double physicalposition, double ...capitalbase) {
 		BuyOffer ret = new BuyOffer();
 		ret.setbuyoffervol((shareboughtatdiscount*(-physicalposition))); //-As the phisical position of buyer would in most cases be negative, but as the offer only has positive numbers. 
-		ret.setbuyofferprice((1-discount)*expectedprice);
+		ret.setbuyofferprice((1+AllVariables.OPAgentmustbuypremium)*expectedprice); //Given must buy volume price. 
 		if (physicalposition == 0) {
 			ret = null;
 		}
@@ -50,7 +51,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	private BuyOffer creatBuyOffertwo(double expectedprice, double physicalposition, double ...capitalbase) {
 		BuyOffer ret = new BuyOffer();
 		ret.setbuyoffervol((-physicalposition) -( (shareboughtatdiscount*(-physicalposition)))); //rest of the monthly production bought at expected price.
-		ret.setbuyofferprice(expectedprice);
+		ret.setbuyofferprice((1-discount)*expectedprice); //Most likely that the second offer is at at discount. Hence they buy what they dont must, at a discount.
 		if (physicalposition == 0) {
 			ret = null;
 		}

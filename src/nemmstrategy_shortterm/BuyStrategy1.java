@@ -8,14 +8,11 @@
  */
 package nemmstrategy_shortterm;
 
-import static nemmcommons.ParameterWrapper.getproduceragentsnumber;
-
 import java.util.ArrayList;
 import java.util.Random;
-
-import repast.simphony.random.RandomHelper;
+import nemmcommons.AllVariables;
 import nemmcommons.RandomWrapper;
-import nemmstrategy_shortterm.GenericStrategy.*;
+
 
 
 public class BuyStrategy1 extends GenericStrategy {
@@ -33,14 +30,14 @@ public class BuyStrategy1 extends GenericStrategy {
 		
 		strategyname = "BuyStrategy1";
 		strategyutilityscore.add(0.0);
-		numberoftactics = 20;
+		numberoftactics = AllVariables.numberoftacticsBuyStrategy1;
 		int seed = RandomWrapper.getstrategyseed(); //Gets a seed form the strategyseed seedgenerator.
 		Random tacticstream = new Random(seed); //uniq stream for this strategies tactics. 
 		
 		//Adds four tactics with differen values of sbd and discount, and stores them in alltactics
 		for (int i = 0; i < numberoftactics; ++i) {
-			double randomshareboughtatdiscount = (tacticstream.nextDouble())-0.1;
-			double randomdiscount = tacticstream.nextDouble(); //RandomHelper.nextDoubleFromTo((i*0.2), ((i*0.2)+0.2));
+			double randomshareboughtatdiscount = (tacticstream.nextDouble());
+			double randomdiscount = (tacticstream.nextDouble()- 0.25); // between -0.25 and 0.75
 			BuyStrategy1Tactic tactic = new BuyStrategy1Tactic(randomshareboughtatdiscount, randomdiscount);
 			alltactics.add(tactic);
 		}
