@@ -10,8 +10,10 @@ package nemmagents;
 
 //Import section for other methods
 import java.util.ArrayList;
+
 import nemmagents.MarketAnalysisAgent;
 import nemmagents.ParentAgent;
+import nemmprocesses.ShortTermMarket;
 import nemmstrategy_shortterm.GenericUtilityMethod;
 import nemmstrategy_shortterm.OPAUtilityMethod;
 import nemmstrategy_shortterm.PAUtilityMethod;
@@ -23,6 +25,7 @@ import nemmstrategy_shortterm.TradeStrategy1;
 import nemmcommons.VolumePrognosis;
 import nemmenvironment.PowerPlant;
 import nemmenvironment.Region;
+import nemmenvironment.TheEnvironment.GlobalValues;
 
 // Class definition
 public class CompanyAgent extends ParentAgent {
@@ -38,7 +41,7 @@ public class CompanyAgent extends ParentAgent {
 		private GenericStrategy beststrategy = null;
 		private GenericUtilityMethod utilitymethod;
 		private double physicalnetposition;
-		private double capitalbase;
+		private double portfoliocapital;
 		
 		// Null constructor for ActiveAgent. Should not be used as this does not specify type of agent.
 		public ActiveAgent() {
@@ -55,7 +58,7 @@ public class CompanyAgent extends ParentAgent {
 				utilitymethod = new PAUtilityMethod();
 				SellStrategy1 sellstrategy = new SellStrategy1();
 				allstrategies.add(sellstrategy);
-				capitalbase = 0;
+				portfoliocapital = 0;
 												
 			} else if (type == 2) {
 				activeagenttypename = "ObligatedPurchaserAgent";
@@ -63,7 +66,7 @@ public class CompanyAgent extends ParentAgent {
 				utilitymethod = new OPAUtilityMethod();
 				BuyStrategy1 buystrategy = new BuyStrategy1();
 				allstrategies.add(buystrategy);
-				capitalbase = 0;
+				portfoliocapital = 0;
 				
 			} else { //Notice that else is all other added as Trader agents. This is okey for now but should call an expetion later. 
 				activeagenttypename = "TraderAgent";
@@ -71,7 +74,7 @@ public class CompanyAgent extends ParentAgent {
 				utilitymethod = new TAUtilityMethod();
 				TradeStrategy1 tradestrategy = new TradeStrategy1();
 				allstrategies.add(tradestrategy);
-				capitalbase = 100000; 
+				portfoliocapital = 100000; 
 			} 
 			companyagent = CompanyAgent.this;
 			beststrategy = allstrategies.get(0); // Choose the first one initially 
@@ -94,10 +97,10 @@ public class CompanyAgent extends ParentAgent {
 		}
 		
 		public void poststmupdate(double certificatessold, double certificatesbought, double ...capitalused) {
+			//Updates the portfoliocapital before the physical position. Also thes method requires that ShortTermMarket is ran, but not Globalvalues.
+			portfoliocapital = portfoliocapital + (physicalnetposition * (GlobalValues.currentmarketprice - ShortTermMarket.getcurrentmarketprice())); //is ran before global values are updated, hence global values current market price has the old market price
 			physicalnetposition = physicalnetposition + certificatesbought - certificatessold; //Certificates bought and sold are positive numbers.
-			if (capitalused.length > 0) {
-			capitalbase = capitalbase + capitalused[0]; }
-			}
+		}
 		
 		public void addtophysicalposition(double prodordemand) {
 			physicalnetposition = physicalnetposition + prodordemand;
@@ -129,8 +132,8 @@ public class CompanyAgent extends ParentAgent {
 		public CompanyAgent getmycompany() {
 			return this.companyagent;
 		}
-		public double getcapitalbase() {
-			return capitalbase;
+		public double getportfoliocapital() {
+			return portfoliocapital;
 		}
 	}
 		

@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.random.RandomHelper;
 import nemmagents.CompanyAgent;
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmcommons.CommonMethods;
 import nemmcommons.ParameterWrapper;
+import nemmcommons.TickArray;
 import nemmprocesses.ShortTermMarket;
+
 import java.util.Comparator;
+
 import nemmtime.NemmCalendar;
 
 public final class TheEnvironment {
@@ -241,6 +245,7 @@ public final class TheEnvironment {
 	*/
 	public static class GlobalValues {
 		
+		public static TickArray certificateprice = new TickArray();
 		public static double currentmarketprice;
 		public static double currentinterestrate;
 		public static int numberofbuyoffersstm;
@@ -283,6 +288,7 @@ public final class TheEnvironment {
 		// Monthly update of current global values
 		public static void monthlyglobalvalueupdate() {
 			currentmarketprice = ShortTermMarket.getcurrentmarketprice();
+			//certificateprice.setElement(ShortTermMarket.getcurrentmarketprice(), theCalendar.getCurrentTick()); //Adds certPrice to history.
 			currentinterestrate = currentinterestrate + RandomHelper.nextDoubleFromTo(-0.002, 0.002);
 			numberofbuyoffersstm = ShortTermMarket.getnumberofbuyoffers();
 			numberofselloffersstm = ShortTermMarket.getnumberofselloffers();

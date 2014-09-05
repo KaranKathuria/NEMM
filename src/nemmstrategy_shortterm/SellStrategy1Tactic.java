@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import repast.simphony.engine.environment.RunEnvironment;
 import nemmagents.ParentAgent;
+import nemmcommons.AllVariables;
 import nemmenvironment.TheEnvironment;
 import nemmstrategy_shortterm.GenericTactic.HistoricTacticValue;
 import nemmstrategy_shortterm.SellOffer;
@@ -41,7 +42,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 	private SellOffer creatSellOfferone(double expectedprice, double physicalposition, double ...capitalbase) {
 		SellOffer ret = new SellOffer();
 		ret.setselloffervol((sharesoldtatdiscount*physicalposition)); //
-		ret.setsellofferprice((1-discount)*expectedprice);
+		ret.setsellofferprice((1-AllVariables.PAgentmustselldiscount)*expectedprice);
 		if (physicalposition == 0) {
 			ret = null;
 		}
@@ -50,7 +51,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 	private SellOffer creatSellOffertwo(double expectedprice, double physicalposition, double ...capitalbase) {
 		SellOffer ret = new SellOffer();
 		ret.setselloffervol(physicalposition - ((sharesoldtatdiscount*physicalposition))); //rest of the monthly production sold at expected price.
-		ret.setsellofferprice(expectedprice);
+		ret.setsellofferprice(expectedprice*(1+discount)); //Prices unsymetrically around expected price with must of the volume tried sold at at premium (1+discount)*expt.
 		if (physicalposition == 0) {
 			ret = null;
 		}
