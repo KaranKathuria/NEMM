@@ -10,8 +10,6 @@ package nemmagents;
 
 //Import section for other methods
 import java.util.ArrayList;
-import java.util.List;
-
 import nemmagents.MarketAnalysisAgent;
 import nemmagents.ParentAgent;
 import nemmstrategy_shortterm.GenericUtilityMethod;

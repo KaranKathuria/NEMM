@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.random.RandomHelper;
 import nemmagents.CompanyAgent;
@@ -13,6 +12,7 @@ import nemmcommons.CommonMethods;
 import nemmcommons.ParameterWrapper;
 import nemmprocesses.ShortTermMarket;
 import java.util.Comparator;
+import nemmtime.NemmCalendar;
 
 public final class TheEnvironment {
 
@@ -126,7 +126,7 @@ public final class TheEnvironment {
 		}		
 	}
 	// NEMMCALENDAR START ========================================================	
-	public static class NemmCalendar {
+	/*public static class NemmCalendar {
 		
 		private int startYear;
 		private int endYear;
@@ -139,12 +139,6 @@ public final class TheEnvironment {
 		private ArrayList<NemmTime> timeBlocks;
 		
 		
-		/**
-		 * @param startYear
-		 * @param endYear
-		 * @param numObligatedPdsInYear
-		 * @param numTradePdsInObligatedPd
-		 */
 		public NemmCalendar(int startYear, int endYear, int numObligatedPdsInYear,
 				int numTradePdsInObligatedPd) {
 			// should throw errors if start year later than end year, other vals <=0 etc
@@ -228,7 +222,7 @@ public final class TheEnvironment {
 			}
 				
 			
-		}
+		} 
 		// NEMMTIME END ===================================================
 		// NEMMTIMECOMPARE START ===================================================
 		class NemmTimeCompare implements Comparator<NemmTime> {
@@ -244,7 +238,7 @@ public final class TheEnvironment {
 
 	}
 	// NEMMCALENDAR END ========================================================	
-	
+	*/
 	public static class GlobalValues {
 		
 		public static double currentmarketprice;

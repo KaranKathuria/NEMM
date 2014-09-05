@@ -7,18 +7,12 @@
 
 package nemmprocesses;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
 import nemmagents.CompanyAgent.ActiveAgent;
+import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
-import nemmcommons.ParameterWrapper;
+import nemmenvironment.TheEnvironment;
 import nemmstrategy_shortterm.GenericTactic;
-import nemmstrategy_shortterm.BuyOffer;
 import nemmstrategy_shortterm.GenericStrategy;
-import nemmstrategy_shortterm.SellOffer;
-import repast.simphony.random.RandomHelper;
 
 
 //To be implemntetd Should in short take inn all bids, find the price which maximates traded volume. excetute trades. And set the price! (and do somethings smart with the imbalance of trade).
@@ -36,6 +30,7 @@ public class UtilitiesStrategiesTactics {
 				double temputilityscore = 0;
 				double bestutilityscore = -10000; //Quicfix as utilities currently can be negative. 
 				for (GenericTactic tactic : strategy.getalltactics()) { 
+					double totalutilityscore = 0;
 					//Use the agents utilitymethod to calculate each tactics utility
 					temputilityscore = agent.getutilitymethod().calculateutility(ShortTermMarket.getcurrentmarketprice(), tactic.gettacticbuyoffers(), tactic.gettacticselloffers(), agent.getphysicalnetposition(), ShortTermMarket.getshareofmarignaloffersold(), ShortTermMarket.getshareofmarignalofferbought());
 					//Updates that tactics utility
@@ -43,12 +38,15 @@ public class UtilitiesStrategiesTactics {
 					//Adds the tactics new current buy/sell-offers and utility to the tactichistoricvalues arrays.
 					tactic.addtactichistory(); 
 					//Updates the strategies best tactic based on which of that strategies tactics has the highest score. 
-					if (temputilityscore >= bestutilityscore) {
-						bestutilityscore = temputilityscore;
+					for (int i = 0; i < Math.min(AllVariables.numofhistutilitiesincluded, TheEnvironment.theCalendar.getCurrentTick()+1);++i) {
+						totalutilityscore = totalutilityscore + tactic.gettacticutilityscore(AllVariables.numofhistutilitiesincluded)[i][1];
+						}
+					if (totalutilityscore >= bestutilityscore) {
+						bestutilityscore = totalutilityscore;
 						tempbesttactic = tactic;
 					}
 				}
-				strategy.addstrategyutilityscore((strategy.getbesttactic().gettacticutilityscore(1))[0][0]);
+				strategy.addstrategyutilityscore((strategy.getbesttactic().gettacticutilityscore(1))[0][1]); //[1] because we want to get the utility.
 				//Note that the strategy utility is set BEFORE the best tactic is updated! This is form the formerly best tactics utility we want to write. 
 				strategy.updatebesttactic(tempbesttactic);	
 			

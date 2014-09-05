@@ -68,8 +68,8 @@ public class GenericTactic {
 			if (curTickID != tickID){
 				throw new IllegalArgumentException("Tick IDs do not match when trying to retrieve last tactic utility vals");
 			}
-			utilityScores[i][1]=tickID;
-			utilityScores[i][2]=curUtil;
+			utilityScores[i][0]=tickID;
+			utilityScores[i][1]=curUtil;
 		}	
 		
 		return utilityScores;
