@@ -17,8 +17,7 @@ public class AllVariables {
 	public static double PAgentmustselldiscount = 0.5;
 	
 	public static double tradermaximumshortpos = -2000;
-	public static double tradermaximumlongpos = 2000;
-	
+	public static double tradermaximumlongpos = 2000;	
 	
 	public static int numofhistutilitiesincluded = 3; //Used by method that deterines the tactics best utility.
 	

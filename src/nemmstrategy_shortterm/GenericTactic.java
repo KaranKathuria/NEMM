@@ -51,7 +51,7 @@ public class GenericTactic {
 	public void updatetactictradeoffers(double expectedprice, double physicalposition, double ...capitalbase) {};
 	public void updatetacticutilityscore(double t) {tacticutilityscore = t;};
 	public void addtactichistory() {};
-	public void parameterLearning() {}; // GJB LEARNING
+	private void parameterLearning() {}; // GJB LEARNING
 //	public double gettacticutilityscore() {return tacticutilityscore;}
 	public ArrayList<HistoricTacticValue> gethistorictacticvalues() {
 		return historictacticvalues;}

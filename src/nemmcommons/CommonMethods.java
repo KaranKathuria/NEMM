@@ -185,6 +185,21 @@ public static List<CompanyAgent> getCompanyAgenList() {
 		return resultArray;
 	}
 	
+	// GJB LEARNING
+	// Sign of a double - returns -1 if <0, 0 if 0 and 1 if >0
+	public static int signDbl(double testNum){
+		int retVal;
+		if (testNum < 0){
+			retVal = -1;
+		} 
+		else if (testNum == 0) {
+			retVal = 0;
+		} 
+		else {
+			retVal = 1;
+		}
+		return retVal;
+	}
 	
 	}
 	
