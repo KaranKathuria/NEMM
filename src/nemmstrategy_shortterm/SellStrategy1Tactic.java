@@ -25,7 +25,7 @@ import nemmtime.NemmCalendar;
 // The remaining volume, set at a % of the expected price for the tick
 //
 // Learning is focused on one of the following:
-// - updating the % of the expected price for the remaining volume
+// - updating the % of the expected price for the remaining volume (2 methods for this)
 // - updating the must-sell volume
 //
 // Other learning possibilities could be updating the must sell price discount
@@ -43,21 +43,21 @@ public class SellStrategy1Tactic extends GenericTactic {
 	private SellOffer offerRestVol;
 	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 	
 	// GJB LEARNING
-	private static final double MAXRESTVOLPRICEMULT = 2.0;
+	private static final double MAXRESTVOLPRICEMULT = 2;
 	private static final double MINRESTVOLPRICEMULT = 0.25;
-	private static final double PRICEMULTSTEP = 0.05;
+	private static final double PRICEMULTDELTASTEP = 0.05;
 	
-
+// GJB  - Why do we have this constructor?????
 	SellStrategy1Tactic() {
 		paramMustSellShare = 0;
-		paramRestVolPriceMult = 0;
 		paramOLDRestVolPriceMult = 0;
+		paramRestVolPriceMult = 0;
 		paramOLDUtilityScore = 0;
 		offerMustSellVol = new SellOffer();
 		offerRestVol = new SellOffer();
 		paramLearningMethod = 0; // GJB LEARNING
 		 // Default learning method ID is 0 (= no learning)
-		NUMLEARNINGMETHODS = 3; //  Learning method IDs are 0, 1 & 2
+		NUMLEARNINGMETHODS = 4; //  Learning method IDs are 0 thru 3
 		}
 	//Used constructor
 	SellStrategy1Tactic(double sbd, double d) {
@@ -68,9 +68,9 @@ public class SellStrategy1Tactic extends GenericTactic {
 		paramOLDRestVolPriceMult = 1; // GJB LEARNING - Need a better way to set this. Random?
 		paramOLDUtilityScore = 0; // GJB LEARNING - This can be set another way
 		// The learning method needs to be set here also. Now defaults to 0.
-		paramLearningMethod = 0; // GJB LEARNING
+		paramLearningMethod = 1; // GJB LEARNING
 		 // Default learning method ID is 0 (= no learning)
-		NUMLEARNINGMETHODS = 3; //  Learning method IDs are 0, 1 & 2
+		NUMLEARNINGMETHODS = 4; //  Learning method IDs are 0 thru 3
 
 	}
 	
@@ -128,37 +128,44 @@ public class SellStrategy1Tactic extends GenericTactic {
 	
 	private void parameterLearning() {
 		// Call the appropriate learning method
+		// if no learning, the method is 0 and nothing is called
 		if (paramLearningMethod == 1) {
 			learningMethod1();
 		} else if (paramLearningMethod == 2) {
 			learningMethod2();
 		}
+		else if (paramLearningMethod == 3) {
+			learningMethod3();
+		}
+			
 	}
 	private void learningMethod1() {
-		// here we write the learning method code
-		// Price based change
-		// if utility(t) > utility (t-1) then diffmult = 1 else diffmult = -1
-		// 
-		// buy_price_delta = diffmult * sign(buy_price(t)-buy_price(t-1)) * rand(0.05,0.1) * buy_price(t)
-		// buy_price(t+1) = buy_price(t) + buy_price_delta;
-		double[][] recentUtilities; 		
-		int diffMult;
+		// Update the % of expected price for the rest volume
+		// Improvement in utility - we adjust price multiplier delta in the same direction as last time
+		// A decline in utility - we adjust the price multiplier delta in the opposite direction as last time
+ 		
+		int diffmultUtility;
+		int diffmultDelta;
 		double priceMultDelta;
 		// Utility comparison		
 		if (tacticutilityscore-paramOLDUtilityScore >= 0) {
 			// Utility has improved
-			diffMult = 1;
+			diffmultUtility = 1;
 		}
 		else {
-			diffMult = -1;
+			diffmultUtility = -1;
 		}
-		priceMultDelta = diffMult * CommonMethods.signDbl(paramRestVolPriceMult-paramOLDRestVolPriceMult) * PRICEMULTSTEP;
-		paramRestVolPriceMult=paramRestVolPriceMult+priceMultDelta;
-		// Ensure not out of bounds
-		paramRestVolPriceMult = Math.min(MAXRESTVOLPRICEMULT, Math.max(paramRestVolPriceMult,MINRESTVOLPRICEMULT));
+		// -ve if the mult is less than the previous, positive otherwise
+		diffmultDelta = CommonMethods.signDbl(paramRestVolPriceMult-paramOLDRestVolPriceMult);
+		if (diffmultDelta == 0) {diffmultDelta = 1;} // tie breaker
+		// set the new multiplier delta
+		priceMultDelta = diffmultUtility * diffmultDelta * PRICEMULTDELTASTEP;
 		// Update the history parameters
 		paramOLDRestVolPriceMult = paramRestVolPriceMult;
 		paramOLDUtilityScore = tacticutilityscore;
+		// Ensure not out of bounds
+		paramRestVolPriceMult = Math.min(MAXRESTVOLPRICEMULT, Math.max(paramRestVolPriceMult+priceMultDelta,MINRESTVOLPRICEMULT));
+
 	}
 	private void learningMethod2() {
 		// here we write the learning method code
@@ -172,5 +179,25 @@ public class SellStrategy1Tactic extends GenericTactic {
 	
 	
 	}	
+	private void learningMethod3() {
+		// Update the % of expected price for the rest volume
+		// Improvement in utility - keep the same multiplier
+		// A decline in utility - change the multiplier to be on the other "side" of 1
+
+		double priceMult;
+		// Utility comparison		
+		if (tacticutilityscore-paramOLDUtilityScore >= 0) {
+			// Utility has improved
+			priceMult = paramRestVolPriceMult;
+		}
+		else {
+			priceMult = 1-CommonMethods.signDbl(paramRestVolPriceMult-1);
+		}
+		// Update the history parameters
+		paramOLDRestVolPriceMult = paramRestVolPriceMult;
+		paramOLDUtilityScore = tacticutilityscore;
+		// Ensure not out of bounds
+		paramRestVolPriceMult = priceMult;
+	}
 	
 }
