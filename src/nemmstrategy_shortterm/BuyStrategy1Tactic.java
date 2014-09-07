@@ -24,12 +24,15 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	private double discount;
 	private BuyOffer buyofferone;
 	private BuyOffer buyoffertwo;
-	private ArrayList<BuyOffer> tacticbuyoffers = new ArrayList<BuyOffer>();
+	private ArrayList<BuyOffer> tacticbuyoffers = new ArrayList<BuyOffer>();	
 
 
 	BuyStrategy1Tactic() {
 		shareboughtatdiscount = 0;
 		discount = 0;
+		paramLearningMethod = 0; // GJB LEARNING
+								 // Default learning method ID is 0 (= no learning)
+		NUMLEARNINGMETHODS = 3; //  Learning method IDs are 0, 1 & 2
 		}
 	//Used constructor
 	BuyStrategy1Tactic(double sbd, double d) {
@@ -88,5 +91,33 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	
 	public ArrayList<HistoricTacticValue> gethistorictacticvalues() {
 		return historictacticvalues;}
-		
+	
+	// GJB LEARNING
+	
+	public void parameterLearning() {
+		// Call the appropriate learning method
+		if (paramLearningMethod == 1) {
+			learningMethod1();
+		} else if (paramLearningMethod == 2) {
+			learningMethod2();
+		}
+	}
+	public void learningMethod1() {
+		// here we write the learning method code
+		// Price based change
+		// if utility(t) > utility (t-1) then diffmult = 1 else diffmult = -1
+		// 
+		// buy_price_delta = diffmult * sign(buy_price(t)-buy_price(t-1)) * rand(0.05,0.1) * buy_price(t)
+		// buy_price(t+1) = buy_price(t) + buy_price_delta;
+	}
+	public void learningMethod2() {
+		// here we write the learning method code
+		// Volume change - this determines the volume of the non "must sell" offer 
+		// (I cant remember if that is offer 1 or offer 2...). 
+		// This will adjust the volume % for the offer
+		// e.g. if utility(t) > utility (t-1) then diffmult = 1 else diffmult = -1
+		// 
+		// buy_vol_delta = diffmult * sign(buy_vol_perc(t)-buy_vol_perc(t-1)) * rand(0.05,0.1) * buy_vol_perc(t)
+		// buy_vol_perc(t+1) = min(1,max(0,buy_vol(t) + buy_vol_delta)); // ensure not bigger or smaller than 0% or 100%
+	}		
 }

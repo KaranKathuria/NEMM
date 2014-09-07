@@ -18,7 +18,12 @@ import nemmenvironment.TheEnvironment;
 public class GenericTactic {
 	
 	protected double tacticutilityscore;
+	
 	protected ArrayList<HistoricTacticValue> historictacticvalues = new ArrayList<HistoricTacticValue>();
+	protected int paramLearningMethod; // GJB LEARNING
+	protected int NUMLEARNINGMETHODS; // GJB LEARNING
+											// This has to be set in the constructor of each
+											// subclass
 	//This class could have had all the selloffers and buyoffers form the respective tactics...
 	
 	
@@ -46,6 +51,7 @@ public class GenericTactic {
 	public void updatetactictradeoffers(double expectedprice, double physicalposition, double ...capitalbase) {};
 	public void updatetacticutilityscore(double t) {tacticutilityscore = t;};
 	public void addtactichistory() {};
+	public void parameterLearning() {}; // GJB LEARNING
 //	public double gettacticutilityscore() {return tacticutilityscore;}
 	public ArrayList<HistoricTacticValue> gethistorictacticvalues() {
 		return historictacticvalues;}
@@ -74,6 +80,22 @@ public class GenericTactic {
 		
 		return utilityScores;
 	}
+
+	// GJB LEARNING
+
+	public int getParamLearningMethod() {
+		return paramLearningMethod;
+	}
+
+	public void setParamLearningMethod(int paramLearningMethod) {
+		if (paramLearningMethod <0 || paramLearningMethod > NUMLEARNINGMETHODS-1 ){
+			throw new IllegalArgumentException("Illegal learning method");
+		}
+		
+		this.paramLearningMethod = paramLearningMethod;
+	}
+	
+	
 
 	
 }
