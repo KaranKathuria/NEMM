@@ -38,6 +38,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 	private double paramMustSellShare;
 	private double paramRestVolPriceMult;
 	private double paramOLDRestVolPriceMult;
+	private double paramOLDUtilityScore;
 	private SellOffer offerMustSellVol;
 	private SellOffer offerRestVol;
 	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 	
@@ -51,6 +52,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		paramMustSellShare = 0;
 		paramRestVolPriceMult = 0;
 		paramOLDRestVolPriceMult = 0;
+		paramOLDUtilityScore = 0;
 		offerMustSellVol = new SellOffer();
 		offerRestVol = new SellOffer();
 		paramLearningMethod = 0; // GJB LEARNING
@@ -64,6 +66,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		// GJB LEARNING - added 1+
 		paramRestVolPriceMult = 1+d;
 		paramOLDRestVolPriceMult = 1; // GJB LEARNING - Need a better way to set this. Random?
+		paramOLDUtilityScore = 0; // GJB LEARNING - This can be set another way
 		// The learning method needs to be set here also. Now defaults to 0.
 		paramLearningMethod = 0; // GJB LEARNING
 		 // Default learning method ID is 0 (= no learning)
@@ -141,22 +144,21 @@ public class SellStrategy1Tactic extends GenericTactic {
 		double[][] recentUtilities; 		
 		int diffMult;
 		double priceMultDelta;
-		int nowTickID = TheEnvironment.theCalendar.getCurrentTick();
-		// Utility comparison
-		if (nowTickID > 0) {// need two ticks for this to work
-			recentUtilities = gettacticutilityscore(2);
-			if (recentUtilities[0][1]-recentUtilities[1][1] >= 0) {
-				// Utility has improved
-				diffMult = 1;
-			}
-			else {
-				diffMult = -1;
-			}
-			priceMultDelta = diffMult * CommonMethods.signDbl(paramRestVolPriceMult-paramOLDRestVolPriceMult) * PRICEMULTSTEP;
-			paramRestVolPriceMult=paramRestVolPriceMult+priceMultDelta;
-			// Ensure not out of bounds
-			paramRestVolPriceMult = Math.min(MAXRESTVOLPRICEMULT, Math.max(paramRestVolPriceMult,MINRESTVOLPRICEMULT));
+		// Utility comparison		
+		if (tacticutilityscore-paramOLDUtilityScore >= 0) {
+			// Utility has improved
+			diffMult = 1;
 		}
+		else {
+			diffMult = -1;
+		}
+		priceMultDelta = diffMult * CommonMethods.signDbl(paramRestVolPriceMult-paramOLDRestVolPriceMult) * PRICEMULTSTEP;
+		paramRestVolPriceMult=paramRestVolPriceMult+priceMultDelta;
+		// Ensure not out of bounds
+		paramRestVolPriceMult = Math.min(MAXRESTVOLPRICEMULT, Math.max(paramRestVolPriceMult,MINRESTVOLPRICEMULT));
+		// Update the history parameters
+		paramOLDRestVolPriceMult = paramRestVolPriceMult;
+		paramOLDUtilityScore = tacticutilityscore;
 	}
 	private void learningMethod2() {
 		// here we write the learning method code
