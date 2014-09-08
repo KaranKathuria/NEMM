@@ -39,6 +39,7 @@ public class BuyStrategy1 extends GenericStrategy {
 			double randomshareboughtatdiscount = (tacticstream.nextDouble());
 			double randomdiscount = (tacticstream.nextDouble()- 0.25); // between -0.25 and 0.75
 			BuyStrategy1Tactic tactic = new BuyStrategy1Tactic(randomshareboughtatdiscount, randomdiscount);
+			tactic.setmyStrategy(BuyStrategy1.this);
 			alltactics.add(tactic);
 		}
 		
@@ -52,11 +53,11 @@ public class BuyStrategy1 extends GenericStrategy {
 	}	
 
 	// Clears strategies buyoffers, updates offers from all tactics. set strategys buyoffers to those of the best tactic. 
-	public void updatealloffers(double expectedprice, double physicalposition, double ...capitalbase) {
+	public void updatealloffers() {
 		//Updates all tactics
 		for (int i = 0; i < numberoftactics; ++i) {
-			alltactics.get(i).updatetacticbuyoffers(expectedprice, physicalposition);}
-		// Updates this strategies buyoffers based on the best tactic (which in turn is given from the previous round)
+			alltactics.get(i).updatetacticbuyoffers();}
+
 		agentsbuyoffers.clear();
 		agentsselloffers.clear();
 		buyofferone = besttactic.getbuyofferone();

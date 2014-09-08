@@ -10,6 +10,7 @@ package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
 import java.util.Random;
+
 import repast.simphony.random.RandomHelper;
 import nemmcommons.AllVariables;
 import nemmcommons.RandomWrapper;
@@ -44,6 +45,7 @@ public class TradeStrategy1 extends GenericStrategy {
 			double randompremium = ((tacticstream.nextDouble())-0.2)/2; // Gives a random number between -0.1 and 0.4
 			double randomdiscount = ((tacticstream.nextDouble())-0.2)/2;
 			TradeStrategy1Tactic tactic = new TradeStrategy1Tactic(randompremium, randomdiscount, maximumshortpos, maximumlongpos);
+			tactic.setmyStrategy(TradeStrategy1.this);
 			alltactics.add(tactic);
 		}
 		
@@ -61,10 +63,10 @@ public class TradeStrategy1 extends GenericStrategy {
 	}	
 
 	// Clears strategies buyoffers, updates offers from all tactics. set strategys buyoffers to those of the best tactic. 
-	public void updatealloffers(double expectedprice, double physicalposition, double ...capitalbase) {
+	public void updatealloffers() {
 		//Updates all tactics
 		for (int i = 0; i < numberoftactics; ++i) {
-			alltactics.get(i).updatetactictradeoffers(expectedprice, physicalposition, capitalbase);}
+			alltactics.get(i).updatetactictradeoffers();}
 		// Updates this strategies buyoffers and selloffers based on the best tactic (which in turn is given from the previous round).
 		agentsbuyoffers.clear();
 		agentsselloffers.clear();

@@ -57,6 +57,7 @@ public class CompanyAgent extends ParentAgent {
 				physicalnetposition = 1000;
 				utilitymethod = new PAUtilityMethod();
 				SellStrategy1 sellstrategy = new SellStrategy1();
+				sellstrategy.setmyAgent(ActiveAgent.this);
 				allstrategies.add(sellstrategy);
 				portfoliocapital = 0;
 												
@@ -65,6 +66,7 @@ public class CompanyAgent extends ParentAgent {
 				physicalnetposition = -1000;
 				utilitymethod = new OPAUtilityMethod();
 				BuyStrategy1 buystrategy = new BuyStrategy1();
+				buystrategy.setmyAgent(ActiveAgent.this);
 				allstrategies.add(buystrategy);
 				portfoliocapital = 0;
 				
@@ -73,6 +75,7 @@ public class CompanyAgent extends ParentAgent {
 				physicalnetposition = 0;
 				utilitymethod = new TAUtilityMethod();
 				TradeStrategy1 tradestrategy = new TradeStrategy1();
+				tradestrategy.setmyAgent(ActiveAgent.this);
 				allstrategies.add(tradestrategy);
 				portfoliocapital = 100000; 
 			} 

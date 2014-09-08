@@ -17,8 +17,8 @@ import nemmenvironment.TheEnvironment;
 
 public class GenericTactic {
 	
+	protected GenericStrategy myStrategy;
 	protected double tacticutilityscore;
-	
 	protected ArrayList<HistoricTacticValue> historictacticvalues = new ArrayList<HistoricTacticValue>();
 	protected int paramLearningMethod; // GJB LEARNING
 	protected int NUMLEARNINGMETHODS; // GJB LEARNING
@@ -46,9 +46,17 @@ public class GenericTactic {
 	public ArrayList<BuyOffer> gettacticbuyoffers() {return null;}
 	public ArrayList<SellOffer> gettacticselloffers() {return null;}
 	
-	public void updatetacticselloffers(double expectedprice, double physicalposition, double ...capitalbase) {};
-	public void updatetacticbuyoffers(double expectedprice, double physicalposition, double ...captalbase) {};
-	public void updatetactictradeoffers(double expectedprice, double physicalposition, double ...capitalbase) {};
+	public void setmyStrategy(GenericStrategy gs) {
+		myStrategy = gs;
+	}
+	
+	public GenericStrategy getmyStrategy() {
+		return myStrategy;
+	}
+	
+	public void updatetacticselloffers() {};
+	public void updatetacticbuyoffers() {};
+	public void updatetactictradeoffers() {};
 	public void updatetacticutilityscore(double t) {tacticutilityscore = t;};
 	public void addtactichistory() {};
 	private void parameterLearning() {}; // GJB LEARNING

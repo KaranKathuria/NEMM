@@ -26,20 +26,14 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	private BuyOffer buyoffertwo;
 	private ArrayList<BuyOffer> tacticbuyoffers = new ArrayList<BuyOffer>();	
 
-
-	BuyStrategy1Tactic() {
-		shareboughtatdiscount = 0;
-		discount = 0;
-		paramLearningMethod = 0; // GJB LEARNING
-								 // Default learning method ID is 0 (= no learning)
-		NUMLEARNINGMETHODS = 3; //  Learning method IDs are 0, 1 & 2
-		}
+	//Default constructor. Not in use. 
+	BuyStrategy1Tactic() {}
+	
 	//Used constructor
 	BuyStrategy1Tactic(double sbd, double d) {
 		shareboughtatdiscount = sbd;
 		discount = d;	
-		paramLearningMethod = 0; // GJB LEARNING
-		 // Default learning method ID is 0 (= no learning)
+		paramLearningMethod = 0; // Default learning method ID is 0 (= no learning)
 		NUMLEARNINGMETHODS = 3; //  Learning method IDs are 0, 1 & 2
 
 	}
@@ -65,7 +59,9 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		return ret;
 		}
 	
-	public void updatetacticbuyoffers(double expectedprice, double physicalposition, double ...capitalbase) {
+	public void updatetacticbuyoffers() {
+		double physicalposition = this.getmyStrategy().getmyAgent().getphysicalnetposition();
+		double expectedprice = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation();
 		if (physicalposition >= 0){
 			physicalposition = -0.0;} //To ensure that we dont get crazy bids.  
 		parameterLearning(); // GJB LEARNING

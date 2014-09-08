@@ -19,6 +19,7 @@ import nemmstrategy_shortterm.SellOffer;
 public abstract class GenericStrategy {
 	
 	//Variables. Notice that the generic strategy only contains the array of buy and sell offers and not the buy or sell offers itself because the number of these vary with the strategy. 
+	protected ActiveAgent myAgent;
 	protected ArrayList<BuyOffer> agentsbuyoffers = new ArrayList<BuyOffer>();
 	protected ArrayList<SellOffer> agentsselloffers = new ArrayList<SellOffer>();
 	protected int numberoftactics;
@@ -37,9 +38,15 @@ public abstract class GenericStrategy {
 	}
 	
 	public ArrayList<SellOffer> getAgentsSellOffers() {
-		return agentsselloffers;
-	}
-	public void updatealloffers(double expectedprice, double physicalposition, double ...capitalbase) {}
+		return agentsselloffers;}
+	
+	public void setmyAgent(ActiveAgent aa) {
+		myAgent = aa;}
+	
+	public ActiveAgent getmyAgent() {
+		return myAgent;}
+	
+	public void updatealloffers() {}
 	
 	//Used when adding/updating to the strategyutility ArrayList with the new score. 
 	public void addstrategyutilityscore(double t) {

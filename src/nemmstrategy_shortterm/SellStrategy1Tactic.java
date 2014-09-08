@@ -19,7 +19,7 @@ import nemmtime.NemmCalendar;
 
 // STRATEGY 1 TACTIC 1
 //
-// This tactic sets the two buy and sell offers as follows:
+// This tactic sets the two sell offers as follows:
 //
 // A must sell volume set at a % of the agent's physical position, at a price set at a small % of the expected price
 // The remaining volume, set at a % of the expected price for the tick
@@ -33,7 +33,6 @@ import nemmtime.NemmCalendar;
 
 public class SellStrategy1Tactic extends GenericTactic {
 	
-	// GJB LEARNING
 	// The tactic parameters
 	private double paramMustSellShare;
 	private double paramRestVolPriceMult;
@@ -47,31 +46,19 @@ public class SellStrategy1Tactic extends GenericTactic {
 	private static final double MINRESTVOLPRICEMULT = 0.25;
 	private static final double PRICEMULTDELTASTEP = 0.05;
 	
-// GJB  - Why do we have this constructor?????
-	SellStrategy1Tactic() {
-		paramMustSellShare = 0;
-		paramOLDRestVolPriceMult = 0;
-		paramRestVolPriceMult = 0;
-		paramOLDUtilityScore = 0;
-		offerMustSellVol = new SellOffer();
-		offerRestVol = new SellOffer();
-		paramLearningMethod = 0; // GJB LEARNING
-		 // Default learning method ID is 0 (= no learning)
-		NUMLEARNINGMETHODS = 4; //  Learning method IDs are 0 thru 3
-		}
+    //Default constructor.
+	SellStrategy1Tactic() {}
+	
 	//Used constructor
 	SellStrategy1Tactic(double sbd, double d) {
 		// These are set in the constructor only
 		paramMustSellShare = sbd;
-		// GJB LEARNING - added 1+
 		paramRestVolPriceMult = 1+d;
-		paramOLDRestVolPriceMult = 1; // GJB LEARNING - Need a better way to set this. Random?
-		paramOLDUtilityScore = 0; // GJB LEARNING - This can be set another way
-		// The learning method needs to be set here also. Now defaults to 0.
-		paramLearningMethod = 1; // GJB LEARNING
-		 // Default learning method ID is 0 (= no learning)
+		paramOLDRestVolPriceMult = 1; // GJB LEARNING - Need a better way to set this. Random could work. This means some try higher som try lower price. 
+		//positive number over means that it tried to increase price last time. 
+		paramOLDUtilityScore = 0; // GJB LEARNING - This can be set another way // The learning method needs to be set here also. Now defaults to 0.
+		paramLearningMethod = 1; // Default learning method ID is 0 (= no learning)
 		NUMLEARNINGMETHODS = 4; //  Learning method IDs are 0 thru 3
-
 	}
 	
 	private SellOffer createMustSellVolOffer(double expectedprice, double physicalposition, double ...capitalbase) {
@@ -83,10 +70,10 @@ public class SellStrategy1Tactic extends GenericTactic {
 		}
 		return ret;
 		}
+	
 	private SellOffer createRestVolOffer(double expectedprice, double physicalposition, double ...capitalbase) {
 		SellOffer ret = new SellOffer();
 		ret.setselloffervol(physicalposition - ((paramMustSellShare*physicalposition))); //rest of the monthly production sold at expected price.
-		// GJB LEARNING - removed 1+
 		ret.setsellofferprice(expectedprice*(paramRestVolPriceMult)); //Prices unsymetrically around expected price with must of the volume tried sold at at premium (1+discount)*expt.
 		if (physicalposition == 0) {
 			ret = null;
@@ -94,12 +81,13 @@ public class SellStrategy1Tactic extends GenericTactic {
 		return ret;
 		}
 	
-	public void updatetacticselloffers(double expectedprice, double physicalposition, double ...capitalbase) {
+	public void updatetacticselloffers() {
+		double physicalposition = this.getmyStrategy().getmyAgent().getphysicalnetposition();
+		double expectedprice = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation();
 		if (physicalposition <= 0){
 			physicalposition = 0.0;} //To not get crazy selloffers
-		// GJB LEARNING - adjust the parameters
+		// GJB LEARNING - adjust the parameters and then create new offers.
 		parameterLearning();
-		// GJB LEARNING - create new offers with the new parameters and save
 		tacticselloffers.clear();
 		offerMustSellVol = createMustSellVolOffer(expectedprice,physicalposition);
 		offerRestVol = createRestVolOffer(expectedprice,physicalposition);
@@ -124,7 +112,6 @@ public class SellStrategy1Tactic extends GenericTactic {
 	public ArrayList<SellOffer> gettacticselloffers() {
 		return tacticselloffers;}
 
-	// GJB LEARNING
 	
 	private void parameterLearning() {
 		// Call the appropriate learning method
@@ -144,8 +131,8 @@ public class SellStrategy1Tactic extends GenericTactic {
 		// Improvement in utility - we adjust price multiplier delta in the same direction as last time
 		// A decline in utility - we adjust the price multiplier delta in the opposite direction as last time
  		
-		int diffmultUtility;
-		int diffmultDelta;
+		int diffmultUtility; //Retning på utility
+		int diffmultDelta;	//Retning på pris fra forrige forrige gang til forrige gang. 
 		double priceMultDelta;
 		// Utility comparison		
 		if (tacticutilityscore-paramOLDUtilityScore >= 0) {
@@ -156,7 +143,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 			diffmultUtility = -1;
 		}
 		// -ve if the mult is less than the previous, positive otherwise
-		diffmultDelta = CommonMethods.signDbl(paramRestVolPriceMult-paramOLDRestVolPriceMult);
+		diffmultDelta = CommonMethods.signDbl(paramRestVolPriceMult-paramOLDRestVolPriceMult); //Prisendringen er gitt prisendring forrige forrige gang og forrige gang.
 		if (diffmultDelta == 0) {diffmultDelta = 1;} // tie breaker
 		// set the new multiplier delta
 		priceMultDelta = diffmultUtility * diffmultDelta * PRICEMULTDELTASTEP;

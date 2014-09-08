@@ -47,7 +47,7 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	}
 	
 	//The buy and sell offer of these tactics are simply creating two buyoffers and two selloffers according to a random discount, premium and a share. 
-	private SellOffer creatSellOfferone(double expectedprice, double physicalposition, double capitalbase) {
+	private SellOffer creatSellOfferone(double expectedprice, double physicalposition) {
 		SellOffer ret = new SellOffer();
 		ret.setsellofferprice((1+premium)*expectedprice); 
 		ret.setselloffervol(100);//For now, they always buy or sell 1000 units, but they cannot go short. 
@@ -58,7 +58,7 @@ public class TradeStrategy1Tactic extends GenericTactic {
 		return ret;
 		}
 	
-	private SellOffer creatSellOffertwo(double expectedprice, double physicalposition, double capitalbase) {
+	private SellOffer creatSellOffertwo(double expectedprice, double physicalposition) {
 		SellOffer ret = new SellOffer();
 		ret.setsellofferprice((1+(premium/2))*expectedprice); 
 		ret.setselloffervol(100);//For now, they always buy or sell 1000 units, but they cannot go short. 
@@ -68,7 +68,7 @@ public class TradeStrategy1Tactic extends GenericTactic {
 		return ret;
 		}
 	
-	private BuyOffer creatBuyOfferone(double expectedprice, double physicalposition, double capitalbase) {
+	private BuyOffer creatBuyOfferone(double expectedprice, double physicalposition) {
 		BuyOffer ret = new BuyOffer();
 		ret.setbuyoffervol(100); //int in order to only sell integer values of certs.
 		ret.setbuyofferprice((1-discount)*expectedprice); 
@@ -78,7 +78,7 @@ public class TradeStrategy1Tactic extends GenericTactic {
 		return ret;
 		}
 	
-	private BuyOffer creatBuyOffertwo(double expectedprice, double physicalposition, double capitalbase) {
+	private BuyOffer creatBuyOffertwo(double expectedprice, double physicalposition) {
 		BuyOffer ret = new BuyOffer();
 		ret.setbuyoffervol(100); //int in order to only sell integer values of certs.
 		ret.setbuyofferprice((1-discount)*expectedprice); 
@@ -87,15 +87,19 @@ public class TradeStrategy1Tactic extends GenericTactic {
 		} return ret;
 		}
 	
-	public void updatetactictradeoffers(double expectedprice, double physicalposition, double ...capitalbase) {
-		if (capitalbase.length<1) {
-			throw new IllegalArgumentException("Now given capitalbase for tradingstrategy");}
+	public void updatetactictradeoffers() {
+		double physicalposition = this.getmyStrategy().getmyAgent().getphysicalnetposition();
+		double expectedprice = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation();
+		double portfoliocapital = this.getmyStrategy().getmyAgent().getportfoliocapital();
+		
+		if (portfoliocapital<=0) { //Currently just thowing an expception, but this would have to be handled another way such as creating a new trader.
+			throw new IllegalArgumentException("The Trader is bankcrupt!");}
 		tacticselloffers.clear();
 		tacticbuyoffers.clear();
-		sellofferone = creatSellOfferone(expectedprice,physicalposition, capitalbase[0]);
-		selloffertwo = creatSellOffertwo(expectedprice,physicalposition, capitalbase[0]);
-		buyofferone = creatBuyOfferone(expectedprice,physicalposition, capitalbase[0]);
-		buyoffertwo = creatBuyOffertwo(expectedprice,physicalposition, capitalbase[0]);
+		sellofferone = creatSellOfferone(expectedprice,physicalposition);
+		selloffertwo = creatSellOffertwo(expectedprice,physicalposition);
+		buyofferone = creatBuyOfferone(expectedprice,physicalposition);
+		buyoffertwo = creatBuyOffertwo(expectedprice,physicalposition);
 		tacticselloffers.add(sellofferone);
 		tacticselloffers.add(selloffertwo);
 		tacticbuyoffers.add(buyofferone);

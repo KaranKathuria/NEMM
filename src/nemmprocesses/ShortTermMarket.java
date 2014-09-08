@@ -54,22 +54,21 @@ public class ShortTermMarket {
 		//Update and add all sell- and buy-offers.  
 		for (final ActiveAgent agent : CommonMethods.getPAgentList()) {
 			//update their phusical net position
-			agent.getbeststrategy().updatealloffers(agent.getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation(), agent.getphysicalnetposition());
+			agent.getbeststrategy().updatealloffers();
 			//Updates all bids for all agents
 			Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers());
 			//Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers()); For the time being the producer does not have buyoffers.
 		}
 		
 		for (final ActiveAgent agent : CommonMethods.getOPAgentList()) {
-			agent.getbeststrategy().updatealloffers(agent.getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation(), agent.getphysicalnetposition(), agent.getportfoliocapital());
+			agent.getbeststrategy().updatealloffers();
 			//Updates all bids for all agents
 			//Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers()); None sell offers from the OP agent list. 
-			//marketsupply = agent.getphysicalnetposition();
 			Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers());
 	
 		}
 		for (final ActiveAgent agent : CommonMethods.getTAgentList()) {
-			agent.getbeststrategy().updatealloffers(agent.getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation(), agent.getphysicalnetposition(), agent.getportfoliocapital()); //Updates all bids for all agents
+			agent.getbeststrategy().updatealloffers(); //Updates all bids for all agents
 			Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers());
 			Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers());
 		}
