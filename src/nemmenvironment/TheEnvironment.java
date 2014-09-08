@@ -245,7 +245,7 @@ public final class TheEnvironment {
 	*/
 	public static class GlobalValues {
 		
-		//public static TickArray certificateprice = new TickArray();
+		public static TickArray certificateprice;
 		public static double currentmarketprice;
 		public static double currentinterestrate;
 		public static int numberofbuyoffersstm;
@@ -274,6 +274,7 @@ public final class TheEnvironment {
 		}
 		public static void initglobalvalues() {
 			//Initially the global market price is set to that of the price expectations
+			certificateprice = new TickArray();
 			currentmarketprice = ParameterWrapper.getpriceexpectation();
 			currentinterestrate = ParameterWrapper.getinitialinterestrate();
 			producersphysicalposition = 10000;
@@ -285,6 +286,7 @@ public final class TheEnvironment {
 			//Modelling the effect of resetting the market price
 			currentmarketprice = ParameterWrapper.getpriceexpectation();
 			}
+		
 		// Monthly update of current global values
 		public static void monthlyglobalvalueupdate() {
 			currentmarketprice = ShortTermMarket.getcurrentmarketprice();

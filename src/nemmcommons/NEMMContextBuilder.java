@@ -35,9 +35,9 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 		//Initialize parameters
 		ParameterWrapper.reinit(); //Reads the parametervalues provided
 		//Create the Environment
+		TheEnvironment.InitEnvironment(); //Creates time and ArrayList of demand and powerplants.
 		TheEnvironment.GlobalValues.initglobalvalues(); //initiates the global values such as price by giving them the parametervalues from the above method. 
-		TheEnvironment.InitEnvironment();
-		TheEnvironment.PopulateEnvironment();
+		TheEnvironment.PopulateEnvironment(); //Reads and creates demand, powerplants etc.
 	
 		// Creates the Agents and adds them to context
 		for (int i = 0; i < getproduceragentsnumber(); ++i) {

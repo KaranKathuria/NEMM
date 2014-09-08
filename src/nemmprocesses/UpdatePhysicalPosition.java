@@ -43,7 +43,7 @@ public static void markettransactions() {
 		//double deltacapitalbase = (certssold-certsbought)*ShortTermMarket.getcurrentmarketprice(); No need
 		agent.poststmupdate(certssold, certsbought);
 	}
-	//method that estimates the volume traded by  taking the price and the bidded price. If lower/higher, that traded is the volume. Should take in market price, offers and give out nnumber of certs and average price they where sold at. 
+
 }
 
 //The following to methods estimates the result of a buy or sell offer array in the market. Hence it takes inn the offers, the outcome price and a "shareoflastoffer sold/bought. THe latter

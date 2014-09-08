@@ -77,7 +77,7 @@ public class CompanyAgent extends ParentAgent {
 				TradeStrategy1 tradestrategy = new TradeStrategy1();
 				tradestrategy.setmyAgent(ActiveAgent.this);
 				allstrategies.add(tradestrategy);
-				portfoliocapital = 100000; 
+				portfoliocapital = 1000000; 
 			} 
 			companyagent = CompanyAgent.this;
 			beststrategy = allstrategies.get(0); // Choose the first one initially 
@@ -99,7 +99,7 @@ public class CompanyAgent extends ParentAgent {
 			return allstrategies;
 		}
 		
-		public void poststmupdate(double certificatessold, double certificatesbought, double ...capitalused) {
+		public void poststmupdate(double certificatessold, double certificatesbought) {
 			//Updates the portfoliocapital before the physical position. Also thes method requires that ShortTermMarket is ran, but not Globalvalues.
 			portfoliocapital = portfoliocapital + (physicalnetposition * (GlobalValues.currentmarketprice - ShortTermMarket.getcurrentmarketprice())); //is ran before global values are updated, hence global values current market price has the old market price
 			physicalnetposition = physicalnetposition + certificatesbought - certificatessold; //Certificates bought and sold are positive numbers.
