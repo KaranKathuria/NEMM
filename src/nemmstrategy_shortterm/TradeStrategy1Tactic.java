@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import repast.simphony.engine.environment.RunEnvironment;
 import nemmagents.ParentAgent;
+import nemmcommons.AllVariables;
 import nemmenvironment.TheEnvironment;
 import nemmstrategy_shortterm.GenericTactic.HistoricTacticValue;
 import nemmstrategy_shortterm.SellOffer;
@@ -23,6 +24,7 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	private double discount;
 	private double maxlongpos;
 	private double maxshortpos;
+	private double porfoliocapitalexitlimit;
 	private SellOffer sellofferone;
 	private SellOffer selloffertwo;
 	private BuyOffer buyofferone;
@@ -30,13 +32,8 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 
 	private ArrayList<BuyOffer> tacticbuyoffers = new ArrayList<BuyOffer>(); // This tactics buyoffers.
 
-
-	TradeStrategy1Tactic() {
-		premium = 0;
-		discount = 0;
-		maxlongpos = 0;
-		maxshortpos = 0;
-		}
+	//Default constructor
+	TradeStrategy1Tactic() {}
 	//Used constructor
 	TradeStrategy1Tactic(double p, double d, double maxshort, double maxlong) {
 		
@@ -44,6 +41,7 @@ public class TradeStrategy1Tactic extends GenericTactic {
 		discount = d;
 		maxshortpos = maxshort;
 		maxlongpos = maxlong;
+		porfoliocapitalexitlimit = AllVariables.portfoliocapitalexitlimit;
 	}
 	
 	//The buy and sell offer of these tactics are simply creating two buyoffers and two selloffers according to a random discount, premium and a share. 
@@ -100,6 +98,19 @@ public class TradeStrategy1Tactic extends GenericTactic {
 		selloffertwo = creatSellOffertwo(expectedprice,physicalposition);
 		buyofferone = creatBuyOfferone(expectedprice,physicalposition);
 		buyoffertwo = creatBuyOffertwo(expectedprice,physicalposition);
+		
+		//Small if that triggers an exit behavor if the traders are about to go bust. 
+		if (this.getmyStrategy().getmyAgent().getportfoliocapital() < porfoliocapitalexitlimit) {
+			if (physicalposition < 0) {
+				sellofferone = null;
+				selloffertwo = null;
+			}
+			else {
+				buyofferone = null;
+				buyoffertwo = null;
+			}
+		}
+		
 		tacticselloffers.add(sellofferone);
 		tacticselloffers.add(selloffertwo);
 		tacticbuyoffers.add(buyofferone);

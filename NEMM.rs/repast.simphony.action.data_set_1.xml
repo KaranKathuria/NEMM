@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Certificate Price</name>
+  <name>Traded volume</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
@@ -11,16 +11,16 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-322947093</hashCode>
+    <hashCode>2009933052</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Cert price</string>
+      <string>Traded Volume</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Cert price</id>
+        <id>Traded Volume</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>currentmarketprice</methodName>
+        <methodName>STMtradedvolume</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

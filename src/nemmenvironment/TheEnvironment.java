@@ -268,6 +268,10 @@ public final class TheEnvironment {
 		public static double tradersphysicalposition = 0;
 		public static double obligatedpurchasersphysiclaposition = 0;
 		public static double totalmarketphysicalposition = 0;
+		public static double bestbuyoffer1;
+		public static double bestbuyoffer2;
+		public static double bestselloffer1;
+		public static double bestselloffer2;
 		
 		public GlobalValues() {
 			currentmarketprice = ParameterWrapper.getpriceexpectation();
@@ -310,6 +314,8 @@ public final class TheEnvironment {
 				tradersphysicalposition = tradersphysicalposition + ta.getphysicalnetposition();	
 			}
 			totalmarketphysicalposition = tradersphysicalposition + obligatedpurchasersphysiclaposition + producersphysicalposition;
+			
+			
 		}
 		// Annual update of annual chaning global values
 		public static void annualglobalvalueupdate() {

@@ -86,7 +86,7 @@ public void annualmarketschedule() {
 }
 
 	//Distributing of Power Plants and Demand Shares
-@ScheduledMethod(start = 0, interval = 36, priority = 0)
+@ScheduledMethod(start = 0, interval = 24, priority = 0)
 public void projectprocesschedule() {
 	ParameterWrapper.reinit();
 	TheEnvironment.GlobalValues.marketshock();
@@ -133,6 +133,22 @@ public void projectprocesschedule() {
 	}
 	public double gettotalmarketphysicalposition() {
 		return TheEnvironment.GlobalValues.totalmarketphysicalposition;
+	}
+	public double getalltacticbuyoffer1() {
+		double ret = ShortTermMarket.getbestbuyoffer1();
+		return ret;
+	}
+	public double getalltacticbuyoffer2() {
+		double ret = ShortTermMarket.getbestbuyoffer2();
+		return ret;
+	}
+	public double getalltacticselloffer1() {
+		double ret = ShortTermMarket.getbestselloffer1();
+		return ret;
+	}
+	public double getalltacticselloffer2() {
+		double ret = ShortTermMarket.getbestselloffer2();
+		return ret;
 	}
 	
 }

@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Physical Position</name>
+  <name>Best offers</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
@@ -11,43 +11,43 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1671396438</hashCode>
+    <hashCode>-577574744</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>ObligatedPurchaser</string>
+      <string>Bestbuyoffer1</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>ObligatedPurchaser</id>
+        <id>Bestbuyoffer1</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getobligatedpurchaserssphysicalposition</methodName>
+        <methodName>getalltacticbuyoffer1</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Producers</string>
+      <string>Bestbuyoffer2</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Producers</id>
+        <id>Bestbuyoffer2</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getproducersphysicalposition</methodName>
+        <methodName>getalltacticbuyoffer2</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Trader</string>
+      <string>Bestselloffer1</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Trader</id>
+        <id>Bestselloffer1</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>gettradersphysicalposition</methodName>
+        <methodName>getalltacticselloffer1</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Total</string>
+      <string>Bestselloffer2</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Total</id>
+        <id>Bestselloffer2</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>gettotalmarketphysicalposition</methodName>
+        <methodName>getalltacticselloffer2</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

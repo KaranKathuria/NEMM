@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import repast.simphony.engine.environment.RunEnvironment;
 import nemmagents.ParentAgent;
 import nemmcommons.AllVariables;
+import nemmcommons.CommonMethods;
 import nemmenvironment.TheEnvironment;
 import nemmstrategy_shortterm.BuyOffer;
 import nemmstrategy_shortterm.SellOffer;
@@ -24,7 +25,13 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	private double discount;
 	private BuyOffer buyofferone;
 	private BuyOffer buyoffertwo;
-	private ArrayList<BuyOffer> tacticbuyoffers = new ArrayList<BuyOffer>();	
+	private ArrayList<BuyOffer> tacticbuyoffers = new ArrayList<BuyOffer>();
+	// GJB LEARNING
+	private double paramOLDRestVoldiscount;
+	private double paramOLDUtilityScore;
+	private static final double MAXRESTVOLDISCOUNT = 2;
+	private static final double MINRESTVOLDISCOUNT = 0.25;
+	private static final double PRICEMULTDELTASTEP = 0.05;
 
 	//Default constructor. Not in use. 
 	BuyStrategy1Tactic() {}
@@ -32,8 +39,10 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	//Used constructor
 	BuyStrategy1Tactic(double sbd, double d) {
 		shareboughtatdiscount = sbd;
-		discount = d;	
-		paramLearningMethod = 0; // Default learning method ID is 0 (= no learning)
+		discount = 1-d;
+		paramOLDRestVoldiscount = 1; // GJB LEARNING - Need a better way to set this. Random could work. What is this?
+		paramOLDUtilityScore = 0; // GJB LEARNING - This can be set another way // The learning method needs to be set here also. Now defaults to 0.
+		paramLearningMethod = 1; // Default learning method ID is 0 (= no learning)
 		NUMLEARNINGMETHODS = 3; //  Learning method IDs are 0, 1 & 2
 
 	}
@@ -52,7 +61,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	private BuyOffer creatBuyOffertwo(double expectedprice, double physicalposition, double ...capitalbase) {
 		BuyOffer ret = new BuyOffer();
 		ret.setbuyoffervol((-physicalposition) -( (shareboughtatdiscount*(-physicalposition)))); //rest of the monthly production bought at expected price.
-		ret.setbuyofferprice((1-discount)*expectedprice); //Most likely that the second offer is at at discount. Hence they buy what they dont must, at a discount.
+		ret.setbuyofferprice((discount)*expectedprice); //Most likely that the second offer is at at discount. Hence they buy what they dont must, at a discount.
 		if (physicalposition == 0) {
 			ret = null;
 		}
@@ -104,7 +113,33 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		}
 	}
 	private void learningMethod1() {
-		// here we write the learning method code
+		// Update the % of expected price for the rest volume
+		// Improvement in utility - we adjust price multiplier delta in the same direction as last time
+		// A decline in utility - we adjust the price multiplier delta in the opposite direction as last time
+ 		
+		int diffmultUtility; //Retning på utility
+		int diffmultDelta;	//Retning på pris fra forrige forrige gang til forrige gang. 
+		double priceMultDelta;
+		// Utility comparison		
+		if (tacticutilityscore-paramOLDUtilityScore >= 0) {
+			// Utility has improved
+			diffmultUtility = 1;
+		}
+		else {
+			diffmultUtility = -1;
+		}
+		// -ve if the mult is less than the previous, positive otherwise
+		diffmultDelta = CommonMethods.signDbl(discount-paramOLDRestVoldiscount); //Prisendringen er gitt prisendring forrige forrige gang og forrige gang.
+		if (diffmultDelta == 0) {diffmultDelta = 1;} // tie breaker
+		// set the new multiplier delta
+		priceMultDelta = diffmultUtility * diffmultDelta * PRICEMULTDELTASTEP;
+		// Update the history parameters
+		paramOLDRestVoldiscount = discount;
+		paramOLDUtilityScore = tacticutilityscore;
+		// Ensure not out of bounds. Note minus sign in difference to sellstrategy1tactiv1 learning 1
+		discount = Math.min(MAXRESTVOLDISCOUNT, Math.max(discount-priceMultDelta,MINRESTVOLDISCOUNT));
+
+	
 
 	}
 	private void learningMethod2() {

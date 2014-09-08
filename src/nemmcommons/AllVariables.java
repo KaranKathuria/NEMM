@@ -16,11 +16,13 @@ public class AllVariables {
 	public static double OPAgentmustbuypremium = 0.5;
 	public static double PAgentmustselldiscount = 0.5;
 	
-	public static double tradermaximumshortpos = -2000;
-	public static double tradermaximumlongpos = 2000;	
+	public static double tradermaximumshortpos = -5000; //These values should have some realtion to the initial portfoliovalue by allowing traders
+	public static double tradermaximumlongpos = 5000;	//to go bust.
+	public static double portfoliocapitalexitlimit = 100000; //reaching this limit triggers and "exit" behavior. This each reach with strong price drop/increase
 	
 	public static int numofhistutilitiesincluded = 3; //Used by method that deterines the tactics best utility.
 	
-
+	
+	
 }
 
