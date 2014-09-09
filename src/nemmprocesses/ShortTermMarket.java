@@ -38,9 +38,11 @@ public class ShortTermMarket {
 	private static ArrayList<BuyOffer> Allbuyoffers = new ArrayList<BuyOffer>();
 	private static ArrayList<SellOffer> Allselloffers = new ArrayList<SellOffer>();
 	
-	private static double bestbuyoffer1;
+	private static double buyoffer1;
+	private static double buyoffer2;
 	private static double bestbuyoffer2;
-	private static double bestselloffer1;
+	private static double selloffer1;
+	private static double selloffer2;
 	private static double bestselloffer2;
 	
 	public ShortTermMarket() {}
@@ -65,8 +67,9 @@ public class ShortTermMarket {
 			//Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers()); For the time being the producer does not have buyoffers.
 			
 			//For displaypurposes
-			bestselloffer1 = agent.getbeststrategy().getalltactics().get(0).getsellofferone().getSellOfferprice();
-			bestselloffer2 = agent.getbeststrategy().getalltactics().get(0).getselloffertwo().getSellOfferprice();
+			selloffer1 = agent.getbeststrategy().getalltactics().get(0).getsellofferone().getSellOfferprice();
+			selloffer2 = agent.getbeststrategy().getalltactics().get(0).getselloffertwo().getSellOfferprice();
+			bestselloffer2 = agent.getbeststrategy().getbesttactic().getselloffertwo().getSellOfferprice();
 		}
 		
 		for (final ActiveAgent agent : CommonMethods.getOPAgentList()) {
@@ -75,9 +78,10 @@ public class ShortTermMarket {
 			//Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers()); None sell offers from the OP agent list. 
 			Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers());
 			
-			bestbuyoffer1 = agent.getbeststrategy().getalltactics().get(0).getbuyofferone().getBuyOfferprice(); 
-			bestbuyoffer2 = agent.getbeststrategy().getalltactics().get(0).getbuyoffertwo().getBuyOfferprice();
-	
+			buyoffer1 = agent.getbeststrategy().getalltactics().get(0).getbuyofferone().getBuyOfferprice(); 
+			buyoffer2 = agent.getbeststrategy().getalltactics().get(0).getbuyoffertwo().getBuyOfferprice();
+			bestbuyoffer2 = agent.getbeststrategy().getbesttactic().getbuyoffertwo().getBuyOfferprice();
+			
 		}
 		for (final ActiveAgent agent : CommonMethods.getTAgentList()) {
 			agent.getbeststrategy().updatealloffers(); //Updates all bids for all agents
@@ -211,15 +215,20 @@ public static int getnumberofselloffers() {
 
 //DisplayVariables
 //The beststrategy and tactis offers for a selecter PA and OPA
-public static double getbestbuyoffer1() {
-return bestbuyoffer1;
+public static double getbuyoffer1() {
+return buyoffer1;
+}
+public static double getbuyoffer2() {
+return buyoffer2;
 }
 public static double getbestbuyoffer2() {
 return bestbuyoffer2;
 }
-public static double getbestselloffer1() {
-return bestselloffer1;
+public static double getselloffer1() {
+return selloffer1;
 }
+public static double getselloffer2() {
+return selloffer2;}
 public static double getbestselloffer2() {
 return bestselloffer2;
 }

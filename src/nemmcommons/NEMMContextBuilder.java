@@ -134,19 +134,30 @@ public void projectprocesschedule() {
 	public double gettotalmarketphysicalposition() {
 		return TheEnvironment.GlobalValues.totalmarketphysicalposition;
 	}
+	
+	//The flowing methods gets the buy and sell offer prices of the last PA and OPA agents best strategy, and first tactic.
+	//The getbest also gets the variable offer of the best tactic. 
 	public double getalltacticbuyoffer1() {
-		double ret = ShortTermMarket.getbestbuyoffer1();
+		double ret = ShortTermMarket.getbuyoffer1();
 		return ret;
 	}
 	public double getalltacticbuyoffer2() {
+		double ret = ShortTermMarket.getbuyoffer2();
+		return ret;
+	}
+	public double getbestbuyoffer2() {
 		double ret = ShortTermMarket.getbestbuyoffer2();
 		return ret;
 	}
 	public double getalltacticselloffer1() {
-		double ret = ShortTermMarket.getbestselloffer1();
+		double ret = ShortTermMarket.getselloffer1();
 		return ret;
 	}
 	public double getalltacticselloffer2() {
+		double ret = ShortTermMarket.getselloffer2();
+		return ret;
+	}
+	public double getbestselloffer2() {
 		double ret = ShortTermMarket.getbestselloffer2();
 		return ret;
 	}

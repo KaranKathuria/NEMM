@@ -34,5 +34,5 @@
     </entry>
   </seriesIds>
   <dataValueIds/>
-  <plotRangeLength>-1</plotRangeLength>
+  <plotRangeLength>0</plotRangeLength>
 </repast.simphony.chart2.engine.TimeSeriesChartDescriptor>
