@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.random.RandomHelper;
 import nemmagents.CompanyAgent;
@@ -13,6 +12,7 @@ import nemmcommons.CommonMethods;
 import nemmcommons.ParameterWrapper;
 import nemmcommons.TickArray;
 import nemmprocesses.ShortTermMarket;
+import inputreader.ReadExcel;
 
 import java.util.Comparator;
 
@@ -52,8 +52,8 @@ public final class TheEnvironment {
 		
 		// This could be added to the constructor, or can be run immediately after
 		//This method should further read from file, hence use the methods in the inputreader packadge. 
-		ReadCreateRegions();
-		ReadCreatePowerPlants();
+		inputreader.ReadExcel.ReadRegions();
+		inputreader.ReadExcel.ReadPowerPlants();
 		PopulatePowerPrices();
 		PopulateMarketDemands();
 	}

@@ -11,7 +11,6 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellValue;
-
 import java.io.FileInputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,14 +29,16 @@ public class ReadExcel {
  private static int genprofileentries;
  private static int loadprofileentries;
  private static int priceEntries;
- private static Region[] regions;
  private static PowerPlant[] plants;
  
 
-	public static void ReadExcel() {
+	public static void ReadExcel() {}
+	
+	public static void ReadRegions() {
 		
 		//Finds file and starts reading
-		String file_path = working_directory + "/NEMM_input.xls";  
+		String file_path = working_directory + "\\NEMM_input.xls";  
+		
 		try{      
 			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(file_path));	
 			
@@ -54,11 +55,49 @@ public class ReadExcel {
 			//Creates an array of regions wiht the length given in the excel and adds reagions to this array of regions. 
 			HSSFSheet list_sheet = workbook.getSheet("Lists");	
 			//regions = new Region[regionsnumber];
-			for(int region_ID = 0; region_ID < regionsnumber; region_ID++){
-				String newregionName = list_sheet.getRow(2+region_ID).getCell(5).getStringCellValue();; 
+			for(int i = 0; i < regionsnumber; i++){
+				String newregionName = list_sheet.getRow(2+i).getCell(5).getStringCellValue(); 
 				Region newRegion = new Region(newregionName);
 				TheEnvironment.allRegions.add(newRegion);
 			}
+		}catch(Exception e) {
+	        System.out.println("!! Bang !! xlRead() : " + e );
+	    }
+	}
+		
+		public static void ReadPowerPlants() {
+			
+			//Finds file and starts reading
+			String file_path = working_directory + "\\NEMM_input.xls";  
+			
+			try{      
+				HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(file_path));	
+				
+				// Read number of plants and technologies
+				HSSFSheet ctr_sheet = workbook.getSheet("Control");
+				plantsnumber = (int) ctr_sheet.getRow(2).getCell(2).getNumericCellValue();
+				technologiesnumber = (int) ctr_sheet.getRow(3).getCell(2).getNumericCellValue();
+				regionsnumber = (int) ctr_sheet.getRow(4).getCell(2).getNumericCellValue();
+				genprofileentries = (int) ctr_sheet.getRow(5).getCell(2).getNumericCellValue();
+				loadprofileentries = (int) ctr_sheet.getRow(6).getCell(2).getNumericCellValue();			
+				priceEntries = (int) ctr_sheet.getRow(7).getCell(2).getNumericCellValue();	
+				
+				// Read plant data
+				HSSFSheet plant_sheet = workbook.getSheet("Plants");	   
+				//plants = new PowerPlant[plantsnumber];
+
+				for(int i = 0; i < plantsnumber; i++){
+					int newcapacity = (int) plant_sheet.getRow(3+i).getCell(3).getNumericCellValue();
+					double newloadfactor = plant_sheet.getRow(3+i).getCell(4).getNumericCellValue();
+					int newregion_ID = (int) plant_sheet.getRow(3+i).getCell(6).getNumericCellValue();				
+					PowerPlant pp = new PowerPlant(newcapacity, newloadfactor, TheEnvironment.allRegions.get(newregion_ID-1));
+					//Add production in form of tickarray
+					TheEnvironment.allPowerPlants.add(pp);
+				}
+				
+			}catch(Exception e) {
+		        System.out.println("!! Bang !! xlRead() : " + e );
+		    }
 			
 			/*
 			// Read load
@@ -85,21 +124,11 @@ public class ReadExcel {
 				// regions[region_ID].setMyPowerPrice(newprice);
 			}			
 					
-			// Read plant data
-			HSSFSheet plant_sheet = workbook.getSheet("Plants");	   
-			plants = new PowerPlant[plantsnumber];
 
-			for(int plant_ID = 0; plant_ID < plantsnumber; plant_ID++){
-				int newcapacity = (int) plant_sheet.getRow(3+plant_ID).getCell(3).getNumericCellValue();
-				double newloadfactor = plant_sheet.getRow(3+plant_ID).getCell(4).getNumericCellValue();
-				int newregion_ID = (int) plant_sheet.getRow(3+plant_ID).getCell(6).getNumericCellValue();				
-				plants[plant_ID] = new PowerPlant(newcapacity, newloadfactor, regions[newregion_ID-1]);
 			}
 			*/
 
-	    }catch(Exception e) {
-	        System.out.println("!! Bang !! xlRead() : " + e );
-	    }
+	    
 	    
 	}
 }
