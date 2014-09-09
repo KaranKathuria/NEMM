@@ -51,6 +51,7 @@ public final class TheEnvironment {
 	public static void PopulateEnvironment(){
 		
 		// This could be added to the constructor, or can be run immediately after
+		//This method should further read from file, hence use the methods in the inputreader packadge. 
 		ReadCreateRegions();
 		ReadCreatePowerPlants();
 		PopulatePowerPrices();
