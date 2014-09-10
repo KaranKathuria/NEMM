@@ -28,7 +28,7 @@ public class TickArray {
 			if (newData.length != this.theData.length){
 				throw new IllegalArgumentException("The newData parameter is not of length numTicks");
 			}		
-			this.theData = theData;			
+			this.theData = newData;			
 		}
 		else {
 			for (int y = 0; y < TheEnvironment.theCalendar.getNumTicks(); ++y){

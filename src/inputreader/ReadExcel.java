@@ -44,9 +44,9 @@ public class ReadExcel {
 			// Read number of plants and technologies
 			HSSFSheet ctr_sheet = workbook.getSheet("Control");
 			plantsnumber = (int) ctr_sheet.getRow(2).getCell(2).getNumericCellValue();
-			technologiesnumber = (int) ctr_sheet.getRow(3).getCell(2).getNumericCellValue();
+			//technologiesnumber = (int) ctr_sheet.getRow(3).getCell(2).getNumericCellValue();
 			regionsnumber = (int) ctr_sheet.getRow(4).getCell(2).getNumericCellValue();
-			genprofileentries = (int) ctr_sheet.getRow(5).getCell(2).getNumericCellValue();
+			//genprofileentries = (int) ctr_sheet.getRow(5).getCell(2).getNumericCellValue();
 			ticks = (int) ctr_sheet.getRow(6).getCell(2).getNumericCellValue();			
 			
 			// Read regions
@@ -101,9 +101,9 @@ public class ReadExcel {
 				// Read number of plants and technologies
 				HSSFSheet ctr_sheet = workbook.getSheet("Control");
 				plantsnumber = (int) ctr_sheet.getRow(2).getCell(2).getNumericCellValue();
-				technologiesnumber = (int) ctr_sheet.getRow(3).getCell(2).getNumericCellValue();
+				//technologiesnumber = (int) ctr_sheet.getRow(3).getCell(2).getNumericCellValue();
 				regionsnumber = (int) ctr_sheet.getRow(4).getCell(2).getNumericCellValue();
-				genprofileentries = (int) ctr_sheet.getRow(5).getCell(2).getNumericCellValue();
+				//genprofileentries = (int) ctr_sheet.getRow(5).getCell(2).getNumericCellValue();
 				ticks = (int) ctr_sheet.getRow(6).getCell(2).getNumericCellValue();			
 				
 				// Read plant data
