@@ -27,8 +27,7 @@ public class ReadExcel {
  private static int technologiesnumber;
  private static int regionsnumber;
  private static int genprofileentries;
- private static int loadprofileentries;
- private static int priceEntries;
+ private static int ticks;
  private static PowerPlant[] plants;
  
 
@@ -48,8 +47,7 @@ public class ReadExcel {
 			technologiesnumber = (int) ctr_sheet.getRow(3).getCell(2).getNumericCellValue();
 			regionsnumber = (int) ctr_sheet.getRow(4).getCell(2).getNumericCellValue();
 			genprofileentries = (int) ctr_sheet.getRow(5).getCell(2).getNumericCellValue();
-			loadprofileentries = (int) ctr_sheet.getRow(6).getCell(2).getNumericCellValue();			
-			priceEntries = (int) ctr_sheet.getRow(7).getCell(2).getNumericCellValue();	
+			ticks = (int) ctr_sheet.getRow(6).getCell(2).getNumericCellValue();			
 			
 			// Read regions
 			//Creates an array of regions wiht the length given in the excel and adds reagions to this array of regions. 
@@ -60,6 +58,33 @@ public class ReadExcel {
 				Region newRegion = new Region(newregionName);
 				TheEnvironment.allRegions.add(newRegion);
 			}
+			
+			//Starts reading in the regions MarketDemand and MarketSeries objects consisting of certQouta, powerDemand and powerPrice
+			
+			HSSFSheet certQouta_sheet = workbook.getSheet("certQuota");	
+			HSSFSheet powerDemand_sheet = workbook.getSheet("powerDemand");
+			HSSFSheet powerPrice_sheet = workbook.getSheet("powerPrice");
+			
+			for(int j = 0; j < regionsnumber; j++){
+				double[] tempqouta = new double[ticks];
+				double[] tempdemand = new double[ticks];
+				double[] temppowerprice = new double[ticks];
+				
+				for(int i = 0; i < ticks; i++){
+					tempqouta[i] = certQouta_sheet.getRow(2+i).getCell(2+j).getNumericCellValue();
+					tempdemand[i] = powerDemand_sheet.getRow(2+i).getCell(2+j).getNumericCellValue();
+					temppowerprice[i] = powerPrice_sheet.getRow(2+i).getCell(2+j).getNumericCellValue();
+				}
+				// Set market demand
+				TheEnvironment.allRegions.get(j).getMyDemand().initMarketDemand(tempdemand, tempqouta);
+				// Set MarketSeries (power prices)
+				TheEnvironment.allRegions.get(j).getMyPowerPrice().initMarketSeries(temppowerprice);
+			}
+			
+		
+			
+			
+			
 		}catch(Exception e) {
 	        System.out.println("!! Bang !! xlRead() : " + e );
 	    }
@@ -79,19 +104,26 @@ public class ReadExcel {
 				technologiesnumber = (int) ctr_sheet.getRow(3).getCell(2).getNumericCellValue();
 				regionsnumber = (int) ctr_sheet.getRow(4).getCell(2).getNumericCellValue();
 				genprofileentries = (int) ctr_sheet.getRow(5).getCell(2).getNumericCellValue();
-				loadprofileentries = (int) ctr_sheet.getRow(6).getCell(2).getNumericCellValue();			
-				priceEntries = (int) ctr_sheet.getRow(7).getCell(2).getNumericCellValue();	
+				ticks = (int) ctr_sheet.getRow(6).getCell(2).getNumericCellValue();			
 				
 				// Read plant data
-				HSSFSheet plant_sheet = workbook.getSheet("Plants");	   
+				HSSFSheet plant_sheet = workbook.getSheet("PowerPlants");	   
+				HSSFSheet production_sheet = workbook.getSheet("Production");	 
 				//plants = new PowerPlant[plantsnumber];
 
-				for(int i = 0; i < plantsnumber; i++){
-					int newcapacity = (int) plant_sheet.getRow(3+i).getCell(3).getNumericCellValue();
-					double newloadfactor = plant_sheet.getRow(3+i).getCell(4).getNumericCellValue();
-					int newregion_ID = (int) plant_sheet.getRow(3+i).getCell(6).getNumericCellValue();				
+				for(int j = 0; j < plantsnumber; j++){
+					int newcapacity = (int) plant_sheet.getRow(3+j).getCell(3).getNumericCellValue();
+					double newloadfactor = plant_sheet.getRow(3+j).getCell(4).getNumericCellValue();
+					int newregion_ID = (int) plant_sheet.getRow(3+j).getCell(6).getNumericCellValue();
+					//newregion_ID starts by 1, hence to indexs it we subtract 1.
 					PowerPlant pp = new PowerPlant(newcapacity, newloadfactor, TheEnvironment.allRegions.get(newregion_ID-1));
+					
+					double[] tempproduction = new double[ticks];
+					for(int i = 0; i < ticks; i++){
+						tempproduction[i] = production_sheet.getRow(2+i).getCell(2+j).getNumericCellValue();
+					}
 					//Add production in form of tickarray
+					pp.setAllProduction(tempproduction);
 					TheEnvironment.allPowerPlants.add(pp);
 				}
 				

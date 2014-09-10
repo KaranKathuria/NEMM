@@ -9,7 +9,7 @@ public class MarketDemand {
 	
 	private TickArray powerDemand;
 	private TickArray certDemand;
-	private TickArray certKvoteplikt;
+	private TickArray certQuota;
 	private int numTicks;
 
 	// Each region has a demand for power and certificates
@@ -23,7 +23,7 @@ public class MarketDemand {
 	public MarketDemand() {
 		powerDemand = new TickArray();
 		certDemand = new TickArray();
-		certKvoteplikt = new TickArray();
+		certQuota = new TickArray();
 	}
 
 	public void initMarketDemand(double[] powerDem, double[] certPlikt){
@@ -50,16 +50,16 @@ public class MarketDemand {
 		if(numPoints==1){
 			for (int y = 0; y < numTicks; ++y){
 				powerDemand.setElement(powerDem[0], y);
-				certKvoteplikt.setElement(certPlikt[0], y);
+				certQuota.setElement(certPlikt[0], y);
 				certDemand.setElement(powerDem[0]*certPlikt[0] , y);
 			}
 		}
 		else {
 			powerDemand.setArray(powerDem);
-			certKvoteplikt.setArray(certPlikt);
+			certQuota.setArray(certPlikt);
 		
 		// calculate the certificate demand
-		certDemand.setArray(CommonMethods.elArrayMult(powerDemand.getArray(),certKvoteplikt.getArray()));
+		certDemand.setArray(CommonMethods.elArrayMult(powerDemand.getArray(),certQuota.getArray()));
 		}
 	}
 		

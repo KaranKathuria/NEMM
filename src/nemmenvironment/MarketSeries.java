@@ -9,17 +9,6 @@ public class MarketSeries {
 	
 	private TickArray seriesValues;
 
-	/*
-	public MarketPrice(double... defaultPrice) {
-		if (defaultPrice.length >0) {
-			this.defaultPrice = defaultPrice[0];
-		}
-		else {
-			this.defaultPrice = 200;
-		}
-	}
-*/
-	
 	
 	// Constructor methods. The set up is slightly unusual - when the object is instantiated
 	// the constructor is called and does nothing. Before use the initMarketPrice
@@ -32,8 +21,7 @@ public class MarketSeries {
 	}
 
 	public void initMarketSeries(double[] mktPrice){
-		// Currently this just calls the setAllPrices. We can add additional initialisation
-		// stuff here later if desired
+
 		setAllValues(mktPrice);		
 	}
 
@@ -80,5 +68,16 @@ public class MarketSeries {
 		}	
 	}
 	
-} // Class MarketPrice	
+	/*
+	public MarketPrice(double... defaultPrice) {
+		if (defaultPrice.length >0) {
+			this.defaultPrice = defaultPrice[0];
+		}
+		else {
+			this.defaultPrice = 200;
+		}
+	}
+*/
+	
+} 	
 	
