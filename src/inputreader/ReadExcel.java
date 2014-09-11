@@ -3,6 +3,7 @@ package inputreader;
 import nemmenvironment.PowerPlant;
 import nemmenvironment.Region;
 import nemmenvironment.TheEnvironment;
+import nemmtime.NemmCalendar;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -11,6 +12,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellValue;
+
 import java.io.FileInputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,15 +30,40 @@ public class ReadExcel {
  private static int regionsnumber;
  private static int genprofileentries;
  private static int ticks;
+ private static int startyear;
+ private static int endyear;
+ private static int numobpdinyear;
+ private static int numtrpdinyear;
  private static PowerPlant[] plants;
  
 
 	public static void ReadExcel() {}
 	
+	public static void ReadCreateTime() {
+		
+		//Finds file and starts reading
+		String file_path = working_directory + "\\NEMM_testdata.xls";  
+		
+		try{      
+			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(file_path));	
+			
+			// Read number of plants and technologies
+			HSSFSheet ctr_sheet = workbook.getSheet("Control");
+			startyear = (int) ctr_sheet.getRow(8).getCell(2).getNumericCellValue();
+			endyear = (int) ctr_sheet.getRow(9).getCell(2).getNumericCellValue();
+			numobpdinyear = (int) ctr_sheet.getRow(10).getCell(2).getNumericCellValue();
+			numtrpdinyear = (int) ctr_sheet.getRow(11).getCell(2).getNumericCellValue();
+			
+			TheEnvironment.theCalendar = new NemmCalendar(startyear, endyear, numobpdinyear, numtrpdinyear);
+		}catch(Exception e) {
+	        System.out.println("!! Bang !! xlRead() : " + e );
+	    }
+	}
+			
 	public static void ReadRegions() {
 		
 		//Finds file and starts reading
-		String file_path = working_directory + "\\NEMM_input.xls";  
+		String file_path = working_directory + "\\NEMM_testdata.xls";  
 		
 		try{      
 			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(file_path));	
@@ -59,31 +86,25 @@ public class ReadExcel {
 				TheEnvironment.allRegions.add(newRegion);
 			}
 			
-			//Starts reading in the regions MarketDemand and MarketSeries objects consisting of certQouta, powerDemand and powerPrice
+			//Starts reading in the regions MarketDemand and MarketSeries objects consisting of only certdemand and powerPrice
 			
-			HSSFSheet certQouta_sheet = workbook.getSheet("certQuota");	
-			HSSFSheet powerDemand_sheet = workbook.getSheet("powerDemand");
-			HSSFSheet powerPrice_sheet = workbook.getSheet("powerPrice");
+			HSSFSheet certdemand_sheet = workbook.getSheet("Certificate Demand");	
+			//HSSFSheet powerDemand_sheet = workbook.getSheet("powerDemand");
+			HSSFSheet powerPrice_sheet = workbook.getSheet("Power price");
 			
 			for(int j = 0; j < regionsnumber; j++){
-				double[] tempqouta = new double[ticks];
-				double[] tempdemand = new double[ticks];
+				double[] tempcertdem = new double[ticks];
 				double[] temppowerprice = new double[ticks];
 				
 				for(int i = 0; i < ticks; i++){
-					tempqouta[i] = certQouta_sheet.getRow(2+i).getCell(2+j).getNumericCellValue();
-					tempdemand[i] = powerDemand_sheet.getRow(2+i).getCell(2+j).getNumericCellValue();
-					temppowerprice[i] = powerPrice_sheet.getRow(2+i).getCell(2+j).getNumericCellValue();
+					tempcertdem[i] = certdemand_sheet.getRow(2+i).getCell(3+j).getNumericCellValue();
+					temppowerprice[i] = powerPrice_sheet.getRow(2+i).getCell(3+j).getNumericCellValue();
 				}
 				// Set market demand
-				TheEnvironment.allRegions.get(j).getMyDemand().initMarketDemand(tempdemand, tempqouta);
+				TheEnvironment.allRegions.get(j).getMyDemand().initMarketDemand(tempcertdem);
 				// Set MarketSeries (power prices)
 				TheEnvironment.allRegions.get(j).getMyPowerPrice().initMarketSeries(temppowerprice);
 			}
-			
-		
-			
-			
 			
 		}catch(Exception e) {
 	        System.out.println("!! Bang !! xlRead() : " + e );
@@ -93,13 +114,14 @@ public class ReadExcel {
 		public static void ReadPowerPlants() {
 			
 			//Finds file and starts reading
-			String file_path = working_directory + "\\NEMM_input.xls";  
+			String file_path = working_directory + "\\NEMM_testdata.xls";  
 			
-			try{      
+			try{      	
 				HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(file_path));	
 				
 				// Read number of plants and technologies
 				HSSFSheet ctr_sheet = workbook.getSheet("Control");
+				
 				plantsnumber = (int) ctr_sheet.getRow(2).getCell(2).getNumericCellValue();
 				//technologiesnumber = (int) ctr_sheet.getRow(3).getCell(2).getNumericCellValue();
 				regionsnumber = (int) ctr_sheet.getRow(4).getCell(2).getNumericCellValue();
@@ -112,15 +134,17 @@ public class ReadExcel {
 				//plants = new PowerPlant[plantsnumber];
 
 				for(int j = 0; j < plantsnumber; j++){
+					String newname = plant_sheet.getRow(3+j).getCell(1).getStringCellValue();
+					int newtechnology = (int) plant_sheet.getRow(3+j).getCell(7).getNumericCellValue();
 					int newcapacity = (int) plant_sheet.getRow(3+j).getCell(3).getNumericCellValue();
 					double newloadfactor = plant_sheet.getRow(3+j).getCell(4).getNumericCellValue();
 					int newregion_ID = (int) plant_sheet.getRow(3+j).getCell(6).getNumericCellValue();
 					//newregion_ID starts by 1, hence to indexs it we subtract 1.
-					PowerPlant pp = new PowerPlant(newcapacity, newloadfactor, TheEnvironment.allRegions.get(newregion_ID-1));
+					PowerPlant pp = new PowerPlant(newname, newtechnology, newcapacity, newloadfactor, TheEnvironment.allRegions.get(newregion_ID-1));
 					
 					double[] tempproduction = new double[ticks];
 					for(int i = 0; i < ticks; i++){
-						tempproduction[i] = production_sheet.getRow(2+i).getCell(2+j).getNumericCellValue();
+						tempproduction[i] = production_sheet.getRow(5+i).getCell(3+j).getNumericCellValue();
 					}
 					//Add production in form of tickarray
 					pp.setAllProduction(tempproduction);
@@ -128,38 +152,8 @@ public class ReadExcel {
 				}
 				
 			}catch(Exception e) {
-		        System.out.println("!! Bang !! xlRead() : " + e );
+		        System.out.println("!! Bangpp !! xlRead() : " + e );
 		    }
-			
-			/*
-			// Read load
-			HSSFSheet load_sheet = workbook.getSheet("Load");	
-			for(int region_ID = 0; region_ID < regionsnumber; region_ID++){
-				double[] doubledemand = new double[loadprofileentries];
-				for(int load_entry = 0; load_entry < loadprofileentries; load_entry++){
-					doubledemand[load_entry] = load_sheet.getRow(2+load_entry).getCell(2+region_ID).getNumericCellValue();					
-				}
-				// FIX : I am not sure how to construct a MarketDemand object
-				// newdemand = new MarketDemand(doubledemand);
-				// regions[region_ID].setMyDemand(newdemand);
-			}
-			
-			// Read price
-			HSSFSheet price_sheet = workbook.getSheet("Price");	
-			for(int region_ID = 0; region_ID < regionsnumber; region_ID++){
-				double[] doubleprice = new double[priceEntries];
-				for(int price_entry = 0; price_entry < priceEntries; price_entry++){
-					doubleprice[price_entry] = price_sheet.getRow(2+price_entry).getCell(2+region_ID).getNumericCellValue();	
-				}
-				// FIX
-				// MarketSeries newprice = new MarketSeries(doubleprice);
-				// regions[region_ID].setMyPowerPrice(newprice);
-			}			
-					
-
-			}
-			*/
-
 	    
 	    
 	}

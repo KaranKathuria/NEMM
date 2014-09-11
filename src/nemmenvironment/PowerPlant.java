@@ -11,21 +11,18 @@ import nemmtime.NemmTime;
 public class PowerPlant {
 
 	private int capacity;
-	private static int nextid = 1;
-	private final int id;
 	private double loadfactor;
 	private String name;
+	private int technologyid; //Technology could also be a object/class in itself later if needed
 	private Region myRegion;
 	private CompanyAgent myCompany;
 	private TickArray myProduction;
 	
-	public PowerPlant() {
-		id = nextid++;
-	}
+	public PowerPlant() {}
 	
-	public PowerPlant(int newcapacity, double newloadfactor, Region newregion) {
-		id = nextid++;
-		name = "PowerPlant " + id;
+	public PowerPlant(String newname, int newtechnology, int newcapacity, double newloadfactor, Region newregion) {
+		name = newname;
+		technologyid = newtechnology;
 		capacity = newcapacity;
 		loadfactor = newloadfactor;
 		myRegion = newregion;

@@ -1,8 +1,6 @@
 /nemmstmstrategiestactics
-/inputreader
 /nemmagents
-/nemmcommons
 /nemmenvironment
 /nemmprocesses
-/nemmstrategy_shortterm
-/nemmtime
+/inputreader
+/nemmcommons

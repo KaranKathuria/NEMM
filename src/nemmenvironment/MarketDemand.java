@@ -7,29 +7,33 @@ import nemmtime.NemmTime;
 
 public class MarketDemand {
 	
-	private TickArray powerDemand;
+	//private TickArray powerDemand;
 	private TickArray certDemand;
-	private TickArray certQuota;
+	//private TickArray certQuota;
 	private int numTicks;
 
-	// Each region has a demand for power and certificates
+	// Each region has a demand for certificats (11.09.2014 KK) Have removed powerDemand and CertQouta as this is used in excel input sheet
 
 	// Constructor methods. The set up is slightly unusual - when the object is instantiated
 	// the constructor is called and does nothing. Before use the initMarketDemand
 	// method should be called - this does the actual constructing.
-	// I've implemented in this way to enable the same code to be used for updating the 
-	// market prices if and as desired
+	
 	
 	public MarketDemand() {
-		powerDemand = new TickArray();
+		//powerDemand = new TickArray();
 		certDemand = new TickArray();
-		certQuota = new TickArray();
+		//certQuota = new TickArray();
 	}
 
-	public void initMarketDemand(double[] powerDem, double[] certPlikt){
+	public void initMarketDemand(double[] certdem){
 		// Currently this just calls the setAllDemands. We can add additional initialisation
 		// stuff here later if desired
-		setAllDemands(powerDem, certPlikt);		
+		setCertDemand(certdem);		
+	}
+	
+	public void setCertDemand(double[] certdem) {
+		
+		certDemand.setArray(certdem);
 	}
 	
 	// Methods --------------------------------------------------------------
@@ -37,7 +41,7 @@ public class MarketDemand {
 	// The setAllDemands allows us to send a single demand and quota, or else an array of demands and quota values
 	// of size numTicks. We need to add functionality to generate the power demands etc internally
 	// e.g. allow annual demand and quota numbers to be inputted, and have the class generate tick level demand
-	// and quota arrays. But this will do for now.
+	/*
 	
 	public void setAllDemands(double[] powerDem, double[] certPlikt) {
 		// error checking is done in the TickArray object - if the parameters are not the correct
@@ -75,6 +79,7 @@ public class MarketDemand {
 
 		return demandcalc;
 	}	
+	*/
 	
 	public double getCertDemand(int... tickID) {
 		double demandcalc;

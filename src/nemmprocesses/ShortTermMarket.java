@@ -67,8 +67,8 @@ public class ShortTermMarket {
 			//Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers()); For the time being the producer does not have buyoffers.
 			
 			//For displaypurposes
-			selloffer1 = agent.getbeststrategy().getalltactics().get(0).getsellofferone().getSellOfferprice();
-			selloffer2 = agent.getbeststrategy().getalltactics().get(0).getselloffertwo().getSellOfferprice();
+			selloffer1 = agent.getbeststrategy().getalltactics().get(1).getsellofferone().getSellOfferprice();
+			selloffer2 = agent.getbeststrategy().getalltactics().get(1).getselloffertwo().getSellOfferprice();
 			bestselloffer2 = agent.getbeststrategy().getbesttactic().getselloffertwo().getSellOfferprice();
 		}
 		
@@ -91,8 +91,8 @@ public class ShortTermMarket {
 		
 		
 		ArrayList<BuyOffer> tempbuy = new ArrayList<BuyOffer>();
-		tempbuy = Allbuyoffers;
 		ArrayList<SellOffer> tempsell = new ArrayList<SellOffer>();
+		tempbuy = Allbuyoffers;
 		tempsell = Allselloffers;
 		Allbuyoffers.removeAll(Collections.singleton(null));
 		Allselloffers.removeAll(Collections.singleton(null));

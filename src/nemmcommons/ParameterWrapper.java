@@ -23,10 +23,10 @@ public final class ParameterWrapper {
 	private static int monthlydemand;
 	private static int monthlysupply;
 	private static double initialinterestrate;
-	private static int startYear = 2012;
-	private static int endYear = 2014;
-	private static int numObPdsInYear = 1;
-	private static int numTradePdsInObPd = 12;
+	//private static int startYear = 2012;
+	//private static int endYear = 2014;
+	//private static int numObPdsInYear = 1;
+	//private static int numTradePdsInObPd = 12;
 	
 	
 	// Getter methods associated with parameters
@@ -62,7 +62,7 @@ public final class ParameterWrapper {
 		return initialinterestrate;
 	}
 	
-	public static int getstartyear() {
+	/*public static int getstartyear() {
 		return startYear;
 	}
 	
@@ -77,6 +77,7 @@ public final class ParameterWrapper {
 	public static int getnumTradePdsInObPd() {
 		return numTradePdsInObPd;
 	}
+	*/
 
 
 	public static void reinit() {
@@ -94,13 +95,13 @@ public final class ParameterWrapper {
 		
 		initialinterestrate = ((Double) parameters.getValue("initialinterestrate")).doubleValue();
 		
-		startYear = ((Integer) parameters.getValue("startYear")).intValue();
+		/*startYear = ((Integer) parameters.getValue("startYear")).intValue();
 		
 		endYear = ((Integer) parameters.getValue("endYear")).intValue();
 		
 		numObPdsInYear = ((Integer) parameters.getValue("numObPdsInYear")).intValue();
 		
-		numTradePdsInObPd = ((Integer) parameters.getValue("numObPdsInYear")).intValue();
+		numTradePdsInObPd = ((Integer) parameters.getValue("numObPdsInYear")).intValue();*/
 	}
 
 

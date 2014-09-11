@@ -9,9 +9,5 @@
 	<parameter defaultValue="5" type="int" displayName="Number of TraderAgents" name="traderagentsnumber"/>
 	<parameter defaultValue="220" name="priceexpectation" displayName="Price Expectation" type="double"></parameter>
 	<parameter defaultValue="0.025" displayName="Intial market interest rate" name="initialinterestrate" type="double"></parameter>
-	<parameter defaultValue="2012" displayName="Model start year " name="startYear" type="int"></parameter>
-	<parameter defaultValue="2035" displayName="Model end year " name="endYear" type="int"></parameter>
-	<parameter defaultValue="1" displayName="Number of obligation periods in a year" name="numObPdsInYear" type="int"></parameter>
-	<parameter defaultValue="12" displayName="Number of trading periods in a year" name="numTradePdsInObPd" type="int"></parameter>
 
 </parameters>
