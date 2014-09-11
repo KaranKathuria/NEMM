@@ -22,11 +22,14 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 	public Double calculateutility(double marketprice, ArrayList<BuyOffer> b, ArrayList<SellOffer> s, double physicalposition, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
 		double boughtcerts;
 		double avrbidprice;
-		double ret;
+		double averagepricenotaccepted;
+
 		boughtcerts = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMcert();
-		avrbidprice = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughInSTMprice();
-		ret = avrbidprice*boughtcerts; //Buy as many as possible but with an average bid price as close to market price as possible. (Avrprice is the avr price for the offers bids that where accepted)
-		return ret;}
+		avrbidprice = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMprice();
+		averagepricenotaccepted = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMnotaccepted();
+		return ((1/avrbidprice)*boughtcerts) + ((0.01)*(averagepricenotaccepted - marketprice)); //Buy as many as possible but with an average bid price as close to market price as possible. (Avrprice is the avr price for the offers bids that where accepted)
+		//Trenger ikke siste del siden utilitien økes når prisene økes. 
+	}
 
 }
 	

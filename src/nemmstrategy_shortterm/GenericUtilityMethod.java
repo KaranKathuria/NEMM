@@ -10,11 +10,14 @@ package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
 
+import nemmagents.CompanyAgent.ActiveAgent;
 import nemmstrategy_shortterm.BoughtInSTM;
 import nemmstrategy_shortterm.SoldInSTM;
 
 //Class definition
 public class GenericUtilityMethod {
+	
+	private ActiveAgent myAgent;
 	
 	public GenericUtilityMethod() {}
 	
@@ -22,6 +25,10 @@ public class GenericUtilityMethod {
 	public Double calculateutility(double marketprice, ArrayList<BuyOffer> b, ArrayList<SellOffer> s, double physicalposition, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
 		double ret = 1000;
 		return ret;
+	}
+	
+	public void setmyAgent(ActiveAgent aa) {
+		myAgent = aa;
 	}
 
 }

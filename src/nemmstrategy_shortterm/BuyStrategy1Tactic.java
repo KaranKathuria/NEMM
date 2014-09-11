@@ -39,7 +39,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	//Used constructor
 	BuyStrategy1Tactic(double sbd, double d) {
 		shareboughtatdiscount = sbd;
-		discount = 1-d;
+		discount = 1-d; //Gir d mellom 1.25 0g 0.25
 		paramOLDRestVoldiscount = 1; // GJB LEARNING - Need a better way to set this. Random could work. What is this?
 		paramOLDUtilityScore = 0; // GJB LEARNING - This can be set another way // The learning method needs to be set here also. Now defaults to 0.
 		paramLearningMethod = 1; // Default learning method ID is 0 (= no learning)
@@ -118,10 +118,10 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		// A decline in utility - we adjust the price multiplier delta in the opposite direction as last time
  		
 		int diffmultUtility; //Retning på utility
-		int diffmultDelta;	//Retning på pris fra forrige forrige gang til forrige gang. 
+		int diffmultDelta;	//Retning på pris fra forrige gang
 		double priceMultDelta;
 		// Utility comparison		
-		if (tacticutilityscore-paramOLDUtilityScore >= 0) {
+		if (tacticutilityscore-paramOLDUtilityScore > 0) { //Uendret utility er det samme at utility gikk opp. 
 			// Utility has improved
 			diffmultUtility = 1;
 		}
@@ -129,15 +129,15 @@ public class BuyStrategy1Tactic extends GenericTactic {
 			diffmultUtility = -1;
 		}
 		// -ve if the mult is less than the previous, positive otherwise
-		diffmultDelta = CommonMethods.signDbl(discount-paramOLDRestVoldiscount); //Prisendringen er gitt prisendring forrige forrige gang og forrige gang.
-		if (diffmultDelta == 0) {diffmultDelta = 1;} // tie breaker
-		// set the new multiplier delta
-		priceMultDelta = diffmultUtility * diffmultDelta * PRICEMULTDELTASTEP;
+		diffmultDelta = CommonMethods.signDbl(discount-paramOLDRestVoldiscount); //Prisendringen fra forrige til nå. 
+		if (diffmultDelta == 0) {diffmultDelta = 1;} // tie breaker. Ingen prisendring, da sier vi at vi siden forrige gang har redusert pris. 
+		// I sum vil dette si at dersom utility er uendret og prisen ble redusert. Så reduseres pris. 
+		priceMultDelta = diffmultUtility * diffmultDelta * PRICEMULTDELTASTEP; //(om vi reduserte pris og utility gikk opp --> reduser pris. Om vi økt pris og utility gikk opp --> øk pris. Om vi økte pris og utility gikk ned --> reduser pris. 
 		// Update the history parameters
 		paramOLDRestVoldiscount = discount;
 		paramOLDUtilityScore = tacticutilityscore;
 		// Ensure not out of bounds. Note minus sign in difference to sellstrategy1tactiv1 learning 1
-		discount = Math.min(MAXRESTVOLDISCOUNT, Math.max(discount-priceMultDelta,MINRESTVOLDISCOUNT));
+		discount = Math.min(MAXRESTVOLDISCOUNT, Math.max(discount+priceMultDelta,MINRESTVOLDISCOUNT));
 
 	
 

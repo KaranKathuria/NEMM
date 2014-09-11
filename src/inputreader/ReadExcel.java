@@ -143,6 +143,7 @@ public class ReadExcel {
 					PowerPlant pp = new PowerPlant(newname, newtechnology, newcapacity, newloadfactor, TheEnvironment.allRegions.get(newregion_ID-1));
 					
 					double[] tempproduction = new double[ticks];
+					
 					for(int i = 0; i < ticks; i++){
 						tempproduction[i] = production_sheet.getRow(5+i).getCell(3+j).getNumericCellValue();
 					}

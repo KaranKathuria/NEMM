@@ -53,7 +53,10 @@ public static void markettransactions() {
 	public static SoldInSTM returnsoldvolume(ArrayList<SellOffer> aso, double marketprice, double shareoflastoffersold) { //Method calculation the outcome of a selloffers array offered in a STM market
 		SoldInSTM ret = new SoldInSTM();
 		double soldcerts = 0;
-		double averageprice = 0; //averageprice is the average price for the bids that where accepted
+		double averageprice = 0;
+		double avragepricenotaccepted = 0; //averageprice is the average price for the bids that where not accepted
+		double tempvol = 0;
+		
 		aso.removeAll(Collections.singleton(null));
 		for (SellOffer s : aso) {
 			if (s.getSellOfferprice() <= (marketprice-ShortTermMarket.getpricestep())) { //In this case the offers was accepted in the market
@@ -63,9 +66,16 @@ public static void markettransactions() {
 			if (s.getSellOfferprice() > marketprice-ShortTermMarket.getpricestep() && s.getSellOfferprice() <= marketprice) {
 				averageprice = ((averageprice*soldcerts)+(s.getnumberofcert()*s.getSellOfferprice()*shareoflastoffersold))/(soldcerts+(s.getnumberofcert()*shareoflastoffersold)); //The new average price
 				soldcerts = soldcerts + (s.getnumberofcert()*shareoflastoffersold);	//Total number of certs sold is updated
-			}}
+			}
+			if (s.getSellOfferprice() > marketprice) {
+				avragepricenotaccepted = ((avragepricenotaccepted*tempvol) + (s.getSellOfferprice() * s.getnumberofcert())) / (tempvol + s.getnumberofcert());
+				tempvol = tempvol + s.getnumberofcert();
+			}
+				
+		}
 			ret.averageprice = averageprice;
 			ret.numberofcert = soldcerts;
+			ret.notacceptavrprice = avragepricenotaccepted;
 		return ret;
 	}
 	
@@ -79,6 +89,9 @@ public static void markettransactions() {
 		else {
 		double boughtcerts = 0;
 		double averageprice = 0; //averageprice is the average price for the bids that where accepted
+		double avragepricenotaccepted = 0; //averageprice is the average price for the bids that where not accepted
+		double tempvol = 0;
+		
 		abo.removeAll(Collections.singleton(null)); //Have no idea why there are null-offers in the buyoffers list, but this bug is temporarly corrected her.
 		for (BuyOffer b : abo) {
 			if (b.getBuyOfferprice() >= (marketprice+ShortTermMarket.getpricestep())) { //In this case the offers was accepted in the market
@@ -88,9 +101,16 @@ public static void markettransactions() {
 			if (b.getBuyOfferprice() >= (marketprice) && b.getBuyOfferprice() < (marketprice+ShortTermMarket.getpricestep())) {
 				averageprice = ((averageprice*boughtcerts)+(b.getnumberofcert()*b.getBuyOfferprice()*shareoflastofferbought))/(boughtcerts+(b.getnumberofcert()*shareoflastofferbought)); //The new average price
 				boughtcerts = boughtcerts + (b.getnumberofcert()*shareoflastofferbought);	//Total number of certs sold is updated
-			}}
+			}
+			if (b.getBuyOfferprice() < marketprice) {
+				avragepricenotaccepted = ((avragepricenotaccepted*tempvol) + (b.getBuyOfferprice() * b.getnumberofcert())) / (tempvol + b.getnumberofcert());
+				tempvol = tempvol + b.getnumberofcert();
+			}
+			
+		}
 			ret.averageprice = averageprice;
 			ret.numberofcert = boughtcerts;
+			ret.notacceptavrprice = avragepricenotaccepted;
 		return ret;
 		}
 	}

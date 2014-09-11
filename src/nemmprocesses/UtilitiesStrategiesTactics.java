@@ -28,7 +28,7 @@ public class UtilitiesStrategiesTactics {
 		for (ActiveAgent agent : CommonMethods.getAAgentList()) {
 			for (GenericStrategy strategy : agent.getallstrategies()) { //
 				double temputilityscore = 0;
-				double bestutilityscore = -10000; //Quicfix as utilities currently can be negative. 
+				double bestutilityscore = -90000000; //Quicfix as utilities currently can be negative. 
 				for (GenericTactic tactic : strategy.getalltactics()) { 
 					double totalutilityscore = 0;
 					//Use the agents utilitymethod to calculate each tactics utility

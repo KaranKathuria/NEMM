@@ -48,8 +48,8 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	private SellOffer creatSellOfferone(double expectedprice, double physicalposition) {
 		SellOffer ret = new SellOffer();
 		ret.setsellofferprice((1+premium)*expectedprice); 
-		ret.setselloffervol(100);//For now, they always buy or sell 1000 units, but they cannot go short. 
-		if (physicalposition < maxshortpos+(100)) {
+		ret.setselloffervol(400);//For now, they always buy or sell 1000 units, but they cannot go short. 
+		if (physicalposition < maxshortpos+(400)) {
 			ret = null;
 		}
 
@@ -59,8 +59,8 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	private SellOffer creatSellOffertwo(double expectedprice, double physicalposition) {
 		SellOffer ret = new SellOffer();
 		ret.setsellofferprice((1+(premium/2))*expectedprice); 
-		ret.setselloffervol(100);//For now, they always buy or sell 1000 units, but they cannot go short. 
-		if (physicalposition < maxshortpos+(200)) { //As there are two selloffers.
+		ret.setselloffervol(400);//For now, they always buy or sell 200 units, but they cannot go short. 
+		if (physicalposition < maxshortpos+(800)) { //As there are two selloffers.
 			ret = null;
 		}
 		return ret;
@@ -68,9 +68,9 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	
 	private BuyOffer creatBuyOfferone(double expectedprice, double physicalposition) {
 		BuyOffer ret = new BuyOffer();
-		ret.setbuyoffervol(100); //int in order to only sell integer values of certs.
+		ret.setbuyoffervol(400); //int in order to only sell integer values of certs.
 		ret.setbuyofferprice((1-discount)*expectedprice); 
-		if (physicalposition > maxlongpos-(100)) {
+		if (physicalposition > maxlongpos-(400)) {
 		ret = null; //If the physical position is larger than maximum physical position than you cannot by more. 
 		} 
 		return ret;
@@ -78,9 +78,9 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	
 	private BuyOffer creatBuyOffertwo(double expectedprice, double physicalposition) {
 		BuyOffer ret = new BuyOffer();
-		ret.setbuyoffervol(100); //int in order to only sell integer values of certs.
+		ret.setbuyoffervol(400); //int in order to only sell integer values of certs.
 		ret.setbuyofferprice((1-discount)*expectedprice); 
-		if (physicalposition > maxlongpos-(200)) { //200 as its two.
+		if (physicalposition > maxlongpos-(800)) { //400 as its two.
 		ret = null; //If the physical position is larger than maximum physical position than you cannot by more. 
 		} return ret;
 		}
