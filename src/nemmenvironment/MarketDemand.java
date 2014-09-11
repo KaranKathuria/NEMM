@@ -7,9 +7,9 @@ import nemmtime.NemmTime;
 
 public class MarketDemand {
 	
-	private TickArray powerDemand;
+	//private TickArray powerDemand;
 	private TickArray certDemand;
-	private TickArray certKvoteplikt;
+	//private TickArray certKvoteplikt;
 	private int numTicks;
 
 	// Each region has a demand for power and certificates
@@ -21,15 +21,20 @@ public class MarketDemand {
 	// market prices if and as desired
 	
 	public MarketDemand() {
-		powerDemand = new TickArray();
+		//powerDemand = new TickArray();
 		certDemand = new TickArray();
-		certKvoteplikt = new TickArray();
+		//certKvoteplikt = new TickArray();
 	}
 
-	public void initMarketDemand(double[] powerDem, double[] certPlikt){
+	public void initMarketDemand(double[] certdem){
 		// Currently this just calls the setAllDemands. We can add additional initialisation
 		// stuff here later if desired
-		setAllDemands(powerDem, certPlikt);		
+		setCertDemand(certdem);		
+	}
+	
+	public void setCertDemand(double[] cd) {
+		certDemand.setArray(cd);
+		
 	}
 	
 	// Methods --------------------------------------------------------------
@@ -37,7 +42,7 @@ public class MarketDemand {
 	// The setAllDemands allows us to send a single demand and quota, or else an array of demands and quota values
 	// of size numTicks. We need to add functionality to generate the power demands etc internally
 	// e.g. allow annual demand and quota numbers to be inputted, and have the class generate tick level demand
-	// and quota arrays. But this will do for now.
+	/*
 	
 	public void setAllDemands(double[] powerDem, double[] certPlikt) {
 		// error checking is done in the TickArray object - if the parameters are not the correct
@@ -62,6 +67,7 @@ public class MarketDemand {
 		certDemand.setArray(CommonMethods.elArrayMult(powerDemand.getArray(),certKvoteplikt.getArray()));
 		}
 	}
+	
 		
 	public double getPowerDemand(int... tickID) {
 		double demandcalc;
@@ -75,7 +81,7 @@ public class MarketDemand {
 
 		return demandcalc;
 	}	
-	
+	*/
 	public double getCertDemand(int... tickID) {
 		double demandcalc;
 		if (tickID.length > 0) {
