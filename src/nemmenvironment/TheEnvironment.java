@@ -30,22 +30,32 @@ public final class TheEnvironment {
 	
 	// Initialise the environment ------------------------------------------------------------
 	public static void InitEnvironment(){
-
-		inputreader.ReadExcel.ReadCreateTime();
+		// Create & set up the time calendar and create the lists
+		// to hold the plants, companies, and regions
+		ReadCreateTime();
 		allPowerPlants = new ArrayList<PowerPlant>() ;
 		allRegions = new ArrayList<Region>() ;	
-		}
+		
+	}
+
+	public static void ReadCreateTime(){
+		int startYear = 2012;
+		int endYear = 2014;
+		int numObPdsInYear = 1;
+		int numTradePdsInObPd = 12;
+		theCalendar = new NemmCalendar(startYear, endYear, numObPdsInYear, numTradePdsInObPd);
+	}
 	
 	// Populate the Environment ------------------------------------------------------------
 	
 	public static void PopulateEnvironment(){
 		
-		
-		//Read from file
+		// This could be added to the constructor, or can be run immediately after
+		//This method should further read from file, hence use the methods in the inputreader packadge. 
 		inputreader.ReadExcel.ReadRegions();
 		inputreader.ReadExcel.ReadPowerPlants();
-		//PopulatePowerPrices();
-		//PopulateMarketDemands();
+		PopulatePowerPrices();
+		PopulateMarketDemands();
 	}
 
 	public static void ReadCreateRegions() {
@@ -70,7 +80,46 @@ public final class TheEnvironment {
 		//PopulateMarketDemands();
 		//PopulatePowerPrices();
 	}
+	
+	private static void ReadCreatePowerPlants() {
+		// Reads in the power plant data and creates
+		// power plant objects, populates these, and 
+		// stores them in the power plant list for the
+		// passed region
 		
+		// TEST VERSION: creates the plants randomly (i.e. they
+		// are not read in from anywhere
+		
+		int numplants = 10;
+		for (int i = 0; i < numplants; ++i) {
+			// randomly create capacity and load factor for the 
+			// new plant
+			int newcap = 10000; //CommonMethods.randInt(50, 150);
+			double newlf = 0.1; //CommonMethods.randInt(20, 35)/100;
+			// randomly choose the region
+			int selectedRegion = CommonMethods.randInt(0, allRegions.size()-1);
+			// Create the plant and store it in the list
+			PowerPlant newplant = new PowerPlant(newcap, newlf, allRegions.get(selectedRegion));
+			double[] defProd = new double[1];
+			defProd[0] = 1000;
+			newplant.setAllProduction(defProd); //  production in each tick set to a default
+			allPowerPlants.add(newplant);
+		}
+	}
+	
+	
+	private static void PopulateMarketDemands(){
+		for (Region curRegion: allRegions){
+			// code to come here to set up the regions power
+			// demand and certificate obligation
+			double[] newDem = new double[1];
+			double[] newObl = new double[1];
+			newDem[0] = 50000;
+			newObl[0] = 0.10;
+			curRegion.getMyDemand().initMarketDemand(newDem, newObl);			
+		}
+	}
+	
 	private static void PopulatePowerPrices(){
 		for (Region curRegion: allRegions){
 			// code to come here to set up the regions power
@@ -281,40 +330,3 @@ public final class TheEnvironment {
 	
 	
 }
-
-//Old Methods not in use
-
-/*private static void ReadCreatePowerPlants() {
-// Reads in the power plant data and creates
-// power plant objects, populates these, and 
-// stores them in the power plant list for the
-// passed region
-
-// TEST VERSION: creates the plants randomly (i.e. they
-// are not read in from anywhere
-
-int numplants = 10;
-for (int i = 0; i < numplants; ++i) {
-	// randomly create capacity and load factor for the 
-	// new plant
-	int newcap = 10000; //CommonMethods.randInt(50, 150);
-	double newlf = 0.1; //CommonMethods.randInt(20, 35)/100;
-	// randomly choose the region
-	int selectedRegion = CommonMethods.randInt(0, allRegions.size()-1);
-	// Create the plant and store it in the list
-	PowerPlant newplant = new PowerPlant(newcap, newlf, allRegions.get(selectedRegion));
-	double[] defProd = new double[1];
-	defProd[0] = 1000;
-	newplant.setAllProduction(defProd); //  production in each tick set to a default
-	allPowerPlants.add(newplant);
-}
-}
-
-	public static void ReadCreateTime(){
-		int startYear = 2012;
-		int endYear = 2035;
-		int numObPdsInYear = 1;
-		int numTradePdsInObPd = 12;
-		theCalendar = new NemmCalendar(startYear, endYear, numObPdsInYear, numTradePdsInObPd);
-	}
-	*/

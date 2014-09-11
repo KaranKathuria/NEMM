@@ -16,19 +16,16 @@ public class DistributeDemandShares {
 	public DistributeDemandShares() {}
 	
 	public static void Uniformdemanddistribution(int agentsregion1, int agentsregion2) {
-		if (TheEnvironment.allRegions.size() == 2) {
-		int numberofOPAgents = CommonMethods.getOPAgentList().size();
-			if (agentsregion1 + agentsregion2 < numberofOPAgents) {
-				throw new IllegalArgumentException("There are few agents given shares and agents in total, hence a uniform dist cannot be done,");
-			}
+		if (TheEnvironment.allRegions.size() == 2){
 		double demandshareregion1 = (double) (1/(double) agentsregion1);
 		double demandshareregion2 = (double) (1/(double) agentsregion2);
-
+		int numberofregions;
+		int numberofOPAgents = CommonMethods.getOPAgentList().size();
 		Region region1 = TheEnvironment.allRegions.get(0);
 		Region region2 = TheEnvironment.allRegions.get(1);
 		int agentcount = 0;
 		
-		//First for-loop starts shareing the demandshares for all agents that should share demand for region 1
+		//Frist for-loop starts shareing the demandshares for all agents that should share demand for region 1
 		for (int i = 0; i < (agentsregion1); ++i) { //For all agents shareing the first regions demand
 			CommonMethods.getOPAgentList().get(agentcount).AddDemandShare(demandshareregion1, region1);
 			agentcount = agentcount+1;
