@@ -69,23 +69,28 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 @ScheduledMethod(start = 0, interval = 1, priority = 1)
 public void monthlymarketschedule() {
 	
-	ShortTermMarket.runshorttermmarket(); //updates all offers for all agents strategies and clears the market based on the best strategies , best tactics offers. 
-	UpdatePhysicalPosition.markettransactions();//updates the market outcomes and hence the physical position for all agents based on what they bid into the market
+	//First the schedual updates all offers for all agents strategies and clears the market based on the best strategies, best tactics offers. Calcualtes market price.
+	ShortTermMarket.runshorttermmarket(); 
+	//All agents strategies utilities are scored. Tactics learn and the best strategies update their best tactics. This is done before the physical update as the intial physical position is part of the utility calcualtion.
+	UtilitiesStrategiesTactics.calculatetilitiesandupdatebesttactics(); 
+	
+	//Following "UpdatePhysicalPosition" methods updates the agents values based on the cleared market, powerplants and demand shares given as input initially. 
+	UpdatePhysicalPosition.markettransactions();//updates the physical position for all agents based on what they bidded into the market
 	UpdatePhysicalPosition.runproduction(); //Loops to all powerplants and adds this ticks prodution to the CompanyAgents producers agents physical position. 
 	UpdatePhysicalPosition.updatedemand(); //Adds demand to the CompanyAgents physicalposition
-	UtilitiesStrategiesTactics.calculatetilitiesandupdatebesttactics(); //Calculates the tactic and strategies utilities and changes the best tactics. 
+	
+	//Reads the values to the global values arrays. Also calcualtes display values.
 	TheEnvironment.GlobalValues.monthlyglobalvalueupdate();
 }
 
-	// the lates monthly update is "hidden" for this update. 
+//All annual updates to come below. Currently not in use.
 @ScheduledMethod(start = 0, interval = 12, priority = 2)
 public void annualmarketschedule() {
 	//Priority 2 means that whenever the tick is 12 (annual tick) this will be ran first. If the priority is the same, the order is random. 
 		TheEnvironment.GlobalValues.annualglobalvalueupdate();
-		
 }
 
-	//Distributing of Power Plants and Demand Shares
+//Distributing of Power Plants and Demand Shares
 @ScheduledMethod(start = 0, interval = 24, priority = 0)
 public void projectprocesschedule() {
 	ParameterWrapper.reinit();

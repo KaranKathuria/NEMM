@@ -76,7 +76,7 @@ public static void markettransactions() {
 			ret.averageprice = averageprice;
 			ret.numberofcert = soldcerts;
 			ret.notacceptavrprice = avragepricenotaccepted;
-		return ret;
+		return ret; //If the bids in selloffers are null, then this would return 0.0 for the values. This is okey for the market transactions but must be handled in the utiltities. 
 	}
 	
 	public static BoughtInSTM returnboughtvolume(ArrayList<BuyOffer> abo, double marketprice, double shareoflastofferbought) { //Method calculation the outcome of a selloffers array offered in a STM market
@@ -84,6 +84,7 @@ public static void markettransactions() {
 		if (marketprice == 0) { //All would have bought, but the price is zero.
 			ret.averageprice = 0.0;
 			ret.numberofcert = 0.0;
+			ret.notacceptavrprice = 0.0;
 			return ret;
 		}
 		else {

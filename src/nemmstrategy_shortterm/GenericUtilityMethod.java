@@ -21,14 +21,17 @@ public class GenericUtilityMethod {
 	
 	public GenericUtilityMethod() {}
 	
-	//Method for scoring utility to be overwritten by subclass methods with same name. 
-	public Double calculateutility(double marketprice, ArrayList<BuyOffer> b, ArrayList<SellOffer> s, double physicalposition, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
+	//Method for scoring utility to be overwritten by subclass methods with same name. Hence this is never used.
+	public Double calculateutility(double marketprice, ArrayList<BuyOffer> b, ArrayList<SellOffer> s, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
 		double ret = 1000;
 		return ret;
 	}
 	
 	public void setmyAgent(ActiveAgent aa) {
 		myAgent = aa;
+	}
+	public ActiveAgent getmyAgent() {
+		return myAgent;
 	}
 
 }

@@ -15,8 +15,6 @@ import nemmstrategy_shortterm.GenericTactic;
 import nemmstrategy_shortterm.GenericStrategy;
 
 
-//To be implemntetd Should in short take inn all bids, find the price which maximates traded volume. excetute trades. And set the price! (and do somethings smart with the imbalance of trade).
-// Take inn bids of differen type. Use them to clear the market and set price. Inputt agents based bids, output price. as well as a methods that updates agents salse volume maybe)
 public class UtilitiesStrategiesTactics {
 	
 	UtilitiesStrategiesTactics() {};
@@ -28,11 +26,11 @@ public class UtilitiesStrategiesTactics {
 		for (ActiveAgent agent : CommonMethods.getAAgentList()) {
 			for (GenericStrategy strategy : agent.getallstrategies()) { //
 				double temputilityscore = 0;
-				double bestutilityscore = -90000000; //Quicfix as utilities currently can be negative. 
+				double bestutilityscore = -90000000; //Quicfix as utilities can be 0
 				for (GenericTactic tactic : strategy.getalltactics()) { 
 					double totalutilityscore = 0;
 					//Use the agents utilitymethod to calculate each tactics utility
-					temputilityscore = agent.getutilitymethod().calculateutility(ShortTermMarket.getcurrentmarketprice(), tactic.gettacticbuyoffers(), tactic.gettacticselloffers(), agent.getphysicalnetposition(), ShortTermMarket.getshareofmarignaloffersold(), ShortTermMarket.getshareofmarignalofferbought());
+					temputilityscore = agent.getutilitymethod().calculateutility(ShortTermMarket.getcurrentmarketprice(), tactic.gettacticbuyoffers(), tactic.gettacticselloffers(), ShortTermMarket.getshareofmarignaloffersold(), ShortTermMarket.getshareofmarignalofferbought());
 					//Updates that tactics utility
 					tactic.updatetacticutilityscore(temputilityscore);
 					//Adds the tactics new current buy/sell-offers and utility to the tactichistoricvalues arrays.

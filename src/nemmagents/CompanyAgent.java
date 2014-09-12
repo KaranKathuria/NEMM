@@ -80,6 +80,7 @@ public class CompanyAgent extends ParentAgent {
 				portfoliocapital = 1000000; 
 			} 
 			companyagent = CompanyAgent.this;
+			this.utilitymethod.setmyAgent(ActiveAgent.this);
 			beststrategy = allstrategies.get(0); // Choose the first one initially 
 			numberofstrategies = allstrategies.size();
 		}

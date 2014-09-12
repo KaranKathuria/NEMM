@@ -54,8 +54,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		// These are set in the constructor only
 		paramMustSellShare = sbd;
 		paramRestVolPriceMult = 1+d;
-		paramOLDRestVolPriceMult = 1; // GJB LEARNING - Need a better way to set this. Random could work. This means some try higher som try lower price. 
-		//positive number over means that it tried to increase price last time. 
+		paramOLDRestVolPriceMult = 2; // GJB LEARNING - Need a better way to set this. Random could work. This means some try higher som try lower price. 
 		paramOLDUtilityScore = 0; // GJB LEARNING - This can be set another way // The learning method needs to be set here also. Now defaults to 0.
 		paramLearningMethod = 1; // Default learning method ID is 0 (= no learning)
 		NUMLEARNINGMETHODS = 4; //  Learning method IDs are 0 thru 3
@@ -130,23 +129,24 @@ public class SellStrategy1Tactic extends GenericTactic {
 		// Update the % of expected price for the rest volume
 		// Improvement in utility - we adjust price multiplier delta in the same direction as last time
 		// A decline in utility - we adjust the price multiplier delta in the opposite direction as last time
+		//Unchanged utility --> Do the same as last time, which to start wiht is to reduce price.
  		
 		int diffmultUtility; //Retning på utility
 		int diffmultDelta;	//Retning på pris fra forrige forrige gang til forrige gang. 
 		double priceMultDelta;
 		// Utility comparison		
 		if (tacticutilityscore-paramOLDUtilityScore >= 0) {
-			// Utility has improved
-			diffmultUtility = 1;
+			// Utility has improved or is unchanged.
+			diffmultUtility = 1; 
 		}
 		else {
 			diffmultUtility = -1;
 		}
 		// -ve if the mult is less than the previous, positive otherwise
-		diffmultDelta = CommonMethods.signDbl(paramRestVolPriceMult-paramOLDRestVolPriceMult); //Prisendringen er gitt prisendring forrige forrige gang og forrige gang.
+		diffmultDelta = CommonMethods.signDbl(paramRestVolPriceMult-paramOLDRestVolPriceMult); // Increased price gives positive number
 		if (diffmultDelta == 0) {diffmultDelta = 1;} // tie breaker
 		// set the new multiplier delta
-		priceMultDelta = diffmultUtility * diffmultDelta * PRICEMULTDELTASTEP;
+		priceMultDelta = diffmultUtility * diffmultDelta * PRICEMULTDELTASTEP; //Hence increasd price and unchange utility --> incresed price (wrong)
 		// Update the history parameters
 		paramOLDRestVolPriceMult = paramRestVolPriceMult;
 		paramOLDUtilityScore = tacticutilityscore;
