@@ -11,13 +11,16 @@ package nemmagents;
 //Imports
 
 
+import nemmcommons.AllVariables;
 import nemmcommons.MarketPrognosis;
+import nemmenvironment.TheEnvironment;
 import nemmagents.ParentAgent;
 
 //Class definition
 public class MarketAnalysisAgent extends ParentAgent {
 
 	private MarketPrognosis marketprognosis; //All current and future market expectations.
+	private double forcastweights[] = AllVariables.forcastweights;
 	
 	public MarketAnalysisAgent() {
 		marketprognosis = new MarketPrognosis();
@@ -27,9 +30,18 @@ public class MarketAnalysisAgent extends ParentAgent {
 		return marketprognosis;
 	}
 	
-	public void updateMarketprognosis() {
-		//Calls market prognosis methods that updates their respective values. Feks a method that updates currentexpected price based on the history
-		//this.marketprognosis.updatepriceexpectation();
+	public void updatecertpriceexpectations() { //Forcast the certprice for the next tick based on the forcastweights. Sets the prognosis cert price for next tick
+		double nexttickcertprice;
+		int numberhistoricprices = TheEnvironment.theCalendar.getCurrentTick() + 1;
+		int curtick = TheEnvironment.theCalendar.getCurrentTick();
+		if (numberhistoricprices < 3) {
+			nexttickcertprice = TheEnvironment.GlobalValues.certificateprice.getElement(curtick);
+		} else {
+			nexttickcertprice = forcastweights[0] * TheEnvironment.GlobalValues.certificateprice.getElement(curtick-2) + forcastweights[1] * TheEnvironment.GlobalValues.certificateprice.getElement(curtick-1) + forcastweights[2] * TheEnvironment.GlobalValues.certificateprice.getElement(curtick);
+		}
+		this.marketprognosis.setstpriceexpectation(nexttickcertprice);
+		this.marketprognosis.setExpectedcertificateprice(nexttickcertprice, curtick+1);
+		
 	}
 
 	

@@ -1,46 +1,29 @@
 /*
  * Version info:
- * 	   Class object for price prognosis. 
- * 
- *     Created: 20140818
+ * 	   Class object for volume prognosis. This objet contains an VolumeAnalysisAgents own prognosis of internal production and demand for all future ticks.
+ * 	   These valus will somehow be distributed around the actual world demand and production for the agent owning this volume analysis agent.
+ *     Created: 20141209
  *     Made by: Karan Kathuria  
  */
 
 package nemmcommons;
 
 // Import
-import nemmprocesses.ShortTermMarket;
 
 
 //Class definitions. Note that this is a static class as all its member variables are static.
 public class VolumePrognosis {
 	
-	private int nextmonthsproduction;
-	private int nextyearsproduction;
-	private int nextmonthsdemand;
-	private int nextyearsdemand;
+	private TickArray expectedtotalproduction;
+	private TickArray expectedtotaldemand;
 
 	public VolumePrognosis() {
-		nextmonthsproduction = 0;
-		nextyearsproduction = 0;
-		nextmonthsdemand = 0;
-		nextyearsdemand = 0;
+		expectedtotalproduction = new TickArray();
+		expectedtotaldemand = new TickArray();
 	}
 	
 	//Methods
-	public int getnextmonthsproduction() {
-		return nextmonthsproduction;
-	}
-	public int getnextmonthsdeamnd() {
-		return nextmonthsdemand;
-	}
-	
-	public void setnextmonthsproduction(int prod) {
-		nextmonthsproduction = prod;
-  }
-	public void setnextmonthsdemand(int dem) {
-		nextmonthsdemand = dem;
-  }
+
 	
 	
 }

@@ -15,6 +15,7 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 import nemmagents.CompanyAgent;
 import nemmagents.ParentAgent;
 import nemmenvironment.TheEnvironment;
+import nemmprocesses.Forcast;
 import nemmprocesses.ShortTermMarket;
 import nemmprocesses.UpdatePhysicalPosition;
 import nemmprocesses.UtilitiesStrategiesTactics;
@@ -81,6 +82,9 @@ public void monthlymarketschedule() {
 	
 	//Reads the values to the global values arrays. Also calcualtes display values.
 	TheEnvironment.GlobalValues.monthlyglobalvalueupdate();
+	
+	//Update the analysis agents forecasts. Must run after global values are updated as it uses the array of certprices
+	Forcast.updatemarketforcasts();
 }
 
 //All annual updates to come below. Currently not in use.
@@ -164,6 +168,10 @@ public void projectprocesschedule() {
 	}
 	public double getbestselloffer2() {
 		double ret = ShortTermMarket.getbestselloffer2();
+		return ret;
+	}
+	public double getpriceexpetations() {
+		double ret = CommonMethods.getMAAgentList().get(0).getpriceprognosis().getstpriceexpectation();
 		return ret;
 	}
 	

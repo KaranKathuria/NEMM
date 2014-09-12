@@ -112,12 +112,12 @@ public static List<CompanyAgent> getCompanyAgenList() {
 	
 	@SuppressWarnings("unchecked")
 	
-	final Iterable<MarketAnalysisAgent> Agents = RunState.getInstance().getMasterContext().getObjects(MarketAnalysisAgent.class);
+	final Iterable<CompanyAgent> Agents = RunState.getInstance().getMasterContext().getObjects(CompanyAgent.class);
 	
 	final ArrayList<MarketAnalysisAgent> ret = new ArrayList<MarketAnalysisAgent>();
 
-	for (final MarketAnalysisAgent agent : Agents) {
-		ret.add(agent);
+	for (final CompanyAgent agent : Agents) {
+		ret.add(agent.getcompanyanalysisagent().getmarketanalysisagent());
 	}
 
 	return Collections.unmodifiableList(ret);

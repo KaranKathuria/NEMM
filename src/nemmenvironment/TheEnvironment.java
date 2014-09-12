@@ -35,21 +35,17 @@ public final class TheEnvironment {
 		inputreader.ReadExcel.ReadCreateTime();
 		allPowerPlants = new ArrayList<PowerPlant>() ;
 		allRegions = new ArrayList<Region>() ;	
-		
 	}
 	
 	// Populate the Environment ------------------------------------------------------------
 	
 	public static void PopulateEnvironment(){
-		
 		// This could be added to the constructor, or can be run immediately after
 		//This method should further read from file, hence use the methods in the inputreader packadge. 
 		inputreader.ReadExcel.ReadRegions();
 		inputreader.ReadExcel.ReadPowerPlants();
-
 	}
 		
-
 	// NEMMCALENDAR START ========================================================	
 	/*public static class NemmCalendar {
 		
@@ -215,7 +211,7 @@ public final class TheEnvironment {
 		// Monthly update of current global values
 		public static void monthlyglobalvalueupdate() {
 			currentmarketprice = ShortTermMarket.getcurrentmarketprice();
-			//certificateprice.setElement(ShortTermMarket.getcurrentmarketprice(), theCalendar.getCurrentTick()); //Adds certPrice to history.
+			certificateprice.setElement(ShortTermMarket.getcurrentmarketprice(), theCalendar.getCurrentTick()); //Adds certPrice to history.
 			currentinterestrate = currentinterestrate + RandomHelper.nextDoubleFromTo(-0.002, 0.002);
 			numberofbuyoffersstm = ShortTermMarket.getnumberofbuyoffers();
 			numberofselloffersstm = ShortTermMarket.getnumberofselloffers();

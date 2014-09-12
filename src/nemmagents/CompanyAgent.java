@@ -140,35 +140,38 @@ public class CompanyAgent extends ParentAgent {
 			return portfoliocapital;
 		}
 	}
-		
-		public class CompanyAnalysisAgent extends ParentAgent {
+	
+//Inner class CompanyAnalysisAgent. This agent consist of two other objects. MarketAnalysisAgent and VolumeAnalysisAgent. THe latter is an inner subclass.
+	public class CompanyAnalysisAgent extends ParentAgent {
 			
-			//Nested inner class 
-			public class VolumeAnalysisAgent extends ParentAgent {	
-				private VolumePrognosis volumeprognosis;
+			//Nested inner class VolumeAnalysisAgent
+		public class VolumeAnalysisAgent extends ParentAgent {	
+			private VolumePrognosis volumeprognosis;
 					
-				VolumeAnalysisAgent() {
-					volumeprognosis = new VolumePrognosis();
-				}
-				public VolumePrognosis getvolumeprognosis() {
-					return volumeprognosis;
-				}
+			VolumeAnalysisAgent() {
+				volumeprognosis = new VolumePrognosis();
 			}
+			public VolumePrognosis getvolumeprognosis() {
+				return volumeprognosis;
+			}}
 			
-			private MarketAnalysisAgent marketanalysisagent;
-			private VolumeAnalysisAgent volumeanalysisagent;
+	private MarketAnalysisAgent marketanalysisagent;
+	private VolumeAnalysisAgent volumeanalysisagent;
 
-			CompanyAnalysisAgent() {
-				marketanalysisagent = new MarketAnalysisAgent();
-				volumeanalysisagent = new VolumeAnalysisAgent();
-			}
-			public MarketAnalysisAgent getmarketanalysisagent() {
-				return marketanalysisagent;
-			}
-			public VolumeAnalysisAgent getvolumeanalysisagent() {
-				return volumeanalysisagent;
-			}
+	//Default constructor calling the respective objects default constructors
+	CompanyAnalysisAgent() {
+		marketanalysisagent = new MarketAnalysisAgent();
+		volumeanalysisagent = new VolumeAnalysisAgent();
 		}
+		
+	//Sets and gets
+		public MarketAnalysisAgent getmarketanalysisagent() {
+			return marketanalysisagent;
+		}
+		public VolumeAnalysisAgent getvolumeanalysisagent() {
+			return volumeanalysisagent;
+		}
+	}
 		
 	//Back to CompanyAgent documentation
 	private String companyname;
@@ -184,22 +187,16 @@ public class CompanyAgent extends ParentAgent {
 		produceragent = null;
 		obligatedpurchaseragent = null;
 		traderagent = null;
-		companyanalysisagent = null;
-	}
+		companyanalysisagent = null;}
 	
 	public CompanyAgent(boolean p, boolean op, boolean t) {
 		if (p==true) {
 			produceragent = new ActiveAgent(1);}
-//		if (p==false) {
-//			produceragent = null;}
 		if (op==true) {
 			obligatedpurchaseragent = new ActiveAgent(2);}
-//		if (op==false) {
-//			obligatedpurchaseragent = null;}
 		if (t==true) {
 			traderagent = new ActiveAgent(3);}
-//		if (t==false) {
-//			traderagent = null;}
+		
 		companyname = "Company " + this.getID();
 		companyanalysisagent = new CompanyAnalysisAgent();	
 		}	

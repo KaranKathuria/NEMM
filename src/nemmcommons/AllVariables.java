@@ -22,6 +22,8 @@ public class AllVariables {
 	
 	public static int numofhistutilitiesincluded = 3; //Used by method that deterines the tactics best utility.
 	
+	public static double forcastweights[] = {0.0, 0.1, 0.9};
+	
 	
 	
 }

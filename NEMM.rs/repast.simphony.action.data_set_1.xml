@@ -24,6 +24,15 @@
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
+    <entry>
+      <string>Expected price</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Expected price</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getpriceexpetations</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
   </methodDataSources>
   <countSources class="linked-hash-map"/>
   <customNADataSources class="linked-hash-map"/>
