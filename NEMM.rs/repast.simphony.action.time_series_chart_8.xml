@@ -21,18 +21,6 @@
   <showLegend>true</showLegend>
   <seriesIds>
     <entry>
-      <string>Selloffer2</string>
-      <SeriesData>
-        <label>Selloffer2</label>
-        <color>
-          <red>204</red>
-          <green>255</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
       <string>Best buyoffer2</string>
       <SeriesData>
         <label>Best buyoffer2</label>
@@ -40,6 +28,18 @@
           <red>204</red>
           <green>0</green>
           <blue>0</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Selloffer2</string>
+      <SeriesData>
+        <label>Selloffer2</label>
+        <color>
+          <red>204</red>
+          <green>255</green>
+          <blue>204</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>
@@ -57,13 +57,13 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Selloffer1</string>
+      <string>Best selloffer2</string>
       <SeriesData>
-        <label>Selloffer1</label>
+        <label>Best selloffer2</label>
         <color>
-          <red>204</red>
-          <green>255</green>
-          <blue>204</blue>
+          <red>0</red>
+          <green>153</green>
+          <blue>51</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>
@@ -81,13 +81,13 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Best selloffer2</string>
+      <string>Selloffer1</string>
       <SeriesData>
-        <label>Best selloffer2</label>
+        <label>Selloffer1</label>
         <color>
-          <red>0</red>
-          <green>153</green>
-          <blue>51</blue>
+          <red>204</red>
+          <green>255</green>
+          <blue>204</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>
