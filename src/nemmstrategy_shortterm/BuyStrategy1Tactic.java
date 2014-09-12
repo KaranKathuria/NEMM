@@ -129,7 +129,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 			diffmultUtility = -1;
 		}
 		// -ve if the mult is less than the previous, positive otherwise
-		diffmultDelta = CommonMethods.signDbl(discount-paramOLDRestVoldiscount); //Prisendringen er gitt prisendring forrige forrige gang og forrige gang.
+		diffmultDelta = CommonMethods.signDbl(discount-paramOLDRestVoldiscount); //Om prisen har gått ned får vi negativt tall
 		if (diffmultDelta == 0) {diffmultDelta = 1;} // tie breaker
 		// set the new multiplier delta
 		priceMultDelta = diffmultUtility * diffmultDelta * PRICEMULTDELTASTEP;
@@ -137,7 +137,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		paramOLDRestVoldiscount = discount;
 		paramOLDUtilityScore = tacticutilityscore;
 		// Ensure not out of bounds. Note minus sign in difference to sellstrategy1tactiv1 learning 1
-		discount = Math.min(MAXRESTVOLDISCOUNT, Math.max(discount-priceMultDelta,MINRESTVOLDISCOUNT));
+		discount = Math.min(MAXRESTVOLDISCOUNT, Math.max(discount+priceMultDelta,MINRESTVOLDISCOUNT));
 
 	
 

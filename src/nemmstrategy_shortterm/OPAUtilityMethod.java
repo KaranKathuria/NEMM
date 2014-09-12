@@ -26,8 +26,9 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 
 		boughtcerts = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMcert();
 		avrbidprice = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMprice();
+		if (avrbidprice == 0) {return 0.0;} //Should not be the case
 		averagepricenotaccepted = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMnotaccepted();
-		return ((1/avrbidprice)*boughtcerts) + ((0.01)*(averagepricenotaccepted - marketprice)); //Buy as many as possible but with an average bid price as close to market price as possible. (Avrprice is the avr price for the offers bids that where accepted)
+		return ((1/avrbidprice)*boughtcerts) + ((averagepricenotaccepted - marketprice)/(avrbidprice*10)); //Buy as many as possible but with an average bid price as close to market price as possible. (Avrprice is the avr price for the offers bids that where accepted)
 		//Trenger ikke siste del siden utilitien økes når prisene økes. 
 	}
 
