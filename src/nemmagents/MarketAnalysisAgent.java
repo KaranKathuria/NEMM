@@ -16,9 +16,8 @@ import nemmagents.ParentAgent;
 
 //Class definition
 public class MarketAnalysisAgent extends ParentAgent {
-		
-	private MarketPrognosis marketprognosis; //The price expectations for next month. 
-	// Could have a prise expectations for future prices that deviates form that of today corrected for cost of holding. 
+
+	private MarketPrognosis marketprognosis; //All current and future market expectations.
 	
 	public MarketAnalysisAgent() {
 		marketprognosis = new MarketPrognosis();
@@ -26,6 +25,11 @@ public class MarketAnalysisAgent extends ParentAgent {
 	
 	public MarketPrognosis getpriceprognosis() {
 		return marketprognosis;
+	}
+	
+	public void updateMarketprognosis() {
+		//Calls market prognosis methods that updates their respective values. Feks a method that updates currentexpected price based on the history
+		//this.marketprognosis.updatepriceexpectation();
 	}
 
 	

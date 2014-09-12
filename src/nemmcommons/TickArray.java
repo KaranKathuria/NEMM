@@ -60,7 +60,20 @@ public class TickArray {
 			throw new IllegalArgumentException("Tick ID: " + tickID + " passed to getElement is too large");				
 		}	
 		this.theData[tickID] = newElement;			
-
 	}	
+	
+	public void setFutureElements(double[] values) {
+		if (values.length != TheEnvironment.theCalendar.getNumTicks()-TheEnvironment.theCalendar.getCurrentTick()) {
+			throw new IllegalArgumentException("Array given to setFutureElements has invalid length (short or long)");	
+		}
+		//In the Array, it sets the values from current tick and until end equal to the values of the incoming array
+		for (int i = 0; i < values.length; ++i) {
+			int index = TheEnvironment.theCalendar.getCurrentTick() + i;
+			this.theData[index] = values[i];
+		}
+		
+	}
+	
+	
 	
 }
