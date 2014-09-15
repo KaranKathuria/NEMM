@@ -73,8 +73,7 @@ public class ReadExcel {
 			plantsnumber = (int) ctr_sheet.getRow(2).getCell(2).getNumericCellValue();
 			//technologiesnumber = (int) ctr_sheet.getRow(3).getCell(2).getNumericCellValue();
 			regionsnumber = (int) ctr_sheet.getRow(4).getCell(2).getNumericCellValue();
-			//genprofileentries = (int) ctr_sheet.getRow(5).getCell(2).getNumericCellValue();
-			ticks = (int) ctr_sheet.getRow(6).getCell(2).getNumericCellValue();			
+			ticks = TheEnvironment.theCalendar.getNumTicks();		
 			
 			// Read regions
 			//Creates an array of regions wiht the length given in the excel and adds reagions to this array of regions. 
