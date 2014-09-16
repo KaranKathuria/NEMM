@@ -84,7 +84,8 @@ public void monthlymarketschedule() {
 	TheEnvironment.GlobalValues.monthlyglobalvalueupdate();
 	
 	//Update the analysis agents forecasts. Must run after global values are updated as it uses the array of certprices
-	//Forcast.updatemarketforcasts();
+	//Add the method/process that updates production forecasts
+	Forcast.updatemarketforcasts();
 }
 
 //All annual updates to come below. Currently not in use.

@@ -131,11 +131,10 @@ public class ReadExcel {
 				
 				plantsnumber = (int) ctr_sheet.getRow(2).getCell(2).getNumericCellValue();
 
-						
-				
 				// Read plant data
 				HSSFSheet plant_sheet = workbook.getSheet("PowerPlants");	   
-				HSSFSheet production_sheet = workbook.getSheet("Production");	 
+				HSSFSheet production_sheet = workbook.getSheet("Production");
+				HSSFSheet expproduction_sheet = workbook.getSheet("Expected production");
 				//plants = new PowerPlant[plantsnumber];
 
 				for(int j = 0; j < plantsnumber; j++){
@@ -148,12 +147,20 @@ public class ReadExcel {
 					PowerPlant pp = new PowerPlant(newname, newtechnology, newcapacity, newloadfactor, TheEnvironment.allRegions.get(newregion_ID-1));
 					
 					double[] tempproduction = new double[ticks];
+					double[] expproduction = new double[ticks];
 					
 					for(int i = 0; i < ticks; i++){
 						tempproduction[i] = production_sheet.getRow(5+i).getCell(3+j).getNumericCellValue();
 					}
-					//Add production in form of tickarray
+					
+					for(int i = 0; i < ticks; i++){
+						expproduction[i] = expproduction_sheet.getRow(5+i).getCell(3+j).getNumericCellValue();
+					}
+					//Add production in form of tick array
 					pp.setAllProduction(tempproduction);
+					//Add all expected production to tick array
+					pp.setAllExpectedProduction(expproduction);
+					
 					TheEnvironment.allPowerPlants.add(pp);
 				}
 				

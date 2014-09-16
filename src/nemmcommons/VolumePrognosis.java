@@ -15,13 +15,20 @@ import nemmagents.CompanyAgent.CompanyAnalysisAgent.VolumeAnalysisAgent;
 //Class definitions. Note that this is a static class as all its member variables are static.
 public class VolumePrognosis {
 	
-	private TickArray expectedtotalproduction; //My companys total production	
-	private TickArray expectedtotaldemand;	//My comapanys total demand
-	private VolumeAnalysisAgent myVAAgent;
+	private double nexttickcertproduction;
+	private double nexttwelvetickscertproduction;
+	private double nexttickcertdemand;
+	private double nexttwelvetickscertdemand;
+	//Do we need the same for power?
+	private VolumeAnalysisAgent myVolumeAnalysisAgent;
 
 	public VolumePrognosis() {
-		expectedtotalproduction = new TickArray();
-		expectedtotaldemand = new TickArray();
+		nexttickcertproduction = 2;//exected cert prod for my powerplants
+	}
+	
+	//Methods
+	public void setmyVAA(VolumeAnalysisAgent myVAA) {
+		myVolumeAnalysisAgent = myVAA;
 	}
 	
 

@@ -16,8 +16,8 @@ public class PowerPlant {
 	private int technologyid; //Technology could also be a object/class in itself later if needed
 	private Region myRegion;
 	private CompanyAgent myCompany;
-	private TickArray myProduction; //Real pregenerated (good given) future production
-	private TickArray myExpectedProduction;	//Expected production 
+	private TickArray myProduction; //Real pregenerated (good given) future production. This is what generates certificates
+	private TickArray ExpectedProduction;	//Expected production. This is the amount of certs the plant is expected to generate
 	
 	public PowerPlant() {}
 	
@@ -91,11 +91,11 @@ public class PowerPlant {
 		double prodcalc;
 		// eventually this will be replaced by a look-up
 		if (tickID.length > 0) {
-			prodcalc = this.myExpectedProduction.getElement(tickID[0]);
+			prodcalc = this.ExpectedProduction.getElement(tickID[0]);
 		}
 		else {
 			int curTick = TheEnvironment.theCalendar.getCurrentTick();
-			prodcalc = this.myExpectedProduction.getElement(curTick);
+			prodcalc = this.ExpectedProduction.getElement(curTick);
 		}
 
 		return prodcalc;
@@ -127,6 +127,17 @@ public class PowerPlant {
 		}
 	}
 	
+	public void setExpectedProduction(double newProd, int... tickID) {
+
+		if (tickID.length > 0) {	
+			this.ExpectedProduction.setElement(newProd, tickID[0]);
+		}
+		else {
+			int curTick = TheEnvironment.theCalendar.getCurrentTick();
+			this.ExpectedProduction.setElement(newProd, curTick);
+		}
+	}
+	
 	public void setAllProduction(double[] newProd) {
 
 		int numPoints = newProd.length;
@@ -140,6 +151,22 @@ public class PowerPlant {
 		}
 		else {
 			myProduction.setArray(newProd);
+		}
+	}
+	
+	public void setAllExpectedProduction(double[] newProd) {
+
+		int numPoints = newProd.length;
+		int numTicks = TheEnvironment.theCalendar.getNumTicks();
+
+		// set the demands and quotas for each tick
+		if(numPoints==1){
+			for (int y = 0; y < numTicks; ++y){
+				ExpectedProduction.setElement(newProd[0], y);
+			}			
+		}
+		else {
+			ExpectedProduction.setArray(newProd);
 		}
 	}
 	

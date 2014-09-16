@@ -150,10 +150,15 @@ public class CompanyAgent extends ParentAgent {
 					
 			VolumeAnalysisAgent() {
 				volumeprognosis = new VolumePrognosis();
+				volumeprognosis.setmyVAA(VolumeAnalysisAgent.this);
 			}
 			public VolumePrognosis getvolumeprognosis() {
 				return volumeprognosis;
-			}}
+			}
+			public CompanyAgent getmyCompany() {
+				return CompanyAgent.this;
+			}
+			}
 			
 	private MarketAnalysisAgent marketanalysisagent;
 	private VolumeAnalysisAgent volumeanalysisagent;
