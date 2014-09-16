@@ -75,7 +75,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		}
 	
 	public void updatetacticselloffers() {
-		double physicalposition = this.getmyStrategy().getmyAgent().getphysicalnetposition();
+		double physicalposition = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getnexttickcertproduction(); //this.getmyStrategy().getmyAgent().getphysicalnetposition();
 		double expectedprice = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation();
 		if (physicalposition <= 0){
 			physicalposition = 0.0;} //To not get crazy selloffers

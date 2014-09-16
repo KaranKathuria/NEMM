@@ -120,7 +120,7 @@ public static void markettransactions() {
 public static void runproduction() {
 	
 	for (PowerPlant pp : TheEnvironment.allPowerPlants) {
-		pp.getMyCompany().getproduceragent().addtophysicalposition(pp.getProduction()); //Cased as int temporarly. Pushes this ticks production to agents physical position.
+		pp.getMyCompany().getproduceragent().addtophysicalposition(pp.getProduction()); // Pushes this ticks production to agents physical position.
 	}
 }
 

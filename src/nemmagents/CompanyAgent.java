@@ -41,6 +41,8 @@ public class CompanyAgent extends ParentAgent {
 		private GenericStrategy beststrategy = null;
 		private GenericUtilityMethod utilitymethod;
 		private double physicalnetposition;
+		private double lasttickproduction;
+		private double lasttickdemand;
 		private double portfoliocapital;
 		
 		// Null constructor for ActiveAgent. Should not be used as this does not specify type of agent.
@@ -105,7 +107,7 @@ public class CompanyAgent extends ParentAgent {
 			portfoliocapital = portfoliocapital + (physicalnetposition * (GlobalValues.currentmarketprice - ShortTermMarket.getcurrentmarketprice())); //is ran before global values are updated, hence global values current market price has the old market price
 			physicalnetposition = physicalnetposition + certificatesbought - certificatessold; //Certificates bought and sold are positive numbers.
 		}
-		
+		//takes in either production (positiv) or demand (negative) amount of certs
 		public void addtophysicalposition(double prodordemand) {
 			physicalnetposition = physicalnetposition + prodordemand;
 		}

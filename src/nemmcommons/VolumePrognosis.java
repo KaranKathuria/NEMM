@@ -34,6 +34,14 @@ public class VolumePrognosis {
 	public void setmyVAA(VolumeAnalysisAgent myVAA) {
 		myVolumeAnalysisAgent = myVAA;
 	}
+	public double getnexttickcertproduction() {
+		return nexttickcertproduction;
+	}
+	
+	public double getnexttwelvetickscertproduction() {
+		return nexttwelvetickscertproduction;
+	}
+	
 	public void initiatevolumeprognosis() { //To be run before first tick
 		double temp1 = 0;
 		double tempticks = 0;
@@ -42,12 +50,11 @@ public class VolumePrognosis {
 		for (PowerPlant pp : myVolumeAnalysisAgent.getmyCompany().getmypowerplants()) {
 			temp1 = temp1 + pp.getExpectedProduction(0); //Tick 0 is the next tick
 			for (int i = 0; i < ticks; ++i) {
-			tempticks = tempticks + pp.getExpectedProduction(i); //The ticks next ticks
+			tempticks = tempticks + pp.getExpectedProduction(i); //The ticks next tick
 			}
 		}
 		nexttickcertproduction = temp1;
 		nexttwelvetickscertproduction = tempticks;
-
 		//equally for expected demand
 		//for (DemandShares ds : myVolumeAnalysisAgent.getmyCompany().getmypowerplants()et) {
 	}
@@ -59,7 +66,7 @@ public class VolumePrognosis {
 		double dtempticks = 0;
 		int from = TheEnvironment.theCalendar.getCurrentTick() + 1;
 		for (PowerPlant pp : myVolumeAnalysisAgent.getmyCompany().getmypowerplants()) {
-			temp1 = temp1 + pp.getExpectedProduction(from); //Tick 0 is the next tick
+			temp1 = temp1 + pp.getExpectedProduction(from);
 			
 			for (int i = from; i < ticks+from; ++i) {
 				tempticks = tempticks + pp.getExpectedProduction(i); //The ticks next ticks
@@ -67,8 +74,7 @@ public class VolumePrognosis {
 		}
 		nexttickcertproduction = temp1;
 		nexttwelvetickscertproduction = tempticks;
-		
-		
+
 		//equally for expected demand
 		//for (DemandShares ds : myVolumeAnalysisAgent.getmyCompany().getmypowerplants()et) {
 	
