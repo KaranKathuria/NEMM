@@ -57,7 +57,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		paramOLDRestVolPriceMult = 2; // GJB LEARNING - Need a better way to set this. Random could work. This means some try higher som try lower price. 
 		paramOLDUtilityScore = 0; // GJB LEARNING - This can be set another way // The learning method needs to be set here also. Now defaults to 0.
 		paramLearningMethod = 1; // Default learning method ID is 0 (= no learning)
-		NUMLEARNINGMETHODS = 4; //  Learning method IDs are 0 thru 3
+		numberoflearningmethods = 4; //  Learning method IDs are 0 thru 3
 	}
 	
 	private SellOffer createMustSellVolOffer(double expectedprice, double physicalposition, double ...capitalbase) {

@@ -10,8 +10,8 @@ package nemmcommons;
 public class AllVariables {
 	
 	//Number of tactics in each of the respective strategies. More tactics gives the agent more alternatives.
-	public static int numberoftacticsBuyStrategy1 = 20;
-	public static int numberoftacticsSellStrategy1 = 20;
+	public static int numberoftacticsBuyStrategy1 = 1;
+	public static int numberoftacticsSellStrategy1 = 1;
 	public static int numberoftacticsTraderStrategy1 = 8;
 	public static double OPAgentmustbuypremium = 0.5;
 	public static double PAgentmustselldiscount = 0.5;
@@ -20,9 +20,9 @@ public class AllVariables {
 	public static double tradermaximumlongpos = 5000;	//to go bust.
 	public static double portfoliocapitalexitlimit = 50000; //reaching this limit triggers and "exit" behavior. This each reach with strong price drop/increase
 	
-	public static int numofhistutilitiesincluded = 3; //Used by method that deterines the tactics best utility.
+	public static int numofhistutilitiesincluded = 1; //Used by method that deterines the tactics best utility.
 	
-	public static double forcastweights[] = {0.0, 0.1, 0.9};
+	public static double forcastweights[] = {0.2, 0.3, 0.5};
 	
 	
 	

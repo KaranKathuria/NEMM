@@ -21,7 +21,7 @@ public class GenericTactic {
 	protected double tacticutilityscore;
 	protected ArrayList<HistoricTacticValue> historictacticvalues = new ArrayList<HistoricTacticValue>();
 	protected int paramLearningMethod; // GJB LEARNING
-	protected int NUMLEARNINGMETHODS; // GJB LEARNING
+	protected int numberoflearningmethods; // GJB LEARNING
 											// This has to be set in the constructor of each
 											// subclass
 	//This class could have had all the selloffers and buyoffers form the respective tactics...
@@ -96,7 +96,7 @@ public class GenericTactic {
 	}
 
 	public void setParamLearningMethod(int paramLearningMethod) {
-		if (paramLearningMethod <0 || paramLearningMethod > NUMLEARNINGMETHODS-1 ){
+		if (paramLearningMethod <0 || paramLearningMethod > numberoflearningmethods-1 ){
 			throw new IllegalArgumentException("Illegal learning method");
 		}
 		

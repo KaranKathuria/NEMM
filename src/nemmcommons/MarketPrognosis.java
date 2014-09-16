@@ -16,6 +16,8 @@ import nemmprocesses.ShortTermMarket;
 //Class definitions. Note that this is a  class as all its member variables are .
 public class MarketPrognosis {
 	private double stpriceexpectation;
+	//Mellomsikt neste åar
+	//Lang sikt 5-10 år. - skla brukes til å beregne tak og gulv for sa
 	private TickArray expectedcertificatedemand;
 	private TickArray expectedcertificateprice;
 	private TickArray expectedpowerpricenorway;

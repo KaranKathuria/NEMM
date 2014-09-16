@@ -22,16 +22,11 @@ import nemmtime.NemmCalendar;
 public class BuyStrategy1Tactic extends GenericTactic {
 	 
 	private double shareboughtatdiscount;
-	private double discount;
+	private double pricemultiplier;
 	private BuyOffer buyofferone;
 	private BuyOffer buyoffertwo;
 	private ArrayList<BuyOffer> tacticbuyoffers = new ArrayList<BuyOffer>();
-	// GJB LEARNING
-	private double paramOLDRestVoldiscount;
-	private double paramOLDUtilityScore;
-	private static final double MAXRESTVOLDISCOUNT = 2;
-	private static final double MINRESTVOLDISCOUNT = 0.25;
-	private static final double PRICEMULTDELTASTEP = 0.05;
+	private static final double deltapricemultiplier = 0.05;
 
 	//Default constructor. Not in use. 
 	BuyStrategy1Tactic() {}
@@ -39,11 +34,9 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	//Used constructor
 	BuyStrategy1Tactic(double sbd, double d) {
 		shareboughtatdiscount = sbd;
-		discount = 1-d; // gives discount = (1.25 - 0.25)
-		paramOLDRestVoldiscount = 0; // GJB LEARNING - Need a better way to set this. Random could work. What is this?
-		paramOLDUtilityScore = 0; // GJB LEARNING - This can be set another way // The learning method needs to be set here also. Now defaults to 0.
+		pricemultiplier = 1-d; // gives pricemultiplier = (1.25 - 0.25)
 		paramLearningMethod = 1; // Default learning method ID is 0 (= no learning)
-		NUMLEARNINGMETHODS = 3; //  Learning method IDs are 0, 1 & 2
+		numberoflearningmethods = 3; //  Learning method IDs are 0, 1 & 2
 
 	}
 	
@@ -61,7 +54,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	private BuyOffer creatBuyOffertwo(double expectedprice, double physicalposition) {
 		BuyOffer ret = new BuyOffer();
 		ret.setbuyoffervol((-physicalposition) -( (shareboughtatdiscount*(-physicalposition)))); //rest of the monthly production bought at expected price.
-		ret.setbuyofferprice((discount)*expectedprice); //Most likely that the second offer is at at discount. Hence they buy what they dont must, at a discount.
+		ret.setbuyofferprice((pricemultiplier)*expectedprice); //Most likely that the second offer is at at pricemultiplier. Hence they buy what they dont must, at a pricemultiplier.
 		if (physicalposition == 0) {
 			ret = null;
 		}
@@ -114,35 +107,56 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	}
 	private void learningMethod1() {
 		// Update the % of expected price for the rest volume
-		// Improvement in utility - we adjust price multiplier delta in the same direction as last time
-		// A decline in utility - we adjust the price multiplier delta in the opposite direction as last time
- 		
-		int diffmultUtility; //Retning på utility
-		int diffmultDelta;	//Retning på pris fra forrige forrige gang til forrige gang. 
-		double priceMultDelta;
-		// Utility comparison		
-		if (tacticutilityscore-paramOLDUtilityScore >= 0) { //Unchanged utility is positive change. 
-			// Utility has improved
-			diffmultUtility = 1;
+		// Utility = 1 - All variable offers where expeted thus try to bid a lower price
+		// Utility = 0 - None of the variable offers where bought, hence reduce increase buyoffer next time
+		// Utility <0,1> - Some where expeted, some where not. Try same again.
+		
+		if (tacticutilityscore == 1)
+			pricemultiplier = pricemultiplier - deltapricemultiplier; //reduce price
+		else if (tacticutilityscore == 0) {
+			pricemultiplier = pricemultiplier + deltapricemultiplier; //increase price
 		}
 		else {
-			diffmultUtility = -1;
+			//Unchanged
 		}
-		// -ve if the mult is less than the previous, positive otherwise
-		diffmultDelta = CommonMethods.signDbl(discount-paramOLDRestVoldiscount); //Unchanged price is positive (increase) price. 
-		if (diffmultDelta == 0) {diffmultDelta = 1;} // tie breaker
-		// set the new multiplier delta
-		priceMultDelta = diffmultUtility * diffmultDelta * PRICEMULTDELTASTEP;
-		// Update the history parameters
-		paramOLDRestVoldiscount = discount;
-		paramOLDUtilityScore = tacticutilityscore;
-		// Ensure not out of bounds. Note minus sign in difference to sellstrategy1tactiv1 learning 1
-		discount = Math.min(MAXRESTVOLDISCOUNT, Math.max(discount+priceMultDelta,MINRESTVOLDISCOUNT));
-		//Says if positive change (utilttychange and pricechange) increase price.
-	
-
 	}
+		//Something to caputure the roof price. The variable price cannot be 
+		
 	private void learningMethod2() {
 		// here we write the learning method code
 	}		
 }
+
+
+// OLD Learning 1
+
+//GJB LEARNING
+//paramOLDRestVoldiscount = 0; // GJB LEARNING - Need a better way to set this. Random could work. What is this?
+//paramOLDUtilityScore = 0; // GJB LEARNING - This can be set another way // The learning method needs to be set here also. Now defaults to 0.
+//private double paramOLDRestVoldiscount;
+//private double paramOLDUtilityScore;
+
+/*
+int diffmultUtility; //Retning på utility
+int diffmultDelta;	//Retning på pris fra forrige forrige gang til forrige gang. 
+double deltapricemultipier;
+// Utility comparison		
+if (tacticutilityscore-paramOLDUtilityScore >= 0) { //Unchanged utility is positive change. 
+	// Utility has improved
+	diffmultUtility = 1;
+}
+else {
+	diffmultUtility = -1;
+}
+// -ve if the mult is less than the previous, positive otherwise
+diffmultDelta = CommonMethods.signDbl(pricemultiplier-paramOLDRestVoldiscount); //Unchanged price is positive (increase) price. 
+if (diffmultDelta == 0) {diffmultDelta = 1;} // tie breaker
+// set the new multiplier delta
+deltapricemultipier = diffmultUtility * diffmultDelta * PRICEMULTDELTASTEP;
+// Update the history parameters
+paramOLDRestVoldiscount = pricemultiplier;
+paramOLDUtilityScore = tacticutilityscore;
+// Ensure not out of bounds. Note minus sign in difference to sellstrategy1tactiv1 learning 1
+pricemultiplier = Math.min(MAXRESTVOLDISCOUNT, Math.max(pricemultiplier+deltapricemultipier,MINRESTVOLDISCOUNT));
+//Says if positive change (utilttychange and pricechange) increase price.
+*/

@@ -8,17 +8,11 @@
 package nemmprocesses;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmcommons.CommonMethods;
-import nemmcommons.ParameterWrapper;
-import nemmenvironment.TheEnvironment;
 import nemmstrategy_shortterm.BuyOffer;
-import nemmstrategy_shortterm.GenericStrategy;
 import nemmstrategy_shortterm.SellOffer;
-import repast.simphony.random.RandomHelper;
 
 
 //To be implemntetd Should in short take inn all bids, find the price which maximates traded volume. excetute trades. And set the price! (and do somethings smart with the imbalance of trade).
@@ -89,11 +83,12 @@ public class ShortTermMarket {
 			Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers());
 		}
 		
-		
+		//For errorcheking purposes
 		ArrayList<BuyOffer> tempbuy = new ArrayList<BuyOffer>();
 		tempbuy = Allbuyoffers;
 		ArrayList<SellOffer> tempsell = new ArrayList<SellOffer>();
 		tempsell = Allselloffers;
+		
 		Allbuyoffers.removeAll(Collections.singleton(null));
 		Allselloffers.removeAll(Collections.singleton(null));
 

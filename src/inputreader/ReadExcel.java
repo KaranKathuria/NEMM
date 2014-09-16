@@ -1,3 +1,12 @@
+/*
+ * Version info:
+ *     File defining the class and methods used to read in input values from excel. Notice that the three methods all have do bee run in a preset order when 
+ *     initializing the Environment. First time, then regions, then plants. 
+ *     
+ *     Last altered data: 20140903
+ *     Made by: Karan Kathuria og Anders
+ */
+
 package inputreader;
 
 import nemmenvironment.PowerPlant;
@@ -12,12 +21,8 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellValue;
-
 import java.io.FileInputStream;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-
-
 //HSSF documentation at https://poi.apache.org/apidocs/
 
 // Object reading in from excel
@@ -55,6 +60,10 @@ public class ReadExcel {
 			numtrpdinyear = (int) ctr_sheet.getRow(11).getCell(2).getNumericCellValue();
 			
 			TheEnvironment.theCalendar = new NemmCalendar(startyear, endyear, numobpdinyear, numtrpdinyear);
+			
+			//Initilizes ticks from the created calender.
+			ticks = TheEnvironment.theCalendar.getNumTicks();
+					
 		}catch(Exception e) {
 	        System.out.println("!! Bang !! xlRead() : " + e );
 	    }
@@ -70,10 +79,9 @@ public class ReadExcel {
 			
 			// Read number of plants and technologies
 			HSSFSheet ctr_sheet = workbook.getSheet("Control");
-			plantsnumber = (int) ctr_sheet.getRow(2).getCell(2).getNumericCellValue();
+			//plantsnumber = (int) ctr_sheet.getRow(2).getCell(2).getNumericCellValue();
 			//technologiesnumber = (int) ctr_sheet.getRow(3).getCell(2).getNumericCellValue();
-			regionsnumber = (int) ctr_sheet.getRow(4).getCell(2).getNumericCellValue();
-			ticks = TheEnvironment.theCalendar.getNumTicks();		
+			regionsnumber = (int) ctr_sheet.getRow(4).getCell(2).getNumericCellValue();		
 			
 			// Read regions
 			//Creates an array of regions wiht the length given in the excel and adds reagions to this array of regions. 
@@ -122,10 +130,8 @@ public class ReadExcel {
 				HSSFSheet ctr_sheet = workbook.getSheet("Control");
 				
 				plantsnumber = (int) ctr_sheet.getRow(2).getCell(2).getNumericCellValue();
-				//technologiesnumber = (int) ctr_sheet.getRow(3).getCell(2).getNumericCellValue();
-				regionsnumber = (int) ctr_sheet.getRow(4).getCell(2).getNumericCellValue();
-				//genprofileentries = (int) ctr_sheet.getRow(5).getCell(2).getNumericCellValue();
-				ticks = (int) ctr_sheet.getRow(6).getCell(2).getNumericCellValue();			
+
+						
 				
 				// Read plant data
 				HSSFSheet plant_sheet = workbook.getSheet("PowerPlants");	   
