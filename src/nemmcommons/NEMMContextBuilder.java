@@ -65,6 +65,8 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	public void Distributions() {
 	DistributePowerPlants.distributeallpowerplants();
 	DistributeDemandShares.Uniformdemanddistribution(5, 5);
+	Forcast.initiatevolumeprognosis(); //Set the Company agents analysis agents, volume analysisagents prognosis of demand and production.
+	
 }
 	//The monthly update
 @ScheduledMethod(start = 0, interval = 1, priority = 1)
@@ -175,12 +177,86 @@ public void projectprocesschedule() {
 		double ret = CommonMethods.getMAAgentList().get(0).getpriceprognosis().getstpriceexpectation();
 		return ret;
 	}
-	public double[] getallvariablebuyoffers() {
-		double ret[] = ShortTermMarket.getbuyoffer2();
+	
+// TO get all sell and buyoffers (with one tactic):
+	public double getallvariablebuyoffers0() {
+		double ret = ShortTermMarket.getbuyoffer2()[0];
 		return ret;
 	}
-	public double[] getallvariableselloffers() {
-		double ret[] = ShortTermMarket.getselloffer2();
+	public double getallvariableselloffers0() {
+		double ret = ShortTermMarket.getselloffer2()[0];
+		return ret;
+	}
+	public double getallvariablebuyoffers1() {
+		double ret = ShortTermMarket.getbuyoffer2()[1];
+		return ret;
+	}
+	public double getallvariableselloffers1() {
+		double ret = ShortTermMarket.getselloffer2()[1];
+		return ret;
+	}
+	public double getallvariablebuyoffers2() {
+		double ret = ShortTermMarket.getbuyoffer2()[2];
+		return ret;
+	}
+	public double getallvariableselloffers2() {
+		double ret = ShortTermMarket.getselloffer2()[2];
+		return ret;
+	}
+	public double getallvariablebuyoffers3() {
+		double ret = ShortTermMarket.getbuyoffer2()[3];
+		return ret;
+	}
+	public double getallvariableselloffers3() {
+		double ret = ShortTermMarket.getselloffer2()[3];
+		return ret;
+	}
+	public double getallvariablebuyoffers4() {
+		double ret = ShortTermMarket.getbuyoffer2()[4];
+		return ret;
+	}
+	public double getallvariableselloffers4() {
+		double ret = ShortTermMarket.getselloffer2()[4];
+		return ret;
+	}
+	public double getallvariablebuyoffers5() {
+		double ret = ShortTermMarket.getbuyoffer2()[5];
+		return ret;
+	}
+	public double getallvariableselloffers5() {
+		double ret = ShortTermMarket.getselloffer2()[5];
+		return ret;
+	}
+	public double getallvariablebuyoffers6() {
+		double ret = ShortTermMarket.getbuyoffer2()[6];
+		return ret;
+	}
+	public double getallvariableselloffers6() {
+		double ret = ShortTermMarket.getselloffer2()[6];
+		return ret;
+	}
+	public double getallvariablebuyoffers7() {
+		double ret = ShortTermMarket.getbuyoffer2()[7];
+		return ret;
+	}
+	public double getallvariableselloffers7() {
+		double ret = ShortTermMarket.getselloffer2()[7];
+		return ret;
+	}
+	public double getallvariablebuyoffers8() {
+		double ret = ShortTermMarket.getbuyoffer2()[8];
+		return ret;
+	}
+	public double getallvariableselloffers8() {
+		double ret = ShortTermMarket.getselloffer2()[8];
+		return ret;
+	}
+	public double getallvariablebuyoffers9() {
+		double ret = ShortTermMarket.getbuyoffer2()[9];
+		return ret;
+	}
+	public double getallvariableselloffers9() {
+		double ret = ShortTermMarket.getselloffer2()[9];
 		return ret;
 	}
 	

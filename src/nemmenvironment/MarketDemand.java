@@ -33,8 +33,7 @@ public class MarketDemand {
 	}
 	
 	public void setCertDemand(double[] cd) {
-		certDemand.setArray(cd);
-		
+		certDemand.setArray(cd);	
 	}
 	
 	// Methods --------------------------------------------------------------

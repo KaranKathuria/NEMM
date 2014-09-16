@@ -58,6 +58,7 @@ public class ReadExcel {
 			endyear = (int) ctr_sheet.getRow(9).getCell(2).getNumericCellValue();
 			numobpdinyear = (int) ctr_sheet.getRow(10).getCell(2).getNumericCellValue();
 			numtrpdinyear = (int) ctr_sheet.getRow(11).getCell(2).getNumericCellValue();
+			plantsnumber = (int) ctr_sheet.getRow(2).getCell(2).getNumericCellValue();
 			
 			TheEnvironment.theCalendar = new NemmCalendar(startyear, endyear, numobpdinyear, numtrpdinyear);
 			
@@ -125,12 +126,7 @@ public class ReadExcel {
 			
 			try{      	
 				HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(file_path));	
-				
-				// Read number of plants and technologies
-				HSSFSheet ctr_sheet = workbook.getSheet("Control");
-				
-				plantsnumber = (int) ctr_sheet.getRow(2).getCell(2).getNumericCellValue();
-
+	
 				// Read plant data
 				HSSFSheet plant_sheet = workbook.getSheet("PowerPlants");	   
 				HSSFSheet production_sheet = workbook.getSheet("Production");
@@ -153,8 +149,8 @@ public class ReadExcel {
 						tempproduction[i] = production_sheet.getRow(5+i).getCell(3+j).getNumericCellValue();
 					}
 					
-					for(int i = 0; i < ticks; i++){
-						expproduction[i] = expproduction_sheet.getRow(5+i).getCell(3+j).getNumericCellValue();
+					for (int k = 0; k < ticks; k++){
+					expproduction[k] = expproduction_sheet.getRow(5+k).getCell(3+j).getNumericCellValue();
 					}
 					//Add production in form of tick array
 					pp.setAllProduction(tempproduction);

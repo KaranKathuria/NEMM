@@ -16,9 +16,9 @@ import nemmprocesses.ShortTermMarket;
 //Class definitions. Note that this is a  class as all its member variables are .
 public class MarketPrognosis {
 	private double stpriceexpectation;
-	//Mellomsikt neste åar
-	//Lang sikt 5-10 år. - skla brukes til å beregne tak og gulv for sa
-	private TickArray expectedcertificatedemand;
+	private double mediumrunpriceexpectations; //5 years
+	private double longrunpriceexpectatations; //10 years
+	private TickArray expectedcertificatedemand; //world total, not per plant
 	private TickArray expectedcertificateprice;
 	private TickArray expectedpowerpricenorway;
 	private TickArray expectedpowerpricesweden;
@@ -29,6 +29,8 @@ public class MarketPrognosis {
 			throw new IllegalArgumentException("MarketPrognisis object does not currently handle more than two regions");}
 		
 		stpriceexpectation = ParameterWrapper.getpriceexpectation();
+		mediumrunpriceexpectations =  ParameterWrapper.getpriceexpectation() * 1.2;
+		longrunpriceexpectatations = ParameterWrapper.getpriceexpectation() * 2;
 		expectedcertificateprice = new TickArray(); 
 		expectedcertificatedemand = new TickArray();
 		expectedpowerpricenorway = new TickArray();

@@ -49,7 +49,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		// These are set in the constructor only
 		paramMustSellShare = sbd;
 		paramRestVolPriceMult = 1+d;
-		paramLearningMethod = 1; // Default learning method ID is 0 (= no learning)
+		paramLearningMethod = 1; // Default learning method ID is 1
 		numberoflearningmethods = 4; //  Learning method IDs are 0 thru 3
 		tacticutilityscore = 0.5; //To ensure no change the frist tick
 	}

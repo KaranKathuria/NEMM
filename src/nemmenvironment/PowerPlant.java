@@ -28,6 +28,7 @@ public class PowerPlant {
 		loadfactor = newloadfactor;
 		myRegion = newregion;
 		myProduction = new TickArray();
+		ExpectedProduction = new TickArray();
 		
 		
 	}
@@ -86,6 +87,7 @@ public class PowerPlant {
 		return prodcalc;
 	}
 	
+	//Get expected production from given tick
 	public double getExpectedProduction(int... tickID) {
 		
 		double prodcalc;
@@ -100,6 +102,7 @@ public class PowerPlant {
 
 		return prodcalc;
 	}
+	
 	
 	public void pushCertstoCompany(int... tickID) {
 		// Deliver produced certificates to my owner

@@ -226,5 +226,12 @@ public class CompanyAgent extends ParentAgent {
 	public CompanyAnalysisAgent getcompanyanalysisagent() {
 		return companyanalysisagent;}
 	
+	public ArrayList<PowerPlant> getmypowerplants() {
+		return myPowerPlants;
+	}
+	public ArrayList<CompanyDemandShare> getMyDemandShares() {
+		return myDemandShares;
+	}	
+	
 }
 	
