@@ -182,12 +182,17 @@ public class CompanyAgent extends ParentAgent {
 	private ArrayList<CompanyDemandShare> myDemandShares = new ArrayList<CompanyDemandShare>();
 	private ArrayList<PowerPlant> myPowerPlants = new ArrayList<PowerPlant>();
 	
+	private double WACC; //Company specific cost of capital
+	private double RAR; //Company specific risk adjusted rate used to discount the future price of certificates. 
+	
+	//default constructor not in use.
 	public CompanyAgent() {
-		companyname = "zeroagent";
+		companyname = "Company " + this.getID();
 		produceragent = null;
 		obligatedpurchaseragent = null;
 		traderagent = null;
 		companyanalysisagent = null;}
+	
 	
 	public CompanyAgent(boolean p, boolean op, boolean t) {
 		if (p==true) {
@@ -199,6 +204,9 @@ public class CompanyAgent extends ParentAgent {
 		
 		companyname = "Company " + this.getID();
 		companyanalysisagent = new CompanyAnalysisAgent();	
+		WACC = 0.10;
+		RAR = 0.05;
+		
 		}	
 	//CompanyAgents methods
 	public ActiveAgent getproduceragent() {

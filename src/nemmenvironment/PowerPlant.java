@@ -16,7 +16,8 @@ public class PowerPlant {
 	private int technologyid; //Technology could also be a object/class in itself later if needed
 	private Region myRegion;
 	private CompanyAgent myCompany;
-	private TickArray myProduction;
+	private TickArray myProduction; //Real pregenerated (good given) future production
+	private TickArray myExpectedProduction;	//Expected production 
 	
 	public PowerPlant() {}
 	
@@ -86,15 +87,15 @@ public class PowerPlant {
 	}
 	
 	public double getExpectedProduction(int... tickID) {
-		// Change this at some point to be different from actual production
+		
 		double prodcalc;
 		// eventually this will be replaced by a look-up
 		if (tickID.length > 0) {
-			prodcalc = this.myProduction.getElement(tickID[0]);
+			prodcalc = this.myExpectedProduction.getElement(tickID[0]);
 		}
 		else {
 			int curTick = TheEnvironment.theCalendar.getCurrentTick();
-			prodcalc = this.myProduction.getElement(curTick);
+			prodcalc = this.myExpectedProduction.getElement(curTick);
 		}
 
 		return prodcalc;

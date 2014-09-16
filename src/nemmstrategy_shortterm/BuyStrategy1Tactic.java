@@ -37,6 +37,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		pricemultiplier = 1-d; // gives pricemultiplier = (1.25 - 0.25)
 		paramLearningMethod = 1; // Default learning method ID is 0 (= no learning)
 		numberoflearningmethods = 3; //  Learning method IDs are 0, 1 & 2
+		tacticutilityscore = 0.5;
 
 	}
 	
@@ -94,8 +95,6 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	
 	public ArrayList<HistoricTacticValue> gethistorictacticvalues() {
 		return historictacticvalues;}
-	
-	// GJB LEARNING
 	
 	private void parameterLearning() {
 		// Call the appropriate learning method

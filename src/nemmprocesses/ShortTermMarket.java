@@ -33,10 +33,10 @@ public class ShortTermMarket {
 	private static ArrayList<SellOffer> Allselloffers = new ArrayList<SellOffer>();
 	
 	private static double buyoffer1;
-	private static double buyoffer2;
+	private static double[] buyoffer2;
 	private static double bestbuyoffer2;
 	private static double selloffer1;
-	private static double selloffer2;
+	private static double[] selloffer2;
 	private static double bestselloffer2;
 	
 	public ShortTermMarket() {}
@@ -48,6 +48,11 @@ public class ShortTermMarket {
 		marketsupply = 0;
 		tradedvolume = 0;
 		pricestep = 0.5;
+		int counts = 0;
+		int countb = 0;
+		buyoffer2 = new double[10];
+		selloffer2 = new double[10];
+		
 
 		Allselloffers.clear();
 		Allbuyoffers.clear();
@@ -62,8 +67,9 @@ public class ShortTermMarket {
 			
 			//For displaypurposes
 			selloffer1 = agent.getbeststrategy().getalltactics().get(0).getsellofferone().getSellOfferprice();
-			selloffer2 = agent.getbeststrategy().getalltactics().get(0).getselloffertwo().getSellOfferprice();
+			selloffer2[counts] = agent.getbeststrategy().getalltactics().get(0).getselloffertwo().getSellOfferprice();
 			bestselloffer2 = agent.getbeststrategy().getbesttactic().getselloffertwo().getSellOfferprice();
+			counts++;
 		}
 		
 		for (final ActiveAgent agent : CommonMethods.getOPAgentList()) {
@@ -73,9 +79,9 @@ public class ShortTermMarket {
 			Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers());
 			
 			buyoffer1 = agent.getbeststrategy().getalltactics().get(0).getbuyofferone().getBuyOfferprice(); 
-			buyoffer2 = agent.getbeststrategy().getalltactics().get(0).getbuyoffertwo().getBuyOfferprice();
+			buyoffer2[countb] = agent.getbeststrategy().getalltactics().get(0).getbuyoffertwo().getBuyOfferprice();
 			bestbuyoffer2 = agent.getbeststrategy().getbesttactic().getbuyoffertwo().getBuyOfferprice();
-			
+			countb++;
 		}
 		for (final ActiveAgent agent : CommonMethods.getTAgentList()) {
 			agent.getbeststrategy().updatealloffers(); //Updates all bids for all agents
@@ -109,6 +115,7 @@ public class ShortTermMarket {
 		
 		initLow = Math.min(Allbuyoffers.get(0).getBuyOfferprice(), Allselloffers.get(0).getSellOfferprice()); 
 		initHigh = Math.max(Allbuyoffers.get(numberofbuyoffers-1).getBuyOfferprice(), Allselloffers.get(numberofselloffers-1).getSellOfferprice());
+		//For debug pruposes
 		double low = initLow;
 		double high = initHigh;
 		double certprice = 0;
@@ -213,7 +220,7 @@ public static int getnumberofselloffers() {
 public static double getbuyoffer1() {
 return buyoffer1;
 }
-public static double getbuyoffer2() {
+public static double[] getbuyoffer2() {
 return buyoffer2;
 }
 public static double getbestbuyoffer2() {
@@ -222,7 +229,7 @@ return bestbuyoffer2;
 public static double getselloffer1() {
 return selloffer1;
 }
-public static double getselloffer2() {
+public static double[] getselloffer2() {
 return selloffer2;}
 public static double getbestselloffer2() {
 return bestselloffer2;

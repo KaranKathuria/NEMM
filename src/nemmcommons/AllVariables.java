@@ -20,7 +20,7 @@ public class AllVariables {
 	public static double tradermaximumlongpos = 5000;	//to go bust.
 	public static double portfoliocapitalexitlimit = 50000; //reaching this limit triggers and "exit" behavior. This each reach with strong price drop/increase
 	
-	public static int numofhistutilitiesincluded = 1; //Used by method that deterines the tactics best utility.
+	public static int numofhistutilitiesincluded = 4; //Used by method that deterines the tactics best utility.
 	
 	public static double forcastweights[] = {0.2, 0.3, 0.5};
 	

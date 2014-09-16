@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.math.*;
 
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmagents.CompanyAgent;
@@ -156,6 +157,7 @@ public static List<CompanyAgent> getCompanyAgenList() {
 	// Added by GJB 20Aug2014. Source: see
 	// http://stackoverflow.com/questions/363681/generating-random-integers-in-a-range-with-java  and
 	// http://docs.oracle.com/javase/7/docs/api/java/util/Random.html#nextInt%28int%29
+	
 	public static int randInt(int min, int max) {
 
 	    // NOTE: Usually this should be a field rather than a method
@@ -169,9 +171,7 @@ public static List<CompanyAgent> getCompanyAgenList() {
 	    return randomNum;
 	}
 	
-	// ----------------------------------------------------------------------------
-		
-	// Multiply two equal length arrays element by element
+	//Multiply two equal length arrays element by element
 	
 	public static double[] elArrayMult(double[] Array1, double[] Array2){
 		
@@ -186,8 +186,7 @@ public static List<CompanyAgent> getCompanyAgenList() {
 	}
 	
 	// GJB LEARNING
-	// Sign of a double - returns -1 if <0, 0 if 0 and 1 if >0
-	public static int signDbl(double testNum){
+	public static int signDbl(double testNum){ 	// Sign of a double - returns -1 if <0, 0 if 0 and 1 if >0
 		int retVal;
 		if (testNum < 0){
 			retVal = -1;
@@ -201,5 +200,10 @@ public static List<CompanyAgent> getCompanyAgenList() {
 		return retVal;
 	}
 	
+	// NPV
+	public static double calculateNPV(double value, double R, double Years) { //Calculates the NPV of a given value with given R and number of years.
+		return (value/(Math.pow(1+R, Years)));	
 	}
+	
+}
 	

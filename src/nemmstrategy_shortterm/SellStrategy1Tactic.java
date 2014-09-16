@@ -36,15 +36,10 @@ public class SellStrategy1Tactic extends GenericTactic {
 	// The tactic parameters
 	private double paramMustSellShare;
 	private double paramRestVolPriceMult;
-	private double paramOLDRestVolPriceMult;
-	private double paramOLDUtilityScore;
 	private SellOffer offerMustSellVol;
 	private SellOffer offerRestVol;
 	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 	
-	// GJB LEARNING
-	private static final double MAXRESTVOLPRICEMULT = 2;
-	private static final double MINRESTVOLPRICEMULT = 0.25;
-	private static final double PRICEMULTDELTASTEP = 0.05;
+	private static final double deltapricemultiplier = 0.05;
 	
     //Default constructor.
 	SellStrategy1Tactic() {}
@@ -54,10 +49,9 @@ public class SellStrategy1Tactic extends GenericTactic {
 		// These are set in the constructor only
 		paramMustSellShare = sbd;
 		paramRestVolPriceMult = 1+d;
-		paramOLDRestVolPriceMult = 2; // GJB LEARNING - Need a better way to set this. Random could work. This means some try higher som try lower price. 
-		paramOLDUtilityScore = 0; // GJB LEARNING - This can be set another way // The learning method needs to be set here also. Now defaults to 0.
 		paramLearningMethod = 1; // Default learning method ID is 0 (= no learning)
 		numberoflearningmethods = 4; //  Learning method IDs are 0 thru 3
+		tacticutilityscore = 0.5; //To ensure no change the frist tick
 	}
 	
 	private SellOffer createMustSellVolOffer(double expectedprice, double physicalposition, double ...capitalbase) {
@@ -127,33 +121,21 @@ public class SellStrategy1Tactic extends GenericTactic {
 	}
 	private void learningMethod1() {
 		// Update the % of expected price for the rest volume
-		// Improvement in utility - we adjust price multiplier delta in the same direction as last time
-		// A decline in utility - we adjust the price multiplier delta in the opposite direction as last time
-		//Unchanged utility --> Do the same as last time, which to start wiht is to reduce price.
- 		
-		int diffmultUtility; //Retning på utility
-		int diffmultDelta;	//Retning på pris fra forrige forrige gang til forrige gang. 
-		double priceMultDelta;
-		// Utility comparison		
-		if (tacticutilityscore-paramOLDUtilityScore >= 0) {
-			// Utility has improved or is unchanged.
-			diffmultUtility = 1; 
+		// Utility = 1 - All variable offers where expeted thus try to sell at a higher price
+		// Utility = 0 - None of the variable offers where sold, thus try to sell at a lower price
+		// Utility <0,1> - Some where expeted, some where not. Try same again.
+		
+		if (tacticutilityscore == 1)
+			paramRestVolPriceMult = paramRestVolPriceMult + deltapricemultiplier; //increase variable sell price
+		else if (tacticutilityscore == 0) {
+			paramRestVolPriceMult = paramRestVolPriceMult - deltapricemultiplier; //reduce variable sell price
 		}
 		else {
-			diffmultUtility = -1;
+			//Unchanged
 		}
-		// -ve if the mult is less than the previous, positive otherwise
-		diffmultDelta = CommonMethods.signDbl(paramRestVolPriceMult-paramOLDRestVolPriceMult); // Increased price gives positive number
-		if (diffmultDelta == 0) {diffmultDelta = 1;} // tie breaker
-		// set the new multiplier delta
-		priceMultDelta = diffmultUtility * diffmultDelta * PRICEMULTDELTASTEP; //Hence increasd price and unchange utility --> incresed price (wrong)
-		// Update the history parameters
-		paramOLDRestVolPriceMult = paramRestVolPriceMult;
-		paramOLDUtilityScore = tacticutilityscore;
-		// Ensure not out of bounds
-		paramRestVolPriceMult = Math.min(MAXRESTVOLPRICEMULT, Math.max(paramRestVolPriceMult+priceMultDelta,MINRESTVOLPRICEMULT));
-
 	}
+		//Something to caputure the roof price. The variable price cannot be 
+
 	private void learningMethod2() {
 		// here we write the learning method code
 		// Volume change - this determines the volume of the non "must sell" offer 
@@ -167,10 +149,11 @@ public class SellStrategy1Tactic extends GenericTactic {
 	
 	}	
 	private void learningMethod3() {
-		// Update the % of expected price for the rest volume
+		/* Update the % of expected price for the rest volume
 		// Improvement in utility - keep the same multiplier
 		// A decline in utility - change the multiplier to be on the other "side" of 1
-
+		
+		
 		double priceMult;
 		// Utility comparison		
 		if (tacticutilityscore-paramOLDUtilityScore >= 0) {
@@ -185,6 +168,47 @@ public class SellStrategy1Tactic extends GenericTactic {
 		paramOLDUtilityScore = tacticutilityscore;
 		// Ensure not out of bounds
 		paramRestVolPriceMult = priceMult;
+		*/
 	}
 	
 }
+
+
+//OLD
+
+//GB Learning
+//	private double paramOLDRestVolPriceMult;
+//	private double paramOLDUtilityScore;
+//private static final double MAXRESTVOLPRICEMULT = 2;
+//private static final double MINRESTVOLPRICEMULT = 0.25;
+
+//paramOLDRestVolPriceMult = 2;  GJB LEARNING - Need a better way to set this. Random could work. This means some try higher som try lower price. 
+//paramOLDUtilityScore = 0; // GJB LEARNING - This can be set another way // The learning method needs to be set here also. Now defaults to 0.
+
+/* Update the % of expected price for the rest volume
+// Improvement in utility - we adjust price multiplier delta in the same direction as last time
+// A decline in utility - we adjust the price multiplier delta in the opposite direction as last time
+//Unchanged utility --> Do the same as last time, which to start wiht is to reduce price.
+	
+int diffmultUtility; //Retning på utility
+int diffmultDelta;	//Retning på pris fra forrige forrige gang til forrige gang. 
+double priceMultDelta;
+// Utility comparison		
+if (tacticutilityscore-paramOLDUtilityScore >= 0) {
+	// Utility has improved or is unchanged.
+	diffmultUtility = 1; 
+}
+else {
+	diffmultUtility = -1;
+}
+// -ve if the mult is less than the previous, positive otherwise
+diffmultDelta = CommonMethods.signDbl(paramRestVolPriceMult-paramOLDRestVolPriceMult); // Increased price gives positive number
+if (diffmultDelta == 0) {diffmultDelta = 1;} // tie breaker
+// set the new multiplier delta
+priceMultDelta = diffmultUtility * diffmultDelta * deltapricemultiplier; //Hence increasd price and unchange utility --> incresed price (wrong)
+// Update the history parameters
+paramOLDRestVolPriceMult = paramRestVolPriceMult;
+paramOLDUtilityScore = tacticutilityscore;
+// Ensure not out of bounds
+paramRestVolPriceMult = Math.min(MAXRESTVOLPRICEMULT, Math.max(paramRestVolPriceMult+priceMultDelta,MINRESTVOLPRICEMULT));
+*/

@@ -7,6 +7,7 @@
  */
 
 package nemmcommons;
+import nemmagents.CompanyAgent.CompanyAnalysisAgent.VolumeAnalysisAgent;
 
 // Import
 
@@ -14,15 +15,15 @@ package nemmcommons;
 //Class definitions. Note that this is a static class as all its member variables are static.
 public class VolumePrognosis {
 	
-	private TickArray expectedtotalproduction;
-	private TickArray expectedtotaldemand;
+	private TickArray expectedtotalproduction; //My companys total production	
+	private TickArray expectedtotaldemand;	//My comapanys total demand
+	private VolumeAnalysisAgent myVAAgent;
 
 	public VolumePrognosis() {
 		expectedtotalproduction = new TickArray();
 		expectedtotaldemand = new TickArray();
 	}
 	
-	//Methods
 
 	
 	

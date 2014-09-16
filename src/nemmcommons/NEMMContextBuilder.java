@@ -84,7 +84,7 @@ public void monthlymarketschedule() {
 	TheEnvironment.GlobalValues.monthlyglobalvalueupdate();
 	
 	//Update the analysis agents forecasts. Must run after global values are updated as it uses the array of certprices
-	Forcast.updatemarketforcasts();
+	//Forcast.updatemarketforcasts();
 }
 
 //All annual updates to come below. Currently not in use.
@@ -151,7 +151,7 @@ public void projectprocesschedule() {
 		return ret;
 	}
 	public double getalltacticbuyoffer2() {
-		double ret = ShortTermMarket.getbuyoffer2();
+		double ret = ShortTermMarket.getbuyoffer2()[9];
 		return ret;
 	}
 	public double getbestbuyoffer2() {
@@ -163,7 +163,7 @@ public void projectprocesschedule() {
 		return ret;
 	}
 	public double getalltacticselloffer2() {
-		double ret = ShortTermMarket.getselloffer2();
+		double ret = ShortTermMarket.getselloffer2()[9];
 		return ret;
 	}
 	public double getbestselloffer2() {
@@ -172,6 +172,14 @@ public void projectprocesschedule() {
 	}
 	public double getpriceexpetations() {
 		double ret = CommonMethods.getMAAgentList().get(0).getpriceprognosis().getstpriceexpectation();
+		return ret;
+	}
+	public double[] getallvariablebuyoffers() {
+		double ret[] = ShortTermMarket.getbuyoffer2();
+		return ret;
+	}
+	public double[] getallvariableselloffers() {
+		double ret[] = ShortTermMarket.getselloffer2();
 		return ret;
 	}
 	
