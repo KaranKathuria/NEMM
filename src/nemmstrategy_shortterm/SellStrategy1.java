@@ -62,7 +62,6 @@ public class SellStrategy1 extends GenericStrategy {
 	public void updatealloffers() {
 		//Updates all tactics
 		
-		//recalculate floor
 		for (int i = 0; i < numberoftactics; ++i) {
 			alltactics.get(i).updatetacticselloffers();}
 		
@@ -78,10 +77,6 @@ public class SellStrategy1 extends GenericStrategy {
 	public ArrayList<GenericTactic> getalltactics() {
 		return alltactics;}
 	
-	public void calculatefloorroofprice() { //Calculates and updates the floorroofprice based on the agents risk adjusted rate and the risk free rate and the market prognosis future price expectatiosn
-		double temp
-		
-	}
 	}
 
 

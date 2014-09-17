@@ -64,7 +64,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	
 	public void updatetacticbuyoffers() {
 		double physicalposition = this.getmyStrategy().getmyAgent().getphysicalnetposition();
-		double expectedprice = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation();
+		double expectedprice = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getstpriceexpectation();
 		if (physicalposition >= 0){
 			physicalposition = -0.0;} //To ensure that we dont get crazy bids.  
 		parameterLearning(); // GJB LEARNING

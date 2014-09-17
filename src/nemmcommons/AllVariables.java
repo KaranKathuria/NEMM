@@ -17,6 +17,9 @@ public class AllVariables {
 	public static double PAgentmustselldiscount = 0.5;
 	public static double PAgentmustsellshare = 0.7;
 	
+	public static double mediumrundpriceexpectations = 250; //2 year expected price. Used by tactics to calculate floor on variable bids. This together with the risk free rate and the agents RAR.
+	public static double longrundpriceexpectations = 300; //10 year expected price - not in use.
+	 
 	public static double tradermaximumshortpos = -5000; //These values should have some realtion to the initial portfoliovalue by allowing traders
 	public static double tradermaximumlongpos = 5000;	//to go bust.
 	public static double portfoliocapitalexitlimit = 50000; //reaching this limit triggers and "exit" behavior. This each reach with strong price drop/increase

@@ -23,8 +23,9 @@ public class GenericTactic {
 	protected int paramLearningMethod; // GJB LEARNING
 	protected int numberoflearningmethods; 
 	protected double floorroofprice;
-	protected double maxoffervolume; //calculated in tactics based on internal number and last months production
 	protected double maxppvolume; //calculated based on the numberof months given from strategy
+	protected double maxoffervolume; //calculated in tactics based on internal number and last months production
+	protected double maxoffervolumemultiplier;
 	
 	//This class could have had all the selloffers and buyoffers form the respective tactics...
 	

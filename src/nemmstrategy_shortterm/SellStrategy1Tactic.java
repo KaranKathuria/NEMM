@@ -52,6 +52,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		paramLearningMethod = 1; // Default learning method ID is 1
 		numberoflearningmethods = 4; //  Learning method IDs are 0 thru 3
 		tacticutilityscore = 0.5; //To ensure no change the frist tick
+		maxoffervolumemultiplier = 2;
 	}
 	
 	private SellOffer createMustSellVolOffer(double expectedprice, double physicalposition, double ...capitalbase) {
@@ -74,16 +75,31 @@ public class SellStrategy1Tactic extends GenericTactic {
 		return ret;
 		}
 	
+	public void updateinputvalues() { //Calculates and updates the floorroofprice based on the agents risk adjusted rate and the risk free rate and the market prognosis future pric
+		double twoyearahead;
+		double tempdisc;
+		twoyearahead = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations();
+		tempdisc = TheEnvironment.GlobalValues.currentinterestrate + this.getmyStrategy().getmyAgent().getRAR(); //For Sellers/Producers this is added + (instead of minus)
+		
+		floorroofprice = twoyearahead/Math.pow(tempdisc + 1, 2); //Hence this equals the discounted future expected cert price. Discounted with a risk free rate and a risk rate //In other words, the seller will not sell the variable part unless the sell price is better than the discounted future price expectations. In that case he would hold the certificates in two years.
+		maxoffervolume = maxoffervolumemultiplier * this.getmyStrategy().getmyAgent().getlasttickproduction(); // * //What i produced the last tick
+		maxppvolume = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getnexttwelvetickscertproduction(); //The max pp volume is equal to the expected production of the twelve next ticks. This value itself is produced in the volumeanalysis agent.
+		
+	
+	}
+	
 	public void updatetacticselloffers() {
-		double physicalposition = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getnexttickcertproduction(); //this.getmyStrategy().getmyAgent().getphysicalnetposition();
-		double expectedprice = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation();
-		if (physicalposition <= 0){
-			physicalposition = 0.0;} //To not get crazy selloffers
-		// GJB LEARNING - adjust the parameters and then create new offers.
+		double nexttickproduction = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getnexttickcertproduction(); //this.getmyStrategy().getmyAgent().getphysicalnetposition();
+		double expectedprice = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getstpriceexpectation();
+		if (nexttickproduction <= 0){
+			nexttickproduction = 0.0;} //To not get crazy selloffers
+		
+		updateinputvalues();
 		parameterLearning();
+		
 		tacticselloffers.clear();
-		offerMustSellVol = createMustSellVolOffer(expectedprice,physicalposition);
-		offerRestVol = createRestVolOffer(expectedprice,physicalposition);
+		offerMustSellVol = createMustSellVolOffer(expectedprice,nexttickproduction);
+		offerRestVol = createRestVolOffer(expectedprice,nexttickproduction);
 		tacticselloffers.add(offerMustSellVol);
 		tacticselloffers.add(offerRestVol);
 	}

@@ -14,9 +14,9 @@ public class Forcast {
 	public Forcast() {};
 	
 	// Updates the certificatepriceexpectations
-	public static void updatemarketforcasts() {
+	public static void updatemarketprognosis() {
 		for (CompanyAgent CA : CommonMethods.getCompanyAgenList()) { 
-			CA.getcompanyanalysisagent().getmarketanalysisagent().updatecertpriceexpectations();
+			CA.getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().updatemarketprognosis();
 			}
 	}
 	

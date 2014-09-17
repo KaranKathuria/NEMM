@@ -45,6 +45,7 @@ public class CompanyAgent extends ParentAgent {
 		private double lasttickdemand;
 		private double riskadjustedinterestrate; //Used to calculate the level of risk averness in current trade price in relation to future expected price. 
 		private double portfoliocapital;
+		private double RAR; //Company specific risk adjusted rate used to discount the future price of certificates. 
 		
 		// Null constructor for ActiveAgent. Should not be used as this does not specify type of agent.
 		public ActiveAgent() {
@@ -82,6 +83,7 @@ public class CompanyAgent extends ParentAgent {
 				allstrategies.add(tradestrategy);
 				portfoliocapital = 1000000; 
 			} 
+			RAR = 0.05;
 			companyagent = CompanyAgent.this;
 			this.utilitymethod.setmyAgent(ActiveAgent.this);
 			beststrategy = allstrategies.get(0); // Choose the first one initially 
@@ -92,7 +94,15 @@ public class CompanyAgent extends ParentAgent {
 		public double getphysicalnetposition() {
 			return physicalnetposition;
 			}
-
+		public double getRAR() {
+			return RAR;
+		}
+		public double getlasttickproduction() {
+			return this.lasttickproduction;
+		}
+		public double getlasttickdemand() {
+			return this.lasttickdemand;
+		}
 		public GenericStrategy getbeststrategy() {
 			return beststrategy;
 			}
@@ -108,9 +118,13 @@ public class CompanyAgent extends ParentAgent {
 			portfoliocapital = portfoliocapital + (physicalnetposition * (GlobalValues.currentmarketprice - ShortTermMarket.getcurrentmarketprice())); //is ran before global values are updated, hence global values current market price has the old market price
 			physicalnetposition = physicalnetposition + certificatesbought - certificatessold; //Certificates bought and sold are positive numbers.
 		}
-		//takes in either production (positiv) or demand (negative) amount of certs
+		//takes in either production (positiv) or demand (negative) amount of certs and updates "lasttickproduction" "lasttickdemand" and physicalposition
 		public void addtophysicalposition(double prodordemand) {
 			physicalnetposition = physicalnetposition + prodordemand;
+			if (prodordemand > 0) { //Implies production
+				lasttickproduction = prodordemand;
+			}
+			else {lasttickdemand = prodordemand;}
 		}
 		
 		public void setphysicalnetposition(double a) {
@@ -191,7 +205,7 @@ public class CompanyAgent extends ParentAgent {
 	private ArrayList<PowerPlant> myPowerPlants = new ArrayList<PowerPlant>();
 	
 	private double WACC; //Company specific cost of capital
-	private double RAR; //Company specific risk adjusted rate used to discount the future price of certificates. 
+	
 	
 	//default constructor not in use.
 	public CompanyAgent() {
@@ -213,7 +227,7 @@ public class CompanyAgent extends ParentAgent {
 		companyname = "Company " + this.getID();
 		companyanalysisagent = new CompanyAnalysisAgent();	
 		WACC = 0.10;
-		RAR = 0.05;
+		
 		
 		}	
 	//CompanyAgents methods

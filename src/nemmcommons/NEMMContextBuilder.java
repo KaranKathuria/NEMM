@@ -87,7 +87,7 @@ public void monthlymarketschedule() {
 	
 	//Update the analysis agents forecasts. Must run after global values are updated as it uses the array of certprices
 	Forcast.updatevolumeprognosis();
-	Forcast.updatemarketforcasts();
+	Forcast.updatemarketprognosis();
 }
 
 //All annual updates to come below. Currently not in use.
@@ -174,7 +174,7 @@ public void projectprocesschedule() {
 		return ret;
 	}
 	public double getpriceexpetations() {
-		double ret = CommonMethods.getMAAgentList().get(0).getpriceprognosis().getstpriceexpectation();
+		double ret = CommonMethods.getMAAgentList().get(0).getmarketprognosis().getstpriceexpectation();
 		return ret;
 	}
 	

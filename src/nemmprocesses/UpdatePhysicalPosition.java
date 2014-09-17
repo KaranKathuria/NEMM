@@ -10,6 +10,8 @@ package nemmprocesses;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import nemmagents.CompanyAgent;
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmagents.CompanyDemandShare;
 import nemmcommons.CommonMethods;
@@ -116,11 +118,15 @@ public static void markettransactions() {
 		}
 	}
 	
-
+	//Method that runs demand and production and adds this to the agents demand, production and physical position.
 public static void runproduction() {
-	
-	for (PowerPlant pp : TheEnvironment.allPowerPlants) {
-		pp.getMyCompany().getproduceragent().addtophysicalposition(pp.getProduction()); // Pushes this ticks production to agents physical position.
+
+	for (CompanyAgent CA : CommonMethods.getCompanyAgenList()) { //For all Companies
+		double thistickprod = 0;
+	for (PowerPlant PP : CA.getmypowerplants()) { //For all PowerPlants
+		thistickprod = thistickprod + PP.getProduction();
+	}
+	CA.getproduceragent().addtophysicalposition(thistickprod); // Pushes this ticks production to agents physical position and updates last tick production
 	}
 }
 

@@ -15,11 +15,15 @@ import nemmprocesses.ShortTermMarket;
 
 //Class definitions. Note that this is a  class as all its member variables are .
 public class MarketPrognosis {
+	
+	private double forcastweights[] = AllVariables.forcastweights;
 	private double stpriceexpectation;
+	
 	private double mediumrunpriceexpectations; //2 years
 	private double longrunpriceexpectatations; //10 years
+	
+	private TickArray expectedcertificateprice;  //Tick array of all expected at the tick before the forcasted tick. 
 	private TickArray expectedcertificatedemand; //world total, not per plant
-	private TickArray expectedcertificateprice;
 	private TickArray expectedpowerpricenorway;
 	private TickArray expectedpowerpricesweden;
 
@@ -29,8 +33,8 @@ public class MarketPrognosis {
 			throw new IllegalArgumentException("MarketPrognisis object does not currently handle more than two regions");}
 		
 		stpriceexpectation = ParameterWrapper.getpriceexpectation();
-		mediumrunpriceexpectations =  ParameterWrapper.getpriceexpectation() * 1.2;
-		longrunpriceexpectatations = ParameterWrapper.getpriceexpectation() * 2;
+		mediumrunpriceexpectations =  AllVariables.mediumrundpriceexpectations; //Must be updated somehow later
+		longrunpriceexpectatations = AllVariables.longrundpriceexpectations;  //Must be updated somehow later
 		expectedcertificateprice = new TickArray(); 
 		expectedcertificatedemand = new TickArray();
 		expectedpowerpricenorway = new TickArray();
@@ -42,19 +46,39 @@ public class MarketPrognosis {
 		//Sets the MarketPrognosis expected certificatedemand and power price to what actually will be the world certificate demand (perfect foresight).
 		for (int i = 0; i < TheEnvironment.theCalendar.getNumTicks(); ++i) {
 			double tempworlddemand = TheEnvironment.allRegions.get(0).getMyDemand().getCertDemand(i) + TheEnvironment.allRegions.get(1).getMyDemand().getCertDemand(i);
-			expectedcertificatedemand.setElement(tempworlddemand, i);
 			
+			// Cert demand, power demand in Norway and Sweden
+			expectedcertificatedemand.setElement(tempworlddemand, i);
 			expectedpowerpricenorway.setElement(TheEnvironment.allRegions.get(0).getMyPowerPrice().getValue(i), i);
 			expectedpowerpricesweden.setElement(TheEnvironment.allRegions.get(1).getMyPowerPrice().getValue(i), i);
 		}
 		
 			
-}
+}	//THis method is called by its market analysis agent and updates the market prognosis. This is done at the end of each tick (Forcast)
+	public void updatemarketprognosis() {
+		double nexttickcertprice;
+		int numberhistoricprices = TheEnvironment.theCalendar.getCurrentTick() + 1;
+		int curtick = TheEnvironment.theCalendar.getCurrentTick();
+		if (numberhistoricprices < 3) {
+			nexttickcertprice = TheEnvironment.GlobalValues.certificateprice.getElement(curtick);
+		} else {
+			nexttickcertprice = forcastweights[0] * TheEnvironment.GlobalValues.certificateprice.getElement(curtick-2) + forcastweights[1] * TheEnvironment.GlobalValues.certificateprice.getElement(curtick-1) + forcastweights[2] * TheEnvironment.GlobalValues.certificateprice.getElement(curtick);
+		}
+		this.setstpriceexpectation(nexttickcertprice);
+		this.setExpectedcertificateprice(nexttickcertprice, curtick+1);
+		
+		//A sectrion where the two years a head price is updated could be added later
+		
+	}
 	
 	
 //Get and set methods
 	public double getstpriceexpectation() {
 		return stpriceexpectation;}
+	
+	public double getmedumrundpriceexpectations() {
+		return mediumrunpriceexpectations;
+	}
 
 	public void setstpriceexpectation(double price) {
 		stpriceexpectation = price;}
