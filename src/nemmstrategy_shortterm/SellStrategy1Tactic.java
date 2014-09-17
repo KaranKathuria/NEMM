@@ -52,12 +52,12 @@ public class SellStrategy1Tactic extends GenericTactic {
 		paramLearningMethod = 1; // Default learning method ID is 1
 		numberoflearningmethods = 4; //  Learning method IDs are 0 thru 3
 		tacticutilityscore = 0.5; //To ensure no change the frist tick
-		maxoffervolumemultiplier = 2;
+		maxoffervolumemultiplier = 2; //Indicates how much the maximum offer volume compared is to last ticks production.
 	}
 	
 	private SellOffer createMustSellVolOffer(double expectedprice, double physicalposition,double lasttickproduction) {
 		SellOffer ret = new SellOffer();
-		ret.setselloffervol((paramMustSellShare*lasttickproduction)); //
+		ret.setselloffervol(Math.max(paramMustSellShare*lasttickproduction,physicalposition-maxppvolume)); //equals must sell
 		ret.setsellofferprice((1-AllVariables.PAgentmustselldiscount)*expectedprice);
 		if (lasttickproduction == 0) {
 			ret = null;
@@ -67,8 +67,10 @@ public class SellStrategy1Tactic extends GenericTactic {
 		
 		//In case of no last production the must sell volume is zero, but we still have a variable volume!
 	private SellOffer createRestVolOffer(double expectedprice, double physicalposition,double lasttickproduction) {
+		double mustsell = (Math.max(paramMustSellShare*lasttickproduction, physicalposition-maxppvolume));
 		SellOffer ret = new SellOffer();
-		ret.setselloffervol(Math.min(physicalposition - (paramMustSellShare*lasttickproduction), maxoffervolume - (paramMustSellShare*lasttickproduction))); //rest of the monthly production sold at expected price.
+		Math.max(0.0,Math.min(maxoffervolume-mustsell,physicalposition));
+		ret.setselloffervol(Math.max(0.0,Math.min(maxoffervolume-mustsell,physicalposition))); //rest of the monthly production sold at expected price.
 		ret.setsellofferprice(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice)); //Prices unsymetrically around expected price with must of the volume tried sold at at premium (1+discount)*expt.
 		if (physicalposition == 0) {
 			ret = null;
@@ -86,7 +88,6 @@ public class SellStrategy1Tactic extends GenericTactic {
 		maxoffervolume = maxoffervolumemultiplier * this.getmyStrategy().getmyAgent().getlasttickproduction(); // * //What i produced the last tick
 		maxppvolume = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getnexttwelvetickscertproduction(); //The max pp volume is equal to the expected production of the twelve next ticks. This value itself is produced in the volumeanalysis agent.
 		
-	
 	}
 	
 	public void updatetacticselloffers() {

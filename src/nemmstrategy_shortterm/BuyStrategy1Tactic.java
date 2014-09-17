@@ -38,12 +38,14 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		paramLearningMethod = 1; // Default learning method ID is 0 (= no learning)
 		numberoflearningmethods = 3; //  Learning method IDs are 0, 1 & 2
 		tacticutilityscore = 0.5;
+		maxoffervolumemultiplier = 2; //Indicates how much the maximum offer volume compared is to last ticks demand.
 
 	}
 	
-	private BuyOffer creatBuyOfferone(double expectedprice, double physicalposition) {
+	private BuyOffer creatBuyOfferone(double expectedprice, double physicalposition, double lasttickdemand) { //physicalpos and lasttickdem are negatie number.
 		BuyOffer ret = new BuyOffer();
-		ret.setbuyoffervol((shareboughtatdiscount*(-physicalposition))); //-As the phisical position of buyer would in most cases be negative, but as the offer only has positive numbers. 
+		//equals must buy
+		ret.setbuyoffervol(Math.min((-physicalposition) - (shareboughtatdiscount*(-lasttickdemand)), (-maxoffervolume) - (shareboughtatdiscount*(-lasttickdemand)))); //-As the phisical position of buyer would in most cases be negative, but as the offer only has positive numbers. 
 		ret.setbuyofferprice((1+AllVariables.OPAgentmustbuypremium)*expectedprice); //Given must buy volume price. 
 		if (physicalposition == 0) {
 			ret = null;
@@ -52,25 +54,43 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		}
 	
 
-	private BuyOffer creatBuyOffertwo(double expectedprice, double physicalposition) {
+	private BuyOffer creatBuyOffertwo(double expectedprice, double physicalposition,  double lasttickdemand) {////physicalpos and lasttickdem are negatie number. also maxppvolume
 		BuyOffer ret = new BuyOffer();
-		ret.setbuyoffervol((-physicalposition) -( (shareboughtatdiscount*(-physicalposition)))); //rest of the monthly production bought at expected price.
-		ret.setbuyofferprice((pricemultiplier)*expectedprice); //Most likely that the second offer is at at pricemultiplier. Hence they buy what they dont must, at a pricemultiplier.
+		double mustbuy = Math.min((-physicalposition) - (shareboughtatdiscount*(-lasttickdemand)), (-maxoffervolume) - (shareboughtatdiscount*(-lasttickdemand)));
+		ret.setbuyoffervol(Math.max(0.0,Math.min(-maxoffervolume-mustbuy,-physicalposition))); //rest of the monthly production bought at expected price.
+		ret.setbuyofferprice(Math.min(expectedprice*pricemultiplier, floorroofprice)); //Most likely that the second offer is at at pricemultiplier. Hence they buy what they dont must, at a pricemultiplier.
 		if (physicalposition == 0) {
 			ret = null;
 		}
 		return ret;
 		}
 	
+	public void updateinputvalues() { //Calculates and updates the floorroofprice based on the agents risk adjusted rate and the risk free rate and the market prognosis future pric
+		double twoyearahead;
+		double tempdisc;
+		twoyearahead = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations();
+		tempdisc = TheEnvironment.GlobalValues.currentinterestrate - this.getmyStrategy().getmyAgent().getRAR(); //For Sellers/Producers this is added + (instead of minus)
+		
+		floorroofprice = twoyearahead/Math.pow(tempdisc + 1, 2); //Hence this equals the discounted future expected cert price. Discounted with a risk free rate and a risk rate //In other words, the seller will not sell the variable part unless the sell price is better than the discounted future price expectations. In that case he would hold the certificates in two years.
+		maxoffervolume = maxoffervolumemultiplier * this.getmyStrategy().getmyAgent().getlasttickdemand(); // * //What was demanded last tick (negativ number).
+		maxppvolume = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getnexttwelvetickscertdemand(); //12 months total demand.
+	}
+		
+	
 	public void updatetacticbuyoffers() {
 		double physicalposition = this.getmyStrategy().getmyAgent().getphysicalnetposition();
 		double expectedprice = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getstpriceexpectation();
+		double lasttickdemand = this.getmyStrategy().getmyAgent().getlasttickdemand();
+		
 		if (physicalposition >= 0){
 			physicalposition = -0.0;} //To ensure that we dont get crazy bids.  
+		
 		parameterLearning(); // GJB LEARNING
+		updateinputvalues();
+		
 		tacticbuyoffers.clear();
-		buyofferone = creatBuyOfferone(expectedprice,physicalposition);
-		buyoffertwo = creatBuyOffertwo(expectedprice,physicalposition);
+		buyofferone = creatBuyOfferone(expectedprice,physicalposition, lasttickdemand);
+		buyoffertwo = creatBuyOffertwo(expectedprice,physicalposition, lasttickdemand);
 		tacticbuyoffers.add(buyofferone);
 		tacticbuyoffers.add(buyoffertwo);
 	}
@@ -110,6 +130,8 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		// Utility = 0 - None of the variable offers where bought, hence reduce increase buyoffer next time
 		// Utility <0,1> - Some where expeted, some where not. Try same again.
 		
+		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && buyoffertwo.getBuyOfferprice() + deltapricemultiplier > floorroofprice) {}
+		else {
 		if (tacticutilityscore == 1)
 			pricemultiplier = pricemultiplier - deltapricemultiplier; //reduce price
 		else if (tacticutilityscore == 0) {
@@ -118,8 +140,9 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		else {
 			//Unchanged
 		}
+		}
+		
 	}
-		//Something to caputure the roof price. The variable price cannot be 
 		
 	private void learningMethod2() {
 		// here we write the learning method code

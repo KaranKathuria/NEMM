@@ -34,9 +34,7 @@ public class SellStrategy1 extends GenericStrategy {
 		numberoftactics = AllVariables.numberoftacticsSellStrategy1;
 		numberofmonthsmaxpp = 12; //This means that the maximum pp equalt the next twelve months expected production.
 		floorroofpricemultiplier = 1; //uses floor/roof price
-		
-		
-		
+			
 		int seed = RandomWrapper.getstrategyseed(); //Gets a seed form the strategyseed seedgenerator.
 		Random tacticstream = new Random(seed); //uniq stream for this strategies tactics. 
 

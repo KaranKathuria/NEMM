@@ -17,13 +17,8 @@ import nemmcommons.RandomWrapper;
 
 public class BuyStrategy1 extends GenericStrategy {
 	
-	//A simple buy strategy creating two buy-offers based on price expectations and certificates demand. 
-	// This the first buy offer is based on a fixed discount, while the other bid is the same as the expected price. The volumes and discunt is decided by the tactic.
-	
-
 	private BuyOffer buyofferone;
 	private BuyOffer buyoffertwo;
-	
 	
 	//Constructor for OPABidstrategy adding the four offers to arraylist of offers.
 	public BuyStrategy1() {
@@ -31,13 +26,16 @@ public class BuyStrategy1 extends GenericStrategy {
 		strategyname = "BuyStrategy1";
 		strategyutilityscore.add(0.0);
 		numberoftactics = AllVariables.numberoftacticsBuyStrategy1;
+		numberofmonthsmaxpp = 12; //This means that the maximum pp equalt the next twelve months expected demand.
+		floorroofpricemultiplier = 1; //Indicates that this strategy uses floor/roof price
+		
 		int seed = RandomWrapper.getstrategyseed(); //Gets a seed form the strategyseed seedgenerator.
 		Random tacticstream = new Random(seed); //uniq stream for this strategies tactics. 
 		
 		//Adds four tactics with differen values of sbd and discount, and stores them in alltactics
 		for (int i = 0; i < numberoftactics; ++i) {
-			double randomshareboughtatdiscount = (tacticstream.nextDouble());
-			double randomdiscount = (tacticstream.nextDouble()- 0.25); // between -0.25 and 0.75
+			double randomshareboughtatdiscount = AllVariables.OPAgentmustsellshare;//(tacticstream.nextDouble());
+			double randomdiscount = (tacticstream.nextDouble()- 0.25); // between -0.25 and 0.75 starting point for the variable offer
 			BuyStrategy1Tactic tactic = new BuyStrategy1Tactic(randomshareboughtatdiscount, randomdiscount);
 			tactic.setmyStrategy(BuyStrategy1.this);
 			alltactics.add(tactic);

@@ -141,6 +141,18 @@
       </SeriesData>
     </entry>
     <entry>
+      <string>sel 8</string>
+      <SeriesData>
+        <label>sel 8</label>
+        <color>
+          <red>204</red>
+          <green>255</green>
+          <blue>204</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
       <string>Market Price</string>
       <SeriesData>
         <label>Market Price</label>
@@ -157,18 +169,6 @@
       <SeriesData>
         <label>buy 7</label>
         <color reference="../../../entry[3]/SeriesData/color"/>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>sel 8</string>
-      <SeriesData>
-        <label>sel 8</label>
-        <color>
-          <red>204</red>
-          <green>255</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
       </SeriesData>
     </entry>
     <entry>

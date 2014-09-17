@@ -87,6 +87,15 @@
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
+    <entry>
+      <string>roof</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>roof</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getroof</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
   </methodDataSources>
   <countSources class="linked-hash-map"/>
   <customNADataSources class="linked-hash-map"/>

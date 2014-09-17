@@ -40,6 +40,9 @@ public class ShortTermMarket {
 	private static double[] selloffer2;
 	private static double bestselloffer2;
 	private static double floor;
+	private static double roof;
+
+	
 	
 	public ShortTermMarket() {}
 			
@@ -88,6 +91,7 @@ public class ShortTermMarket {
 			buyoffer1 = agent.getbeststrategy().getalltactics().get(0).getbuyofferone().getBuyOfferprice(); 
 			buyoffer2[countb] = agent.getbeststrategy().getalltactics().get(0).getbuyoffertwo().getBuyOfferprice();
 			bestbuyoffer2 = agent.getbeststrategy().getbesttactic().getbuyoffertwo().getBuyOfferprice();
+			roof = agent.getbeststrategy().getalltactics().get(0).getfloorroofprice();
 			countb++;
 		}
 		for (final ActiveAgent agent : CommonMethods.getTAgentList()) {
@@ -223,6 +227,9 @@ public static int getnumberofselloffers() {
 }
 public static double getfloor() {
 	return floor;
+}
+public static double getroof() {
+	return roof;
 }
 
 //DisplayVariables

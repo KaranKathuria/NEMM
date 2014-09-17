@@ -96,20 +96,23 @@ public class ReadExcel {
 			
 			//Starts reading in the regions MarketDemand and MarketSeries objects consisting of only certdemand and powerPrice
 			
-			HSSFSheet certdemand_sheet = workbook.getSheet("Certificate Demand");	
+			HSSFSheet certdemand_sheet = workbook.getSheet("Certificate demand");	
+			HSSFSheet expectedcertdemand_sheet = workbook.getSheet("Expected certdemand");	
 			//HSSFSheet powerDemand_sheet = workbook.getSheet("powerDemand");
 			HSSFSheet powerPrice_sheet = workbook.getSheet("Power price");
 			
 			for(int j = 0; j < regionsnumber; j++){
 				double[] tempcertdem = new double[ticks];
+				double[] tempexpcertdem = new double[ticks];
 				double[] temppowerprice = new double[ticks];
 				
 				for(int i = 0; i < ticks; i++){
 					tempcertdem[i] = certdemand_sheet.getRow(2+i).getCell(3+j).getNumericCellValue();
+					tempexpcertdem[i] = certdemand_sheet.getRow(2+i).getCell(3+j).getNumericCellValue();
 					temppowerprice[i] = powerPrice_sheet.getRow(2+i).getCell(3+j).getNumericCellValue();
 				}
-				// Set market demand
-				TheEnvironment.allRegions.get(j).getMyDemand().initMarketDemand(tempcertdem);
+				// Set market demand (both power price, cert demand and expected cert demand
+				TheEnvironment.allRegions.get(j).getMyDemand().initMarketDemand(tempcertdem, tempexpcertdem);
 				// Set MarketSeries (power prices)
 				TheEnvironment.allRegions.get(j).getMyPowerPrice().initMarketSeries(temppowerprice);
 			}

@@ -9,6 +9,7 @@ public class MarketDemand {
 	
 	//private TickArray powerDemand;
 	private TickArray certDemand;
+	private TickArray expectedcertDemand;
 	//private TickArray certKvoteplikt;
 	private int numTicks;
 
@@ -23,17 +24,22 @@ public class MarketDemand {
 	public MarketDemand() {
 		//powerDemand = new TickArray();
 		certDemand = new TickArray();
+		expectedcertDemand = new TickArray();
 		//certKvoteplikt = new TickArray();
 	}
 
-	public void initMarketDemand(double[] certdem){
+	public void initMarketDemand(double[] certdem, double[] expectedcertdem){
 		// Currently this just calls the setAllDemands. We can add additional initialisation
 		// stuff here later if desired
 		setCertDemand(certdem);		
+		setExpectedCertDemand(expectedcertdem);
 	}
 	
 	public void setCertDemand(double[] cd) {
 		certDemand.setArray(cd);	
+	}
+	public void setExpectedCertDemand(double[] cd) {
+		expectedcertDemand.setArray(cd);	
 	}
 	
 	// Methods --------------------------------------------------------------
@@ -92,9 +98,19 @@ public class MarketDemand {
 		}
 		return demandcalc;
 	}
+	public double getExpectedCertDemand(int... tickID) {
+		double demandcalc;
+		if (tickID.length > 0) {
+			demandcalc = this.expectedcertDemand.getElement(tickID[0]);
+		}
+		else {
+			int curTick = TheEnvironment.theCalendar.getCurrentTick();
+			demandcalc = this.expectedcertDemand.getElement(curTick);
+		}
+		return demandcalc;
+	}
 	
-	// We have not created methods to set individual power and certificate demands. Should these be required
-	// they will have to be added
+
 	
-} // MarketDemand class
+} 
 

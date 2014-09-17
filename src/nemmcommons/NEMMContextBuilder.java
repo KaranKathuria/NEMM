@@ -180,6 +180,9 @@ public void projectprocesschedule() {
 	public double getfloor() {
 		return ShortTermMarket.getfloor();
 	}
+	public double getroof() {
+		return ShortTermMarket.getroof();
+	}
 	
 // TO get all sell and buyoffers (with one tactic):
 	public double getallvariablebuyoffers0() {

@@ -16,6 +16,7 @@ public class AllVariables {
 	public static double OPAgentmustbuypremium = 0.5;
 	public static double PAgentmustselldiscount = 0.5;
 	public static double PAgentmustsellshare = 0.7;
+	public static double OPAgentmustsellshare = 0.7;
 	
 	public static double mediumrundpriceexpectations = 220; //2 year expected price. Used by tactics to calculate floor on variable bids. This together with the risk free rate and the agents RAR.
 	public static double longrundpriceexpectations = 300; //10 year expected price - not in use.

@@ -8,6 +8,7 @@
 
 package nemmcommons;
 import nemmagents.CompanyAgent.CompanyAnalysisAgent.VolumeAnalysisAgent;
+import nemmagents.CompanyDemandShare;
 import nemmenvironment.PowerPlant;
 import nemmenvironment.TheEnvironment;
 
@@ -19,15 +20,14 @@ public class VolumePrognosis {
 	
 	private double nexttickcertproduction;
 	private double nexttwelvetickscertproduction;
-	private int ticks;
+	private int ticks = 12; //How many future ticks are included in the "nexttwelvetickscertproduction"
 	private double nexttickcertdemand;
 	private double nexttwelvetickscertdemand;
 	//Do we need the same for power?
 	private VolumeAnalysisAgent myVolumeAnalysisAgent;
 
 	public VolumePrognosis() {
-		nexttickcertproduction = 0; //exected cert prod for my powerplants. This cannot be set in the constructor as myVAA is set afterwards
-		ticks = ticks; //number of ticks total production summed
+		ticks = 12;
 	}
 	
 	//Methods
@@ -41,22 +41,35 @@ public class VolumePrognosis {
 	public double getnexttwelvetickscertproduction() {
 		return nexttwelvetickscertproduction;
 	}
+	public double getnexttwelvetickscertdemand() {
+		return nexttwelvetickscertdemand;
+	}
 	
 	public void initiatevolumeprognosis() { //To be run before first tick
 		double temp1 = 0;
 		double tempticks = 0;
 		double dtemp1 = 0;
 		double dtempticks = 0;
+		
 		for (PowerPlant pp : myVolumeAnalysisAgent.getmyCompany().getmypowerplants()) {
 			temp1 = temp1 + pp.getExpectedProduction(0); //Tick 0 is the next tick
 			for (int i = 0; i < ticks; ++i) {
 			tempticks = tempticks + pp.getExpectedProduction(i); //The ticks next tick
 			}
 		}
+		for (CompanyDemandShare CDS : this.myVolumeAnalysisAgent.getmyCompany().getMyDemandShares()) {
+			dtemp1 = dtemp1 + (CDS.getDemandShare(0) * CDS.getMyRegion().getMyDemand().getCertDemand(0));
+			for (int i = 0; i < ticks; ++i) {
+			dtempticks = dtempticks + (CDS.getDemandShare(i) * CDS.getMyRegion().getMyDemand().getCertDemand(i)); //The ticks next ticks
+				}	
+			
+		}
+		
 		nexttickcertproduction = temp1;
 		nexttwelvetickscertproduction = tempticks;
-		//equally for expected demand
-		//for (DemandShares ds : myVolumeAnalysisAgent.getmyCompany().getmypowerplants()et) {
+		nexttickcertdemand = -dtemp1;
+		nexttwelvetickscertdemand = -dtempticks;
+
 	}
 	
 	public void updatevolumeprognosis() { //To be run after market, next to Forecasts
@@ -72,13 +85,21 @@ public class VolumePrognosis {
 				tempticks = tempticks + pp.getExpectedProduction(i); //The ticks next ticks
 				}		
 		}
+		
+		for (CompanyDemandShare CDS : this.myVolumeAnalysisAgent.getmyCompany().getMyDemandShares()) {
+			dtemp1 = dtemp1 + (CDS.getDemandShare(from) * CDS.getMyRegion().getMyDemand().getCertDemand(from));
+			
+			for (int i = from; i < ticks+from; ++i) {
+				dtempticks = dtempticks + (CDS.getDemandShare(i) * CDS.getMyRegion().getMyDemand().getCertDemand(i)); //The ticks next ticks
+				}	
+			
+		}
 		nexttickcertproduction = temp1;
 		nexttwelvetickscertproduction = tempticks;
-
-		//equally for expected demand
-		//for (DemandShares ds : myVolumeAnalysisAgent.getmyCompany().getmypowerplants()et) {
-	
-	}
+		nexttickcertdemand = dtemp1;
+		nexttwelvetickscertdemand = dtempticks;
+		
+}
 	
 	
 
