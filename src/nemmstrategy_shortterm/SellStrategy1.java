@@ -32,19 +32,23 @@ public class SellStrategy1 extends GenericStrategy {
 		strategyname = "SellStrategy1";
 		this.strategyutilityscore.add(0.0);
 		numberoftactics = AllVariables.numberoftacticsSellStrategy1;
+		numberofmonthsmaxpp = 12; //This means that the maximum pp equalt the next twelve months expected production.
+		floorroofpricemultiplier = 1; //uses floor/roof price
+		
+		
+		
 		int seed = RandomWrapper.getstrategyseed(); //Gets a seed form the strategyseed seedgenerator.
 		Random tacticstream = new Random(seed); //uniq stream for this strategies tactics. 
 
 		
 		//Adds four tactics with differen values of sbd and discount, and stores them in alltactics
 		for (int i = 0; i < numberoftactics; ++i) {
-			double randomsharesoldtatdiscount = (tacticstream.nextDouble());
-			double randomdiscount = (tacticstream.nextDouble()-0.25); // between (-0.25 - 0.75) 
+			double randomsharesoldtatdiscount = AllVariables.PAgentmustsellshare; //(tacticstream.nextDouble()); this is the initial staring point and could be changed later.
+			double randomdiscount = (tacticstream.nextDouble()-0.25); // between (-0.25 - 0.75) //Initial starting point for the variable bid price. Is changed in the tactic later
 			SellStrategy1Tactic tactic = new SellStrategy1Tactic(randomsharesoldtatdiscount, randomdiscount);
 			tactic.setmyStrategy(SellStrategy1.this);
 			alltactics.add(tactic);
 		}
-		
 		besttactic = alltactics.get(tacticstream.nextInt(numberoftactics));
 		
 		sellofferone = besttactic.getsellofferone();
@@ -57,21 +61,27 @@ public class SellStrategy1 extends GenericStrategy {
 	// Clears strategies selloffers, updates offers from all tactics. set strategys selloffers to those of the best tactic. 
 	public void updatealloffers() {
 		//Updates all tactics
+		
+		//recalculate floor
 		for (int i = 0; i < numberoftactics; ++i) {
 			alltactics.get(i).updatetacticselloffers();}
-
+		
+		
 		agentsbuyoffers.clear();
 		agentsselloffers.clear();
 		sellofferone = besttactic.getsellofferone();
 		selloffertwo = besttactic.getselloffertwo();
 		agentsselloffers.add(sellofferone);
-		agentsselloffers.add(selloffertwo);
-		
+		agentsselloffers.add(selloffertwo);		
 		}
 	
-		
 	public ArrayList<GenericTactic> getalltactics() {
 		return alltactics;}
+	
+	public void calculatefloorroofprice() { //Calculates and updates the floorroofprice based on the agents risk adjusted rate and the risk free rate and the market prognosis future price expectatiosn
+		double temp
+		
+	}
 	}
 
 

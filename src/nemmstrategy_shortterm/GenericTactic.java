@@ -21,9 +21,11 @@ public class GenericTactic {
 	protected double tacticutilityscore;
 	protected ArrayList<HistoricTacticValue> historictacticvalues = new ArrayList<HistoricTacticValue>();
 	protected int paramLearningMethod; // GJB LEARNING
-	protected int numberoflearningmethods; // GJB LEARNING
-											// This has to be set in the constructor of each
-											// subclass
+	protected int numberoflearningmethods; 
+	protected double floorroofprice;
+	protected double maxoffervolume; //calculated in tactics based on internal number and last months production
+	protected double maxppvolume; //calculated based on the numberof months given from strategy
+	
 	//This class could have had all the selloffers and buyoffers form the respective tactics...
 	
 	

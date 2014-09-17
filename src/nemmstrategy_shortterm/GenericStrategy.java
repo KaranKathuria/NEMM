@@ -27,6 +27,9 @@ public abstract class GenericStrategy {
 	protected String strategyname; 
 	protected ArrayList<GenericTactic> alltactics = new ArrayList<GenericTactic>();
 	protected GenericTactic besttactic = null;
+	
+	protected int floorroofpricemultiplier; //Thus this strategy us a floor/roof [zero or one]
+	protected int numberofmonthsmaxpp; //This means that the maximum pp equalt this number of months expected demand or production.
 
 	
 

@@ -16,7 +16,7 @@ import nemmprocesses.ShortTermMarket;
 //Class definitions. Note that this is a  class as all its member variables are .
 public class MarketPrognosis {
 	private double stpriceexpectation;
-	private double mediumrunpriceexpectations; //5 years
+	private double mediumrunpriceexpectations; //2 years
 	private double longrunpriceexpectatations; //10 years
 	private TickArray expectedcertificatedemand; //world total, not per plant
 	private TickArray expectedcertificateprice;
