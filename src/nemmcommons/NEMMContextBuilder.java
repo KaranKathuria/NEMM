@@ -177,6 +177,9 @@ public void projectprocesschedule() {
 		double ret = CommonMethods.getMAAgentList().get(0).getmarketprognosis().getstpriceexpectation();
 		return ret;
 	}
+	public double getfloor() {
+		return ShortTermMarket.getfloor();
+	}
 	
 // TO get all sell and buyoffers (with one tactic):
 	public double getallvariablebuyoffers0() {

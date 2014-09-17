@@ -55,20 +55,21 @@ public class SellStrategy1Tactic extends GenericTactic {
 		maxoffervolumemultiplier = 2;
 	}
 	
-	private SellOffer createMustSellVolOffer(double expectedprice, double physicalposition, double ...capitalbase) {
+	private SellOffer createMustSellVolOffer(double expectedprice, double physicalposition,double lasttickproduction) {
 		SellOffer ret = new SellOffer();
-		ret.setselloffervol((paramMustSellShare*physicalposition)); //
+		ret.setselloffervol((paramMustSellShare*lasttickproduction)); //
 		ret.setsellofferprice((1-AllVariables.PAgentmustselldiscount)*expectedprice);
-		if (physicalposition == 0) {
+		if (lasttickproduction == 0) {
 			ret = null;
 		}
 		return ret;
 		}
-	
-	private SellOffer createRestVolOffer(double expectedprice, double physicalposition, double ...capitalbase) {
+		
+		//In case of no last production the must sell volume is zero, but we still have a variable volume!
+	private SellOffer createRestVolOffer(double expectedprice, double physicalposition,double lasttickproduction) {
 		SellOffer ret = new SellOffer();
-		ret.setselloffervol(physicalposition - ((paramMustSellShare*physicalposition))); //rest of the monthly production sold at expected price.
-		ret.setsellofferprice(expectedprice*(paramRestVolPriceMult)); //Prices unsymetrically around expected price with must of the volume tried sold at at premium (1+discount)*expt.
+		ret.setselloffervol(Math.min(physicalposition - (paramMustSellShare*lasttickproduction), maxoffervolume - (paramMustSellShare*lasttickproduction))); //rest of the monthly production sold at expected price.
+		ret.setsellofferprice(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice)); //Prices unsymetrically around expected price with must of the volume tried sold at at premium (1+discount)*expt.
 		if (physicalposition == 0) {
 			ret = null;
 		}
@@ -89,17 +90,20 @@ public class SellStrategy1Tactic extends GenericTactic {
 	}
 	
 	public void updatetacticselloffers() {
-		double nexttickproduction = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getnexttickcertproduction(); //this.getmyStrategy().getmyAgent().getphysicalnetposition();
+		double physicalnetposition = this.getmyStrategy().getmyAgent().getphysicalnetposition();
 		double expectedprice = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getstpriceexpectation();
-		if (nexttickproduction <= 0){
-			nexttickproduction = 0.0;} //To not get crazy selloffers
+		double lasttickproduction = this.getmyStrategy().getmyAgent().getlasttickproduction();
 		
+		if (physicalnetposition <= 0){
+			physicalnetposition = 0.0;} //To not get crazy selloffers
+		
+		
+		parameterLearning(); //Takes bids and utilities form last time and alters the price of the variable bid
 		updateinputvalues();
-		parameterLearning();
 		
 		tacticselloffers.clear();
-		offerMustSellVol = createMustSellVolOffer(expectedprice,nexttickproduction);
-		offerRestVol = createRestVolOffer(expectedprice,nexttickproduction);
+		offerMustSellVol = createMustSellVolOffer(expectedprice,physicalnetposition,lasttickproduction);
+		offerRestVol = createRestVolOffer(expectedprice,physicalnetposition, lasttickproduction);
 		tacticselloffers.add(offerMustSellVol);
 		tacticselloffers.add(offerRestVol);
 	}
@@ -141,6 +145,9 @@ public class SellStrategy1Tactic extends GenericTactic {
 		// Utility = 0 - None of the variable offers where sold, thus try to sell at a lower price
 		// Utility <0,1> - Some where expeted, some where not. Try same again.
 		
+		//Exeption if the price offered last time is lower than close to the floor-price. 
+		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && offerRestVol.getSellOfferprice() - deltapricemultiplier < floorroofprice) {	} //Could cause failure if the price start below floorroofprice
+		else {
 		if (tacticutilityscore == 1)
 			paramRestVolPriceMult = paramRestVolPriceMult + deltapricemultiplier; //increase variable sell price
 		else if (tacticutilityscore == 0) {
@@ -148,6 +155,9 @@ public class SellStrategy1Tactic extends GenericTactic {
 		}
 		else {
 			//Unchanged
+		}
+			
+			
 		}
 	}
 		//Something to caputure the roof price. The variable price cannot be 

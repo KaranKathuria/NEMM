@@ -32,12 +32,14 @@ public class ShortTermMarket {
 	private static ArrayList<BuyOffer> Allbuyoffers = new ArrayList<BuyOffer>();
 	private static ArrayList<SellOffer> Allselloffers = new ArrayList<SellOffer>();
 	
+	// For display purposes
 	private static double buyoffer1;
 	private static double[] buyoffer2;
 	private static double bestbuyoffer2;
 	private static double selloffer1;
 	private static double[] selloffer2;
 	private static double bestselloffer2;
+	private static double floor;
 	
 	public ShortTermMarket() {}
 			
@@ -48,10 +50,13 @@ public class ShortTermMarket {
 		marketsupply = 0;
 		tradedvolume = 0;
 		pricestep = 0.5;
+		
+		// For display purposes
 		int counts = 0;
 		int countb = 0;
 		buyoffer2 = new double[10];
 		selloffer2 = new double[10];
+		
 		
 
 		Allselloffers.clear();
@@ -69,7 +74,9 @@ public class ShortTermMarket {
 			selloffer1 = agent.getbeststrategy().getalltactics().get(0).getsellofferone().getSellOfferprice();
 			selloffer2[counts] = agent.getbeststrategy().getalltactics().get(0).getselloffertwo().getSellOfferprice();
 			bestselloffer2 = agent.getbeststrategy().getbesttactic().getselloffertwo().getSellOfferprice();
+			floor = agent.getbeststrategy().getalltactics().get(0).getfloorroofprice();
 			counts++;
+			
 		}
 		
 		for (final ActiveAgent agent : CommonMethods.getOPAgentList()) {
@@ -213,6 +220,9 @@ public static int getnumberofbuyoffers() {
 
 public static int getnumberofselloffers() {
 	return Allselloffers.size();
+}
+public static double getfloor() {
+	return floor;
 }
 
 //DisplayVariables

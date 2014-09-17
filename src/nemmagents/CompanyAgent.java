@@ -59,6 +59,7 @@ public class CompanyAgent extends ParentAgent {
 			if (type == 1) {
 				activeagenttypename = "ProducerAgent";
 				physicalnetposition = 1000;
+				lasttickproduction = 1000;
 				utilitymethod = new PAUtilityMethod();
 				SellStrategy1 sellstrategy = new SellStrategy1();
 				sellstrategy.setmyAgent(ActiveAgent.this);
@@ -68,6 +69,7 @@ public class CompanyAgent extends ParentAgent {
 			} else if (type == 2) {
 				activeagenttypename = "ObligatedPurchaserAgent";
 				physicalnetposition = -1000;
+				lasttickdemand = -1000;
 				utilitymethod = new OPAUtilityMethod();
 				BuyStrategy1 buystrategy = new BuyStrategy1();
 				buystrategy.setmyAgent(ActiveAgent.this);
@@ -83,7 +85,7 @@ public class CompanyAgent extends ParentAgent {
 				allstrategies.add(tradestrategy);
 				portfoliocapital = 1000000; 
 			} 
-			RAR = 0.05;
+			RAR = 0.07; //quite risk avers
 			companyagent = CompanyAgent.this;
 			this.utilitymethod.setmyAgent(ActiveAgent.this);
 			beststrategy = allstrategies.get(0); // Choose the first one initially 

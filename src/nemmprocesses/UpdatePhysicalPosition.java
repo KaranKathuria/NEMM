@@ -121,12 +121,12 @@ public static void markettransactions() {
 	//Method that runs demand and production and adds this to the agents demand, production and physical position.
 public static void runproduction() {
 
-	for (CompanyAgent CA : CommonMethods.getCompanyAgenList()) { //For all Companies
+	for (ActiveAgent AA : CommonMethods.getPAgentList()) { //For all Companies
 		double thistickprod = 0;
-	for (PowerPlant PP : CA.getmypowerplants()) { //For all PowerPlants
+	for (PowerPlant PP : AA.getmypowerplants()) { //For all PowerPlants
 		thistickprod = thistickprod + PP.getProduction();
 	}
-	CA.getproduceragent().addtophysicalposition(thistickprod); // Pushes this ticks production to agents physical position and updates last tick production
+	AA.addtophysicalposition(thistickprod); // Pushes this ticks production to agents physical position and updates last tick production
 	}
 }
 

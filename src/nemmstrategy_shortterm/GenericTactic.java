@@ -42,6 +42,7 @@ public class GenericTactic {
 	
 	public BuyOffer getbuyofferone() {return null;} //All these methods are overridden by the respective subtactics hence they do return something
 	public BuyOffer getbuyoffertwo() {return null;}
+	public double getfloorroofprice() {return floorroofprice;}
 
 	public SellOffer getsellofferone() {return null;}
 	public SellOffer getselloffertwo() {return null;}

@@ -78,6 +78,15 @@
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
+    <entry>
+      <string>floor</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>floor</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getfloor</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
   </methodDataSources>
   <countSources class="linked-hash-map"/>
   <customNADataSources class="linked-hash-map"/>

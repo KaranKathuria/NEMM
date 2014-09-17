@@ -87,7 +87,7 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	
 	public void updatetactictradeoffers() {
 		double physicalposition = this.getmyStrategy().getmyAgent().getphysicalnetposition();
-		double expectedprice = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getpriceprognosis().getstpriceexpectation();
+		double expectedprice = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getstpriceexpectation();
 		double portfoliocapital = this.getmyStrategy().getmyAgent().getportfoliocapital();
 		
 		if (portfoliocapital<=0) { //Currently just thowing an expception, but this would have to be handled another way such as creating a new trader.
