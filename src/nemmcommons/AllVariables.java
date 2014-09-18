@@ -7,6 +7,10 @@
  */
 package nemmcommons;
 
+import java.util.Random;
+
+import repast.simphony.random.RandomHelper;
+
 public class AllVariables {
 	
 	//Number of tactics in each of the respective strategies. More tactics gives the agent more alternatives.
@@ -29,7 +33,8 @@ public class AllVariables {
 	
 	public static double forcastweights[] = {0.2, 0.3, 0.5};
 	
-	
+	//public static double randomfactorinintialstpriceexpectations = X; //Se market prognoisis constructor
+	//public static double randomfactorininmediummrundpriceexpectations = X; //Se market prognoisis constructor //This two could have the same random numer!
 	
 }
 

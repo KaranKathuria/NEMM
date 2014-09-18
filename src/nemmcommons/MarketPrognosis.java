@@ -8,6 +8,7 @@
 
 package nemmcommons;
 
+import repast.simphony.random.RandomHelper;
 import nemmenvironment.TheEnvironment;
 // Import
 import nemmprocesses.ShortTermMarket;
@@ -32,8 +33,8 @@ public class MarketPrognosis {
 		if (TheEnvironment.allRegions.size()>2) {
 			throw new IllegalArgumentException("MarketPrognisis object does not currently handle more than two regions");}
 		
-		stpriceexpectation = ParameterWrapper.getpriceexpectation();
-		mediumrunpriceexpectations =  AllVariables.mediumrundpriceexpectations; //Must be updated somehow later
+		stpriceexpectation = ParameterWrapper.getpriceexpectation() * RandomHelper.nextDoubleFromTo(1, 1); //Random
+		mediumrunpriceexpectations =  AllVariables.mediumrundpriceexpectations * RandomHelper.nextDoubleFromTo(1, 1); //Random
 		longrunpriceexpectatations = AllVariables.longrundpriceexpectations;  //Must be updated somehow later
 		expectedcertificateprice = new TickArray(); 
 		expectedcertificatedemand = new TickArray();

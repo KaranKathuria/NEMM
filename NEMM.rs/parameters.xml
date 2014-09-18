@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <parameters>
 
-	<parameter name="randomSeed" displayName="Default Random Seed" type="int" defaultValue="100" /><parameter
+	<parameter name="randomSeed" displayName="Default Random Seed" type="int" defaultValue="103" /><parameter
 		defaultValue="10" type="int" name="produceragentsnumber" displayName="Number of ProducerAgents">
 </parameter>
 	<parameter defaultValue="10" name="obligatedpurchaseragentsnumber" displayName="Number of ObligatedPurchaserAgents" type="int"></parameter>
