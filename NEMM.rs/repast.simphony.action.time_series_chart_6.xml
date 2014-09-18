@@ -45,13 +45,6 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Floor</string>
-      <SeriesData>
-        <label>Sell floor</label>
-        <color reference="../../../entry[2]/SeriesData/color"/>
-      </SeriesData>
-    </entry>
-    <entry>
       <string>Expected price</string>
       <SeriesData>
         <label>Expected certificate price</label>
@@ -61,6 +54,13 @@
           <blue>255</blue>
           <alpha>255</alpha>
         </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Floor</string>
+      <SeriesData>
+        <label>Sell floor</label>
+        <color reference="../../../entry[2]/SeriesData/color"/>
       </SeriesData>
     </entry>
   </seriesIds>

@@ -34,7 +34,7 @@ public class MarketPrognosis {
 			throw new IllegalArgumentException("MarketPrognisis object does not currently handle more than two regions");}
 		
 		stpriceexpectation = ParameterWrapper.getpriceexpectation() * RandomHelper.nextDoubleFromTo(1, 1); //Random
-		mediumrunpriceexpectations =  AllVariables.mediumrundpriceexpectations * RandomHelper.nextDoubleFromTo(1, 1); //Random
+		mediumrunpriceexpectations =  AllVariables.mediumrundpriceexpectations * RandomHelper.nextDoubleFromTo(1,1); //Random
 		longrunpriceexpectatations = AllVariables.longrundpriceexpectations;  //Must be updated somehow later
 		expectedcertificateprice = new TickArray(); 
 		expectedcertificatedemand = new TickArray();

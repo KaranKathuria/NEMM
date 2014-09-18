@@ -23,7 +23,7 @@
     <entry>
       <string>roof</string>
       <SeriesData>
-        <label>Buy roof</label>
+        <label>roof</label>
         <color>
           <red>204</red>
           <green>204</green>
@@ -47,7 +47,7 @@
     <entry>
       <string>floor</string>
       <SeriesData>
-        <label>Sell floor</label>
+        <label>floor</label>
         <color reference="../../../entry/SeriesData/color"/>
       </SeriesData>
     </entry>
