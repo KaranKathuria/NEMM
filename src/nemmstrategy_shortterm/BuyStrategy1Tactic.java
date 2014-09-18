@@ -45,7 +45,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	private BuyOffer creatBuyOfferone(double expectedprice, double physicalposition, double lasttickdemand) { //physicalpos and lasttickdem are negatie number.
 		BuyOffer ret = new BuyOffer();
 		//equals must buy
-		ret.setbuyoffervol(Math.min((-physicalposition) - (shareboughtatdiscount*(-lasttickdemand)), (-maxoffervolume) - (shareboughtatdiscount*(-lasttickdemand)))); //-As the phisical position of buyer would in most cases be negative, but as the offer only has positive numbers. 
+		ret.setbuyoffervol(Math.max((shareboughtatdiscount*(-lasttickdemand)), (-physicalposition) - (-maxppvolume))); //-As the phisical position of buyer would in most cases be negative, but as the offer only has positive numbers. 
 		ret.setbuyofferprice((1+AllVariables.OPAgentmustbuypremium)*expectedprice); //Given must buy volume price. 
 		if (physicalposition == 0) {
 			ret = null;
@@ -54,10 +54,10 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		}
 	
 
-	private BuyOffer creatBuyOffertwo(double expectedprice, double physicalposition,  double lasttickdemand) {////physicalpos and lasttickdem are negatie number. also maxppvolume
+	private BuyOffer creatBuyOffertwo(double expectedprice, double physicalposition,  double lasttickdemand) {////physicalpos and lasttickdem are negatie number. 
 		BuyOffer ret = new BuyOffer();
-		double mustbuy = Math.min((-physicalposition) - (shareboughtatdiscount*(-lasttickdemand)), (-maxoffervolume) - (shareboughtatdiscount*(-lasttickdemand)));
-		ret.setbuyoffervol(Math.max(0.0,Math.min(-maxoffervolume-mustbuy,-physicalposition))); //rest of the monthly production bought at expected price.
+		double mustbuy = Math.max((shareboughtatdiscount*(-lasttickdemand)), (-physicalposition) - (-maxppvolume));
+		ret.setbuyoffervol(Math.max(0.0,Math.min(-maxoffervolume-mustbuy,-physicalposition-mustbuy))); //rest of the monthly production bought at expected price.
 		ret.setbuyofferprice(Math.min(expectedprice*pricemultiplier, floorroofprice)); //Most likely that the second offer is at at pricemultiplier. Hence they buy what they dont must, at a pricemultiplier.
 		if (physicalposition == 0) {
 			ret = null;
@@ -130,7 +130,9 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		// Utility = 0 - None of the variable offers where bought, hence reduce increase buyoffer next time
 		// Utility <0,1> - Some where expeted, some where not. Try same again.
 		
-		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && buyoffertwo.getBuyOfferprice() + deltapricemultiplier > floorroofprice) {}
+		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && buyoffertwo.getBuyOfferprice() + (deltapricemultiplier*buyoffertwo.getBuyOfferprice()) >= floorroofprice) {
+			pricemultiplier = pricemultiplier - deltapricemultiplier;
+		}
 		else {
 		if (tacticutilityscore == 1)
 			pricemultiplier = pricemultiplier - deltapricemultiplier; //reduce price

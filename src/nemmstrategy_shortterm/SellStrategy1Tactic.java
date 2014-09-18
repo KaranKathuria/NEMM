@@ -69,8 +69,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 	private SellOffer createRestVolOffer(double expectedprice, double physicalposition,double lasttickproduction) {
 		double mustsell = (Math.max(paramMustSellShare*lasttickproduction, physicalposition-maxppvolume));
 		SellOffer ret = new SellOffer();
-		Math.max(0.0,Math.min(maxoffervolume-mustsell,physicalposition));
-		ret.setselloffervol(Math.max(0.0,Math.min(maxoffervolume-mustsell,physicalposition))); //rest of the monthly production sold at expected price.
+		ret.setselloffervol(Math.max(0.0,Math.min(maxoffervolume-mustsell,physicalposition-mustsell))); //rest of the monthly production sold at expected price.
 		ret.setsellofferprice(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice)); //Prices unsymetrically around expected price with must of the volume tried sold at at premium (1+discount)*expt.
 		if (physicalposition == 0) {
 			ret = null;
@@ -147,7 +146,9 @@ public class SellStrategy1Tactic extends GenericTactic {
 		// Utility <0,1> - Some where expeted, some where not. Try same again.
 		
 		//Exeption if the price offered last time is lower than close to the floor-price. 
-		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && offerRestVol.getSellOfferprice() - deltapricemultiplier < floorroofprice) {	} //Could cause failure if the price start below floorroofprice
+		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && offerRestVol.getSellOfferprice() - (deltapricemultiplier*offerRestVol.getSellOfferprice()) <= floorroofprice) {
+			paramRestVolPriceMult = paramRestVolPriceMult + deltapricemultiplier;
+		} //Could cause failure if the price start below floorroofprice
 		else {
 		if (tacticutilityscore == 1)
 			paramRestVolPriceMult = paramRestVolPriceMult + deltapricemultiplier; //increase variable sell price

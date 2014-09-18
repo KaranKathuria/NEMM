@@ -96,8 +96,8 @@ public class VolumePrognosis {
 		}
 		nexttickcertproduction = temp1;
 		nexttwelvetickscertproduction = tempticks;
-		nexttickcertdemand = dtemp1;
-		nexttwelvetickscertdemand = dtempticks;
+		nexttickcertdemand = -dtemp1;
+		nexttwelvetickscertdemand = -dtempticks;
 		
 }
 	

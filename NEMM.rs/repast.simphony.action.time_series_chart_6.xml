@@ -33,6 +33,18 @@
       </SeriesData>
     </entry>
     <entry>
+      <string>Roof</string>
+      <SeriesData>
+        <label>Roof</label>
+        <color>
+          <red>0</red>
+          <green>204</green>
+          <blue>204</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
       <string>Floor</string>
       <SeriesData>
         <label>Floor</label>

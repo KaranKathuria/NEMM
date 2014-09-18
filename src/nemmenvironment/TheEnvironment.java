@@ -212,7 +212,7 @@ public final class TheEnvironment {
 		public static void monthlyglobalvalueupdate() {
 			currentmarketprice = ShortTermMarket.getcurrentmarketprice();
 			certificateprice.setElement(ShortTermMarket.getcurrentmarketprice(), theCalendar.getCurrentTick()); //Adds certPrice to history.
-			currentinterestrate = currentinterestrate + RandomHelper.nextDoubleFromTo(-0.002, 0.002);
+			//currentinterestrate = currentinterestrate + RandomHelper.nextDoubleFromTo(-0.002, 0.002); //Randomness in risk free interest rate.
 			numberofbuyoffersstm = ShortTermMarket.getnumberofbuyoffers();
 			numberofselloffersstm = ShortTermMarket.getnumberofselloffers();
 			
