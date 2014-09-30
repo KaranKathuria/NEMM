@@ -47,7 +47,7 @@ public class ReadExcel {
 	public static void ReadCreateTime() {
 		
 		//Finds file and starts reading
-		String file_path = working_directory + "\\NEMM_testdata.xls";  
+		String file_path = working_directory + "\\NEMM_testdata_20.xls";  
 		
 		try{      
 			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(file_path));	
@@ -73,7 +73,7 @@ public class ReadExcel {
 	public static void ReadRegions() {
 		
 		//Finds file and starts reading
-		String file_path = working_directory + "\\NEMM_testdata.xls";  
+		String file_path = working_directory + "\\NEMM_testdata_20.xls";  
 		
 		try{      
 			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(file_path));	
@@ -125,7 +125,7 @@ public class ReadExcel {
 		public static void ReadPowerPlants() {
 			
 			//Finds file and starts reading
-			String file_path = working_directory + "\\NEMM_testdata.xls";  
+			String file_path = working_directory + "\\NEMM_testdata_20.xls";  
 			
 			try{      	
 				HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(file_path));	

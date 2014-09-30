@@ -72,7 +72,7 @@ public class VolumePrognosis {
 
 	}
 	
-	public void updatevolumeprognosis() { //To be run after market, next to Forecasts
+	public void updatevolumeprognosis() { //To be run after market, next to Forecasts. This method uses calculates the expected production of next tick and the total expected production/demand of twele nest ticks
 		double temp1 = 0;
 		double tempticks = 0;
 		double dtemp1 = 0;

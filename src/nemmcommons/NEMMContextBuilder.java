@@ -64,7 +64,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 @ScheduledMethod(start = 0, priority = 3)
 	public void Distributions() {
 	DistributePowerPlants.distributeallpowerplants();
-	DistributeDemandShares.Uniformdemanddistribution(5, 5);
+	DistributeDemandShares.Uniformdemanddistribution(10, 10);
 	Forcast.initiatevolumeprognosis(); //Set the Company agents analysis agents, volume analysisagents prognosis of demand and production.
 	
 }
@@ -265,6 +265,34 @@ public void projectprocesschedule() {
 		double ret = ShortTermMarket.getselloffer2()[9];
 		return ret;
 	}
+	public int getbidsovermp() {
+		int over = 0;
+		//int under = 0;
+		double mp = ShortTermMarket.getcurrentmarketprice();
+		for (int i = 0; i <10; ++i) {
+			if (ShortTermMarket.getselloffer2()[i] > mp) {
+				over++;
+			}
+			if (ShortTermMarket.getbuyoffer2()[i] > mp) {
+				over++;
+			}
+		}
+		return over;
+		}
+	
+	public int getbidsundermp() {
+		int under = 0;
+		double mp = ShortTermMarket.getcurrentmarketprice();
+		for (int i = 0; i <10; ++i) {
+			if (ShortTermMarket.getselloffer2()[i] < mp) {
+				under++;
+			}
+			if (ShortTermMarket.getbuyoffer2()[i] < mp) {
+				under++;
+			}
+		}
+		return under;
+		}
 	
 }
 

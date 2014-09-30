@@ -57,8 +57,8 @@ public class ShortTermMarket {
 		// For display purposes
 		int counts = 0;
 		int countb = 0;
-		buyoffer2 = new double[10];
-		selloffer2 = new double[10];
+		buyoffer2 = new double[20];
+		selloffer2 = new double[20];
 		
 		
 
