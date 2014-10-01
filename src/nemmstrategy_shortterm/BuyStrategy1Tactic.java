@@ -14,6 +14,7 @@ import nemmagents.ParentAgent;
 import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
 import nemmenvironment.TheEnvironment;
+import nemmprocesses.ShortTermMarket;
 import nemmstrategy_shortterm.BuyOffer;
 import nemmstrategy_shortterm.SellOffer;
 import nemmtime.NemmCalendar;
@@ -26,7 +27,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	private BuyOffer buyofferone;
 	private BuyOffer buyoffertwo;
 	private ArrayList<BuyOffer> tacticbuyoffers = new ArrayList<BuyOffer>();
-	private static final double deltapricemultiplier = 0.05;
+	
 
 	//Default constructor. Not in use. 
 	BuyStrategy1Tactic() {}
@@ -130,15 +131,26 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		// Utility = 0 - None of the variable offers where bought, hence reduce increase buyoffer next time
 		// Utility <0,1> - Some where expeted, some where not. Try same again.
 		
+		//Learning the adjustment of price multiplier
+		double deltapricemup;
+		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && (Math.abs(buyoffertwo.getBuyOfferprice() - ShortTermMarket.getcurrentmarketprice())/(ShortTermMarket.getcurrentmarketprice())) > 0.11) {
+		 deltapricemup = 0.1;
+		}
+		else {
+		 deltapricemup = deltapricemultiplier;
+		}
+		
+		
+		
 		//If I reduce price with one step based on the offer price on last tick and the prices I get is lower than floor --> do the opposit.
-		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && buyoffertwo.getBuyOfferprice() + (deltapricemultiplier*buyoffertwo.getBuyOfferprice()) >= floorroofprice) {
-			pricemultiplier = pricemultiplier - deltapricemultiplier;
+		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && buyoffertwo.getBuyOfferprice() + (deltapricemup*buyoffertwo.getBuyOfferprice()) >= floorroofprice) {
+			pricemultiplier = pricemultiplier - deltapricemup;
 		}
 		else {
 		if (tacticutilityscore == 1)
-			pricemultiplier = pricemultiplier - deltapricemultiplier; //reduce price
+			pricemultiplier = pricemultiplier - deltapricemup; //reduce price
 		else if (tacticutilityscore == 0) {
-			pricemultiplier = pricemultiplier + deltapricemultiplier; //increase price
+			pricemultiplier = pricemultiplier + deltapricemup; //increase price
 		}
 		else {
 			//Unchanged

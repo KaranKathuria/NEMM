@@ -52,7 +52,7 @@ public class ShortTermMarket {
 		marketdemand = 0;
 		marketsupply = 0;
 		tradedvolume = 0;
-		pricestep = 0.5;
+		pricestep = 0.25;
 		
 		// For display purposes
 		int counts = 0;

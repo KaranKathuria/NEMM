@@ -37,6 +37,7 @@ public class BuyStrategy1 extends GenericStrategy {
 			double randomshareboughtatdiscount = AllVariables.OPAgentmustsellshare;//(tacticstream.nextDouble());
 			double randomdiscount = (tacticstream.nextDouble()- 0.25); // between -0.25 and 0.75 starting point for the variable offer
 			BuyStrategy1Tactic tactic = new BuyStrategy1Tactic(randomshareboughtatdiscount, randomdiscount);
+			tactic.setdeltapricemultiplier(0.025+(i/50)); //Sets this to 0.025 in case only one tactic, but with multiple tactics we have tactics with bigger pricesteps
 			tactic.setmyStrategy(BuyStrategy1.this);
 			alltactics.add(tactic);
 		}

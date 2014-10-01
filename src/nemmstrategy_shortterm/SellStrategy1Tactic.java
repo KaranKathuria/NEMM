@@ -14,6 +14,7 @@ import nemmagents.ParentAgent;
 import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
 import nemmenvironment.TheEnvironment;
+import nemmprocesses.ShortTermMarket;
 import nemmstrategy_shortterm.SellOffer;
 import nemmtime.NemmCalendar;
 
@@ -39,7 +40,6 @@ public class SellStrategy1Tactic extends GenericTactic {
 	private SellOffer offerMustSellVol;
 	private SellOffer offerRestVol;
 	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 	
-	private static final double deltapricemultiplier = 0.05;
 	
     //Default constructor.
 	SellStrategy1Tactic() {}
@@ -145,15 +145,25 @@ public class SellStrategy1Tactic extends GenericTactic {
 		// Utility = 0 - None of the variable offers where sold, thus try to sell at a lower price
 		// Utility <0,1> - Some where expeted, some where not. Try same again.
 		
+		//Learning the adjustment of price multiplier
+		double deltapricemup;
+		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && (Math.abs(offerRestVol.getSellOfferprice() - ShortTermMarket.getcurrentmarketprice())/(ShortTermMarket.getcurrentmarketprice())) > 0.11) {
+			 deltapricemup = 0.1;
+			}
+			else {
+			 deltapricemup = deltapricemultiplier;
+			}
+		
+		
 		//Exeption if the price offered last time is lower than close to the floor-price. 
-		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && offerRestVol.getSellOfferprice() - (deltapricemultiplier*offerRestVol.getSellOfferprice()) <= floorroofprice) {
-			paramRestVolPriceMult = paramRestVolPriceMult + deltapricemultiplier;
+		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && offerRestVol.getSellOfferprice() - (deltapricemup*offerRestVol.getSellOfferprice()) <= floorroofprice) {
+			paramRestVolPriceMult = paramRestVolPriceMult + deltapricemup;
 		} //Could cause failure if the price start below floorroofprice
 		else {
 		if (tacticutilityscore == 1)
-			paramRestVolPriceMult = paramRestVolPriceMult + deltapricemultiplier; //increase variable sell price
+			paramRestVolPriceMult = paramRestVolPriceMult + deltapricemup; //increase variable sell price
 		else if (tacticutilityscore == 0) {
-			paramRestVolPriceMult = paramRestVolPriceMult - deltapricemultiplier; //reduce variable sell price
+			paramRestVolPriceMult = paramRestVolPriceMult - deltapricemup; //reduce variable sell price
 		}
 		else {
 			//Unchanged

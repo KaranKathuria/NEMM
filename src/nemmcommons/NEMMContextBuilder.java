@@ -64,7 +64,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 @ScheduledMethod(start = 0, priority = 3)
 	public void Distributions() {
 	DistributePowerPlants.distributeallpowerplants();
-	DistributeDemandShares.Uniformdemanddistribution(1, 1);
+	DistributeDemandShares.Uniformdemanddistribution(10, 10);
 	Forcast.initiatevolumeprognosis(); //Set the Company agents analysis agents, volume analysisagents prognosis of demand and production.
 	
 }
@@ -91,10 +91,18 @@ public void monthlymarketschedule() {
 }
 
 //All obligation periods updates to come below.
-@ScheduledMethod(start = 0, interval = 12, priority = 2)
+@ScheduledMethod(start = 0, interval = AllVariables.obintr, priority = 2)
 public void obligationsperiodshedule() {
-	//Priority 2 means that whenever the tick is 12 (annual tick) this will be ran first. If the priority is the same, the order is random. 
-		TheEnvironment.GlobalValues.annualglobalvalueupdate();
+ //Should for each obligations period ending sum up all demand of certificates, calculate the penelty price and "blanked out"
+	//Also calculating the total demand and supply for the period at hand can be "official" news that the volume and market analyss agents can use. 
+	//Later the fact that the OPA knows that it will be rewarded a penelty if not having enough certs, they will use this in their strategy.
+	
+	//The volume analysis agents "have" the expectaito informaston, and the real prouton and demand is in the PP and Region objects. Could nevertheless be calculated her as well.
+	// - This obperiods demand
+	// - THis OB periods supply
+	// - This OB volumwheigted average price. 
+	// - Peneltyprice  .. the opa agents could have a field "expected" penelty price that they use to calculate their penelty. 
+	
 }
 
 //All annual updates to come below. Currently not in use.

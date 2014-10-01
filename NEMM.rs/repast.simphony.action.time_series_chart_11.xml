@@ -141,13 +141,6 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>buy 7</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
-        <color reference="../../../entry[3]/SeriesData/color"/>
-      </SeriesData>
-    </entry>
-    <entry>
       <string>Market Price</string>
       <SeriesData>
         <label>Market Price</label>
@@ -169,6 +162,13 @@
           <blue>204</blue>
           <alpha>255</alpha>
         </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>buy 7</string>
+      <SeriesData>
+        <label>Variable buyoffer</label>
+        <color reference="../../../entry[3]/SeriesData/color"/>
       </SeriesData>
     </entry>
     <entry>

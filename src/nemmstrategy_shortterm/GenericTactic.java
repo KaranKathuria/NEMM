@@ -26,6 +26,7 @@ public class GenericTactic {
 	protected double maxppvolume; //calculated based on the numberof months given from strategy
 	protected double maxoffervolume; //calculated in tactics based on internal number and last months production
 	protected double maxoffervolumemultiplier;
+	protected double deltapricemultiplier; //Used for learning and adjusting bid prices (currenly by PA and OPA only). 
 	
 	//This class could have had all the selloffers and buyoffers form the respective tactics...
 	
@@ -63,6 +64,9 @@ public class GenericTactic {
 	public void updatetactictradeoffers() {};
 	public void updatetacticutilityscore(double t) {tacticutilityscore = t;};
 	public void addtactichistory() {};
+	public void setdeltapricemultiplier(double t) {
+		deltapricemultiplier = t;
+	}
 	private void parameterLearning() {}; // GJB LEARNING
 //	public double gettacticutilityscore() {return tacticutilityscore;}
 	public ArrayList<HistoricTacticValue> gethistorictacticvalues() {

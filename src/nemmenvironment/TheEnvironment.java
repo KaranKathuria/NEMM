@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.random.RandomHelper;
 import nemmagents.CompanyAgent;
@@ -25,6 +26,7 @@ public final class TheEnvironment {
 	public static ArrayList<Region> allRegions;
 	public static ArrayList<CompanyAgent> allCompanies;
 	public static NemmCalendar theCalendar;
+	
 	
 	private TheEnvironment() {}
 	

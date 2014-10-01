@@ -9,9 +9,13 @@ package nemmcommons;
 
 import java.util.Random;
 
+import nemmenvironment.TheEnvironment;
 import repast.simphony.random.RandomHelper;
 
 public class AllVariables {
+	
+	//Unfortuanaty there is now other way then setting the obligation period intervall (ticks) manually.
+	public static final int obintr = 12; // TheEnvironment.theCalendar.getNumTradePdsInObligatedPd();
 	
 	//Number of tactics in each of the respective strategies. More tactics gives the agent more alternatives.
 	public static int numberoftacticsBuyStrategy1 = 1;
@@ -29,7 +33,7 @@ public class AllVariables {
 	public static double tradermaximumlongpos = 5000;	//to go bust.
 	public static double portfoliocapitalexitlimit = 100000; //reaching this limit triggers and "exit" behavior. This each reach with strong price drop/increase
 	
-	public static int numofhistutilitiesincluded = 4; //Used by method that deterines the tactics best utility.
+	public static int numofhistutilitiesincluded = 3; //Used by method that deterines the tactics best utility.
 	
 	public static double forcastweights[] = {0.2, 0.3, 0.5};
 	

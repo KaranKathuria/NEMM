@@ -44,6 +44,7 @@ public class SellStrategy1 extends GenericStrategy {
 			double randomsharesoldtatdiscount = AllVariables.PAgentmustsellshare; //(tacticstream.nextDouble()); this is the initial staring point and could be changed later.
 			double randomdiscount = (tacticstream.nextDouble()-0.25); // between (-0.25 - 0.75) //Initial starting point for the variable bid price. Is changed in the tactic later
 			SellStrategy1Tactic tactic = new SellStrategy1Tactic(randomsharesoldtatdiscount, randomdiscount);
+			tactic.setdeltapricemultiplier(0.025+(i/50)); //Sets this to 0.025 in case only one tactic, but with multiple tactics we have tactics with bigger pricesteps
 			tactic.setmyStrategy(SellStrategy1.this);
 			alltactics.add(tactic);
 		}

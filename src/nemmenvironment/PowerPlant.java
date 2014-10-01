@@ -17,7 +17,7 @@ public class PowerPlant {
 	private Region myRegion;
 	private CompanyAgent myCompany;
 	private TickArray myProduction; //Real pregenerated (good given) future production. This is what generates certificates
-	private TickArray ExpectedProduction;	//Expected production. This is the amount of certs the plant is expected to generate
+	private TickArray ExpectedProduction;	//Expected production. This is the amount of certs the plant is expected to generate and used by the owners to estimate. 
 	
 	public PowerPlant() {}
 	
