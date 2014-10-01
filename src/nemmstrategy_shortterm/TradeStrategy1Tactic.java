@@ -79,7 +79,7 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	private BuyOffer creatBuyOffertwo(double expectedprice, double physicalposition) {
 		BuyOffer ret = new BuyOffer();
 		ret.setbuyoffervol(400); //int in order to only sell integer values of certs.
-		ret.setbuyofferprice((1-discount)*expectedprice); 
+		ret.setbuyofferprice((1-(discount/2))*expectedprice); 
 		if (physicalposition > maxlongpos-(800)) { //400 as its two.
 		ret = null; //If the physical position is larger than maximum physical position than you cannot by more. 
 		} return ret;

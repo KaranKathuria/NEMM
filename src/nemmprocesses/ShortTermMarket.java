@@ -155,7 +155,7 @@ public class ShortTermMarket {
 					supply = supply + s.getnumberofcert();}
 			}
 			diff = Math.abs(demand-supply);
-			if (diff<=mindiff && supply>0 && demand>0) {
+			if (diff<mindiff && supply>0 && demand>0) { //setting < or <= has quite an effect as this implies that prices will be the lowest when if there are several cases with same diff.Nevertheless, when running with "a lot" of agents, this will have a minor effect. 
 				//marketsupply = supply;
 				mindiff = diff;
 				tradedvolume = Math.min(supply, demand);

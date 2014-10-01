@@ -130,6 +130,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		// Utility = 0 - None of the variable offers where bought, hence reduce increase buyoffer next time
 		// Utility <0,1> - Some where expeted, some where not. Try same again.
 		
+		//If I reduce price with one step based on the offer price on last tick and the prices I get is lower than floor --> do the opposit.
 		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && buyoffertwo.getBuyOfferprice() + (deltapricemultiplier*buyoffertwo.getBuyOfferprice()) >= floorroofprice) {
 			pricemultiplier = pricemultiplier - deltapricemultiplier;
 		}

@@ -42,8 +42,13 @@ public class TradeStrategy1 extends GenericStrategy {
 		
 		//Adds four tactics with differen values of discount and premium. This is less sophisticated. 
 		for (int i = 0; i < numberoftactics; ++i) {
-			double randompremium = ((tacticstream.nextDouble())-0.2)/2; // Gives a random number between -0.1 and 0.4
-			double randomdiscount = ((tacticstream.nextDouble())-0.2)/2;
+			double randompremium = ((tacticstream.nextDouble())-0.3)/2; // Gives a random number between -0.1.5 and 0.35
+			double randomdiscount = ((tacticstream.nextDouble())-0.3)/2; //Gives a random number between -0.1.5 and 0.35
+			//Special case ensuring that a trader does not offers a sellprice lower than buy price
+			while ((1+randompremium) < (1-randomdiscount)) {
+				randompremium = randompremium + 0.01;
+				randomdiscount = randomdiscount + 0.01; 
+			}
 			TradeStrategy1Tactic tactic = new TradeStrategy1Tactic(randompremium, randomdiscount, maximumshortpos, maximumlongpos);
 			tactic.setmyStrategy(TradeStrategy1.this);
 			alltactics.add(tactic);

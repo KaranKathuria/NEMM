@@ -64,7 +64,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 @ScheduledMethod(start = 0, priority = 3)
 	public void Distributions() {
 	DistributePowerPlants.distributeallpowerplants();
-	DistributeDemandShares.Uniformdemanddistribution(10, 10);
+	DistributeDemandShares.Uniformdemanddistribution(1, 1);
 	Forcast.initiatevolumeprognosis(); //Set the Company agents analysis agents, volume analysisagents prognosis of demand and production.
 	
 }
@@ -88,6 +88,13 @@ public void monthlymarketschedule() {
 	//Update the analysis agents forecasts. Must run after global values are updated as it uses the array of certprices
 	Forcast.updatevolumeprognosis();
 	Forcast.updatemarketprognosis();
+}
+
+//All obligation periods updates to come below.
+@ScheduledMethod(start = 0, interval = 12, priority = 2)
+public void obligationsperiodshedule() {
+	//Priority 2 means that whenever the tick is 12 (annual tick) this will be ran first. If the priority is the same, the order is random. 
+		TheEnvironment.GlobalValues.annualglobalvalueupdate();
 }
 
 //All annual updates to come below. Currently not in use.
