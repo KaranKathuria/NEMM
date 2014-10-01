@@ -90,8 +90,8 @@ public void monthlymarketschedule() {
 	Forcast.updatemarketprognosis();
 }
 
-//All obligation periods updates to come below.
-@ScheduledMethod(start = 0, interval = AllVariables.obintr, priority = 2)
+//All obligation periods updates to come below. Priority 2 says this is done before the monthlymaret schedual.
+@ScheduledMethod(start = 1, interval = AllVariables.obintr, priority = 2)
 public void obligationsperiodshedule() {
  //Should for each obligations period ending sum up all demand of certificates, calculate the penelty price and "blanked out"
 	//Also calculating the total demand and supply for the period at hand can be "official" news that the volume and market analyss agents can use. 
