@@ -19,11 +19,11 @@ public class AllVariables {
 	
 	//Number of tactics in each of the respective strategies. More tactics gives the agent more alternatives.
 	public static int numberoftacticsBuyStrategy1 = 1;
-	public static int numberoftacticsSellStrategy1 = 1;
+//	public static int numberoftacticsSellStrategy1 = 1;
 	public static int numberoftacticsTraderStrategy1 = 8;
 	public static double OPAgentmustbuypremium = 0.5;
-	public static double PAgentmustselldiscount = 0.5;
-	public static double PAgentmustsellshare = 0.5;//RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
+//	public static double PAgentmustselldiscount = 0.5;
+//	public static double PAgentmustsellshare = 0.5;//RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
 	public static double OPAgentmustsellshare = 0.5; //RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
 	
 	public static double mediumrundpriceexpectations = 220; //2 year expected price. Used by tactics to calculate floor on variable bids. This together with the risk free rate and the agents RAR.
@@ -37,10 +37,22 @@ public class AllVariables {
 	
 	public static double forcastweights[] = {0.2, 0.3, 0.5};
 	
+	// Utilities
 	public static int utilityDefault_PA = 2; // default utility for a purchaser agent
 	public static int utilityDefault_OP = 1; // default utility for a obligated agent
 	public static int utilityDefault_TR = 1; // default utility for a trader agent
 	
+	// Producer Strategies & Tactics
+	// Note - not all of these need be used in any given tactic & strategy
+	public static double multOfferVol_PASellStrategy1 = 2; // default max fraction of that month's production than can be sold in the month
+	public static int tacticDefaultLearn_PASellStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
+	public static double tacticDefaultMustSellShare_PASellStrategy1 = 0.5; // Default must sell share for the producer tactics (if used)
+	public static double tacticDefaultMustSellPriceMult_PASellStrategy1 = 0.5;  // Default must sell price multiplier for the producer tactics (if used)
+	public static double tacticMinRestPriceMult_PASellStrategy1 = 0.5; // Specify the multiplier range
+	public static double tacticMaxRestPriceMult_PASellStrategy1 = 1.5;
+	public static int numTactics_PASellStrategy1 = 11; // The number of tactics to make
+	public static double tacticMinRestPriceStep_PASellStrategy1 = 0.025; // Step size range for the multiplier if learning is used
+	public static double tacticMaxRestPriceStep_PASellStrategy1 = 0.025;
 	
 	//public static double randomfactorinintialstpriceexpectations = X; //Se market prognoisis constructor
 	//public static double randomfactorininmediummrundpriceexpectations = X; //Se market prognoisis constructor //This two could have the same random numer!

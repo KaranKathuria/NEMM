@@ -37,6 +37,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 	// The tactic parameters
 	private double paramMustSellShare;
 	private double paramRestVolPriceMult;
+	private double paramMustSellPriceMult;
 	private SellOffer offerMustSellVol;
 	private SellOffer offerRestVol;
 	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 	
@@ -45,20 +46,25 @@ public class SellStrategy1Tactic extends GenericTactic {
 	SellStrategy1Tactic() {}
 	
 	//Used constructor
-	SellStrategy1Tactic(double sbd, double d) {
+	SellStrategy1Tactic(double multOfferVol, double sbd, double multMustSellPrice, double multRestPrice, int learnID) {
+		// This should not really be here...
+		numberoflearningmethods = 4; //  Learning method IDs are 0 thru 3
 		// These are set in the constructor only
 		paramMustSellShare = sbd;
-		paramRestVolPriceMult = 1+d;
-		paramLearningMethod = 1; // Default learning method ID is 1
-		numberoflearningmethods = 4; //  Learning method IDs are 0 thru 3
-		tacticutilityscore = 0.5; //To ensure no change the frist tick
-		maxoffervolumemultiplier = 2; //Indicates how much the maximum offer volume compared is to last ticks production.
+		paramMustSellPriceMult = multMustSellPrice;
+		paramRestVolPriceMult = multRestPrice;
+		paramLearningMethod = learnID; // Default learning method ID is 1
+		if (learnID < 0 || learnID > numberoflearningmethods-1) {
+			paramLearningMethod = 0; // default is no learning
+		}
+		tacticutilityscore = 0.5; //To ensure no change the first tick
+		maxoffervolumemultiplier = multOfferVol; //Indicates how much the maximum offer volume compared is to last ticks production.
 	}
 	
 	private SellOffer createMustSellVolOffer(double expectedprice, double physicalposition,double lasttickproduction) {
 		SellOffer ret = new SellOffer();
 		ret.setselloffervol(Math.max(paramMustSellShare*lasttickproduction,physicalposition-maxppvolume)); //equals must sell
-		ret.setsellofferprice((1-AllVariables.PAgentmustselldiscount)*expectedprice);
+		ret.setsellofferprice(paramMustSellPriceMult*expectedprice);
 		if (lasttickproduction == 0) {
 			ret = null;
 		}
@@ -140,6 +146,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 			
 	}
 	private void learningMethod1() {
+		// NOTE: This learning method only makes sense for [0,1] utility functions
 		// Update the % of expected price for the rest volume
 		// Utility = 1 - All variable offers where expeted thus try to sell at a higher price
 		// Utility = 0 - None of the variable offers where sold, thus try to sell at a lower price
@@ -228,8 +235,8 @@ public class SellStrategy1Tactic extends GenericTactic {
 // A decline in utility - we adjust the price multiplier delta in the opposite direction as last time
 //Unchanged utility --> Do the same as last time, which to start wiht is to reduce price.
 	
-int diffmultUtility; //Retning på utility
-int diffmultDelta;	//Retning på pris fra forrige forrige gang til forrige gang. 
+int diffmultUtility; //Retning pï¿½ utility
+int diffmultDelta;	//Retning pï¿½ pris fra forrige forrige gang til forrige gang. 
 double priceMultDelta;
 // Utility comparison		
 if (tacticutilityscore-paramOLDUtilityScore >= 0) {
