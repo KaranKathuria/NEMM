@@ -60,7 +60,9 @@ public class CompanyAgent extends ParentAgent {
 				activeagenttypename = "ProducerAgent";
 				physicalnetposition = 1000;
 				lasttickproduction = 1000;
-				utilitymethod = new PAUtilityMethod();
+				// here we need a way to have different utilities
+				// currently hard coded to the default
+				utilitymethod = new PAUtilityMethod(nemmcommons.AllVariables.utilityDefault_PA);
 				SellStrategy1 sellstrategy = new SellStrategy1();
 				sellstrategy.setmyAgent(ActiveAgent.this);
 				allstrategies.add(sellstrategy);
@@ -70,7 +72,9 @@ public class CompanyAgent extends ParentAgent {
 				activeagenttypename = "ObligatedPurchaserAgent";
 				physicalnetposition = -1000;
 				lasttickdemand = -1000;
-				utilitymethod = new OPAUtilityMethod();
+				// here we need a way to have different utilities
+				// currently hard coded to the default
+				utilitymethod = new OPAUtilityMethod(nemmcommons.AllVariables.utilityDefault_OP);
 				BuyStrategy1 buystrategy = new BuyStrategy1();
 				buystrategy.setmyAgent(ActiveAgent.this);
 				allstrategies.add(buystrategy);
@@ -79,7 +83,9 @@ public class CompanyAgent extends ParentAgent {
 			} else { //Notice that else is all other added as Trader agents. This is okey for now but should call an expetion later. 
 				activeagenttypename = "TraderAgent";
 				physicalnetposition = 0;
-				utilitymethod = new TAUtilityMethod();
+				// here we need a way to have different utilities
+				// currently hard coded to the default
+				utilitymethod = new TAUtilityMethod(nemmcommons.AllVariables.utilityDefault_TR);
 				TradeStrategy1 tradestrategy = new TradeStrategy1();
 				tradestrategy.setmyAgent(ActiveAgent.this);
 				allstrategies.add(tradestrategy);

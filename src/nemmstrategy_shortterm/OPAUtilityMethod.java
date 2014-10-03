@@ -18,7 +18,17 @@ import nemmprocesses.UpdatePhysicalPosition;
 //Class definition
 public class OPAUtilityMethod extends GenericUtilityMethod{
 
-	public OPAUtilityMethod() {
+	// Class level variables
+	private int flagUtilityFunction;
+	
+	
+	// Constructor
+	public OPAUtilityMethod(int functionFlag) {
+		if (functionFlag < 1 || functionFlag > 2){
+			throw new IllegalArgumentException("DEBUG: Illegal flagUtilityFunction in OPAUtilityMethod. Val = " + functionFlag);
+		}
+		flagUtilityFunction = functionFlag;
+
 	}
 	
 	//Takes in the given values and calculates the producers utility based on how much of the offered volume at variable price (all bids without must buy bid) he managed to sell.

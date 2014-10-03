@@ -16,9 +16,17 @@ import nemmstrategy_shortterm.SoldInSTM;
 
 //Class definition
 public class TAUtilityMethod extends GenericUtilityMethod{
+	
+	// Class level variables
+	private int flagUtilityFunction;
 
-	public TAUtilityMethod() {
-		
+	// Constructor
+	public TAUtilityMethod(int functionFlag) {
+		if (functionFlag < 1 || functionFlag > 2){
+			throw new IllegalArgumentException("DEBUG: Illegal flagUtilityFunction in TAUtilityMethod. Val = " + functionFlag);
+		}
+		flagUtilityFunction = functionFlag;
+
 	}
 	
 	//Calculates the traders tactic utilities. Overrides the GenericUtilityMethods methods. 

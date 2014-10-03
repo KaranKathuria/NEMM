@@ -37,6 +37,11 @@ public class AllVariables {
 	
 	public static double forcastweights[] = {0.2, 0.3, 0.5};
 	
+	public static int utilityDefault_PA = 2; // default utility for a purchaser agent
+	public static int utilityDefault_OP = 1; // default utility for a obligated agent
+	public static int utilityDefault_TR = 1; // default utility for a trader agent
+	
+	
 	//public static double randomfactorinintialstpriceexpectations = X; //Se market prognoisis constructor
 	//public static double randomfactorininmediummrundpriceexpectations = X; //Se market prognoisis constructor //This two could have the same random numer!
 	
