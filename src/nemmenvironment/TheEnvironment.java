@@ -34,6 +34,7 @@ public final class TheEnvironment {
 	public static void InitEnvironment(){
 		// Create & set up the time calendar and create the lists
 		// to hold the plants, companies, and regions
+		inputreader.ReadExcel.InitReadExcel();
 		inputreader.ReadExcel.ReadCreateTime();
 		allPowerPlants = new ArrayList<PowerPlant>() ;
 		allRegions = new ArrayList<Region>() ;	

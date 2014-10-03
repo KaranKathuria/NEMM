@@ -42,17 +42,19 @@ public class ReadExcel {
  private static int numobpdinyear;
  private static int numtrpdinyear;
  private static PowerPlant[] plants;
+ private static String filePath;
  
 
+ 	public static void InitReadExcel() {
+ 		filePath = working_directory + File.separator + "NEMM_testdata_20.xls"; 
+ 	}
+ 
 	public static void ReadExcel() {}
 	
 	public static void ReadCreateTime() {
-		
-		//Finds file and starts reading
-		String file_path = working_directory + File.separator + "NEMM_testdata_20.xls";  
-		
+				
 		try{      
-			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(file_path));	
+			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(filePath));	
 			
 			// Read number of plants and technologies
 			HSSFSheet ctr_sheet = workbook.getSheet("Control");
@@ -73,12 +75,9 @@ public class ReadExcel {
 	}
 			
 	public static void ReadRegions() {
-		
-		//Finds file and starts reading
-		String file_path = working_directory + "\\NEMM_testdata_20.xls";  
-		
+				
 		try{      
-			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(file_path));	
+			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(filePath));	
 			
 			// Read number of plants and technologies
 			HSSFSheet ctr_sheet = workbook.getSheet("Control");
@@ -125,12 +124,9 @@ public class ReadExcel {
 	}
 		
 		public static void ReadPowerPlants() {
-			
-			//Finds file and starts reading
-			String file_path = working_directory + "\\NEMM_testdata_20.xls";  
-			
+						
 			try{      	
-				HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(file_path));	
+				HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(filePath));	
 	
 				// Read plant data
 				HSSFSheet plant_sheet = workbook.getSheet("PowerPlants");	   
