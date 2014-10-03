@@ -21,6 +21,8 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellValue;
+
+import java.io.File;
 import java.io.FileInputStream;
 import java.nio.file.Paths;
 //HSSF documentation at https://poi.apache.org/apidocs/
@@ -47,7 +49,7 @@ public class ReadExcel {
 	public static void ReadCreateTime() {
 		
 		//Finds file and starts reading
-		String file_path = working_directory + "\\NEMM_testdata_20.xls";  
+		String file_path = working_directory + File.separator + "NEMM_testdata_20.xls";  
 		
 		try{      
 			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(file_path));	
