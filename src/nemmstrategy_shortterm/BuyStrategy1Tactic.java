@@ -105,6 +105,15 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		historictacticvalues.add(a);
 	}
 	
+	// GJB Added 6oct14
+	public void UpdateUtilityScore() {
+	//Use the agents utilitymethod to calculate each tactics utility
+		double temputilityscore = myStrategy.myAgent.getutilitymethod().calculateutility(ShortTermMarket.getcurrentmarketprice(), gettacticbuyoffers(), gettacticselloffers(), ShortTermMarket.getshareofmarignaloffersold(), ShortTermMarket.getshareofmarignalofferbought());
+	//Updates that tactics utility
+		updatetacticutilityscore(temputilityscore);
+	}
+	// --End GJB Added
+	
 	public BuyOffer getbuyofferone() {
 		return buyofferone;}
 	
@@ -174,8 +183,8 @@ public class BuyStrategy1Tactic extends GenericTactic {
 //private double paramOLDUtilityScore;
 
 /*
-int diffmultUtility; //Retning på utility
-int diffmultDelta;	//Retning på pris fra forrige forrige gang til forrige gang. 
+int diffmultUtility; //Retning pï¿½ utility
+int diffmultDelta;	//Retning pï¿½ pris fra forrige forrige gang til forrige gang. 
 double deltapricemultipier;
 // Utility comparison		
 if (tacticutilityscore-paramOLDUtilityScore >= 0) { //Unchanged utility is positive change. 

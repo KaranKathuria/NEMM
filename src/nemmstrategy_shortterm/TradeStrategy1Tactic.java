@@ -13,6 +13,7 @@ import repast.simphony.engine.environment.RunEnvironment;
 import nemmagents.ParentAgent;
 import nemmcommons.AllVariables;
 import nemmenvironment.TheEnvironment;
+import nemmprocesses.ShortTermMarket;
 import nemmstrategy_shortterm.GenericTactic.HistoricTacticValue;
 import nemmstrategy_shortterm.SellOffer;
 import nemmtime.NemmCalendar;
@@ -125,6 +126,16 @@ public class TradeStrategy1Tactic extends GenericTactic {
 		a.tickID = TheEnvironment.theCalendar.getCurrentTick();
 		historictacticvalues.add(a);
 	}
+	
+	// GJB Added 6oct14
+	public void UpdateUtilityScore() {
+	//Use the agents utilitymethod to calculate each tactics utility
+		double temputilityscore = myStrategy.myAgent.getutilitymethod().calculateutility(ShortTermMarket.getcurrentmarketprice(), gettacticbuyoffers(), gettacticselloffers(), ShortTermMarket.getshareofmarignaloffersold(), ShortTermMarket.getshareofmarignalofferbought());
+	//Updates that tactics utility
+		updatetacticutilityscore(temputilityscore);
+	}
+	// --End GJB Added
+
 	
 	public SellOffer getsellofferone() {
 		return sellofferone;}

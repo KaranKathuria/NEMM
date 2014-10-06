@@ -30,9 +30,10 @@ public class UtilitiesStrategiesTactics {
 				for (GenericTactic tactic : strategy.getalltactics()) { 
 					double totalutilityscore = 0;
 					//Use the agents utilitymethod to calculate each tactics utility
-					temputilityscore = agent.getutilitymethod().calculateutility(ShortTermMarket.getcurrentmarketprice(), tactic.gettacticbuyoffers(), tactic.gettacticselloffers(), ShortTermMarket.getshareofmarignaloffersold(), ShortTermMarket.getshareofmarignalofferbought());
+//					temputilityscore = agent.getutilitymethod().calculateutility(ShortTermMarket.getcurrentmarketprice(), tactic.gettacticbuyoffers(), tactic.gettacticselloffers(), ShortTermMarket.getshareofmarignaloffersold(), ShortTermMarket.getshareofmarignalofferbought());
 					//Updates that tactics utility
-					tactic.updatetacticutilityscore(temputilityscore);
+//					tactic.updatetacticutilityscore(temputilityscore);
+					tactic.UpdateUtilityScore();
 					//Adds the tactics new current buy/sell-offers and utility to the tactichistoricvalues arrays.
 					tactic.addtactichistory(); 
 					//Updates the strategies best tactic based on which of that strategies tactics has the highest score. 

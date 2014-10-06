@@ -101,7 +101,10 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 				// There is a sell offer, so we need to calculate the new utility measures
 				
 				// Initialise the utilities to be the previous values
-				tmpArray = s.get(i).getOfferUtility().clone();
+				tmpArray = null;
+				if(s.get(i).getOfferUtility()!=null){
+					tmpArray = s.get(i).getOfferUtility().clone();
+				}				
 				// Calculate the new utility if there was an offer made.
 				// If not offer was made, we just keep the previous utility
 				curOfferVol = s.get(i).getnumberofcert(); 

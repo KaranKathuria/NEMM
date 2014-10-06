@@ -85,7 +85,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		double mustsell = (Math.max(paramMustSellShare*lasttickproduction, physicalposition-maxppvolume));
 		SellOffer ret = new SellOffer();
 		ret.setselloffervol(Math.max(0.0,Math.min(maxoffervolume-mustsell,physicalposition-mustsell))); //rest of the monthly production sold at expected price.
-		ret.setsellofferprice(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice)); //Prices unsymetrically around expected price with must of the volume tried sold at at premium (1+discount)*expt.
+		ret.setsellofferprice(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice)); //Prices not symmetric around expected price with must of the volume tried sold at at premium (1+discount)*expt.
 		if (physicalposition == 0) {
 			ret = null;
 		}
@@ -156,19 +156,28 @@ public class SellStrategy1Tactic extends GenericTactic {
 		// If there is no sell offer (it is null) then we skip this
 		for(i = 0; i<numBids; i++) {
 			if(tacticselloffers.get(i) != null) {
-				tacticselloffers.get(i).setOfferUtility(curUtility.get(i).clone());
+				if(curUtility.get(i)!=null){
+					tacticselloffers.get(i).setOfferUtility(curUtility.get(i).clone());
+				}
+				else {
+					tacticselloffers.get(i).setOfferUtility(null);
+				}
+					
 			}
 		}
 
 		// Calculate the utility using the utility function for the agent
 		
 		 retUtility = myStrategy.myAgent.getutilitymethod().CalcUtilityWithHistory(ShortTermMarket.getcurrentmarketprice(), tacticselloffers, ShortTermMarket.getshareofmarignaloffersold());
-
-
+		 // Check that retUtility is returned with size = numBids
+		if(retUtility.size()!=numBids) {
+				throw new IllegalArgumentException("DEBUG(UpdateUtilityScore: Returned utility not expected size");
+		}
+		 
 		// store the returned utility if there is an offer and a non-null utility returned, otherwise just keep the 
 		// existing utility	
 		for(i = 0; i<numBids; i++) {
-			if(tacticselloffers.get(i) != null && curUtility.get(i) != null) {
+			if(tacticselloffers.get(i) != null && retUtility.get(i) != null) {
 				curUtility.set(i, retUtility.get(i).clone());
 			}
 		}
