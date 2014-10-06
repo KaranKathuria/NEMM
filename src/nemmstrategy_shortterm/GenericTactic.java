@@ -67,6 +67,10 @@ public class GenericTactic {
 	public void setdeltapricemultiplier(double t) {
 		deltapricemultiplier = t;
 	}
+	public void UpdateUtilityScore() {
+		// Code to update the tactic's utility value
+	}
+	
 	private void parameterLearning() {}; // GJB LEARNING
 //	public double gettacticutilityscore() {return tacticutilityscore;}
 	public ArrayList<HistoricTacticValue> gethistorictacticvalues() {

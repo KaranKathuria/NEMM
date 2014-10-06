@@ -41,6 +41,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 	private SellOffer offerMustSellVol;
 	private SellOffer offerRestVol;
 	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 	
+	private ArrayList<double[]> curUtility; // stores the utilities for the latest offers
 	
     //Default constructor.
 	SellStrategy1Tactic() {}
@@ -59,6 +60,14 @@ public class SellStrategy1Tactic extends GenericTactic {
 		}
 		tacticutilityscore = 0.5; //To ensure no change the first tick
 		maxoffervolumemultiplier = multOfferVol; //Indicates how much the maximum offer volume compared is to last ticks production.
+		// Create the curUtility array list to store utilities
+		// The first item is the utility info for the must sell
+		// The second item is the utility infor for the rest volume
+		// The utilities are set to new arrays of length 3 - this is just temporary as they will
+		// be replaced by the utility function if they are required
+		curUtility = new ArrayList<double[]>();
+		curUtility.add(null);
+		curUtility.add(null);
 	}
 	
 	private SellOffer createMustSellVolOffer(double expectedprice, double physicalposition,double lasttickproduction) {
@@ -131,6 +140,51 @@ public class SellStrategy1Tactic extends GenericTactic {
 	public ArrayList<SellOffer> gettacticselloffers() {
 		return tacticselloffers;}
 
+	public void UpdateUtilityScore() {
+		
+		ArrayList<double[]> retUtility;
+		int i;
+		int numBids;
+		
+		// Check that the tacticselloffers and the utility arraylists are the same size
+		if(tacticselloffers.size()!=curUtility.size()) {
+			throw new IllegalArgumentException("DEBUG(UpdateUtilityScore: tacticseloffers and curUtility are different sizes.");
+		}
+		numBids = tacticselloffers.size();
+		// Append the utility to the current sell offers
+		// Am using clone so that we get a copy, not a reference
+		// If there is no sell offer (it is null) then we skip this
+		for(i = 0; i<numBids; i++) {
+			if(tacticselloffers.get(i) != null) {
+				tacticselloffers.get(i).setOfferUtility(curUtility.get(i).clone());
+			}
+		}
+
+		// Calculate the utility using the utility function for the agent
+		
+		 retUtility = myStrategy.myAgent.getutilitymethod().CalcUtilityWithHistory(ShortTermMarket.getcurrentmarketprice(), tacticselloffers, ShortTermMarket.getshareofmarignaloffersold());
+
+
+		// store the returned utility if there is an offer and a non-null utility returned, otherwise just keep the 
+		// existing utility	
+		for(i = 0; i<numBids; i++) {
+			if(tacticselloffers.get(i) != null && curUtility.get(i) != null) {
+				curUtility.set(i, retUtility.get(i).clone());
+			}
+		}
+		
+		// Save the total utility score for the set of offers (use the first item in the utility arrays)
+		// Note: the default if all utilities are null (this can occur if there have been no bids so far) is 0
+		double calcUtil = 0.0;
+		for(i = 0; i<numBids; i++) {
+			if(curUtility.get(i)!=null) {
+				calcUtil = calcUtil + curUtility.get(i)[0];
+			}		
+		}
+		// Update
+		updatetacticutilityscore(calcUtil);
+	}
+	
 	
 	private void parameterLearning() {
 		// Call the appropriate learning method

@@ -22,8 +22,7 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 	
 	// Specific variables used for utility 2 (expected return)
 	private double alpha;
-	private double expectedProfit;
-	private double expectedActivation;
+
 	private int flagFirstPd; // the first period has special rules for setting expectedProfit and expectedActivation
 
 	// Constructor
@@ -37,96 +36,119 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 				// No specific initialisation required
 			case 2:
 				alpha = 0.5;
-				expectedProfit = 0;
-				expectedActivation = 0;
 				flagFirstPd = 1;
 		}
 	}
+
+	public ArrayList<double[]> CalcUtilityWithHistory(double marketprice, ArrayList<SellOffer> s, double shareofmarginaltoffersold) {
+		
+		ArrayList<double[]> retList = new ArrayList<double[]>();
+		double retVal = 0;
+		switch (flagUtilityFunction){
+		case 1:
+			
+			retVal = UtilFctn_VolOnly( marketprice, s, shareofmarginaltoffersold);
+			double[] retArray = new double[1];
+			retArray[0] = retVal;
+			for(int i=0;i<s.size();i++){
+				if(i==0) {
+					retList.add(retArray);
+				}
+				else {
+					retList.add(null);
+				}
+			}			
+
+		case 2:
+			retList = UtilFctn_ExpReturn( marketprice, s, shareofmarginaltoffersold);	
+		}
+		return retList;
+	}	
+	
 	
 	public Double calculateutility(double marketprice, ArrayList<BuyOffer> b, ArrayList<SellOffer> s, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
 	
 		double retVal = 0;
 		switch (flagUtilityFunction){
 		case 1:
-			retVal = UtilFctn_VolOnly( marketprice, b, s, shareofmarginaltoffersold, shareofmarginalofferbought);
+			retVal = UtilFctn_VolOnly( marketprice, s, shareofmarginaltoffersold);
 		case 2:
-			retVal = UtilFctn_ExpReturn( marketprice, s, shareofmarginaltoffersold);
+			retVal = 0.0; // should not be using this function if you want the expected return utility
 			
 		}
 		return retVal;
 	}
 	
-	private Double UtilFctn_ExpReturn(double priceSpot, ArrayList<SellOffer> s, double shareofmarginaltoffersold) {
+	private ArrayList<double[]> UtilFctn_ExpReturn(double priceSpot, ArrayList<SellOffer> s, double shareofmarginaltoffersold) {
 
-		double retVal = 0;
 		double curProfit = 0;
 		double curActivation = 0;
-		double curTotVolSold = 0;
-		double curTotVolOffered = 0;
 		double curOfferVol = 0;
 		double curOfferPrice = 0;
 		double curOfferSold = 0;
-
-		s.removeAll(Collections.singleton(null)); //removes null bids (should not be the case, but...)
-
-		// Calculate the profit and activation for the current period
-
-		if (s.size() == 0) { //In this case there are no bids at all (which could be because the PA has no volume to offer)
-			curProfit = expectedProfit;
-			curActivation = expectedActivation;}
-		else {
-			//Sorts offers form lowest to highest price. The first bid is hence the must sell bid
-			Collections.sort(s, new CommonMethods.customselloffercomparator()); 
-			
-			for (int i = 0; i < s.size(); ++i) { //Skips the first bid as this is must sell bid
-				// Note: this code can be streamlined, but I have written it so it is easy to understand
-				// get the offer volume and price
-				curOfferVol = s.get(i).getnumberofcert(); 
-				curOfferPrice = s.get(i).getSellOfferprice();
-				// update the total volume offered
-				curTotVolOffered = curTotVolOffered + curOfferVol; 
-				// Calc volume sold from the offer if offer price <= market price
-				if (curOfferPrice<priceSpot){
-					curOfferSold = curOfferVol;
-				}
-				else if (curOfferPrice == priceSpot) {
-					curOfferSold = curOfferVol*shareofmarginaltoffersold;
-				}
-				else {
-					curOfferSold = 0;
-				}
-				curTotVolSold = curTotVolSold + curOfferSold;
-				curProfit = curProfit + curOfferSold*curOfferPrice;
-			}
-			// Set the activation, and catch divide by 0
-			if (curTotVolOffered > 0) {
-				curActivation = curTotVolSold/curTotVolOffered;
-			}
-			else {
-				curActivation = expectedActivation;
-			}	
-			// If this is the first period where a bid has been placed, then set the expected values to
-			// the current period values (i.e. we always start assuming expected = actual in the first period)
-			if (flagFirstPd == 1) {
-				expectedActivation = curActivation;
-				expectedProfit = curProfit;
-				// set flag to 0, as we only do this once
-				flagFirstPd = 0;
-			}
+		
+		ArrayList<double[]> retList = new ArrayList<double[]>();
+		double[] tmpArray;
+		int i;
+		
+		// Initialise the return array list with null objects.
+		for ( i=0;i<s.size();i++) {
+			retList.add(null);
 		}
 		
-		// Calculate the expected profit and activation for the next period
-			expectedProfit = expectedProfit + alpha*(curProfit - expectedProfit);
-			expectedActivation = expectedActivation + alpha*(curActivation - expectedActivation);
-			
-		// Calculate and return the utility
-		retVal = expectedProfit*expectedActivation;
-		return retVal;
+		for ( i=0;i<s.size();i++) {
+			if(s.get(i) != null) {
+				// There is a sell offer, so we need to calculate the new utility measures
+				
+				// Initialise the utilities to be the previous values
+				tmpArray = s.get(i).getOfferUtility().clone();
+				// Calculate the new utility if there was an offer made.
+				// If not offer was made, we just keep the previous utility
+				curOfferVol = s.get(i).getnumberofcert(); 
+				curOfferPrice = s.get(i).getSellOfferprice();
+				if (curOfferVol > 0) {
+					// Calculate the volume sold from the offer if an offer was made (vol >0)
+					if (curOfferPrice<priceSpot){
+						curOfferSold = curOfferVol;
+					}
+					else if (curOfferPrice == priceSpot) {
+						curOfferSold = curOfferVol*shareofmarginaltoffersold;
+					}
+					else {
+						curOfferSold = 0;
+					}
+					curProfit = curOfferSold*curOfferPrice; // Profit
+					curActivation = curOfferSold/curOfferVol; // Activation
+					// Exponential smoothing
+					if (tmpArray != null) {
+						tmpArray[1] = tmpArray[1] + alpha*(curProfit-tmpArray[1]); // Profit
+						tmpArray[2] = tmpArray[2] + alpha*(curActivation-tmpArray[2]); // Activation
+						tmpArray[0] = tmpArray[1]*tmpArray[2]; // Return						
+					}
+					else {
+						// This will occur if there has been no utility set for this sell offer as yet
+						// In this case, we will simply set the utilities to be the current offer's profit
+						// and activation and return
+						tmpArray = new double[3];
+						tmpArray[1] = curProfit;
+						tmpArray[2] = curActivation;
+						tmpArray[0] = tmpArray[1]*tmpArray[2];
+					}
+						
+
+				}
+				// Add a copy of the result to the return ArrayList. We use a copy here because
+				// we will re-use the tmpArray object
+				retList.set(i,tmpArray.clone());
+			}
+				
+		}
+		return retList;
 		
 	}
 	
 	//Takes in the given values and calculates the producers utility just based on how much of the variable sell offers are accepted in the short term market.
-	private Double UtilFctn_VolOnly(double marketprice, ArrayList<BuyOffer> b, ArrayList<SellOffer> s, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
+	private Double UtilFctn_VolOnly(double marketprice, ArrayList<SellOffer> s, double shareofmarginaltoffersold) {
 		
 		double variableoffervolume = 0; //Offered volume at variable price. This is the sum of all offers but not the must sell offer (lowest priced offer)
 		double totalsoldcerts = 0;	//Total number of certs sold
