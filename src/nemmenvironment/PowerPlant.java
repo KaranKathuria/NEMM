@@ -24,6 +24,8 @@ public class PowerPlant {
 	private double capex;
 	private double opex;
 	private double annualcostreduction;		//Annual rate of cost reduction due to technology improvment. 
+	private double LRMC; 					//Long rund marginal cost for this powerplant build at a given year. This is update for each annual update. 
+	
 	private TickArray myProduction; 		//Future production (good given).
 	private TickArray ExpectedProduction;	//Expected production. This is the amount of certs the plant is expected to generate and used by the owners to estimate. 
 	
