@@ -17,21 +17,33 @@ import nemmprocesses.ShortTermMarket;
 //Class definitions. Note that this is a  class as all its member variables are .
 public class MarketPrognosis {
 	
-	private double forcastweights[] = AllVariables.forcastweights;
+	private double forcastweights[];// = AllVariables.forcastweights;
 	private double stpriceexpectation;
 	
 	private double mediumrunpriceexpectations; //2 years
 	private double longrunpriceexpectatations; //10 years
 	
-	private TickArray expectedcertificateprice;  //Tick array of all expected at the tick before the forcasted tick. 
-	private TickArray expectedcertificatedemand; //world total, not per plant
-	private TickArray expectedpowerpricenorway;
-	private TickArray expectedpowerpricesweden;
+	private TickArray expectedcertificateprice;  //Tick array contaning history of what price where expected for the next tick. Could be used later to evaluate the STM-strategy.
+	private TickArray expectedcertificatedemand; //Total certificate demand for each tick in the simulation. 
+	private TickArray expectedpowerpricenorway; // Expected power price in Norway. Only point of having this Tick Array is if this differs from the one given in the Environment. 
+	private TickArray expectedpowerpricesweden; // Expected power price in Sweden. Only point of having this Tick Array is if this differs from the one given in the Environment.
 
 	//Methods
 	public MarketPrognosis() {
 		if (TheEnvironment.allRegions.size()>2) {
 			throw new IllegalArgumentException("MarketPrognisis object does not currently handle more than two regions");}
+		
+		// Randomly setting the forcastweights. Notice the range for w1 can be altered to ensure a logical front-wheighted average. 
+		// Later a market prognosis could have multiple forcastweights forcasting the next tick price. These forcasted prices could than be measured against the outcome to score them accoriding to 
+		// how well they preform. THe more multiple forecast weights the market prognosis would have, the bigger is the chance for forcasting the right price, hence the number of such forcast-weights array 
+		// could be used as a parameter for how "advanced" the analysisagents short term market prognosis would be. 
+		
+		double w3 = RandomHelper.nextDoubleFromTo(0.0, 1); 
+		forcastweights[2] = w3;  //weight used for the previous price
+		double w2 = RandomHelper.nextDoubleFromTo(0.0,(1-w3));  
+		forcastweights[1] = w2; //weight used for the current tick - 2 price ...
+		double w1 = 1-w2-w3;
+		forcastweights[0] = w1;
 		
 		stpriceexpectation = ParameterWrapper.getpriceexpectation() * RandomHelper.nextDoubleFromTo(1, 1); //Random
 		mediumrunpriceexpectations =  AllVariables.mediumrundpriceexpectations * RandomHelper.nextDoubleFromTo(1,1); //Random
@@ -39,23 +51,18 @@ public class MarketPrognosis {
 		expectedcertificateprice = new TickArray(); 
 		expectedcertificatedemand = new TickArray();
 		expectedpowerpricenorway = new TickArray();
-		expectedpowerpricesweden = new TickArray();
-		
-		
-		expectedcertificateprice.setElement(stpriceexpectation, 0); //The first arrayvalue is given by the parametervalue
-		
+		expectedpowerpricesweden = new TickArray();		
+		expectedcertificateprice.setElement(stpriceexpectation, 0);
 		//Sets the MarketPrognosis expected certificatedemand and power price to what actually will be the world certificate demand (perfect foresight).
 		for (int i = 0; i < TheEnvironment.theCalendar.getNumTicks(); ++i) {
 			double tempworlddemand = TheEnvironment.allRegions.get(0).getMyDemand().getCertDemand(i) + TheEnvironment.allRegions.get(1).getMyDemand().getCertDemand(i);
-			
 			// Cert demand, power demand in Norway and Sweden
 			expectedcertificatedemand.setElement(tempworlddemand, i);
 			expectedpowerpricenorway.setElement(TheEnvironment.allRegions.get(0).getMyPowerPrice().getValue(i), i);
-			expectedpowerpricesweden.setElement(TheEnvironment.allRegions.get(1).getMyPowerPrice().getValue(i), i);
-		}
-		
+			expectedpowerpricesweden.setElement(TheEnvironment.allRegions.get(1).getMyPowerPrice().getValue(i), i);}	
 			
-}	//THis method is called by its market analysis agent and updates the market prognosis. This is done at the end of each tick (Forcast)
+}	
+	// The following method updates the STM price expectation for the next tick based on the forecast weights. Called each tick (through Forcast) and updates the market prognosis.
 	public void updatemarketprognosis() {
 		double nexttickcertprice;
 		int numberhistoricprices = TheEnvironment.theCalendar.getCurrentTick() + 1;
@@ -67,10 +74,12 @@ public class MarketPrognosis {
 		}
 		this.setstpriceexpectation(nexttickcertprice);
 		this.setExpectedcertificateprice(nexttickcertprice, curtick+1);
-		
-		//A sectrion where the two years a head price is updated could be added later
-		
 	}
+	
+	public void updatefunamentalmarketprognosis() {
+		// Updates the 
+	}
+	
 	
 	
 //Get and set methods
