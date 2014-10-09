@@ -10,13 +10,21 @@ import nemmtime.NemmTime;
 
 public class PowerPlant {
 
+	private String name;
+	private Region myRegion;
+	private CompanyAgent myCompany;			//Belonging CompanyAgent for both the developer and the Producer reciving the power plant when in operation (status=1).
+	private int status; 					//Integer indicating which status the project/powerplant is in (1=in operation, 2=under construction, 3=waiting investment decision, 4=in process, 5=identifyed, 6=generic)
 	private int capacity;
 	private double loadfactor;
-	private String name;
-	private int technologyid; //Technology could also be a object/class in itself later if needed
-	private Region myRegion;
-	private CompanyAgent myCompany;
-	private TickArray myProduction; //Real pregenerated (good given) future production. This is what generates certificates
+	private int technologyid; 				//Technology could also be a object/class in itself later if needed
+	private int lifetime; 					//Number of years expected as lifetime for project, that is even without certs. For Powerpland part of "overgangsordningen", the year indicates when they are out of the scheme.
+	
+	private int startyear;					//If the Powerplant is in operation when simulation is ran, this indicates when it is put in operation. If 0, the start is endogenous in the model
+	private int earlieststartyear;			//Given for all real projects (those identifyd).
+	private double capex;
+	private double opex;
+	private double annualcostreduction;		//Annual rate of cost reduction due to technology improvment. 
+	private TickArray myProduction; 		//Future production (good given).
 	private TickArray ExpectedProduction;	//Expected production. This is the amount of certs the plant is expected to generate and used by the owners to estimate. 
 	
 	public PowerPlant() {}
