@@ -15,6 +15,8 @@ public class FundamentalMarketAnalysis {
 	
 	//List containing all the fundamental price for the years ahead.
 	private ArrayList<Double> equilibriumpricesyearsahead = new ArrayList<Double>();
+	private double certificatebalance;																				//Certbalance at end of given year.
+	private double annualproductionnewplants;																		//Annual production from plants not with status=1 at iteration start.
 	
 	//In order to preform a fundamental market analysis (with perfect foresight) for all years ahead. A copy of all projects are needed.
 	//public static ArrayList<PowerPlant> projectsunderconstruction_copy = new ArrayList<PowerPlant>();				//PowerPlants currently under construction. Not needed as they are already decided.
@@ -41,28 +43,46 @@ public class FundamentalMarketAnalysis {
 		
 		//Calcuations begin
 		int currenttick = TheEnvironment.theCalendar.getCurrentTick();
-		int numberofyears = 2035 - /*currentyear */ + 1;
+		int currentyear = 2012 /*currentyear */;
+		int numberofyears = 2035 - currentyear + 1;
 		int numberofticksinyear = TheEnvironment.theCalendar.getNumTradePdsInYear();
 		
-	for (int i = 0; i < numberofyears; ++i ) {
+	
+		certificatebalance = TheEnvironment.GlobalValues.totalmarketphysicalposition; 							//Based on balance from previous year.
+		annualproductionnewplants = 0;																			//Based simply on LF and Capacity
 		
+		for (int i = 0; i < numberofyears; ++i ) {
 		
-		
-		
-		
-		
-		//for each year. Calculate total demand. Take total bank + total production from existing plants and production from plants 
-		double totaldemand = 0;
+		//For the years before the endogenous projects can be build. Only nesissary due to correct certificatebalane at year = current year + 3.
+			if (i < 3) {
+		//Get total demand for given year. 
+		double totalannudemand = 0;
 		for (Region R : TheEnvironment.allRegions) {															//All regions
 			for (int j = 0; j < numberofticksinyear; j++) { 													//All ticks in a year			
-			totaldemand = totaldemand + R.getMyDemand().getCertDemand(currenttick+(numberofticksinyear*i)+j); } //TheEnvironment.theCalendar.getCurrentTick()+1;
+			totalannudemand = totalannudemand + R.getMyDemand().getCertDemand(currenttick+(numberofticksinyear*i)+j); } //TheEnvironment.theCalendar.getCurrentTick()+1;
 		}
-			double totalbankandcertproduction = TheEnvironment.GlobalValues.totalmarketphysicalposition; 			//This provides the totalmarket minus or pluss at end of previous tick.
+		//Get total production from plants i operation at start, for this year.
+			double totalannucertproduction = 0;																	
 		for (PowerPlant PP : TheEnvironment.allPowerPlants) { 													//All operational PP
 			for (int j = 0; j < numberofticksinyear; j++) { 													//All ticks in a year
-			totalbankandcertproduction = totalbankandcertproduction + PP.getProduction(currenttick+(numberofticksinyear*i)+j);} //Starting at year i. 
+				totalannucertproduction = totalannucertproduction + PP.getProduction(currenttick+(numberofticksinyear*i)+j);} //Starting at year i. 
 			}
 		
+		//Get and updates the annual production from the plants in process. Notie that LF * Capacity (hence normal year) is used. The same should might be used for existing plants.
+		for (PowerPlant PP : TheEnvironment.projectinprocess) {
+			if (PP.getstartyear() == currentyear+i) {
+				annualproductionnewplants = annualproductionnewplants + (PP.getLoadfactor() * PP.getCapacity());
+			}
+		}
+		//Calculate the certificatebalance before new investments are made. 
+		certificatebalance = certificatebalance + totalannucertproduction - totalannudemand + annualproductionnewplants;
+			}
+		//No the years when LRMCCurve is calculated. 
+			else {
+		
+		
+			
+		}
 		//So we have this comming years demand and production
 		
 		
@@ -72,5 +92,3 @@ public class FundamentalMarketAnalysis {
 	}
 		
 	
-	
-}

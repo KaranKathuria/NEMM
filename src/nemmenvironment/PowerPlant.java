@@ -1,12 +1,9 @@
 package nemmenvironment;
 
-import java.util.Calendar;
-import java.util.Random;
 
 import nemmagents.CompanyAgent;
-import nemmcommons.CommonMethods;
 import nemmcommons.TickArray;
-import nemmtime.NemmTime;
+
 
 public class PowerPlant {
 
@@ -19,7 +16,7 @@ public class PowerPlant {
 	private int technologyid; 				//Technology could also be a object/class in itself later if needed
 	private int lifetime; 					//Number of years expected as lifetime for project, that is even without certs. For Powerpland part of "overgangsordningen", the year indicates when they are out of the scheme.
 	
-	private int startyear;					//If the Powerplant is in operation when simulation is ran, this indicates when it is put in operation. If 0, the start is endogenous in the model
+	private int startyear;					//If the Powerplant is in operation when simulation is ran, this indicates when it is put in operation. If 0, the start is endogenous in the model and set in the development game.
 	private int earlieststartyear;			//Given for all real projects (those identifyd).
 	private double capex;
 	private double opex;
@@ -169,7 +166,6 @@ public class PowerPlant {
 	}
 	
 	public void setAllExpectedProduction(double[] newProd) {
-
 		int numPoints = newProd.length;
 		int numTicks = TheEnvironment.theCalendar.getNumTicks();
 
@@ -182,22 +178,13 @@ public class PowerPlant {
 		else {
 			ExpectedProduction.setArray(newProd);
 		}
+		
 	}
 	
-	// OLD - kept just in case. 
-/*	public double Production(Calendar startdate, Calendar enddate) {
-		double prodcalc;
-		prodcalc = capacity*CommonMethods.HoursBetween(startdate,enddate)*loadfactor;
-		return prodcalc;
+	public int getstartyear() {
+		return startyear;}
+
+	
+	
 	}
 	
-	public double ExpectedProduction(Calendar startdate, Calendar enddate) {
-		// for now, just get the expected production from the actual
-		// production function
-		double expprod;
-		return expprod = this.Production(startdate, enddate);
-	} */
-	
-	
-	
-}
