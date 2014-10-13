@@ -173,7 +173,8 @@ public final class TheEnvironment {
 		
 		public static TickArray certificateprice;
 		public static double currentmarketprice;
-		public static double currentinterestrate; //risk free interest rate
+		public static double currentinterestrate;   //risk free interest rate
+		public static double RRR; 					//Required rate of return for RE investments. 
 		public static int numberofbuyoffersstm;
 		public static int numberofselloffersstm;
 		// Future cert prices

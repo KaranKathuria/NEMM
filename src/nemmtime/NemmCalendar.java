@@ -57,7 +57,6 @@ public class NemmCalendar {
 		return (int) RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 	}
 
-
 	public NemmTime getTimeBlock(int tickID){
 		return timeBlocks.get(tickID);
 	}
