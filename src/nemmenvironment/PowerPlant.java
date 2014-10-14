@@ -37,9 +37,7 @@ public class PowerPlant {
 		loadfactor = newloadfactor;
 		myRegion = newregion;
 		myProduction = new TickArray();
-		ExpectedProduction = new TickArray();
-		
-		
+		ExpectedProduction = new TickArray();	
 	}
 
 	// Gets & Sets ------------------------------------------------------------------------
@@ -170,7 +168,8 @@ public class PowerPlant {
 			ExpectedProduction.setArray(newProd);
 		}	}
 	
-	//THis method is only usefull for endogenous projects, hence it does not have to take care of "overgangsordningen" projects. 
+	//THis method caluclates the LRMC and certificate price needed for a project realised in a given year. This is only usefull for endogenous projects, hence it does not have to take care of "overgangsordningen" projects. 
+	//Takes in the realisation year as this alters the LRMC and Certpriceneeeded through improvment in Capex. Also, now the current power price (simlation tick) is used as bases for certpriceneeded.
 	public void calculateLRMCandcertpriceneeded(int currentyear) {
 		
 		//int currentyear = TheEnvironment.theCalendar.getTimeBlock(TheEnvironment.theCalendar.getCurrentTick()).year;
@@ -185,7 +184,7 @@ public class PowerPlant {
 					yearswithcertificates = 2035 - currentyear;
 			}}
 		
-		double newCapex = capex*Math.pow((1-annualcostreduction),yearsoftechnologyimprovment);	//Note that the Capex value of the powerplant is not set/updated.
+		double newCapex = capex*Math.pow((1-annualcostreduction),yearsoftechnologyimprovment);			//Note that the Capex value of the powerplant is not set/updated.
 		
 		double NPVfactor_lifetime = 0;
 		for (int i = 1; i <= lifetime; i++) {
@@ -198,8 +197,8 @@ public class PowerPlant {
 		for (int i = 1; i <= yearswithcertificates; i++) {
 			NPVfactor_certyears = NPVfactor_certyears + 1/Math.pow((1+TheEnvironment.GlobalValues.RRR),i);}
 		
-		//Calculating the needed price for certificates, with the correct assumptions of when the plant is eligable and the current local power price. 
-		certpriceneeded = (LRMC*NPVfactor_lifetime - myRegion.getMyPowerPrice().getValue()*NPVfactor_lifetime) / NPVfactor_certyears; 
+		//Calculating the needed price for certificates, with the correct assumptions of when the plant is eligable and the simulation-current local power price. T
+		certpriceneeded = (LRMC*NPVfactor_lifetime - myRegion.getMyPowerPrice().getValue()*NPVfactor_lifetime) / NPVfactor_certyears; //Drawback: IS the powerprice assumption okey?
 	
 	}
 	
@@ -214,6 +213,17 @@ public class PowerPlant {
 	public int getearlieststartyear() {
 		return earlieststartyear;
 	}
-	
+	public double getestimannualprod() {
+		return this.loadfactor*this.capacity*8760;
 	}
+	public double getLRMC() {
+		return LRMC;
+	}
+	public double getcertpriceneeded() {
+		return certpriceneeded;
+	}
+	public String getname() {
+		return name;}
+	}
+	
 	

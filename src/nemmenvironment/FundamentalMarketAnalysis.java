@@ -65,14 +65,10 @@ public class FundamentalMarketAnalysis {
 		int numberofyears = 2035 - currentyear + 1;
 		int numberofticksinyear = TheEnvironment.theCalendar.getNumTradePdsInYear();
 		
-	
 		certificatebalance = TheEnvironment.GlobalValues.totalmarketphysicalposition; 							//Based on balance from previous year.
-		
-		
+				
 		for (int i = 0; i < numberofyears; ++i ) {
 			tempendogenousprojects.clear();
-
-		
 		
 		//For the years before the endogenous projects can be build. In order to  have correct certificatebalane at year = current year + 3.
 			if (i < 3) {
@@ -93,18 +89,25 @@ public class FundamentalMarketAnalysis {
 			}
 		}
 		
-		//Get total production from plants i operation at start, for iterated year.
+		//Get total production from plants i operation, for iterated year.
 		double totalannucertproduction = 0;																	
 		for (PowerPlant PP : this.allPowerPlants_copy) { 																//All operational PP. Notice that this is the original "allPowerPlants".
 			if (PP.getendyear() >= (currentyear+i) ) {																	//Only count certificates when the plant is eligable. 
-			totalannucertproduction = totalannucertproduction + (PP.getLoadfactor() * PP.getCapacity() * 8760);} 		//Starting at year i. 
+			totalannucertproduction = totalannucertproduction + PP.getestimannualprod();} 								//Starting at year i. Later method returns the calculated normal year production.
 			}
 		
 		//Calculate the certificatebalance before new investments are made. 
 		certificatebalance = certificatebalance + totalannucertproduction - totalannudemand;
-		//Do something with price?????? For instane if balance is negative, priecs are 1.5 * current price?!
-			}
+		//Adds the equilibrium price based on this.
+		double temp = 0.0;
+			if (certificatebalance >= 0){
+				temp = 0.0;}																							//Or should this be currentprice. 
+			else {
+				temp = TheEnvironment.GlobalValues.currentmarketprice * 1.5;}											//The 1.5 should be set from AllVariables. 
 			
+			equilibriumpricesyearsahead.add(temp);
+	}
+		
 		//Now the years when LRMCCurve is calculated, as there are no endogenous projects in the next three years.
 			else  {
 				
@@ -113,30 +116,43 @@ public class FundamentalMarketAnalysis {
 			for (int j = 0; j < numberofticksinyear; j++) { 															//All ticks in a year			
 			totalannudemand = totalannudemand + R.getMyDemand().getCertDemand(currenttick+(numberofticksinyear*i)+j);}} //TheEnvironment.theCalendar.getCurrentTick()+1;
 		
-		certificatebalance = certificatebalance - totalannudemand;														//Give the current balance and hence how many new project needs to be realized.
+		//Get total production from plants i operation, for iterated year.
+		double totalannucertproduction = 0;																	
+		for (PowerPlant PP : this.allPowerPlants_copy) { 																//All operational PP. Notice that this is the original "allPowerPlants".
+			if (PP.getendyear() >= (currentyear+i) ) {																	//Only count certificates when the plant is eligable. 
+			totalannucertproduction = totalannucertproduction + PP.getestimannualprod();} 								//Starting at year i. Later method returns the calculated normal year production.
+			}
+		
+		certificatebalance = certificatebalance - totalannudemand + totalannucertproduction;							//Give the current balance and hence how many new project needs to be realized.
 
-							
+		if (certificatebalance < 0) {												//Just to save time. 
+			
 		for (PowerPlant PP : this.allendogenousprojects) {							//All endogenous projects
-			if (PP.getearlieststartyear() == currentyear+i) {						//If they can earliest be finished in time
-			tempendogenousprojects.add(PP);	}										//Add all endogenous projects to this list.
-				LRMCCurve yearcurve = new LRMCCurve(currentyear, currentyear+i);
-				yearcurve.calculatelrmccurve(tempendogenousprojects, certificatebalance);
-					
-				}
-				
-				
+			if (PP.getearlieststartyear() == currentyear+i) {						//If they can earliest be finished in time for this year.
+			tempendogenousprojects.add(PP);	}}										//Add all relevant endogenous projects to this list.
 			
-			
+		LRMCCurve yearcurve = new LRMCCurve(currentyear, currentyear+i);			//Calculates the certpriceneeded for all objects in the list and calculates the equilibrium price. 
+		yearcurve.calculatelrmccurve(tempendogenousprojects, certificatebalance); 
 		
+		for (PowerPlant PP : this.tempendogenousprojects) {
+			if (PP.getcertpriceneeded() < yearcurve.getequilibriumprice()) {
+				allendogenousprojects.remove(PP); 									//NOT COMPLETLE SURE THIS WOULD WORK; BUT I THINK SO! ASK Gavin
+				PP.setendyear(currentyear+i+14);									//Just setting the endyear is sufficient for calculating the future certproduction of this plant. 
+				allPowerPlants_copy.add(PP);										//Adds the same powerplant to list of powerplants in production. 
+			}}
+		equilibriumpricesyearsahead.add(yearcurve.getequilibriumprice());			//Stores just the equilibrium price from the LRMC curve. Could be an idea to store the object itself, or the curvepair. 
+			}
+		else {
+		equilibriumpricesyearsahead.add(0.0);	//In case there are no shortcommings, the price is set to 0.
+		}	
+		//End of iteration over endouengous years. Could be usefull to store the LRMCCurves. 
+	}			
+	//End of iteration-year iteration.	
+}
 		
-			
-		}
-		//So we have this comming years demand and production
-		
-		
-				}
+	//End of runfundamentalmarketanalysis. Need to clear something?
 	}
 		
-	}
+}
 		
 	
