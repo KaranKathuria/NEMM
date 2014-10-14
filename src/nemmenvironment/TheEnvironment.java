@@ -22,7 +22,13 @@ import nemmtime.NemmCalendar;
 public final class TheEnvironment {
 
 	// This class is used to hold all the stuff in the environment
-	public static ArrayList<PowerPlant> allPowerPlants;
+	public static ArrayList<PowerPlant> allprojectsandpowerplants; 			//All objects of PowerPlant read into the model regardless of status. PowerPlant are reffered to as projects before they are in operation
+	public static ArrayList<PowerPlant> projectsunderconstruction;			//PowerPlants currently under construction
+	public static ArrayList<PowerPlant> projectsawaitinginvestmentdecision;	//PowerPlants projects awaiting investment decision
+	public static ArrayList<PowerPlant> projectinprocess;					//All powerplant in process
+	public static ArrayList<PowerPlant> projectsidentifyed;					//All projects identifyed
+	public static ArrayList<PowerPlant> potentialprojects;					//Auto-generated potential projects
+	public static ArrayList<PowerPlant> allPowerPlants; 	//allPowerPlants (add: inoperation?) referes to all power plants in operation. Before an object PowerPlant is in operation, its reffered to as a project.
 	public static ArrayList<Region> allRegions;
 	public static ArrayList<CompanyAgent> allCompanies;
 	public static NemmCalendar theCalendar;
@@ -167,7 +173,8 @@ public final class TheEnvironment {
 		
 		public static TickArray certificateprice;
 		public static double currentmarketprice;
-		public static double currentinterestrate; //risk free interest rate
+		public static double currentinterestrate;   //risk free interest rate
+		public static double RRR; 					//Required rate of return for RE investments. 
 		public static int numberofbuyoffersstm;
 		public static int numberofselloffersstm;
 		// Future cert prices

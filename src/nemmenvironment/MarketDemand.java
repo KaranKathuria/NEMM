@@ -98,6 +98,26 @@ public class MarketDemand {
 		}
 		return demandcalc;
 	}
+	//returns the demand for the 12 next ticks
+	public double getAnnualCertDemand(int... tickID) {
+		double demandcalc;
+		if (tickID.length > 0) {
+			double temp = 0;
+			for (int i = 0; i<TheEnvironment.theCalendar.getNumTradePdsInYear(); ++i) {
+			temp = temp + this.certDemand.getElement(tickID[0]+1);}
+			demandcalc = temp;
+		}
+		else {
+			double temp = 0;
+			int curTick = TheEnvironment.theCalendar.getCurrentTick();
+			for (int i = 0; i<TheEnvironment.theCalendar.getNumTradePdsInYear(); ++i) {
+			temp = temp + this.certDemand.getElement(curTick+1);}	
+			demandcalc = temp;
+			}
+		return demandcalc;
+	}
+	
+	
 	public double getExpectedCertDemand(int... tickID) {
 		double demandcalc;
 		if (tickID.length > 0) {
