@@ -26,8 +26,11 @@ public class AllVariables {
 //	public static double PAgentmustsellshare = 0.5;//RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
 	public static double OPAgentmustsellshare = 0.5; //RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
 	
-	public static double mediumrundpriceexpectations = 220; //2 year expected price. Used by tactics to calculate floor on variable bids. This together with the risk free rate and the agents RAR.
-	public static double longrundpriceexpectations = 300; //10 year expected price - not in use.
+	public static double stdmediumrunpriceexpect = 0.1;     //The standard deviation in the Normaly distributed error for MPE (where mean is the perfect foresight price)
+	public static double stdlongrunpriceexpect = 0.1;     //The standard deviation in the Normaly distributed error for MPE (where mean is the perfect foresight price)
+
+//	public static double mediumrundpriceexpectations = 220; //2 year expected price. Used by tactics to calculate floor on variable bids. This together with the risk free rate and the agents RAR.
+//	public static double longrundpriceexpectations = 300; //10 year expected price - not in use.
 	 
 	public static double tradermaximumshortpos = -5000; //These values should have some realtion to the initial portfoliovalue by allowing traders
 	public static double tradermaximumlongpos = 5000;	//to go bust.
@@ -35,7 +38,7 @@ public class AllVariables {
 	
 	public static int numofhistutilitiesincluded = 3; //Used by method that deterines the tactics best utility.
 	
-	public static double forcastweights[] = {0.2, 0.3, 0.5};
+//	public static double forcastweights[] = {0.2, 0.3, 0.5};  Not in used anymore as the AA have individually randomly generated forecastweights. 
 	
 	// Utilities
 	public static int utilityDefault_PA = 2; // default utility for a purchaser agent

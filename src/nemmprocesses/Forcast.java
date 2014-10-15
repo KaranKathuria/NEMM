@@ -32,6 +32,12 @@ public static void initiatevolumeprognosis() {
 		CA.getcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().initiatevolumeprognosis();
 	}
 }
+
+public static void updateMPEandLPE() { 
+	for (CompanyAgent CA : CommonMethods.getCompanyAgenList()) { 
+		CA.getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().updatefunamentalmarketprognosis();
+		}
+}
 	
 	
 }

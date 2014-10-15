@@ -111,8 +111,9 @@ public void obligationsperiodshedule() {
 public void annualmarketschedule() {
 	//Priority 2 means that whenever the tick is 12 (annual tick) this will be ran first. If the priority is the same, the order is random. 
 		TheEnvironment.GlobalValues.annualglobalvalueupdate();
-		//FundamentalMarketAnalysis.runfundamentalmarketanalysis(); 	//SHould the FMA be static or an object that then is added to GlobalValues. Keeping it static is also an idea, but then the values
-																		//should be stored.
+		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	//SHould the FMA be static or an object that then is added to GlobalValues. Keeping it static is also an idea, but then the values
+																	//should be stored.
+		Forcast.updateMPEandLPE();
 }
 
 //Distributing of Power Plants and Demand Shares

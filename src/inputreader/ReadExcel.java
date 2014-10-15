@@ -149,7 +149,7 @@ public class ReadExcel {
 					double newlearningrate = plant_sheet.getRow(3+j).getCell(12).getNumericCellValue();
 					
 					//newregion_ID starts by 1, hence to indexs it we subtract 1.
-					PowerPlant pp = new PowerPlant(newname, newtechnology, newcapacity, newloadfactor, TheEnvironment.allRegions.get(newregion_ID-1));
+					PowerPlant pp = new PowerPlant(newname, TheEnvironment.allRegions.get(newregion_ID-1), newstatus, newcapacity, newloadfactor, newtechnology, newlifetime, newyearstarted, newearlieststartyear, newcapex, newopex, newlearningrate);
 					
 					double[] tempproduction = new double[ticks];
 					double[] expproduction = new double[ticks];
@@ -166,7 +166,19 @@ public class ReadExcel {
 					//Add all expected production to tick array
 					pp.setAllExpectedProduction(expproduction);
 					
-					TheEnvironment.allPowerPlants.add(pp);
+					//Setting the powerplant/project to the relevant ArrayList. 
+					if (newstatus == 1) {
+						TheEnvironment.allPowerPlants.add(pp);}
+					else if (newstatus == 2) {
+						TheEnvironment.projectsunderconstruction.add(pp);}
+					else if (newstatus == 3) {
+						TheEnvironment.projectsawaitinginvestmentdecision.add(pp);}
+					else if (newstatus == 4) {
+						TheEnvironment.projectinprocess.add(pp);}
+					else if (newstatus == 5) {
+						TheEnvironment.projectsidentifyed.add(pp);}
+					else {TheEnvironment.potentialprojects.add(pp);}
+
 				}
 				
 			}catch(Exception e) {

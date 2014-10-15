@@ -7,6 +7,7 @@ import nemmcommons.TickArray;
 
 public class PowerPlant {
 
+	//Variables given by inputt sheet
 	private String name;
 	private Region myRegion;
 	private CompanyAgent myCompany;			//Belonging CompanyAgent for both the developer and the Producer reciving the power plant when in operation (status=1).
@@ -15,27 +16,40 @@ public class PowerPlant {
 	private double loadfactor;
 	private int technologyid; 				//Technology could also be a object/class in itself later if needed
 	private int lifetime; 					//Number of years expected as lifetime for project from startdate, that is even without certs. For Powerpland part of "overgangsordningen", the year indicates when they are out of the scheme.
-	
 	private int startyear;					//If the Powerplant is in operation when simulation is ran, this indicates when it is put in operation. If 0, the start is endogenous in the model and set in the development game.
 	private int earlieststartyear;			//Given for all real projects (those identifyd). Must be set and updated each year. 
-	private double capex;
-	private double opex;
+	private double capex;					//Total capex for project
+	private double opex;					//Opex per MWh for project, assumed that this does not vary with the fluctiations in annual production. 
 	private double annualcostreduction;		//Annual rate of cost reduction due to technology improvment. 
-	private int endyear; 					//THis is the last year eligable for certificates.
-	private double LRMC; 					//Long run marginal cost for this powerplant build at a given year. This is update for each annual update.
-	private double certpriceneeded;			//Reason for having this field is that the projects cannot be sorted by LRMC as the region defines when its certificatesobligated.
 	
 	private TickArray myProduction; 		//Future production (good given).
 	private TickArray ExpectedProduction;	//Expected production. This is the amount of certs the plant is expected to generate and used by the owners to estimate. 
 	
+	//Variables calculated
+	private int endyear; 					//THis is the last year eligable for certificates.
+	private double LRMC; 					//Long run marginal cost for this powerplant build at a given year. This is update for each annual update.
+	private double certpriceneeded;			//Reason for having this field is that the projects cannot be sorted by LRMC as the region defines when its certificatesobligated.
+	
 	public PowerPlant() {}
 	
-	public PowerPlant(String newname, int newtechnology, int newcapacity, double newloadfactor, Region newregion) {
+	public PowerPlant(String newname, Region newregion, int newstatus, int newcapacity, double newloadfactor, int newtechnology, 
+					  int newlifetime, int newstartyear, int newearlieststartyear, double newcapex, double newopex, double newannualcostreduction) {
 		name = newname;
-		technologyid = newtechnology;
+		myRegion = newregion;
+		status = newstatus;
 		capacity = newcapacity;
 		loadfactor = newloadfactor;
-		myRegion = newregion;
+		technologyid = newtechnology;
+		lifetime = newlifetime;
+		startyear = newstartyear;
+		earlieststartyear = newearlieststartyear;
+		capex = newcapex;
+		opex = newopex;
+		annualcostreduction = newannualcostreduction;
+		
+		if (startyear != 0) {									//null equals 0 for int in java This snippet takes care of exogenous plants and "overgangsordningen"
+			endyear = startyear + Math.min(lifetime, 15) - 1;}
+			
 		myProduction = new TickArray();
 		ExpectedProduction = new TickArray();	
 	}

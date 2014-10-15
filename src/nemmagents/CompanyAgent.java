@@ -35,7 +35,7 @@ public class CompanyAgent extends ParentAgent {
 
 		private CompanyAgent companyagent;
 		private String activeagenttypename;
-		private int activeagenttypecode; //1 = ProducerAgent, 2 = ObligatedPurchaserAgent, 3 = TraderAgent
+		private int activeagenttypecode;		 //1 = ProducerAgent, 2 = ObligatedPurchaserAgent, 3 = TraderAgent
 		private ArrayList<GenericStrategy> allstrategies = new ArrayList<GenericStrategy>();
 		private int numberofstrategies;
 		private GenericStrategy beststrategy = null;
@@ -45,7 +45,7 @@ public class CompanyAgent extends ParentAgent {
 		private double lasttickdemand;
 		private double riskadjustedinterestrate; //Used to calculate the level of risk averness in current trade price in relation to future expected price. 
 		private double portfoliocapital;
-		private double RAR; //Company specific risk adjusted rate used to discount the future price of certificates. 
+		private double RAR;						 //Company specific risk adjusted rate used to discount the future price of certificates. 
 		
 		// Null constructor for ActiveAgent. Should not be used as this does not specify type of agent.
 		public ActiveAgent() {

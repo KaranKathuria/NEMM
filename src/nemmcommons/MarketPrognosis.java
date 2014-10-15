@@ -8,7 +8,11 @@
 
 package nemmcommons;
 
+import java.util.Random;
+
+import cern.jet.random.Normal;
 import repast.simphony.random.RandomHelper;
+import nemmenvironment.FundamentalMarketAnalysis;
 import nemmenvironment.TheEnvironment;
 // Import
 import nemmprocesses.ShortTermMarket;
@@ -20,8 +24,8 @@ public class MarketPrognosis {
 	private double forcastweights[];// = AllVariables.forcastweights;
 	private double stpriceexpectation;
 	
-	private double mediumrunpriceexpectations; //2 years
-	private double longrunpriceexpectatations; //10 years
+	private double mediumrunpriceexpectations; //Highest fundamental price for the future year 3 or 4. Based on FMA and a errorterm. 
+	private double longrunpriceexpectatations; //Highest fundamental price for the future year 10 or 11. Based on FMA and a errorterm.
 	
 	private TickArray expectedcertificateprice;  //Tick array contaning history of what price where expected for the next tick. Could be used later to evaluate the STM-strategy.
 	private TickArray expectedcertificatedemand; //Total certificate demand for each tick in the simulation. 
@@ -46,8 +50,8 @@ public class MarketPrognosis {
 		forcastweights[0] = w1;
 		
 		stpriceexpectation = ParameterWrapper.getpriceexpectation() * RandomHelper.nextDoubleFromTo(1, 1); //Random
-		mediumrunpriceexpectations =  AllVariables.mediumrundpriceexpectations * RandomHelper.nextDoubleFromTo(1,1); //Random
-		longrunpriceexpectatations = AllVariables.longrundpriceexpectations;  //Must be updated somehow later
+		mediumrunpriceexpectations =  0; //AllVariables.mediumrundpriceexpectations 
+		longrunpriceexpectatations = 0;  //AllVariables.longrundpriceexpectations;  
 		expectedcertificateprice = new TickArray(); 
 		expectedcertificatedemand = new TickArray();
 		expectedpowerpricenorway = new TickArray();
@@ -77,7 +81,13 @@ public class MarketPrognosis {
 	}
 	
 	public void updatefunamentalmarketprognosis() {
-		// Updates the 
+		// Updates the medium and long run priceexpectations.
+		
+		//Calculates standardeviation based on the magnitude of the price. Creates a random normal distribution and retrives the next double:
+
+		mediumrunpriceexpectations = RandomWrapper.geterroredMPE();
+		longrunpriceexpectatations = RandomWrapper.geterroredLPE();
+		
 	}
 	
 	

@@ -14,20 +14,22 @@ import java.util.Collections;
 public class FundamentalMarketAnalysis {
 	
 	//List containing all the fundamental price for the years ahead.
-	private ArrayList<Double> equilibriumpricesyearsahead = new ArrayList<Double>();
-	private double certificatebalance;																				//Certbalance at end of given year.
+	private static double MPE;
+	private static double LPE;
+	private static ArrayList<Double> equilibriumpricesyearsahead = new ArrayList<Double>();
+	private static double certificatebalance;																		//Certbalance at end of given year.
 	
 	//In order to preform a fundamental market analysis (with perfect foresight) for all years ahead. A copy of all projects are needed.
 	
-	public ArrayList<PowerPlant> allPowerPlants_copy = new ArrayList<PowerPlant>();
-	public ArrayList<PowerPlant> projectsunderconstruction_copy = new ArrayList<PowerPlant>();				//PowerPlants currently under construction. Not needed as they are already decided.
-	public ArrayList<PowerPlant> projectsawaitinginvestmentdecision_copy = new ArrayList<PowerPlant>();		//PowerPlants projects awaiting investment decision
-	public ArrayList<PowerPlant> projectinprocess_copy = new ArrayList<PowerPlant>();						//All powerplant in process
-	public ArrayList<PowerPlant> projectsidentifyed_copy = new ArrayList<PowerPlant>();						//All projects identifyed
-	public ArrayList<PowerPlant> potentialprojects_copy = new ArrayList<PowerPlant>();						//Auto-generated potential projects
-	public ArrayList<PowerPlant> allendogenousprojects = new ArrayList<PowerPlant>();	
+	public static ArrayList<PowerPlant> allPowerPlants_copy = new ArrayList<PowerPlant>();
+	public static ArrayList<PowerPlant> projectsunderconstruction_copy = new ArrayList<PowerPlant>();				//PowerPlants currently under construction. Not needed as they are already decided.
+	public static ArrayList<PowerPlant> projectsawaitinginvestmentdecision_copy = new ArrayList<PowerPlant>();		//PowerPlants projects awaiting investment decision
+	public static ArrayList<PowerPlant> projectinprocess_copy = new ArrayList<PowerPlant>();						//All powerplant in process
+	public static ArrayList<PowerPlant> projectsidentifyed_copy = new ArrayList<PowerPlant>();						//All projects identifyed
+	public static ArrayList<PowerPlant> potentialprojects_copy = new ArrayList<PowerPlant>();						//Auto-generated potential projects
+	public static ArrayList<PowerPlant> allendogenousprojects = new ArrayList<PowerPlant>();	
 	
-	ArrayList<PowerPlant> tempendogenousprojects = new ArrayList<PowerPlant>();
+	static ArrayList<PowerPlant> tempendogenousprojects = new ArrayList<PowerPlant>();
 	
 	//For storing the result from historic fundamental market analysis
 	public class HistoricFundamentalMarketAnalysis {
@@ -37,7 +39,7 @@ public class FundamentalMarketAnalysis {
 	
 	FundamentalMarketAnalysis() {};	
 	
-	public void runfundamentalmarketanalysis() {
+	public static void runfundamentalmarketanalysis() {
 		//The ArrayLists must be clear as the Collection.copy method would risk keeping some of the original values in the List. 
 		allPowerPlants_copy.clear();
 		projectsunderconstruction_copy.clear();
@@ -80,18 +82,18 @@ public class FundamentalMarketAnalysis {
 			totalannudemand = totalannudemand + R.getMyDemand().getCertDemand(currenttick+(numberofticksinyear*i)+j); } //TheEnvironment.theCalendar.getCurrentTick()+1;
 		}
 		
-		//Adding to allPowerPlants from the plants in process that will be finished.. Notie that LF * Capacity (hence normal year) is used and that this is done BEFORE the sum annual production to include the ones finished this year.
-		for (PowerPlant PP : this.projectsunderconstruction_copy) {
+		//Adding to allPowerPlants from the plants in process that will be finished. Notice that this is done BEFORE the sum annual production to include the ones finished this year.
+		for (PowerPlant PP : projectsunderconstruction_copy) {
 			if (PP.getstartyear() == currentyear+i) {									 //Currentyear + i is the iterated year. By definition projects are set in operation 1.1 for the start year.
 			PP.setendyear(currentyear+i+14);											 //Setting endyear in order to not count the certificates after 15 years.
-			this.projectsunderconstruction_copy.remove(PP);
-			this.allPowerPlants_copy.add(PP);
+			projectsunderconstruction_copy.remove(PP);
+			allPowerPlants_copy.add(PP);
 			}
 		}
 		
-		//Get total production from plants i operation, for iterated year.
+		//Get total production from plants i operation, for iterated year. Notie the use of getestimannualprod() and not the exact or expected production. 
 		double totalannucertproduction = 0;																	
-		for (PowerPlant PP : this.allPowerPlants_copy) { 																//All operational PP. Notice that this is the original "allPowerPlants".
+		for (PowerPlant PP : allPowerPlants_copy) { 																//All operational PP. Notice that this is the original "allPowerPlants".
 			if (PP.getendyear() >= (currentyear+i) ) {																	//Only count certificates when the plant is eligable. 
 			totalannucertproduction = totalannucertproduction + PP.getestimannualprod();} 								//Starting at year i. Later method returns the calculated normal year production.
 			}
@@ -118,7 +120,7 @@ public class FundamentalMarketAnalysis {
 		
 		//Get total production from plants i operation, for iterated year.
 		double totalannucertproduction = 0;																	
-		for (PowerPlant PP : this.allPowerPlants_copy) { 																//All operational PP. Notice that this is the original "allPowerPlants".
+		for (PowerPlant PP : allPowerPlants_copy) { 																//All operational PP. Notice that this is the original "allPowerPlants".
 			if (PP.getendyear() >= (currentyear+i) ) {																	//Only count certificates when the plant is eligable. 
 			totalannucertproduction = totalannucertproduction + PP.getestimannualprod();} 								//Starting at year i. Later method returns the calculated normal year production.
 			}
@@ -127,14 +129,14 @@ public class FundamentalMarketAnalysis {
 
 		if (certificatebalance < 0) {												//Just to save time. 
 			
-		for (PowerPlant PP : this.allendogenousprojects) {							//All endogenous projects
+		for (PowerPlant PP : allendogenousprojects) {							//All endogenous projects
 			if (PP.getearlieststartyear() == currentyear+i) {						//If they can earliest be finished in time for this year.
 			tempendogenousprojects.add(PP);	}}										//Add all relevant endogenous projects to this list.
 			
 		LRMCCurve yearcurve = new LRMCCurve(currentyear, currentyear+i);			//Calculates the certpriceneeded for all objects in the list and calculates the equilibrium price. 
 		yearcurve.calculatelrmccurve(tempendogenousprojects, certificatebalance); 
 		
-		for (PowerPlant PP : this.tempendogenousprojects) {
+		for (PowerPlant PP : tempendogenousprojects) {
 			if (PP.getcertpriceneeded() < yearcurve.getequilibriumprice()) {
 				allendogenousprojects.remove(PP); 									//NOT COMPLETLE SURE THIS WOULD WORK; BUT I THINK SO! ASK Gavin
 				PP.setendyear(currentyear+i+14);									//Just setting the endyear is sufficient for calculating the future certproduction of this plant. 
@@ -149,8 +151,16 @@ public class FundamentalMarketAnalysis {
 	}			
 	//End of iteration-year iteration.	
 }
-		
-	//End of runfundamentalmarketanalysis. Need to clear something?
+	//THe final operation of FMA: Setting the MPE and LPE. 
+	MPE = Math.max(equilibriumpricesyearsahead.get(3), equilibriumpricesyearsahead.get(4)); //Set it to the highest price of the 3. or 4. year ahead.
+	LPE = Math.max(equilibriumpricesyearsahead.get(10), equilibriumpricesyearsahead.get(11)); //Set it to the highest price of the 3. or 4. year ahead.
+	}
+	
+	public static double getMPE() {
+		return MPE;
+	}
+	public static double getLPE() {
+		return LPE;
 	}
 		
 }
