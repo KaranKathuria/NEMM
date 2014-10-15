@@ -30,19 +30,19 @@ import java.nio.file.Paths;
 // Object reading in from excel
 public class ReadExcel {
 	
- // Get working directory
- private static String working_directory = Paths.get("").toAbsolutePath().toString();
- private static int plantsnumber;
- private static int technologiesnumber;
- private static int regionsnumber;
- private static int genprofileentries;
- private static int ticks;
- private static int startyear;
- private static int endyear;
- private static int numobpdinyear;
- private static int numtrpdinyear;
- private static PowerPlant[] plants;
- private static String filePath;
+	 // Get working directory
+	 private static String working_directory = Paths.get("").toAbsolutePath().toString();
+	 private static int plantsnumber;
+	 private static int technologiesnumber;
+	 private static int regionsnumber;
+	 private static int genprofileentries;
+	 private static int ticks;
+	 private static int startyear;
+	 private static int endyear;
+	 private static int numobpdinyear;
+	 private static int numtrpdinyear;
+	 private static PowerPlant[] plants;
+	 private static String filePath;
  
 
  	public static void InitReadExcel() {
@@ -66,7 +66,7 @@ public class ReadExcel {
 			
 			TheEnvironment.theCalendar = new NemmCalendar(startyear, endyear, numobpdinyear, numtrpdinyear);
 			
-			//Initilizes ticks from the created calender.
+			//Initializes ticks from the created calender.
 			ticks = TheEnvironment.theCalendar.getNumTicks();
 					
 		}catch(Exception e) {
@@ -136,10 +136,18 @@ public class ReadExcel {
 
 				for(int j = 0; j < plantsnumber; j++){
 					String newname = plant_sheet.getRow(3+j).getCell(1).getStringCellValue();
-					int newtechnology = (int) plant_sheet.getRow(3+j).getCell(7).getNumericCellValue();
+					int newregion_ID = (int) plant_sheet.getRow(3+j).getCell(13).getNumericCellValue();
 					int newcapacity = (int) plant_sheet.getRow(3+j).getCell(3).getNumericCellValue();
 					double newloadfactor = plant_sheet.getRow(3+j).getCell(4).getNumericCellValue();
-					int newregion_ID = (int) plant_sheet.getRow(3+j).getCell(6).getNumericCellValue();
+					int newtechnology = (int) plant_sheet.getRow(3+j).getCell(14).getNumericCellValue();
+					int newstatus = (int) plant_sheet.getRow(3+j).getCell(6).getNumericCellValue();
+					int newyearstarted = (int) plant_sheet.getRow(3+j).getCell(7).getNumericCellValue();
+					int newlifetime = (int) plant_sheet.getRow(3+j).getCell(8).getNumericCellValue();
+					int newearlieststartyear = (int) plant_sheet.getRow(3+j).getCell(9).getNumericCellValue();
+					double newcapex = plant_sheet.getRow(3+j).getCell(10).getNumericCellValue();
+					double newopex = plant_sheet.getRow(3+j).getCell(11).getNumericCellValue();
+					double newlearningrate = plant_sheet.getRow(3+j).getCell(12).getNumericCellValue();
+					
 					//newregion_ID starts by 1, hence to indexs it we subtract 1.
 					PowerPlant pp = new PowerPlant(newname, newtechnology, newcapacity, newloadfactor, TheEnvironment.allRegions.get(newregion_ID-1));
 					

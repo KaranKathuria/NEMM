@@ -1,11 +1,16 @@
 <<<<<<< HEAD
 =======
 /nemmstmstrategiestactics
+/.gitignore
 /inputreader
-/nemmenvironment
 /nemmagents
-/nemmstrategy_shortterm
 /nemmcommons
+/nemmenvironment
 /nemmprocesses
+<<<<<<< HEAD
 /nemmtime
 >>>>>>> refs/heads/Analysis
+=======
+/nemmstrategy_shortterm
+/nemmtime
+>>>>>>> refs/heads/anders
