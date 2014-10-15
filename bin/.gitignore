@@ -1,7 +1,9 @@
 /nemmstmstrategiestactics
+/.gitignore
 /inputreader
-/nemmenvironment
 /nemmagents
-/nemmstrategy_shortterm
 /nemmcommons
+/nemmenvironment
 /nemmprocesses
+/nemmstrategy_shortterm
+/nemmtime
