@@ -18,6 +18,8 @@ import java.math.*;
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmagents.CompanyAgent;
 import nemmagents.MarketAnalysisAgent;
+import nemmenvironment.PowerPlant;
+import nemmenvironment.LRMCCurve.Curvepair;
 import nemmstrategy_shortterm.BuyOffer;
 import nemmstrategy_shortterm.SellOffer;
 import nemmtime.NemmCalendar;
@@ -141,7 +143,14 @@ public static List<CompanyAgent> getCompanyAgenList() {
 	        return o1.getSellOfferprice().compareTo(o2.getSellOfferprice());
 	    }
 	}
-	
+
+	//Defining the comparator for curvepair. These are implemented to enable sorting an array of curvepair by certprice needed. 
+	public static class customcurvepaircomparator implements Comparator<Curvepair> {
+	    @Override
+	    public int compare(Curvepair c1, Curvepair c2) {
+	        return c1.getcertpriceneeded().compareTo(c2.getcertpriceneeded());
+	    }
+	}
 	
 	// ----------------------------------------------------------------------------
 		

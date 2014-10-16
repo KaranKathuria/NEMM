@@ -42,6 +42,11 @@ public final class TheEnvironment {
 		inputreader.ReadExcel.InitReadExcel();
 		inputreader.ReadExcel.ReadCreateTime();
 		allPowerPlants = new ArrayList<PowerPlant>() ;
+		potentialprojects = new ArrayList<PowerPlant>() ;
+		projectsidentifyed = new ArrayList<PowerPlant>() ;
+		projectinprocess = new ArrayList<PowerPlant>() ;
+		projectsawaitinginvestmentdecision = new ArrayList<PowerPlant>() ;
+		projectsunderconstruction = new ArrayList<PowerPlant>() ;
 		allRegions = new ArrayList<Region>() ;	
 	}
 	

@@ -91,6 +91,19 @@ public class PowerPlant {
 
 	// Methods ------------------------------------------------------------------------
 	
+	//Needed to clone() powerplants
+	@Override
+	public PowerPlant clone()
+	{
+		PowerPlant foo;
+	    try
+	    {      foo = (PowerPlant) super.clone();}
+	    catch (CloneNotSupportedException e)
+	    {throw new Error("pp noclone"); }
+	    // Deep clone member fields here
+	    return foo;
+	}
+	
 	public double getProduction(int... tickID) {
 		double prodcalc;
 		// eventually this will be replaced by a look-up

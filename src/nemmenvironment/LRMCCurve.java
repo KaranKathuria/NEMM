@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import nemmcommons.CommonMethods;
 import nemmstrategy_shortterm.SellOffer;
 
 public class LRMCCurve {
@@ -46,13 +47,6 @@ public class LRMCCurve {
 		}
 	}
 	
-	//Defining the comparator for curvepair. These are implemented to enable sorting an array of curvepair by certprice needed. 
-	final class customcurvepaircomparator implements Comparator<Curvepair> {
-	    @Override
-	    public int compare(Curvepair c1, Curvepair c2) {
-	        return c1.getcertpriceneeded().compareTo(c2.getcertpriceneeded());
-	    }
-	}
 	
 	public LRMCCurve(int runye, int yearsah) {
 		runyear = runye;
@@ -77,7 +71,7 @@ public class LRMCCurve {
 		}
 		
 		
-		Collections.sort(projectsupplycurve, new customcurvepaircomparator());		//Sorting the ArrayList from lowest certprie needed to highest cert price needed
+		Collections.sort(projectsupplycurve, new CommonMethods.customcurvepaircomparator());		//Sorting the ArrayList from lowest certprie needed to highest cert price needed
 		
 		int index = 0;
 		double newproductionbuilt = 0;

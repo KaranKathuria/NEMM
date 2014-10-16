@@ -49,13 +49,25 @@ public class FundamentalMarketAnalysis {
 		potentialprojects_copy.clear();
 		allendogenousprojects.clear();
 		
-		//Then create the copies based on the current year. Only the lists of projects which are endougneous are kept. 
-		Collections.copy(allPowerPlants_copy, TheEnvironment.allPowerPlants);
-		Collections.copy(projectsunderconstruction_copy, TheEnvironment.projectsunderconstruction);
-		Collections.copy(projectsawaitinginvestmentdecision_copy, TheEnvironment.projectsawaitinginvestmentdecision);	//Can be build in 3 years earliest
-		Collections.copy(projectinprocess_copy, TheEnvironment.projectinprocess);										//4 years earliest
-		Collections.copy(projectsidentifyed_copy, TheEnvironment.projectsidentifyed);									
-		Collections.copy(potentialprojects_copy, TheEnvironment.potentialprojects);
+		//Then create the deep copies based on the current year. Only the lists of projects which are endougneous are kept. 
+		for (PowerPlant pp: TheEnvironment.allPowerPlants){
+			allPowerPlants_copy.add(pp.clone());}
+		
+		for (PowerPlant pp: TheEnvironment.projectsunderconstruction){
+			projectsunderconstruction_copy.add(pp.clone());}
+		
+		for (PowerPlant pp: TheEnvironment.potentialprojects){
+			potentialprojects_copy.add(pp.clone());}
+		
+		for (PowerPlant pp: TheEnvironment.projectsawaitinginvestmentdecision){
+			projectsawaitinginvestmentdecision_copy.add(pp.clone());}
+		
+		for (PowerPlant pp: TheEnvironment.projectinprocess){
+			projectinprocess_copy.add(pp.clone());}
+		
+		for (PowerPlant pp: TheEnvironment.projectsidentifyed){
+			projectsidentifyed_copy.add(pp.clone());}
+
 		allendogenousprojects.addAll(projectsawaitinginvestmentdecision_copy);
 		allendogenousprojects.addAll(projectinprocess_copy);
 		allendogenousprojects.addAll(projectsidentifyed_copy);
@@ -152,7 +164,17 @@ public class FundamentalMarketAnalysis {
 	//End of iteration-year iteration.	
 }
 	//THe final operation of FMA: Setting the MPE and LPE. 
-	MPE = Math.max(equilibriumpricesyearsahead.get(3), equilibriumpricesyearsahead.get(4)); //Set it to the highest price of the 3. or 4. year ahead.
+	int MPEcount = 3;
+	while (equilibriumpricesyearsahead.get(MPEcount) < 1 && MPEcount < 8) {
+		MPE = equilibriumpricesyearsahead.get(MPEcount);
+		MPE++;
+	}
+	int LPEcount = 10;
+	while (equilibriumpricesyearsahead.get(LPEcount) < 1 && LPEcount < 15) {
+		LPE = equilibriumpricesyearsahead.get(LPEcount);
+		LPEcount++;	
+	}
+	
 	LPE = Math.max(equilibriumpricesyearsahead.get(10), equilibriumpricesyearsahead.get(11)); //Set it to the highest price of the 3. or 4. year ahead.
 	}
 	

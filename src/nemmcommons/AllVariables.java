@@ -41,7 +41,7 @@ public class AllVariables {
 //	public static double forcastweights[] = {0.2, 0.3, 0.5};  Not in used anymore as the AA have individually randomly generated forecastweights. 
 	
 	// Utilities
-	public static int utilityDefault_PA = 2; // default utility for a purchaser agent
+	public static int utilityDefault_PA = 1; // default utility for a purchaser agent
 	public static int utilityDefault_OP = 1; // default utility for a obligated agent
 	public static int utilityDefault_TR = 1; // default utility for a trader agent
 	

@@ -21,7 +21,7 @@ import nemmprocesses.ShortTermMarket;
 //Class definitions. Note that this is a  class as all its member variables are .
 public class MarketPrognosis {
 	
-	private double forcastweights[];// = AllVariables.forcastweights;
+	private double forcastweights[] = new double[3];// = AllVariables.forcastweights;
 	private double stpriceexpectation;
 	
 	private double mediumrunpriceexpectations; //Highest fundamental price for the future year 3 or 4. Based on FMA and a errorterm. 
