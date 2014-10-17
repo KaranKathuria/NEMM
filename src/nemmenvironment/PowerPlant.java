@@ -5,7 +5,7 @@ import nemmagents.CompanyAgent;
 import nemmcommons.TickArray;
 
 
-public class PowerPlant {
+public class PowerPlant implements Cloneable{
 
 	//Variables given by inputt sheet
 	private String name;
@@ -217,7 +217,7 @@ public class PowerPlant {
 		for (int i = 1; i <= lifetime; i++) {
 			NPVfactor_lifetime = NPVfactor_lifetime + 1/Math.pow((1+TheEnvironment.GlobalValues.RRR),i);}
 		
-		LRMC = (newCapex/(NPVfactor_lifetime*this.loadfactor*this.capacity*8760))+this.opex; 			//Calculates the average nominal income needed per MWh (Certprice + Powerprice) for the project lifetime.
+		LRMC = (newCapex/(NPVfactor_lifetime*this.getestimannualprod()))+this.opex; 			//Calculates the average nominal income needed per MWh (Certprice + Powerprice) for the project lifetime.
 		
 		//Calculating the needed average cert price is not trival as the certificates are only valid for a subperiod of the lifetime. First take into account the yearsofcertificates
 		double NPVfactor_certyears = 0;
@@ -231,6 +231,8 @@ public class PowerPlant {
 	
 	
 	public void setendyear(int e) {
+		endyear = e;}
+	public void setstatus(int e) {
 		endyear = e;
 	}
 	public int getstartyear() {

@@ -65,10 +65,19 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 @ScheduledMethod(start = 0, priority = 3)
 	public void Distributions() {
 	DistributePowerPlants.distributeallpowerplants();
-	DistributeDemandShares.Uniformdemanddistribution(10, 10);
-	Forcast.initiatevolumeprognosis(); //Set the Company agents analysis agents, volume analysisagents prognosis of demand and production.
-	
+	DistributeDemandShares.Uniformdemanddistribution(10, 10);	//Distributes the regional demand between the agents in each region. 
+	Forcast.initiatevolumeprognosis(); 							//Set the Company agents analysis agents, volume analysisagents prognosis of demand and production.	
 }
+
+//All annual updates to come below. Currently not in use.
+@ScheduledMethod(start = 0, interval = 12, priority = 2)
+public void annualmarketschedule() {
+	//Priority 2 means that whenever the tick is 12 (annual tick) this will be ran first. If the priority is the same, the order is random. 
+		TheEnvironment.GlobalValues.annualglobalvalueupdate();
+		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	//SHould the FMA be static or an object that then is added to GlobalValues. Keeping it static is also an idea, but then the values
+		Forcast.updateMPEandLPE();									//Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
+}
+
 	//The monthly update
 @ScheduledMethod(start = 0, interval = 1, priority = 1)
 public void monthlymarketschedule() {
@@ -106,24 +115,20 @@ public void obligationsperiodshedule() {
 	
 }
 
-//All annual updates to come below. Currently not in use.
-@ScheduledMethod(start = 0, interval = 12, priority = 2)
-public void annualmarketschedule() {
-	//Priority 2 means that whenever the tick is 12 (annual tick) this will be ran first. If the priority is the same, the order is random. 
-		TheEnvironment.GlobalValues.annualglobalvalueupdate();
-		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	//SHould the FMA be static or an object that then is added to GlobalValues. Keeping it static is also an idea, but then the values
-																	//should be stored.
-		Forcast.updateMPEandLPE();
-}
+//@ScheduledMethod(start = 0, interval = 24, priority = 0)
+//public void projectprocesschedule() {
+//	ParameterWrapper.reinit();
+//	TheEnvironment.GlobalValues.marketshock();
+//	}
 
-//Distributing of Power Plants and Demand Shares
-@ScheduledMethod(start = 0, interval = 24, priority = 0)
-public void projectprocesschedule() {
-	ParameterWrapper.reinit();
-	TheEnvironment.GlobalValues.marketshock();
-	
-	
-	}
+
+
+
+
+
+
+
+
 
 // ========================================================================
 // === Observer Methods ===================================================

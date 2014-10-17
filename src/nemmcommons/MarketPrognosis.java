@@ -85,8 +85,8 @@ public class MarketPrognosis {
 		
 		//Calculates standardeviation based on the magnitude of the price. Creates a random normal distribution and retrives the next double:
 
-		mediumrunpriceexpectations = RandomWrapper.geterroredMPE();
-		longrunpriceexpectatations = RandomWrapper.geterroredLPE();
+		mediumrunpriceexpectations = RandomWrapper.geterroredMPE() +200;
+		longrunpriceexpectatations = RandomWrapper.geterroredLPE() +200;
 		
 	}
 	
