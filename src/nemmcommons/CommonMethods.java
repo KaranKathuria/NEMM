@@ -23,6 +23,7 @@ import nemmenvironment.LRMCCurve.Curvepair;
 import nemmstrategy_shortterm.BuyOffer;
 import nemmstrategy_shortterm.SellOffer;
 import nemmtime.NemmCalendar;
+import nemmtime.NemmTime;
 import repast.simphony.engine.environment.RunState;
 
 public class CommonMethods {
@@ -152,6 +153,7 @@ public static List<CompanyAgent> getCompanyAgenList() {
 	    }
 	}
 	
+
 	// ----------------------------------------------------------------------------
 		
 	// Calculate the difference between two Calendar dates, in hours

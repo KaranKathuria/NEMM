@@ -60,5 +60,10 @@ public class AllVariables {
 	//public static double randomfactorinintialstpriceexpectations = X; //Se market prognoisis constructor
 	//public static double randomfactorininmediummrundpriceexpectations = X; //Se market prognoisis constructor //This two could have the same random numer!
 	
+	//FundamentalMarketAnalysis
+	public static int yearstoendogprojects = 4;
+	public static double maxpricecerts = 1000;
+	public static double RRR = 0.06;
+	
 }
 

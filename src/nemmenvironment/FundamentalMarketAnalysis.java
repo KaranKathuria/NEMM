@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import nemmcommons.AllVariables;
+
 public class FundamentalMarketAnalysis {
 	
 	//List containing all the fundamental price for the years ahead.
@@ -29,7 +31,7 @@ public class FundamentalMarketAnalysis {
 	public static ArrayList<PowerPlant> potentialprojects_copy = new ArrayList<PowerPlant>();						//Auto-generated potential projects
 	public static ArrayList<PowerPlant> allendogenousprojects = new ArrayList<PowerPlant>();	
 	
-	static ArrayList<PowerPlant> tempendogenousprojects = new ArrayList<PowerPlant>();
+	private static ArrayList<PowerPlant> tempendogenousprojects = new ArrayList<PowerPlant>();
 	
 	//For storing the result from historic fundamental market analysis
 	public class HistoricFundamentalMarketAnalysis {
@@ -75,7 +77,7 @@ public class FundamentalMarketAnalysis {
 		
 		//Calcuations begin
 		int currenttick = TheEnvironment.theCalendar.getCurrentTick();
-		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year;							//Gets the current year.
+		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year + TheEnvironment.theCalendar.getStartYear();		//Gets the current year.
 		int numberofyears = 2035 - currentyear + 1;
 		int numberofticksinyear = TheEnvironment.theCalendar.getNumTradePdsInYear();
 		
@@ -85,8 +87,7 @@ public class FundamentalMarketAnalysis {
 			tempendogenousprojects.clear();
 		
 		//For the years before the endogenous projects can be build. In order to  have correct certificatebalane at year = current year + 3.
-			if (i < 3) {
-				
+if (i < AllVariables.yearstoendogprojects) {
 		//Get total demand for the iterated year. 
 		double totalannudemand = 0;
 		for (Region R : TheEnvironment.allRegions) {																	//All regions
@@ -98,7 +99,7 @@ public class FundamentalMarketAnalysis {
 		for (PowerPlant PP : projectsunderconstruction_copy) {
 			if (PP.getstartyear() == currentyear+i) {									 //Currentyear + i is the iterated year. By definition projects are set in operation 1.1 for the start year.
 			PP.setendyear(currentyear+i+14);											 //Setting endyear in order to not count the certificates after 15 years.
-			projectsunderconstruction_copy.remove(PP);
+			//PP.setstatus(1);															 Not needed. No need to remove the realized projects from the projectsunderconstruction_copy as only those with startyear are added. Hence no chance of doublecounting.
 			allPowerPlants_copy.add(PP);
 			}
 		}
@@ -110,6 +111,7 @@ public class FundamentalMarketAnalysis {
 			totalannucertproduction = totalannucertproduction + PP.getestimannualprod();} 								//Starting at year i. Later method returns the calculated normal year production.
 			}
 		
+		int a = allPowerPlants_copy.size();
 		//Calculate the certificatebalance before new investments are made. 
 		certificatebalance = certificatebalance + totalannucertproduction - totalannudemand;
 		//Adds the equilibrium price based on this.
@@ -120,10 +122,9 @@ public class FundamentalMarketAnalysis {
 				temp = TheEnvironment.GlobalValues.currentmarketprice * 1.5;}											//The 1.5 should be set from AllVariables. 
 			
 			equilibriumpricesyearsahead.add(temp);
-	}
-		
+}		
 		//Now the years when LRMCCurve is calculated, as there are no endogenous projects in the next three years.
-			else  {
+else  {
 				
 		double totalannudemand = 0;																						//Demand this year (current + i (>3))
 		for (Region R : TheEnvironment.allRegions) {																	//All regions
@@ -139,45 +140,51 @@ public class FundamentalMarketAnalysis {
 		
 		certificatebalance = certificatebalance - totalannudemand + totalannucertproduction;							//Give the current balance and hence how many new project needs to be realized.
 
-		if (certificatebalance < 0) {												//Just to save time. 
+		if (certificatebalance < 0) {											//Just to save time. No need to create LRMC of the balance is positive.
 			
-		for (PowerPlant PP : allendogenousprojects) {							//All endogenous projects
-			if (PP.getearlieststartyear() == currentyear+i) {						//If they can earliest be finished in time for this year.
-			tempendogenousprojects.add(PP);	}}										//Add all relevant endogenous projects to this list.
-			
-		LRMCCurve yearcurve = new LRMCCurve(currentyear, currentyear+i);			//Calculates the certpriceneeded for all objects in the list and calculates the equilibrium price. 
-		yearcurve.calculatelrmccurve(tempendogenousprojects, certificatebalance); 
+			for (PowerPlant PP : allendogenousprojects) {							//All endogenous projects
+				if (PP.getearlieststartyear() <= currentyear+i) {					//If they can earliest be finished in time for this year.
+			tempendogenousprojects.add(PP);	}}									//Add all relevant endogenous projects to this list.
 		
-		for (PowerPlant PP : tempendogenousprojects) {
-			if (PP.getcertpriceneeded() < yearcurve.getequilibriumprice()) {
-				allendogenousprojects.remove(PP); 									//NOT COMPLETLE SURE THIS WOULD WORK; BUT I THINK SO! ASK Gavin
-				PP.setendyear(currentyear+i+14);									//Just setting the endyear is sufficient for calculating the future certproduction of this plant. 
-				allPowerPlants_copy.add(PP);										//Adds the same powerplant to list of powerplants in production. 
-			}}
-		equilibriumpricesyearsahead.add(yearcurve.getequilibriumprice());			//Stores just the equilibrium price from the LRMC curve. Could be an idea to store the object itself, or the curvepair. 
+		//What if there is a shortcumming and there are no certificate plants available? Needs to be handle
+			if (tempendogenousprojects.size() < 1) {throw new Error("There is no projects that can be finished in order to meet demand");}
+			
+			LRMCCurve yearcurve = new LRMCCurve(currentyear, currentyear+i);		//Calculates the certpriceneeded for all objects in the list and calculates the equilibrium price. 
+			yearcurve.calculatelrmccurve(tempendogenousprojects, certificatebalance); 
+		
+			for (PowerPlant PP : tempendogenousprojects) {
+				if (PP.getcertpriceneeded() < yearcurve.getequilibriumprice()) {
+					allendogenousprojects.remove(PP); 									//NOT COMPLETLE SURE THIS WOULD WORK; BUT I THINK SO! ASK Gavin
+					PP.setendyear(currentyear+i+14);									//Just setting the endyear is sufficient for calculating the future certproduction of this plant. 
+					allPowerPlants_copy.add(PP);										//Adds the same powerplant to list of powerplants in production. 
+					//Remove fom 
+					}}
+			equilibriumpricesyearsahead.add(yearcurve.getequilibriumprice());			//Stores just the equilibrium price from the LRMC curve. Could be an idea to store the object itself, or the curvepair. 
 			}
-		else {
-		equilibriumpricesyearsahead.add(0.0);	//In case there are no shortcommings, the price is set to 0.
-		}	
-		//End of iteration over endouengous years. Could be usefull to store the LRMCCurves. 
-	}			
-	//End of iteration-year iteration.	
-}
-	//THe final operation of FMA: Setting the MPE and LPE. 
-	int MPEcount = 3;
-	while (equilibriumpricesyearsahead.get(MPEcount) < 1 && MPEcount < 8) {
-		MPE = equilibriumpricesyearsahead.get(MPEcount);
-		MPE++;
+		else { //Positive certificate balance.
+			equilibriumpricesyearsahead.add(0.0);}	//In case there are no shortcommings, the price is set to 0.
+		
 	}
+//Ended iteration over endouengous years for all i`s. Store the LRMC curves? 
+}
+	//End of iteration-year iteration.
+	//THe final operation of FMA: Setting the MPE and LPE. 
+	int b = 2;
+	
+	int MPEcount = 3;
+	while (equilibriumpricesyearsahead.get(MPEcount) < 0.1 && MPEcount < 10) {
+		MPE = equilibriumpricesyearsahead.get(MPEcount);
+		MPEcount++;
+	}
+	//Select the Long term fundamental price
 	int LPEcount = 10;
-	while (equilibriumpricesyearsahead.get(LPEcount) < 1 && LPEcount < 15) {
+	while (equilibriumpricesyearsahead.get(LPEcount) < 0.1 && LPEcount < numberofyears-1) {
 		LPE = equilibriumpricesyearsahead.get(LPEcount);
 		LPEcount++;	
 	}
-	
-	LPE = Math.max(equilibriumpricesyearsahead.get(10), equilibriumpricesyearsahead.get(11)); //Set it to the highest price of the 3. or 4. year ahead.
+
 	}
-	
+
 	public static double getMPE() {
 		return MPE;
 	}

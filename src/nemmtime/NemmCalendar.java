@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import nemmcommons.CommonMethods;
 import repast.simphony.engine.environment.RunEnvironment;
 
 public class NemmCalendar {

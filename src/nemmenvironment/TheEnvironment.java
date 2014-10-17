@@ -9,6 +9,7 @@ import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.random.RandomHelper;
 import nemmagents.CompanyAgent;
 import nemmagents.CompanyAgent.ActiveAgent;
+import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
 import nemmcommons.ParameterWrapper;
 import nemmcommons.TickArray;
@@ -212,6 +213,7 @@ public final class TheEnvironment {
 			certificateprice = new TickArray();
 			currentmarketprice = ParameterWrapper.getpriceexpectation();
 			currentinterestrate = ParameterWrapper.getinitialinterestrate();
+			RRR = AllVariables.RRR;
 			producersphysicalposition = 10000;
 			tradersphysicalposition = 0;
 			obligatedpurchasersphysiclaposition = -10000;

@@ -23,7 +23,7 @@ public class RandomWrapper  {
 	private static Random someotherstream = new Random(RandomHelper.nextInt());
 	
 	static Normal erroredMPE = RandomHelper.createNormal(FundamentalMarketAnalysis.getMPE(), AllVariables.stdmediumrunpriceexpect);
-	static Normal erroredLPE = RandomHelper.createNormal(FundamentalMarketAnalysis.getLPE(), AllVariables.stdmediumrunpriceexpect);
+	static Normal erroredLPE = RandomHelper.createNormal(FundamentalMarketAnalysis.getLPE(), AllVariables.stdlongrunpriceexpect);
 
 	private RandomWrapper() {}
 	

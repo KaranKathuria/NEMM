@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
 import nemmstrategy_shortterm.SellOffer;
 
@@ -58,28 +59,29 @@ public class LRMCCurve {
 	public void calculatelrmccurve(ArrayList<PowerPlant> tempendogenousprojects, double certbalance) {
 		certificatebalance = certbalance;
 		
-		if (certificatebalance > 0) { 							// No need for new projects. 
+		if (certificatebalance > 0) { 							// No need for new projects. Thr
 			equilibriumprice = 0;								
 			projectsupplycurve = null;
-			return;
+			throw new Error("No need for new projects when there is access certificates");
+			
 		} else {
 				
-		for (PowerPlant PP : tempendogenousprojects) {																	//Loop creating and adding all relevant project info to the supplycurve.
-			PP.calculateLRMCandcertpriceneeded(yearsahead);																//Calculates the LRMC and needed Certificateprice based on the given year.
+		for (PowerPlant PP : tempendogenousprojects) {			//Loop creating and adding all relevant project info to the supplycurve.
+			PP.calculateLRMCandcertpriceneeded(yearsahead);		//Calculates the LRMC and needed Certificateprice based on the given year.
 			Curvepair cp = new Curvepair(PP.getname(), PP.getLRMC(), PP.getcertpriceneeded(), PP.getestimannualprod());
 			projectsupplycurve.add(cp);
 		}
-		
-		
 		Collections.sort(projectsupplycurve, new CommonMethods.customcurvepaircomparator());		//Sorting the ArrayList from lowest certprie needed to highest cert price needed
 		
 		int index = 0;
 		double newproductionbuilt = 0;
-		while (newproductionbuilt < -certificatebalance) {							//While the newbuiltproduction is not enough to fulfill the shortcommings of certs, take the next project.
+		while (newproductionbuilt < (-certificatebalance) && index < projectsupplycurve.size()) {		// While the newbuiltproduction is not enough to fulfill the shortcommings of certs, take the next project.
 			newproductionbuilt = newproductionbuilt + projectsupplycurve.get(index).getannualcertproduction();
 			equilibriumprice = projectsupplycurve.get(index).getcertpriceneeded();
 			index++;
 		}
+		//IF all are build and there is still not enough.
+		if (newproductionbuilt < (-certificatebalance)){ equilibriumprice = AllVariables.maxpricecerts; } //throw new Error("There is no projects that can be finished in order to meet demand");}
 		
 		//Need to figure out how to draw the curve. 
 		

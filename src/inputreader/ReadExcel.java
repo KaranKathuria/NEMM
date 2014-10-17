@@ -150,7 +150,7 @@ public class ReadExcel {
 					
 					//newregion_ID starts by 1, hence to indexs it we subtract 1.
 					PowerPlant pp = new PowerPlant(newname, TheEnvironment.allRegions.get(newregion_ID-1), newstatus, newcapacity, newloadfactor, newtechnology, newlifetime, newyearstarted, newearlieststartyear, newcapex, newopex, newlearningrate);
-					
+					/* Temp while xls. xlsx problem is ficed.
 					double[] tempproduction = new double[ticks];
 					double[] expproduction = new double[ticks];
 					
@@ -165,7 +165,7 @@ public class ReadExcel {
 					pp.setAllProduction(tempproduction);
 					//Add all expected production to tick array
 					pp.setAllExpectedProduction(expproduction);
-					
+					*/
 					//Setting the powerplant/project to the relevant ArrayList. 
 					if (newstatus == 1) {
 						TheEnvironment.allPowerPlants.add(pp);}
