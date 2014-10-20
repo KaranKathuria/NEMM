@@ -59,7 +59,7 @@ public class LRMCCurve {
 	public void calculatelrmccurve(ArrayList<PowerPlant> tempendogenousprojects, double certbalance) {
 		certificatebalance = certbalance;
 		
-		if (certificatebalance > 0) { 							// No need for new projects. Thr
+		if (certificatebalance > 0) { 							// No need for new projects.
 			equilibriumprice = 0;								
 			projectsupplycurve = null;
 			throw new Error("No need for new projects when there is access certificates");

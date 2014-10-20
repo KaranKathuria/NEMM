@@ -40,8 +40,6 @@ public class SellStrategy1 extends GenericStrategy {
 		numberofmonthsmaxpp = 12; //This means that the maximum pp equalt the next twelve months expected production.
 		floorroofpricemultiplier = 1; //uses floor/roof price
 			
-		int seed = RandomWrapper.getstrategyseed(); //Gets a seed form the strategyseed seedgenerator.
-		Random tacticstream = new Random(seed); //uniq stream for this strategies tactics. 
 
 		
 		//Adds multiple tactics with different values of sbd and discount, and stores them in alltactics
@@ -55,7 +53,7 @@ public class SellStrategy1 extends GenericStrategy {
 			// If yes, we set the initial multiplier values to be random
 			// If not, we distribute the mutiplier values uniformly over the min to max range
 			if (AllVariables.tacticDefaultLearn_PASellStrategy1 > 0) {
-				randomMultStep = tacticstream.nextDouble()*(AllVariables.tacticMaxRestPriceMult_PASellStrategy1-
+				randomMultStep = RandomHelper.nextDouble()*(AllVariables.tacticMaxRestPriceMult_PASellStrategy1-
 						AllVariables.tacticMinRestPriceMult_PASellStrategy1); // between (-0.25 - 0.75) //Initial starting point for the variable bid price. Is changed in the tactic later
 				multRestPrice = AllVariables.tacticMinRestPriceMult_PASellStrategy1+randomMultStep;				
 			}
@@ -77,7 +75,7 @@ public class SellStrategy1 extends GenericStrategy {
 					multRestPrice, AllVariables.tacticDefaultLearn_PASellStrategy1);
 			
 			// Set the step size for the rest price multiplier (used if learning turned on) 
-			multRestPriceStep = tacticstream.nextDouble()*(AllVariables.tacticMaxRestPriceStep_PASellStrategy1 - 
+			multRestPriceStep = RandomHelper.nextDouble()*(AllVariables.tacticMaxRestPriceStep_PASellStrategy1 - 
 					AllVariables.tacticMinRestPriceStep_PASellStrategy1) + AllVariables.tacticMinRestPriceStep_PASellStrategy1;
 			tactic.setdeltapricemultiplier(multRestPriceStep); //Sets this to 0.025 in case only one tactic, but with multiple tactics we have tactics with bigger pricesteps
 			
@@ -87,10 +85,10 @@ public class SellStrategy1 extends GenericStrategy {
 			// And add it to the pile
 			alltactics.add(tactic);
 		}
-		besttactic = alltactics.get(tacticstream.nextInt(numberoftactics));
+		besttactic = alltactics.get(RandomHelper.nextIntFromTo(0,numberoftactics-1));
 		
 		sellofferone = besttactic.getsellofferone();
-		selloffertwo = besttactic.getsellofferone();
+		selloffertwo = besttactic.getselloffertwo();
 		agentsselloffers.add(sellofferone);
 		agentsselloffers.add(selloffertwo);
 

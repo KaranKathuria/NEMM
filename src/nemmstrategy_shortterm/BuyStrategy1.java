@@ -10,6 +10,8 @@ package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import repast.simphony.random.RandomHelper;
 import nemmcommons.AllVariables;
 import nemmcommons.RandomWrapper;
 
@@ -29,20 +31,17 @@ public class BuyStrategy1 extends GenericStrategy {
 		numberofmonthsmaxpp = 12; //This means that the maximum pp equalt the next twelve months expected demand.
 		floorroofpricemultiplier = 1; //Indicates that this strategy uses floor/roof price
 		
-		int seed = RandomWrapper.getstrategyseed(); //Gets a seed form the strategyseed seedgenerator.
-		Random tacticstream = new Random(seed); //uniq stream for this strategies tactics. 
-		
 		//Adds four tactics with differen values of sbd and discount, and stores them in alltactics
 		for (int i = 0; i < numberoftactics; ++i) {
 			double randomshareboughtatdiscount = AllVariables.OPAgentmustsellshare;//(tacticstream.nextDouble());
-			double randomdiscount = (tacticstream.nextDouble()- 0.25); // between -0.25 and 0.75 starting point for the variable offer
+			double randomdiscount = (RandomHelper.nextDouble()- 0.25); // between -0.25 and 0.75 starting point for the variable offer
 			BuyStrategy1Tactic tactic = new BuyStrategy1Tactic(randomshareboughtatdiscount, randomdiscount);
 			tactic.setdeltapricemultiplier(0.025+(i/50)); //Sets this to 0.025 in case only one tactic, but with multiple tactics we have tactics with bigger pricesteps
 			tactic.setmyStrategy(BuyStrategy1.this);
 			alltactics.add(tactic);
 		}
 		
-		besttactic = alltactics.get(tacticstream.nextInt(numberoftactics));
+		besttactic = alltactics.get(RandomHelper.nextIntFromTo(0,numberoftactics-1));
 		
 		buyofferone = new BuyOffer();
 		buyoffertwo = new BuyOffer();

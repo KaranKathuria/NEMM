@@ -85,11 +85,12 @@ public class FundamentalMarketAnalysis {
 				
 		for (int i = 0; i < numberofyears; ++i ) {
 			tempendogenousprojects.clear();
+			double totalannudemand = 0;
+			double totalannucertproduction = 0;
 		
 		//For the years before the endogenous projects can be build. In order to  have correct certificatebalane at year = current year + 3.
 if (i < AllVariables.yearstoendogprojects) {
 		//Get total demand for the iterated year. 
-		double totalannudemand = 0;
 		for (Region R : TheEnvironment.allRegions) {																	//All regions
 			for (int j = 0; j < numberofticksinyear; j++) { 															//All ticks in a year			
 			totalannudemand = totalannudemand + R.getMyDemand().getCertDemand(currenttick+(numberofticksinyear*i)+j); } //TheEnvironment.theCalendar.getCurrentTick()+1;
@@ -98,20 +99,19 @@ if (i < AllVariables.yearstoendogprojects) {
 		//Adding to allPowerPlants from the plants in process that will be finished. Notice that this is done BEFORE the sum annual production to include the ones finished this year.
 		for (PowerPlant PP : projectsunderconstruction_copy) {
 			if (PP.getstartyear() == currentyear+i) {									 //Currentyear + i is the iterated year. By definition projects are set in operation 1.1 for the start year.
-			PP.setendyear(currentyear+i+14);											 //Setting endyear in order to not count the certificates after 15 years.
+			PP.setendyear(Math.min(PP.getlifetime()+currentyear+i-1, currentyear+i+14));	 //Setting endyear in order to not count the certificates after 15 years. And take care of projects in overgangsperioden with lifetime = 1.
 			//PP.setstatus(1);															 Not needed. No need to remove the realized projects from the projectsunderconstruction_copy as only those with startyear are added. Hence no chance of doublecounting.
 			allPowerPlants_copy.add(PP);
 			}
 		}
 		
 		//Get total production from plants i operation, for iterated year. Notie the use of getestimannualprod() and not the exact or expected production. 
-		double totalannucertproduction = 0;																	
+																			
 		for (PowerPlant PP : allPowerPlants_copy) { 																//All operational PP. Notice that this is the original "allPowerPlants".
 			if (PP.getendyear() >= (currentyear+i) ) {																	//Only count certificates when the plant is eligable. 
 			totalannucertproduction = totalannucertproduction + PP.getestimannualprod();} 								//Starting at year i. Later method returns the calculated normal year production.
 			}
 		
-		int a = allPowerPlants_copy.size();
 		//Calculate the certificatebalance before new investments are made. 
 		certificatebalance = certificatebalance + totalannucertproduction - totalannudemand;
 		//Adds the equilibrium price based on this.
@@ -125,25 +125,33 @@ if (i < AllVariables.yearstoendogprojects) {
 }		
 		//Now the years when LRMCCurve is calculated, as there are no endogenous projects in the next three years.
 else  {
-				
-		double totalannudemand = 0;																						//Demand this year (current + i (>3))
+		//First add up demand and production already given for this year.
 		for (Region R : TheEnvironment.allRegions) {																	//All regions
 			for (int j = 0; j < numberofticksinyear; j++) { 															//All ticks in a year			
 			totalannudemand = totalannudemand + R.getMyDemand().getCertDemand(currenttick+(numberofticksinyear*i)+j);}} //TheEnvironment.theCalendar.getCurrentTick()+1;
 		
+		//IT might seem to strange to include this exougenous in the endougenous loop, but this is because THema defines projects other then Wind to be exougneous.
+		for (PowerPlant PP : projectsunderconstruction_copy) {
+			if (PP.getstartyear() == currentyear+i) {									 //Currentyear + i is the iterated year. By definition projects are set in operation 1.1 for the start year.
+			PP.setendyear(Math.min(PP.getlifetime()+currentyear+i-1, currentyear+i+14));	 //Setting endyear in order to not count the certificates after 15 years. And take care of projects in overgangsperioden with lifetime = 1.
+			//PP.setstatus(1);															 Not needed. No need to remove the realized projects from the projectsunderconstruction_copy as only those with startyear are added. Hence no chance of doublecounting.
+			allPowerPlants_copy.add(PP);
+			}
+		}
+		
 		//Get total production from plants i operation, for iterated year.
-		double totalannucertproduction = 0;																	
 		for (PowerPlant PP : allPowerPlants_copy) { 																//All operational PP. Notice that this is the original "allPowerPlants".
 			if (PP.getendyear() >= (currentyear+i) ) {																	//Only count certificates when the plant is eligable. 
-			totalannucertproduction = totalannucertproduction + PP.getestimannualprod();} 								//Starting at year i. Later method returns the calculated normal year production.
+			totalannucertproduction = totalannucertproduction + PP.getestimannualprod();} 						//Starting at year i. Later method returns the calculated normal year production.
 			}
 		
-		certificatebalance = certificatebalance - totalannudemand + totalannucertproduction;							//Give the current balance and hence how many new project needs to be realized.
-
+		certificatebalance = certificatebalance - totalannudemand + totalannucertproduction;						//Give the current balance and hence how many new project needs to be realized.
+		
+		//Then if there is a shortcoming. 
 		if (certificatebalance < 0) {											//Just to save time. No need to create LRMC of the balance is positive.
 			
-			for (PowerPlant PP : allendogenousprojects) {							//All endogenous projects
-				if (PP.getearlieststartyear() <= currentyear+i) {					//If they can earliest be finished in time for this year.
+			for (PowerPlant PP : allendogenousprojects) {						//All endogenous projects
+				if (PP.getearlieststartyear() <= currentyear+i) {				//If they can earliest be finished in time for this year.
 			tempendogenousprojects.add(PP);	}}									//Add all relevant endogenous projects to this list.
 		
 		//What if there is a shortcumming and there are no certificate plants available? Needs to be handle
@@ -169,19 +177,28 @@ else  {
 }
 	//End of iteration-year iteration.
 	//THe final operation of FMA: Setting the MPE and LPE. 
-	int b = 2;
+	int at = equilibriumpricesyearsahead.size();
+	ArrayList<Double> test = new ArrayList<Double>();
+	test = equilibriumpricesyearsahead;
 	
-	int MPEcount = 3;
-	while (equilibriumpricesyearsahead.get(MPEcount) < 0.1 && MPEcount < 10) {
+	int MPEcount = 2;  //Startingpoint year for Medium term price
+	MPE = 0;
+	LPE = 0;
+	while ((MPE < 0.1) && MPEcount < 9) {
 		MPE = equilibriumpricesyearsahead.get(MPEcount);
 		MPEcount++;
 	}
 	//Select the Long term fundamental price
-	int LPEcount = 10;
-	while (equilibriumpricesyearsahead.get(LPEcount) < 0.1 && LPEcount < numberofyears-1) {
-		LPE = equilibriumpricesyearsahead.get(LPEcount);
-		LPEcount++;	
+	double temp=0;
+	int LPEcount = 12;	//Startingpoint year for Long term price
+	for (int k = 2; k < LPEcount; k++) {
+		if(equilibriumpricesyearsahead.get(k) > LPE){
+		temp = equilibriumpricesyearsahead.get(k);}
+		LPE = temp;
 	}
+	
+	double m = MPE;
+	double l = LPE;
 
 	}
 

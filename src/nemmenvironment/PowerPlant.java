@@ -242,6 +242,9 @@ public class PowerPlant implements Cloneable{
 	public int getearlieststartyear() {
 		return earlieststartyear;
 	}
+	public int getlifetime() {
+		return lifetime;
+	}
 	public double getestimannualprod() {
 		return this.loadfactor*this.capacity*8760;
 	}

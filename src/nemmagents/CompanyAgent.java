@@ -166,7 +166,15 @@ public class CompanyAgent extends ParentAgent {
 		}
 	}
 	
-//Inner class CompanyAnalysisAgent. This agent consist of two other objects. MarketAnalysisAgent and VolumeAnalysisAgent. THe latter is an inner subclass.
+	////DeveloperAgent defined as inner class of CompanyAgent in order to have access to company specific data.
+	public class DeveloperAgent extends ParentAgent {
+		
+		//Should have som referances or list to projects in the different stages of developement
+		//A Company/agents specific limit to number of projects in each "bukket". 
+		private int developmentcriteriaflag; 			//Flag indicationg the development criteria for the DA. 1 = The project must fullfill RRR with prognosed price 2 = The project must fullfill RRR with todays price. 3 = The project must fullfill RRR with both price 
+	}
+	
+	//Inner class CompanyAnalysisAgent. This agent consist of two other objects. MarketAnalysisAgent and VolumeAnalysisAgent. THe latter is an inner subclass.
 	public class CompanyAnalysisAgent extends ParentAgent {
 			
 			//Nested inner class VolumeAnalysisAgent

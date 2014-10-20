@@ -46,7 +46,6 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 		double retVal = 0;
 		switch (flagUtilityFunction){
 		case 1:
-			
 			retVal = UtilFctn_VolOnly( marketprice, s, shareofmarginaltoffersold);
 			double[] retArray = new double[1];
 			retArray[0] = retVal;
@@ -60,7 +59,7 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 			}			
 
 		case 2:
-			retList = UtilFctn_ExpReturn( marketprice, s, shareofmarginaltoffersold);	
+			//retList = UtilFctn_ExpReturn( marketprice, s, shareofmarginaltoffersold);	
 		}
 		return retList;
 	}	

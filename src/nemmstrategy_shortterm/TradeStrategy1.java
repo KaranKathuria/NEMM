@@ -35,15 +35,13 @@ public class TradeStrategy1 extends GenericStrategy {
 		strategyname = "TradeStrategy1";
 		strategyutilityscore.add(0.0);
 		numberoftactics = AllVariables.numberoftacticsTraderStrategy1;
-		int seed = RandomWrapper.getstrategyseed(); //Gets a seed form the strategyseed seedgenerator.
-		Random tacticstream = new Random(seed); //uniq stream for this strategies tactics. 
 		maximumshortpos = AllVariables.tradermaximumshortpos;
 		maximumlongpos = AllVariables.tradermaximumlongpos;
 		
 		//Adds four tactics with differen values of discount and premium. This is less sophisticated. 
 		for (int i = 0; i < numberoftactics; ++i) {
-			double randompremium = ((tacticstream.nextDouble())-0.3)/2; // Gives a random number between -0.1.5 and 0.35
-			double randomdiscount = ((tacticstream.nextDouble())-0.3)/2; //Gives a random number between -0.1.5 and 0.35
+			double randompremium = ((RandomHelper.nextDouble())-0.3)/2; // Gives a random number between -0.1.5 and 0.35
+			double randomdiscount = ((RandomHelper.nextDouble())-0.3)/2; //Gives a random number between -0.1.5 and 0.35
 			//Special case ensuring that a trader does not offers a sellprice lower than buy price
 			while ((1+randompremium) < (1-randomdiscount)) {
 				randompremium = randompremium + 0.01;
@@ -54,7 +52,7 @@ public class TradeStrategy1 extends GenericStrategy {
 			alltactics.add(tactic);
 		}
 		
-		besttactic = alltactics.get(tacticstream.nextInt(numberoftactics)); //Randomly selects the initial best strategy.
+		besttactic = alltactics.get(RandomHelper.nextIntFromTo(0, numberoftactics-1)); //Randomly selects the initial best strategy.
 		
 		sellofferone = new SellOffer();
 		selloffertwo = new SellOffer();
