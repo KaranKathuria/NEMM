@@ -19,8 +19,12 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellValue;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,7 +50,7 @@ public class ReadExcel {
  
 
  	public static void InitReadExcel() {
- 		filePath = working_directory + File.separator + "NEMM_realdata.xls"; 
+ 		filePath = working_directory + File.separator + "NEMM_realdata.xlsx"; 
  	}
  
 	public static void ReadExcel() {}
@@ -54,10 +58,11 @@ public class ReadExcel {
 	public static void ReadCreateTime() {
 				
 		try{      
-			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(filePath));	
+			
+			Workbook workbook = WorkbookFactory.create(new POIFSFileSystem (new FileInputStream(filePath)));
 			
 			// Read number of plants and technologies
-			HSSFSheet ctr_sheet = workbook.getSheet("Control");
+			Sheet ctr_sheet = workbook.getSheet("Control");
 			startyear = (int) ctr_sheet.getRow(8).getCell(2).getNumericCellValue();
 			endyear = (int) ctr_sheet.getRow(9).getCell(2).getNumericCellValue();
 			numobpdinyear = (int) ctr_sheet.getRow(10).getCell(2).getNumericCellValue();
@@ -80,7 +85,7 @@ public class ReadExcel {
 			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(filePath));	
 			
 			// Read number of plants and technologies
-			HSSFSheet ctr_sheet = workbook.getSheet("Control");
+			Sheet ctr_sheet = workbook.getSheet("Control");
 			//plantsnumber = (int) ctr_sheet.getRow(2).getCell(2).getNumericCellValue();
 			//technologiesnumber = (int) ctr_sheet.getRow(3).getCell(2).getNumericCellValue();
 			regionsnumber = (int) ctr_sheet.getRow(4).getCell(2).getNumericCellValue();		
@@ -97,10 +102,10 @@ public class ReadExcel {
 			
 			//Starts reading in the regions MarketDemand and MarketSeries objects consisting of only certdemand and powerPrice
 			
-			HSSFSheet certdemand_sheet = workbook.getSheet("Certificate demand");	
-			HSSFSheet expectedcertdemand_sheet = workbook.getSheet("Expected certdemand");	
+			Sheet certdemand_sheet = workbook.getSheet("Certificate demand");	
+			Sheet expectedcertdemand_sheet = workbook.getSheet("Expected certdemand");	
 			//HSSFSheet powerDemand_sheet = workbook.getSheet("powerDemand");
-			HSSFSheet powerPrice_sheet = workbook.getSheet("Power price");
+			Sheet powerPrice_sheet = workbook.getSheet("Power price");
 			
 			for(int j = 0; j < regionsnumber; j++){
 				double[] tempcertdem = new double[ticks];
@@ -129,9 +134,9 @@ public class ReadExcel {
 				HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(filePath));	
 	
 				// Read plant data
-				HSSFSheet plant_sheet = workbook.getSheet("PowerPlants");	   
-				HSSFSheet production_sheet = workbook.getSheet("Production");
-				HSSFSheet expproduction_sheet = workbook.getSheet("Expected production");
+				Sheet plant_sheet = workbook.getSheet("PowerPlants");	   
+				Sheet production_sheet = workbook.getSheet("Production");
+				Sheet expproduction_sheet = workbook.getSheet("Expected production");
 				//plants = new PowerPlant[plantsnumber];
 
 				for(int j = 0; j < plantsnumber; j++){

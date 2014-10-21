@@ -169,9 +169,18 @@ public class CompanyAgent extends ParentAgent {
 	////DeveloperAgent defined as inner class of CompanyAgent in order to have access to company specific data.
 	public class DeveloperAgent extends ParentAgent {
 		
-		//Should have som referances or list to projects in the different stages of developement
-		//A Company/agents specific limit to number of projects in each "bukket". 
+		private CompanyAgent companyagent;
 		private int developmentcriteriaflag; 			//Flag indicationg the development criteria for the DA. 1 = The project must fullfill RRR with prognosed price 2 = The project must fullfill RRR with todays price. 3 = The project must fullfill RRR with both price 
+		private ArrayList<PowerPlant> myprojects;		//List of all projects owned by the agent regardless of project stage.
+		private int numberofidentificationprocess;		//The agents maximum number of projects that can be identifyed each year. Thats from the potential list.
+		private int numberofprocess;					//The DAs maximum number of projects it can take form the identifyed list over to processing. 
+		private int numberofconstruction;				//Number of projects it can have under construction simultaniasly.
+		private double shareofprojectresourcesinNorway;	//Currently not in use. Should be more generic as the model could in the future need several regions. THis does not support this. 
+		
+		
+		public DeveloperAgent() {
+			companyagent = this.companyagent;
+		}
 	}
 	
 	//Inner class CompanyAnalysisAgent. This agent consist of two other objects. MarketAnalysisAgent and VolumeAnalysisAgent. THe latter is an inner subclass.

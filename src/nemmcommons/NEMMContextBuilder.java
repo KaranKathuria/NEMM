@@ -13,14 +13,13 @@ import repast.simphony.context.DefaultContext;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import nemmagents.CompanyAgent;
-import nemmagents.ParentAgent;
 import nemmenvironment.FundamentalMarketAnalysis;
 import nemmenvironment.TheEnvironment;
+import nemmprocesses.DistributeProjectsandPowerPlants;
 import nemmprocesses.Forcast;
 import nemmprocesses.ShortTermMarket;
 import nemmprocesses.UpdatePhysicalPosition;
 import nemmprocesses.UtilitiesStrategiesTactics;
-import nemmprocesses.DistributePowerPlants;
 import nemmprocesses.DistributeDemandShares;
 import static nemmcommons.ParameterWrapper.*;
 
@@ -64,7 +63,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	//The annual update of the project process as descried in the model specification. 
 @ScheduledMethod(start = 0, priority = 3)
 	public void Distributions() {
-	DistributePowerPlants.distributeallpowerplants();
+	DistributeProjectsandPowerPlants.distributeallpowerplants();
 	DistributeDemandShares.Uniformdemanddistribution(10, 10);	//Distributes the regional demand between the agents in each region. 
 	Forcast.initiatevolumeprognosis(); 							//Set the Company agents analysis agents, volume analysisagents prognosis of demand and production.	
 }
