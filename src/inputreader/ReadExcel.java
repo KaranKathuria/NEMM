@@ -14,17 +14,18 @@ import nemmenvironment.Region;
 import nemmenvironment.TheEnvironment;
 import nemmtime.NemmCalendar;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
+//import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+
+
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,8 +48,7 @@ public class ReadExcel {
 	 private static int numtrpdinyear;
 	 private static PowerPlant[] plants;
 	 private static String filePath;
- 
-
+	 
  	public static void InitReadExcel() {
  		filePath = working_directory + File.separator + "NEMM_realdata.xlsx"; 
  	}
@@ -59,7 +59,8 @@ public class ReadExcel {
 				
 		try{      
 			
-			Workbook workbook = WorkbookFactory.create(new POIFSFileSystem (new FileInputStream(filePath)));
+			Workbook workbook = new XSSFWorkbook();
+			workbook = WorkbookFactory.create(new POIFSFileSystem (new FileInputStream(filePath)));
 			
 			// Read number of plants and technologies
 			Sheet ctr_sheet = workbook.getSheet("Control");
@@ -82,7 +83,7 @@ public class ReadExcel {
 	public static void ReadRegions() {
 				
 		try{      
-			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(filePath));	
+			Workbook workbook = WorkbookFactory.create(new POIFSFileSystem (new FileInputStream(filePath)));	
 			
 			// Read number of plants and technologies
 			Sheet ctr_sheet = workbook.getSheet("Control");
@@ -92,7 +93,7 @@ public class ReadExcel {
 			
 			// Read regions
 			//Creates an array of regions wiht the length given in the excel and adds reagions to this array of regions. 
-			HSSFSheet list_sheet = workbook.getSheet("Lists");	
+			Sheet list_sheet = workbook.getSheet("Lists");	
 			//regions = new Region[regionsnumber];
 			for(int i = 0; i < regionsnumber; i++){
 				String newregionName = list_sheet.getRow(2+i).getCell(5).getStringCellValue(); 
@@ -104,7 +105,7 @@ public class ReadExcel {
 			
 			Sheet certdemand_sheet = workbook.getSheet("Certificate demand");	
 			Sheet expectedcertdemand_sheet = workbook.getSheet("Expected certdemand");	
-			//HSSFSheet powerDemand_sheet = workbook.getSheet("powerDemand");
+			Sheet powerDemand_sheet = workbook.getSheet("powerDemand");
 			Sheet powerPrice_sheet = workbook.getSheet("Power price");
 			
 			for(int j = 0; j < regionsnumber; j++){
@@ -131,13 +132,12 @@ public class ReadExcel {
 		public static void ReadPowerPlants() {
 						
 			try{      	
-				HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(filePath));	
-	
+				Workbook workbook = WorkbookFactory.create(new POIFSFileSystem (new FileInputStream(filePath)));
+				
 				// Read plant data
 				Sheet plant_sheet = workbook.getSheet("PowerPlants");	   
 				Sheet production_sheet = workbook.getSheet("Production");
 				Sheet expproduction_sheet = workbook.getSheet("Expected production");
-				//plants = new PowerPlant[plantsnumber];
 
 				for(int j = 0; j < plantsnumber; j++){
 					String newname = plant_sheet.getRow(3+j).getCell(1).getStringCellValue();
@@ -155,7 +155,7 @@ public class ReadExcel {
 					
 					//newregion_ID starts by 1, hence to indexs it we subtract 1.
 					PowerPlant pp = new PowerPlant(newname, TheEnvironment.allRegions.get(newregion_ID-1), newstatus, newcapacity, newloadfactor, newtechnology, newlifetime, newyearstarted, newearlieststartyear, newcapex, newopex, newlearningrate);
-					/* Temp while xls. xlsx problem is ficed.
+					
 					double[] tempproduction = new double[ticks];
 					double[] expproduction = new double[ticks];
 					
@@ -170,7 +170,7 @@ public class ReadExcel {
 					pp.setAllProduction(tempproduction);
 					//Add all expected production to tick array
 					pp.setAllExpectedProduction(expproduction);
-					*/
+					
 					//Setting the powerplant/project to the relevant ArrayList. 
 					if (newstatus == 1) {
 						TheEnvironment.allPowerPlants.add(pp);}
