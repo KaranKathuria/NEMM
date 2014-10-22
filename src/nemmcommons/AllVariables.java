@@ -51,8 +51,12 @@ public class AllVariables {
 	public static int tacticDefaultLearn_PASellStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
 	public static double tacticDefaultMustSellShare_PASellStrategy1 = 0.5; // Default must sell share for the producer tactics (if used)
 	public static double tacticDefaultMustSellPriceMult_PASellStrategy1 = 0.5;  // Default must sell price multiplier for the producer tactics (if used)
+	public static double tacticMinMustSellPriceMult_PASellStrategy1 = 0.5;
+	public static double tacticMaxMustSellPriceMult_PASellStrategy1 = 0.5;
+	public static int tacticNumMustSellSteps_PASellStrategy1 = 1;
 	public static double tacticMinRestPriceMult_PASellStrategy1 = 0.5; // Specify the multiplier range
 	public static double tacticMaxRestPriceMult_PASellStrategy1 = 1.5;
+	public static int tacticNumRestSteps_PASellStrategy1 = 11;
 	public static int numTactics_PASellStrategy1 = 11; // The number of tactics to make
 	public static double tacticMinRestPriceStep_PASellStrategy1 = 0.025; // Step size range for the multiplier if learning is used
 	public static double tacticMaxRestPriceStep_PASellStrategy1 = 0.025;
