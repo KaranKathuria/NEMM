@@ -86,7 +86,6 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		if (physicalposition >= 0){
 			physicalposition = -0.0;} //To ensure that we dont get crazy bids.  
 		
-		parameterLearning(); // GJB LEARNING
 		updateinputvalues();
 		
 		tacticbuyoffers.clear();

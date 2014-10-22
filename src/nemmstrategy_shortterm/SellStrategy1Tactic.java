@@ -42,6 +42,8 @@ public class SellStrategy1Tactic extends GenericTactic {
 	private SellOffer offerRestVol;
 	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 	
 	private ArrayList<double[]> curUtility; // stores the utilities for the latest offers
+
+// ---- CONSTRUCTORS
 	
     //Default constructor.
 	SellStrategy1Tactic() {}
@@ -62,35 +64,49 @@ public class SellStrategy1Tactic extends GenericTactic {
 		maxoffervolumemultiplier = multOfferVol; //Indicates how much the maximum offer volume compared is to last ticks production.
 		// Create the curUtility array list to store utilities
 		// The first item is the utility info for the must sell
-		// The second item is the utility infor for the rest volume
-		// The utilities are set to new arrays of length 3 - this is just temporary as they will
+		// The second item is the utility info for the rest volume
+		// Two null utilities are added - this is just temporary as they will
 		// be replaced by the utility function if they are required
 		curUtility = new ArrayList<double[]>();
 		curUtility.add(null);
 		curUtility.add(null);
 	}
 	
-	private SellOffer createMustSellVolOffer(double expectedprice, double physicalposition,double lasttickproduction) {
-		SellOffer ret = new SellOffer();
-		ret.setselloffervol(Math.max(paramMustSellShare*lasttickproduction,physicalposition-maxppvolume)); //equals must sell
-		ret.setsellofferprice(paramMustSellPriceMult*expectedprice);
-		if (lasttickproduction == 0) {
-			ret = null;
-		}
-		return ret;
-		}
+// ---- GETS & SETS	
+	
+	public SellOffer getsellofferone() {
+		return offerMustSellVol;}
+	
+	public SellOffer getselloffertwo() {
+		return offerRestVol;}
+	
+	public ArrayList<SellOffer> gettacticselloffers() {
+		return tacticselloffers;}
+	
+// ---- UPDATE THE TACTIC SELL OFFERS	
+	
+	public void updatetacticselloffers() {
+		double physicalnetposition = this.getmyStrategy().getmyAgent().getphysicalnetposition();
+		double expectedprice = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getstpriceexpectation();
+		double lasttickproduction = this.getmyStrategy().getmyAgent().getlasttickproduction();
 		
-		//In case of no last production the must sell volume is zero, but we still have a variable volume!
-	private SellOffer createRestVolOffer(double expectedprice, double physicalposition,double lasttickproduction) {
-		double mustsell = (Math.max(paramMustSellShare*lasttickproduction, physicalposition-maxppvolume));
-		SellOffer ret = new SellOffer();
-		ret.setselloffervol(Math.max(0.0,Math.min(maxoffervolume-mustsell,physicalposition-mustsell))); //rest of the monthly production sold at expected price.
-		ret.setsellofferprice(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice)); //Prices not symmetric around expected price with must of the volume tried sold at at premium (1+discount)*expt.
-		if (physicalposition == 0) {
-			ret = null;
-		}
-		return ret;
-		}
+		if (physicalnetposition <= 0){
+			physicalnetposition = 0.0;} //To not get crazy selloffers
+		
+		
+//		parameterLearning(); // Remove this (GJB)
+		updateinputvalues();
+		
+		// Delete the previous sell offers stored in the tacticselloffers arraylist
+		tacticselloffers.clear();
+		// Calculate the sell offers
+		offerMustSellVol = createMustSellVolOffer(expectedprice,physicalnetposition,lasttickproduction);
+		double mustsellvol = offerMustSellVol.getnumberofcert();
+		offerRestVol = createRestVolOffer(expectedprice,physicalnetposition, lasttickproduction, mustsellvol);
+		// Store the sell offers in the tacticselloffers arraylist
+		tacticselloffers.add(offerMustSellVol);
+		tacticselloffers.add(offerRestVol);
+	}
 	
 	public void updateinputvalues() { //Calculates and updates the floorroofprice based on the agents risk adjusted rate and the risk free rate and the market prognosis future pric
 		double twoyearahead;
@@ -104,57 +120,96 @@ public class SellStrategy1Tactic extends GenericTactic {
 		
 	}
 	
-	public void updatetacticselloffers() {
-		double physicalnetposition = this.getmyStrategy().getmyAgent().getphysicalnetposition();
-		double expectedprice = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getstpriceexpectation();
-		double lasttickproduction = this.getmyStrategy().getmyAgent().getlasttickproduction();
+	private SellOffer createMustSellVolOffer(double expectedprice, double physicalposition,double lasttickproduction) {
+		SellOffer ret = new SellOffer();
+		// Must sell is set to the maximum of the must sell share * last ticks production, and the difference between
+		// the physical position and the desired/target max physical position
+		ret.setselloffervol(Math.max(paramMustSellShare*lasttickproduction,physicalposition-maxppvolume)); //equals must sell
+		ret.setsellofferprice(paramMustSellPriceMult*expectedprice);
+		if (lasttickproduction == 0) {
+			ret = null;
+		}
+		return ret;
+		}
 		
-		if (physicalnetposition <= 0){
-			physicalnetposition = 0.0;} //To not get crazy selloffers
-		
-		
-		parameterLearning(); //Takes bids and utilities form last time and alters the price of the variable bid
-		updateinputvalues();
-		
-		tacticselloffers.clear();
-		offerMustSellVol = createMustSellVolOffer(expectedprice,physicalnetposition,lasttickproduction);
-		offerRestVol = createRestVolOffer(expectedprice,physicalnetposition, lasttickproduction);
-		tacticselloffers.add(offerMustSellVol);
-		tacticselloffers.add(offerRestVol);
-	}
+		//In case of no last production the must sell volume is zero, but we still have a variable volume!
+	private SellOffer createRestVolOffer(double expectedprice, double physicalposition,double lasttickproduction, double mustsell) {
+		// Should replace this with using the already calculated must sell
+		SellOffer ret = new SellOffer();
+		ret.setselloffervol(Math.max(0.0,Math.min(maxoffervolume-mustsell,physicalposition-mustsell))); //rest of the monthly production sold at expected price.
+		ret.setsellofferprice(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice)); //Prices not symmetric around expected price with must of the volume tried sold at at premium (1+discount)*expt.
+		if (physicalposition == 0) {
+			ret = null;
+		}
+		return ret;
+		}
+	
+// ---- TACTIC MEMORY	
 	
 	public void addtactichistory() {
+		// Store the sell offers for each tick
 		HistoricTacticValue a = new HistoricTacticValue();
 		a.tacticsbuyoffers = null;
 		a.tacticselloffers = tacticselloffers;
 		a.tacticutilityscore = tacticutilityscore;
 		a.tickID = TheEnvironment.theCalendar.getCurrentTick();
 		historictacticvalues.add(a);}
-	
-	public SellOffer getsellofferone() {
-		return offerMustSellVol;}
-	
-	public SellOffer getselloffertwo() {
-		return offerRestVol;}
-	
-	public ArrayList<SellOffer> gettacticselloffers() {
-		return tacticselloffers;}
 
+// ---- UTILITY CALCULATIONS
+	
 	public void UpdateUtilityScore() {
 		
 		ArrayList<double[]> retUtility;
 		int i;
-		int numBids;
+		int numOffers;
 		
 		// Check that the tacticselloffers and the utility arraylists are the same size
 		if(tacticselloffers.size()!=curUtility.size()) {
 			throw new IllegalArgumentException("DEBUG(UpdateUtilityScore: tacticseloffers and curUtility are different sizes.");
 		}
-		numBids = tacticselloffers.size();
-		// Append the utility to the current sell offers
+		numOffers = tacticselloffers.size();
+		// Append the (previous tick's) utility to the current sell offers
+		// Reason: in case the utility function needs to use the previous utility
+		// values in calculating the utility for the current tick
 		// Am using clone so that we get a copy, not a reference
 		// If there is no sell offer (it is null) then we skip this
-		for(i = 0; i<numBids; i++) {
+		addUtilitiesToOffers(numOffers);
+
+		// Calculate the utility for the current tick, using the utility function for the agent
+		
+		 retUtility = myStrategy.myAgent.getutilitymethod().CalcUtilityWithHistory(ShortTermMarket.getcurrentmarketprice(), tacticselloffers, ShortTermMarket.getshareofmarignaloffersold());
+		 // Check that retUtility is returned with size = numBids
+		if(retUtility.size()!=numOffers) {
+				throw new IllegalArgumentException("DEBUG(UpdateUtilityScore: Returned utility not expected size");
+		}
+		 
+		// Store the returned utility if there is an offer and a non-null utility returned, otherwise just keep the 
+		// existing utility	
+		for(i = 0; i<numOffers; i++) {
+			if(tacticselloffers.get(i) != null && retUtility.get(i) != null) {
+				curUtility.set(i, retUtility.get(i).clone());
+			}
+		}
+		
+		// Add the calculated utility (that is, the utility for this tick) to each of the tick's offers
+		// This will replace the previous tick's utility (stored above)
+		addUtilitiesToOffers(numOffers);
+		
+		// Calculate the total utility score for the set of offers (use the first item in the utility arrays)
+		// Note: the default if all utilities are null (this can occur if there have been no bids so far) is 0
+		double calcUtil = 0.0;
+		for(i = 0; i<numOffers; i++) {
+			if(curUtility.get(i)!=null) {
+				calcUtil = calcUtil + curUtility.get(i)[0];
+			}		
+		}
+		// Update to tactic's current total utility score
+		updatetacticutilityscore(calcUtil);
+	}
+	
+	private void addUtilitiesToOffers(int numOffers) {
+		int i;
+		for(i = 0; i<numOffers; i++) {
 			if(tacticselloffers.get(i) != null) {
 				if(curUtility.get(i)!=null){
 					tacticselloffers.get(i).setOfferUtility(curUtility.get(i).clone());
@@ -165,35 +220,9 @@ public class SellStrategy1Tactic extends GenericTactic {
 					
 			}
 		}
-
-		// Calculate the utility using the utility function for the agent
-		
-		 retUtility = myStrategy.myAgent.getutilitymethod().CalcUtilityWithHistory(ShortTermMarket.getcurrentmarketprice(), tacticselloffers, ShortTermMarket.getshareofmarignaloffersold());
-		 // Check that retUtility is returned with size = numBids
-		if(retUtility.size()!=numBids) {
-				throw new IllegalArgumentException("DEBUG(UpdateUtilityScore: Returned utility not expected size");
-		}
-		 
-		// store the returned utility if there is an offer and a non-null utility returned, otherwise just keep the 
-		// existing utility	
-		for(i = 0; i<numBids; i++) {
-			if(tacticselloffers.get(i) != null && retUtility.get(i) != null) {
-				curUtility.set(i, retUtility.get(i).clone());
-			}
-		}
-		
-		// Save the total utility score for the set of offers (use the first item in the utility arrays)
-		// Note: the default if all utilities are null (this can occur if there have been no bids so far) is 0
-		double calcUtil = 0.0;
-		for(i = 0; i<numBids; i++) {
-			if(curUtility.get(i)!=null) {
-				calcUtil = calcUtil + curUtility.get(i)[0];
-			}		
-		}
-		// Update
-		updatetacticutilityscore(calcUtil);
 	}
 	
+// ---- PARAMETER LEARNING
 	
 	private void parameterLearning() {
 		// Call the appropriate learning method

@@ -29,13 +29,8 @@ public class UtilitiesStrategiesTactics {
 				double bestutilityscore = -90000000; //Quicfix as utilities can be 0
 				for (GenericTactic tactic : strategy.getalltactics()) { 
 					double totalutilityscore = 0;
-					//Use the agents utilitymethod to calculate each tactics utility
-//					temputilityscore = agent.getutilitymethod().calculateutility(ShortTermMarket.getcurrentmarketprice(), tactic.gettacticbuyoffers(), tactic.gettacticselloffers(), ShortTermMarket.getshareofmarignaloffersold(), ShortTermMarket.getshareofmarignalofferbought());
-					//Updates that tactics utility
-//					tactic.updatetacticutilityscore(temputilityscore);
-					tactic.UpdateUtilityScore();
-					//Adds the tactics new current buy/sell-offers and utility to the tactichistoricvalues arrays.
-					tactic.addtactichistory(); 
+					// Update the tactic
+					tactic.updateTactic();
 					//Updates the strategies best tactic based on which of that strategies tactics has the highest score. 
 					for (int i = 0; i < Math.min(AllVariables.numofhistutilitiesincluded, TheEnvironment.theCalendar.getCurrentTick()+1);++i) {
 						totalutilityscore = totalutilityscore + tactic.gettacticutilityscore(AllVariables.numofhistutilitiesincluded)[i][1];

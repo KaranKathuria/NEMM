@@ -30,16 +30,24 @@ public class GenericTactic {
 	
 	//This class could have had all the selloffers and buyoffers form the respective tactics...
 	
+// ---- INNER CLASSES
 	
 	protected class HistoricTacticValue {
-		 
+		 	// The tactic's memory - used to store buy & sell offers and utility scores
 			protected ArrayList<BuyOffer> tacticsbuyoffers;
 			protected ArrayList<SellOffer> tacticselloffers; //with fixed length given as a parameter. 
 			protected double tacticutilityscore;
 			protected int tickID;
 	 }
+	
+// ---- CONSTRUCTOR	
 	 
 	public GenericTactic() {};
+	
+// -- GETS & SETS	
+	
+	public ArrayList<HistoricTacticValue> gethistorictacticvalues() {
+		return historictacticvalues;}
 	
 	public BuyOffer getbuyofferone() {return null;} //All these methods are overridden by the respective subtactics hence they do return something
 	public BuyOffer getbuyoffertwo() {return null;}
@@ -59,22 +67,45 @@ public class GenericTactic {
 		return myStrategy;
 	}
 	
-	public void updatetacticselloffers() {};
-	public void updatetacticbuyoffers() {};
-	public void updatetactictradeoffers() {};
-	public void updatetacticutilityscore(double t) {tacticutilityscore = t;};
-	public void addtactichistory() {};
 	public void setdeltapricemultiplier(double t) {
 		deltapricemultiplier = t;
 	}
+	
+//	public double gettacticutilityscore() {return tacticutilityscore;}
+	
+// ---- COMPLETELY UPDATE THE TACTIC
+	
+	// Performs all updating for the tactic, including
+	//  -- Calculating the utility
+	//  -- Parameter learning
+	//  -- Stores the current bids & offers in the tactics memory
+	// This will be called by the strategy when it wants the tactic to be updated (that is, every tick)
+	public void updateTactic() {
+		UpdateUtilityScore();
+		parameterLearning();
+		addtactichistory();
+	};
+	
+// ---- UPDATE OFFERS AND BIDS	
+	
+	public void updatetacticselloffers() {};
+	public void updatetacticbuyoffers() {};
+	public void updatetactictradeoffers() {};
+	
+// ---- TACTIC MEMORY	
+	
+	public void addtactichistory() {};
+
+// ---- UTILITIES	
+	
 	public void UpdateUtilityScore() {
 		// Code to update the tactic's utility value
 	}
 	
-	private void parameterLearning() {}; // GJB LEARNING
-//	public double gettacticutilityscore() {return tacticutilityscore;}
-	public ArrayList<HistoricTacticValue> gethistorictacticvalues() {
-		return historictacticvalues;}
+	public void updatetacticutilityscore(double t) {tacticutilityscore = t;};
+	
+
+
 	public double[][] gettacticutilityscore(int numTicks) {
 		// Returns  a 2-D array of length (numTicks,2). The row (first dim) indexes how many ticks
 		// ago the data comes from (e.g. row 2 indexes the data from tick CurrentTick-2-1 (recall - indexes start
@@ -101,8 +132,10 @@ public class GenericTactic {
 		return utilityScores;
 	}
 
-	// GJB LEARNING
+// ---- LEARNING
 
+	private void parameterLearning() {};
+	
 	public int getParamLearningMethod() {
 		return paramLearningMethod;
 	}

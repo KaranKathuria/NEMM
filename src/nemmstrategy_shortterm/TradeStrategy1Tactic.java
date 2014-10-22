@@ -92,7 +92,7 @@ public class TradeStrategy1Tactic extends GenericTactic {
 		double portfoliocapital = this.getmyStrategy().getmyAgent().getportfoliocapital();
 		
 		if (portfoliocapital<=0) { //Currently just thowing an expception, but this would have to be handled another way such as creating a new trader.
-			throw new IllegalArgumentException("The Trader is bankcrupt!");}
+			throw new IllegalArgumentException("The Trader is bankrupt!");}
 		tacticselloffers.clear();
 		tacticbuyoffers.clear();
 		sellofferone = creatSellOfferone(expectedprice,physicalposition);
