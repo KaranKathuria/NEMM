@@ -71,45 +71,12 @@ public class GenericTactic {
 		deltapricemultiplier = t;
 	}
 	
-//	public double gettacticutilityscore() {return tacticutilityscore;}
+	public void setUtilityScore(double t) {tacticutilityscore = t;};
 	
-// ---- COMPLETELY UPDATE THE TACTIC
-	
-	// Performs all updating for the tactic, including
-	//  -- Calculating the utility
-	//  -- Parameter learning
-	//  -- Stores the current bids & offers in the tactics memory
-	// This will be called by the strategy when it wants the tactic to be updated (that is, every tick)
-	public void updateTactic() {
-		UpdateUtilityScore();
-		parameterLearning();
-		addtactichistory();
-	};
-	
-// ---- UPDATE OFFERS AND BIDS	
-	
-	public void updatetacticselloffers() {};
-	public void updatetacticbuyoffers() {};
-	public void updatetactictradeoffers() {};
-	
-// ---- TACTIC MEMORY	
-	
-	public void addtactichistory() {};
-
-// ---- UTILITIES	
-	
-	public void UpdateUtilityScore() {
-		// Code to update the tactic's utility value
-	}
-	
-	public void updatetacticutilityscore(double t) {tacticutilityscore = t;};
-	
-
-
-	public double[][] gettacticutilityscore(int numTicks) {
+	public double[][] getUtilityScore(int numTicks) {
 		// Returns  a 2-D array of length (numTicks,2). The row (first dim) indexes how many ticks
 		// ago the data comes from (e.g. row 2 indexes the data from tick CurrentTick-2-1 (recall - indexes start
-		// at 0)). The first column is the datapoints tickID, the second column is the utility.
+		// at 0)). The first column (index = 0) is the datapoint's tickID, the second column (index = 1) is the utility.
 		double[][] utilityScores;
 		int nowTick = TheEnvironment.theCalendar.getCurrentTick();
 		// ensure that you dont try to get data from ticks before tickID = 0
@@ -131,10 +98,6 @@ public class GenericTactic {
 		
 		return utilityScores;
 	}
-
-// ---- LEARNING
-
-	private void parameterLearning() {};
 	
 	public int getParamLearningMethod() {
 		return paramLearningMethod;
@@ -147,6 +110,44 @@ public class GenericTactic {
 		
 		this.paramLearningMethod = paramLearningMethod;
 	}
+	
+//	public double gettacticutilityscore() {return tacticutilityscore;}
+	
+// ---- UPDATE THE TACTIC's UTILITY, PARAMETERS AND MEMORY
+	
+	// Performs all updating for the tactic, including
+	//  -- Calculating the utility
+	//  -- Parameter learning
+	//  -- Stores the current bids & offers in the tactics memory
+	// This will be called by the strategy when it wants the tactic to be updated (that is, every tick)
+	public void updateTactic() {
+		calcUtilityForCurrentTick();
+		learnParameters();
+		addTacticValuesToHistory();
+	};
+	
+// ---- UPDATE OFFERS AND BIDS	
+	
+	public void updatetacticselloffers() {};
+	public void updatetacticbuyoffers() {};
+	public void updatetactictradeoffers() {};
+	
+// ---- TACTIC MEMORY	
+	
+	public void addTacticValuesToHistory() {};
+	
+
+// ---- UTILITIES	
+	
+	public void calcUtilityForCurrentTick() {
+		// Code to update the tactic's utility value
+	}
+
+// ---- LEARNING
+
+	private void learnParameters() {};
+	
+
 	
 	
 

@@ -146,7 +146,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 	
 // ---- TACTIC MEMORY	
 	
-	public void addtactichistory() {
+	public void addTacticToHistory() {
 		// Store the sell offers for each tick
 		HistoricTacticValue a = new HistoricTacticValue();
 		a.tacticsbuyoffers = null;
@@ -157,7 +157,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 
 // ---- UTILITY CALCULATIONS
 	
-	public void UpdateUtilityScore() {
+	public void calcUtilityForCurrentTick() {
 		
 		ArrayList<double[]> retUtility;
 		int i;
@@ -204,7 +204,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 			}		
 		}
 		// Update to tactic's current total utility score
-		updatetacticutilityscore(calcUtil);
+		setUtilityScore(calcUtil);
 	}
 	
 	private void addUtilitiesToOffers(int numOffers) {
@@ -224,7 +224,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 	
 // ---- PARAMETER LEARNING
 	
-	private void parameterLearning() {
+	private void learnParameters() {
 		// Call the appropriate learning method
 		// if no learning, the method is 0 and nothing is called
 		if (paramLearningMethod == 1) {
