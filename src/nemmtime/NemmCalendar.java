@@ -35,7 +35,7 @@ public class NemmCalendar {
 		this.endYear = endYear;
 		this.numObligatedPdsInYear = numObligatedPdsInYear;
 		this.numTradePdsInObligatedPd = numTradePdsInObligatedPd;
-		this.numYears = this.endYear - this.startYear + 1;
+		this.numYears = (this.endYear - this.startYear) + 1;			
 		this.numTradePdsInYear = this.numObligatedPdsInYear*this.numTradePdsInObligatedPd;
 		this.numTicks = this.numYears * this.numTradePdsInYear;
 		timeBlocks = new ArrayList<NemmTime>();

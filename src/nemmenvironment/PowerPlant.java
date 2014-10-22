@@ -197,6 +197,7 @@ public class PowerPlant implements Cloneable{
 	
 	//THis method caluclates the LRMC and certificate price needed for a project realised in a given year. This is only usefull for endogenous projects, hence it does not have to take care of "overgangsordningen" projects. 
 	//Takes in the realisation year as this alters the LRMC and Certpriceneeeded through improvment in Capex. Also, now the current power price (simlation tick) is used as bases for certpriceneeded.
+	//Currently uses the in moment powerprice and global RRR.
 	public void calculateLRMCandcertpriceneeded(int currentyear) {
 		
 		//int currentyear = TheEnvironment.theCalendar.getTimeBlock(TheEnvironment.theCalendar.getCurrentTick()).year;

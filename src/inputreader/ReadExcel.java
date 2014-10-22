@@ -18,7 +18,7 @@ import nemmtime.NemmCalendar;
 
 
 
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellValue;
@@ -50,7 +50,7 @@ public class ReadExcel {
 	 private static String filePath;
 	 
  	public static void InitReadExcel() {
- 		filePath = working_directory + File.separator + "NEMM_realdata.xlsx"; 
+ 		filePath = working_directory + File.separator + "NEMM_realdata.xls"; 
  	}
  
 	public static void ReadExcel() {}
@@ -59,8 +59,8 @@ public class ReadExcel {
 				
 		try{      
 			
-			Workbook workbook = new XSSFWorkbook();
-			workbook = WorkbookFactory.create(new POIFSFileSystem (new FileInputStream(filePath)));
+			//Workbook workbook = new XSSFWorkbook();
+			Workbook workbook = WorkbookFactory.create(new File(filePath));
 			
 			// Read number of plants and technologies
 			Sheet ctr_sheet = workbook.getSheet("Control");
@@ -74,16 +74,17 @@ public class ReadExcel {
 			
 			//Initializes ticks from the created calender.
 			ticks = TheEnvironment.theCalendar.getNumTicks();
+			
 					
 		}catch(Exception e) {
-	        System.out.println("!! Bang !! xlRead() : " + e );
+	        System.out.println("!! Bang Timeerror !! xlRead() : " + e );
 	    }
 	}
 			
 	public static void ReadRegions() {
 				
 		try{      
-			Workbook workbook = WorkbookFactory.create(new POIFSFileSystem (new FileInputStream(filePath)));	
+			Workbook workbook = WorkbookFactory.create(new File(filePath));
 			
 			// Read number of plants and technologies
 			Sheet ctr_sheet = workbook.getSheet("Control");
@@ -94,7 +95,7 @@ public class ReadExcel {
 			// Read regions
 			//Creates an array of regions wiht the length given in the excel and adds reagions to this array of regions. 
 			Sheet list_sheet = workbook.getSheet("Lists");	
-			//regions = new Region[regionsnumber];
+
 			for(int i = 0; i < regionsnumber; i++){
 				String newregionName = list_sheet.getRow(2+i).getCell(5).getStringCellValue(); 
 				Region newRegion = new Region(newregionName);
@@ -105,34 +106,46 @@ public class ReadExcel {
 			
 			Sheet certdemand_sheet = workbook.getSheet("Certificate demand");	
 			Sheet expectedcertdemand_sheet = workbook.getSheet("Expected certdemand");	
-			Sheet powerDemand_sheet = workbook.getSheet("powerDemand");
+			//Sheet powerDemand_sheet = workbook.getSheet("powerDemand");		Not read in.
 			Sheet powerPrice_sheet = workbook.getSheet("Power price");
+			int years = endyear-startyear+1;
 			
 			for(int j = 0; j < regionsnumber; j++){
 				double[] tempcertdem = new double[ticks];
 				double[] tempexpcertdem = new double[ticks];
-				double[] temppowerprice = new double[ticks];
+				double[] temppowerprice = new double[years];
+				double[][] tempfwdprice = new double[years][years];												//For each year there is a Forward powerprice curve.
+
 				
 				for(int i = 0; i < ticks; i++){
 					tempcertdem[i] = certdemand_sheet.getRow(2+i).getCell(3+j).getNumericCellValue();
-					tempexpcertdem[i] = certdemand_sheet.getRow(2+i).getCell(3+j).getNumericCellValue();
-					temppowerprice[i] = powerPrice_sheet.getRow(2+i).getCell(3+j).getNumericCellValue();
+					tempexpcertdem[i] = expectedcertdemand_sheet.getRow(2+i).getCell(3+j).getNumericCellValue();
+				}
+				
+				for(int f = 0; f < years; f++){
+				temppowerprice[f] = powerPrice_sheet.getRow(2+f+(48*j)).getCell(3).getNumericCellValue();		 //49*j ensuring right startingpoint for second region.
+				for(int fw = 0; fw < years; fw++){
+				tempfwdprice[f][fw] = powerPrice_sheet.getRow(2+f+(48*j)+fw).getCell(4+f).getNumericCellValue(); //For each row, looping across the columns. Notice + fw as historic fwd does not make sense.
+				}
+				// Set alle the forward AnnualMarketSeries
+				TheEnvironment.allRegions.get(j).getMyForwardPrice(f).initAnnualMarketSeries(tempfwdprice[f]);
 				}
 				// Set market demand (both power price, cert demand and expected cert demand
 				TheEnvironment.allRegions.get(j).getMyDemand().initMarketDemand(tempcertdem, tempexpcertdem);
-				// Set MarketSeries (power prices)
-				TheEnvironment.allRegions.get(j).getMyPowerPrice().initMarketSeries(temppowerprice);
+				// Set AnnualMarketSeries (power prices)
+				TheEnvironment.allRegions.get(j).getMyPowerPrice().initAnnualMarketSeries(temppowerprice);
+				
 			}
 			
 		}catch(Exception e) {
-	        System.out.println("!! Bang !! xlRead() : " + e );
+	        System.out.println("!! Bang Regionerror !! xlRead() : " + e );
 	    }
 	}
 		
 		public static void ReadPowerPlants() {
 						
 			try{      	
-				Workbook workbook = WorkbookFactory.create(new POIFSFileSystem (new FileInputStream(filePath)));
+				Workbook workbook = WorkbookFactory.create(new File(filePath));
 				
 				// Read plant data
 				Sheet plant_sheet = workbook.getSheet("PowerPlants");	   
@@ -159,7 +172,7 @@ public class ReadExcel {
 					double[] tempproduction = new double[ticks];
 					double[] expproduction = new double[ticks];
 					
-					for(int i = 0; i < ticks; i++){
+				/*	for(int i = 0; i < ticks; i++){
 						tempproduction[i] = production_sheet.getRow(5+i).getCell(3+j).getNumericCellValue();
 					}
 					
@@ -170,6 +183,7 @@ public class ReadExcel {
 					pp.setAllProduction(tempproduction);
 					//Add all expected production to tick array
 					pp.setAllExpectedProduction(expproduction);
+					*/
 					
 					//Setting the powerplant/project to the relevant ArrayList. 
 					if (newstatus == 1) {
@@ -187,7 +201,7 @@ public class ReadExcel {
 				}
 				
 			}catch(Exception e) {
-		        System.out.println("!! Bangpp !! xlRead() : " + e );
+		        System.out.println("!! Bang Powerplanterror !! xlRead() : " + e );
 		    }
 	    
 	    

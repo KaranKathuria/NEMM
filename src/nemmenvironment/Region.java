@@ -10,7 +10,8 @@ public class Region {
 	// In the world, there are regions
 	private String regionName;
 	private MarketDemand myDemand;
-	private MarketSeries myPowerPrice;
+	private AnnualMarketSeries myPowerPrice;
+	private AnnualMarketSeries[] myForwardPrice;	//Array of AnnualMarketSeries. The array lenght is years. AnnualMarketseries[1] is the future prices standing in year 2013, with 24 doubles.
 	
 	
 	/**
@@ -20,7 +21,11 @@ public class Region {
 		
 		this.regionName = regionName;
 		this.myDemand = new MarketDemand();
-		this.myPowerPrice = new MarketSeries();
+		this.myPowerPrice = new AnnualMarketSeries();
+		this.myForwardPrice = new AnnualMarketSeries[TheEnvironment.theCalendar.getNumYears()];
+		for (int i=0; i < myForwardPrice.length;i++) {
+			myForwardPrice[i] = new AnnualMarketSeries();
+		}
 	}
 	
 
@@ -41,14 +46,14 @@ public class Region {
 		this.myDemand = myDemand;
 	}
 */
-	public MarketSeries getMyPowerPrice() {
+	public AnnualMarketSeries getMyPowerPrice() {
 		return myPowerPrice;
 	}
-	// commented out as you should not need to set a new price object
-/*	public void setMyPowerPrice(MarketPrice myPowerPrice) {
-		this.myPowerPrice = myPowerPrice;
+	
+	public AnnualMarketSeries getMyForwardPrice(int i) {	//I refers to the year you are standing in looking at the forward prices.
+		return myForwardPrice[i];
 	}
-*/
+
 
 
 }

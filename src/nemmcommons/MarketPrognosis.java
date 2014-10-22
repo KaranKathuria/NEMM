@@ -29,8 +29,8 @@ public class MarketPrognosis {
 	
 	private TickArray expectedcertificateprice;  //Tick array contaning history of what price where expected for the next tick. Could be used later to evaluate the STM-strategy.
 	private TickArray expectedcertificatedemand; //Total certificate demand for each tick in the simulation. 
-	private TickArray expectedpowerpricenorway; // Expected power price in Norway. Only point of having this Tick Array is if this differs from the one given in the Environment. 
-	private TickArray expectedpowerpricesweden; // Expected power price in Sweden. Only point of having this Tick Array is if this differs from the one given in the Environment.
+	private YearArray expectedpowerpricenorway; // Expected power price in Norway. Only point of having this Tick Array is if this differs from the one given in the Environment. 
+	private YearArray expectedpowerpricesweden; // Expected power price in Sweden. Only point of having this Tick Array is if this differs from the one given in the Environment.
 
 	//Methods
 	public MarketPrognosis() {
@@ -54,16 +54,18 @@ public class MarketPrognosis {
 		longrunpriceexpectatations = 0;  //AllVariables.longrundpriceexpectations;  
 		expectedcertificateprice = new TickArray(); 
 		expectedcertificatedemand = new TickArray();
-		expectedpowerpricenorway = new TickArray();
-		expectedpowerpricesweden = new TickArray();		
+		expectedpowerpricenorway = new YearArray();
+		expectedpowerpricesweden = new YearArray();		
 		expectedcertificateprice.setElement(stpriceexpectation, 0);
 		//Sets the MarketPrognosis expected certificatedemand and power price to what actually will be the world certificate demand (perfect foresight).
 		for (int i = 0; i < TheEnvironment.theCalendar.getNumTicks(); ++i) {
 			double tempworlddemand = TheEnvironment.allRegions.get(0).getMyDemand().getCertDemand(i) + TheEnvironment.allRegions.get(1).getMyDemand().getCertDemand(i);
 			// Cert demand, power demand in Norway and Sweden
-			expectedcertificatedemand.setElement(tempworlddemand, i);
-			expectedpowerpricenorway.setElement(TheEnvironment.allRegions.get(0).getMyPowerPrice().getValue(i), i);
-			expectedpowerpricesweden.setElement(TheEnvironment.allRegions.get(1).getMyPowerPrice().getValue(i), i);}	
+			expectedcertificatedemand.setElement(tempworlddemand, i);}	
+		
+		for (int i = 0; i < TheEnvironment.theCalendar.getNumYears(); ++i) {
+		expectedpowerpricenorway.setElement(TheEnvironment.allRegions.get(0).getMyPowerPrice().getValue(i), i);
+		expectedpowerpricesweden.setElement(TheEnvironment.allRegions.get(1).getMyPowerPrice().getValue(i), i);}
 			
 }	
 	// The following method updates the STM price expectation for the next tick based on the forecast weights. Called each tick (through Forcast) and updates the market prognosis.
@@ -136,9 +138,9 @@ public class MarketPrognosis {
 	public void InitiateAllExpectedpowerpricenorway(double[] cd) { //To set all expected future certprice
 		expectedpowerpricenorway.setArray(cd);
 	}
-	public void updateFutureExpectedpowerpricenorway(double[] values) {
-		expectedpowerpricenorway.setFutureElements(values);
-	}
+	//public void updateFutureExpectedpowerpricenorway(double[] values) {		Marked out as this is not implemented for yeararray.
+	//	expectedpowerpricenorway.setFutureElements(values);
+	//}
 	public double getExpectedpowerpricenorway(int tickID) {
 		return expectedpowerpricenorway.getElement(tickID);
 	}
@@ -148,9 +150,9 @@ public class MarketPrognosis {
 	public void InitiateAllExpectedpowerpricesweden(double[] cd) { //To set all expected future certprice
 		expectedpowerpricesweden.setArray(cd);
 	}
-	public void updateFutureExpectedpowerpricesweden(double[] values) {
-		expectedpowerpricesweden.setFutureElements(values);
-	}
+	//public void updateFutureExpectedpowerpricesweden(double[] values) {
+	//	expectedpowerpricesweden.setFutureElements(values);
+	//}
 	public double getExpectedpowerpricesweden(int tickID) {
 		return expectedpowerpricesweden.getElement(tickID);
 	}
