@@ -51,7 +51,7 @@ public class BuyStrategy1 extends GenericStrategy {
 	}	
 
 	// Clears strategies buyoffers, updates offers from all tactics. set strategys buyoffers to those of the best tactic. 
-	public void updatealloffers() {
+	public void updateBidsAndOffers() {
 		//Updates all tactics
 		for (int i = 0; i < numberoftactics; ++i) {
 			alltactics.get(i).updatetacticbuyoffers();}
@@ -63,11 +63,9 @@ public class BuyStrategy1 extends GenericStrategy {
 		agentsbuyoffers.add(buyofferone);
 		agentsbuyoffers.add(buyoffertwo);
 		
-		}
-	
-	public ArrayList<GenericTactic> getalltactics() {
-		return alltactics;}
 	}
+	
+} // END CLASS
 	
 	
 

@@ -30,16 +30,24 @@ public class GenericTactic {
 	
 	//This class could have had all the selloffers and buyoffers form the respective tactics...
 	
+// ---- INNER CLASSES
 	
 	protected class HistoricTacticValue {
-		 
+		 	// The tactic's memory - used to store buy & sell offers and utility scores
 			protected ArrayList<BuyOffer> tacticsbuyoffers;
 			protected ArrayList<SellOffer> tacticselloffers; //with fixed length given as a parameter. 
 			protected double tacticutilityscore;
 			protected int tickID;
 	 }
+	
+// ---- CONSTRUCTOR	
 	 
 	public GenericTactic() {};
+	
+// -- GETS & SETS	
+	
+	public ArrayList<HistoricTacticValue> gethistorictacticvalues() {
+		return historictacticvalues;}
 	
 	public BuyOffer getbuyofferone() {return null;} //All these methods are overridden by the respective subtactics hence they do return something
 	public BuyOffer getbuyoffertwo() {return null;}
@@ -59,26 +67,16 @@ public class GenericTactic {
 		return myStrategy;
 	}
 	
-	public void updatetacticselloffers() {};
-	public void updatetacticbuyoffers() {};
-	public void updatetactictradeoffers() {};
-	public void updatetacticutilityscore(double t) {tacticutilityscore = t;};
-	public void addtactichistory() {};
 	public void setdeltapricemultiplier(double t) {
 		deltapricemultiplier = t;
 	}
-	public void UpdateUtilityScore() {
-		// Code to update the tactic's utility value
-	}
 	
-	private void parameterLearning() {}; // GJB LEARNING
-//	public double gettacticutilityscore() {return tacticutilityscore;}
-	public ArrayList<HistoricTacticValue> gethistorictacticvalues() {
-		return historictacticvalues;}
-	public double[][] gettacticutilityscore(int numTicks) {
+	public void setUtilityScore(double t) {tacticutilityscore = t;};
+	
+	public double[][] getUtilityScore(int numTicks) {
 		// Returns  a 2-D array of length (numTicks,2). The row (first dim) indexes how many ticks
 		// ago the data comes from (e.g. row 2 indexes the data from tick CurrentTick-2-1 (recall - indexes start
-		// at 0)). The first column is the datapoints tickID, the second column is the utility.
+		// at 0)). The first column (index = 0) is the datapoint's tickID, the second column (index = 1) is the utility.
 		double[][] utilityScores;
 		int nowTick = TheEnvironment.theCalendar.getCurrentTick();
 		// ensure that you dont try to get data from ticks before tickID = 0
@@ -100,9 +98,7 @@ public class GenericTactic {
 		
 		return utilityScores;
 	}
-
-	// GJB LEARNING
-
+	
 	public int getParamLearningMethod() {
 		return paramLearningMethod;
 	}
@@ -114,6 +110,44 @@ public class GenericTactic {
 		
 		this.paramLearningMethod = paramLearningMethod;
 	}
+	
+//	public double gettacticutilityscore() {return tacticutilityscore;}
+	
+// ---- UPDATE THE TACTIC's UTILITY, PARAMETERS AND MEMORY
+	
+	// Performs all updating for the tactic, including
+	//  -- Calculating the utility
+	//  -- Parameter learning
+	//  -- Stores the current bids & offers in the tactics memory
+	// This will be called by the strategy when it wants the tactic to be updated (that is, every tick)
+	public void updateTactic() {
+		calcUtilityForCurrentTick();
+		learnParameters();
+		addTacticValuesToHistory();
+	};
+	
+// ---- UPDATE OFFERS AND BIDS	
+	
+	public void updatetacticselloffers() {};
+	public void updatetacticbuyoffers() {};
+	public void updatetactictradeoffers() {};
+	
+// ---- TACTIC MEMORY	
+	
+	public void addTacticValuesToHistory() {};
+	
+
+// ---- UTILITIES	
+	
+	public void calcUtilityForCurrentTick() {
+		// Code to update the tactic's utility value
+	}
+
+// ---- LEARNING
+
+	private void learnParameters() {};
+	
+
 	
 	
 

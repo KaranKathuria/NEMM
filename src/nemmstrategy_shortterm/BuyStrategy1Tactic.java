@@ -86,7 +86,6 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		if (physicalposition >= 0){
 			physicalposition = -0.0;} //To ensure that we dont get crazy bids.  
 		
-		parameterLearning(); // GJB LEARNING
 		updateinputvalues();
 		
 		tacticbuyoffers.clear();
@@ -96,7 +95,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		tacticbuyoffers.add(buyoffertwo);
 	}
 	
-	public void addtactichistory() {
+	public void addTacticValuesToHistory() {
 		HistoricTacticValue a = new HistoricTacticValue();
 		a.tacticsbuyoffers = tacticbuyoffers;
 		a.tacticselloffers = null;
@@ -106,11 +105,11 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	}
 	
 	// GJB Added 6oct14
-	public void UpdateUtilityScore() {
+	public void calcUtilityForCurrentTick() {
 	//Use the agents utilitymethod to calculate each tactics utility
 		double temputilityscore = myStrategy.myAgent.getutilitymethod().calculateutility(ShortTermMarket.getcurrentmarketprice(), gettacticbuyoffers(), gettacticselloffers(), ShortTermMarket.getshareofmarignaloffersold(), ShortTermMarket.getshareofmarignalofferbought());
 	//Updates that tactics utility
-		updatetacticutilityscore(temputilityscore);
+		setUtilityScore(temputilityscore);
 	}
 	// --End GJB Added
 	
@@ -126,7 +125,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	public ArrayList<HistoricTacticValue> gethistorictacticvalues() {
 		return historictacticvalues;}
 	
-	private void parameterLearning() {
+	private void learnParameters() {
 		// Call the appropriate learning method
 		if (paramLearningMethod == 1) {
 			learningMethod1();

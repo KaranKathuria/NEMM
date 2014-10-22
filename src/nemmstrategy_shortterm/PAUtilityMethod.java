@@ -50,6 +50,9 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 			double[] retArray = new double[1];
 			retArray[0] = retVal;
 			for(int i=0;i<s.size();i++){
+				// Just for convenience we save the utility in the first (must sell) offer
+				// As the utilities for each offer step are added up in the tactic to get a total
+				// utility, this is fine
 				if(i==0) {
 					retList.add(retArray);
 				}
@@ -59,7 +62,7 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 			}			
 
 		case 2:
-			//retList = UtilFctn_ExpReturn( marketprice, s, shareofmarginaltoffersold);	
+			retList = UtilFctn_ExpReturn( marketprice, s, shareofmarginaltoffersold);	
 		}
 		return retList;
 	}	

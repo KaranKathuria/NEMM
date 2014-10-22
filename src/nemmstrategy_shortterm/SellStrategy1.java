@@ -94,26 +94,31 @@ public class SellStrategy1 extends GenericStrategy {
 
 	}	
 
-	// Clears strategies selloffers, updates offers from all tactics. set strategys selloffers to those of the best tactic. 
-	public void updatealloffers() {
-		//Updates all tactics
+	// ----	UPDATE STRATEGY
+	
+		// Three things to update:
+		//  - the bids and offers for all the strategy's tactics
+		//  - the utilities and parameters for all the strategy's tactics
+		//  - the strategy's best tactic (and utility)
+	
+	
+	public void updateBidsAndOffers() {
+		// Clears strategies selloffers, updates offers from all tactics, 
+		// set strategys selloffers to those of the best tactic. 
 		
 		for (int i = 0; i < numberoftactics; ++i) {
 			alltactics.get(i).updatetacticselloffers();}
-		
-		
+				
 		agentsbuyoffers.clear();
 		agentsselloffers.clear();
 		sellofferone = besttactic.getsellofferone();
 		selloffertwo = besttactic.getselloffertwo();
 		agentsselloffers.add(sellofferone);
 		agentsselloffers.add(selloffertwo);		
-		}
-	
-	public ArrayList<GenericTactic> getalltactics() {
-		return alltactics;}
-	
 	}
+	
+	
+} // END CLASS
 
 
 	

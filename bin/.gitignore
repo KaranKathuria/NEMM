@@ -3,4 +3,10 @@
 /nemmcommons
 /nemmagents
 /inputreader
+<<<<<<< HEAD
 /nemmstrategy_shortterm
+=======
+/nemmenvironment
+/nemmstrategy_shortterm
+/nemmtime
+>>>>>>> refs/heads/Dev_Shortterm
