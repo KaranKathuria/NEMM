@@ -92,7 +92,7 @@ public class TradeStrategy1Tactic extends GenericTactic {
 		double portfoliocapital = this.getmyStrategy().getmyAgent().getportfoliocapital();
 		
 		if (portfoliocapital<=0) { //Currently just thowing an expception, but this would have to be handled another way such as creating a new trader.
-			throw new IllegalArgumentException("The Trader is bankcrupt!");}
+			throw new IllegalArgumentException("The Trader is bankrupt!");}
 		tacticselloffers.clear();
 		tacticbuyoffers.clear();
 		sellofferone = creatSellOfferone(expectedprice,physicalposition);
@@ -118,7 +118,7 @@ public class TradeStrategy1Tactic extends GenericTactic {
 		tacticbuyoffers.add(buyoffertwo);
 	}
 	
-	public void addtactichistory() {
+	public void addTacticValuesToHistory() {
 		HistoricTacticValue a = new HistoricTacticValue();
 		a.tacticsbuyoffers = tacticbuyoffers;
 		a.tacticselloffers = tacticselloffers;
@@ -128,11 +128,11 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	}
 	
 	// GJB Added 6oct14
-	public void UpdateUtilityScore() {
+	public void calcUtilityForCurrentTick() {
 	//Use the agents utilitymethod to calculate each tactics utility
 		double temputilityscore = myStrategy.myAgent.getutilitymethod().calculateutility(ShortTermMarket.getcurrentmarketprice(), gettacticbuyoffers(), gettacticselloffers(), ShortTermMarket.getshareofmarignaloffersold(), ShortTermMarket.getshareofmarignalofferbought());
 	//Updates that tactics utility
-		updatetacticutilityscore(temputilityscore);
+		setUtilityScore(temputilityscore);
 	}
 	// --End GJB Added
 
