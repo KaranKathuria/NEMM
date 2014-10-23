@@ -17,6 +17,7 @@ import java.math.*;
 
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmagents.CompanyAgent;
+import nemmagents.CompanyAgent.DeveloperAgent;
 import nemmagents.MarketAnalysisAgent;
 import nemmenvironment.PowerPlant;
 import nemmenvironment.LRMCCurve.Curvepair;
@@ -107,6 +108,22 @@ public static List<CompanyAgent> getCompanyAgenList() {
 		for (final CompanyAgent agent : Agents) {
 			if (agent.gettraderagent() != null){
 			ret.add(agent.gettraderagent());}
+		}
+
+		return Collections.unmodifiableList(ret);
+	}
+	
+	public static List<DeveloperAgent> getDAgentList() {
+		
+		@SuppressWarnings("unchecked")
+		
+		final Iterable<CompanyAgent> Agents = RunState.getInstance().getMasterContext().getObjects(CompanyAgent.class);
+		
+		final ArrayList<DeveloperAgent> ret = new ArrayList<DeveloperAgent>();
+
+		for (final CompanyAgent agent : Agents) {
+			if (agent.getdeveloperagent() != null){
+			ret.add(agent.getdeveloperagent());}
 		}
 
 		return Collections.unmodifiableList(ret);

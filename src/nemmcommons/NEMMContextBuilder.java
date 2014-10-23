@@ -63,7 +63,9 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	//The annual update of the project process as descried in the model specification. 
 @ScheduledMethod(start = 0, priority = 3)
 	public void Distributions() {
-	DistributeProjectsandPowerPlants.distributeallpowerplants();
+	DistributeProjectsandPowerPlants.distributeallpowerplants(AllVariables.powerplantdistributioncode);
+	DistributeProjectsandPowerPlants.distributeprojects(AllVariables.projectsdistributioncode);
+	DistributeDemandShares.distributedemand(AllVariables.demandsharedistrubutioncode);
 	DistributeDemandShares.Uniformdemanddistribution(10, 10);	//Distributes the regional demand between the agents in each region. 
 	Forcast.initiatevolumeprognosis(); 							//Set the Company agents analysis agents, volume analysisagents prognosis of demand and production.	
 }

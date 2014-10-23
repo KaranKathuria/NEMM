@@ -43,9 +43,10 @@ public class CompanyAgent extends ParentAgent {
 		private double physicalnetposition;
 		private double lasttickproduction;
 		private double lasttickdemand;
-		private double riskadjustedinterestrate; //Used to calculate the level of risk averness in current trade price in relation to future expected price. 
 		private double portfoliocapital;
-		private double RAR;						 //Company specific risk adjusted rate used to discount the future price of certificates. 
+		private int sizecode;			//Code value indicationg if the AA has few=1, normal=2 og alot=3 of activities (powerplants or demandshares) in the regions the company of that AA participates in
+		private double RAR;				//Agentspecific risk adjusted rate used to discount the future price of certificates to floor/roof prices in STM bidding. Not to be confused with the company specific RRR which is the companies investmentcriteria.
+
 		
 		// Null constructor for ActiveAgent. Should not be used as this does not specify type of agent.
 		public ActiveAgent() {
@@ -104,6 +105,12 @@ public class CompanyAgent extends ParentAgent {
 			}
 		public double getRAR() {
 			return RAR;
+		}
+		public int getsizecode() {
+			return sizecode;
+		}
+		public int getregionpartcode() {
+			return this.companyagent.regionpartcode;
 		}
 		public double getlasttickproduction() {
 			return this.lasttickproduction;
@@ -172,15 +179,23 @@ public class CompanyAgent extends ParentAgent {
 		private CompanyAgent companyagent;
 		private int developmentcriteriaflag; 			//Flag indicationg the development criteria for the DA. 1 = The project must fullfill RRR with prognosed price 2 = The project must fullfill RRR with todays price. 3 = The project must fullfill RRR with both price 
 		private ArrayList<PowerPlant> myprojects;		//List of all projects owned by the agent regardless of project stage.
-		private int numberofidentificationprocess;		//The agents maximum number of projects that can be identifyed each year. Thats from the potential list.
-		private int numberofprocess;					//The DAs maximum number of projects it can take form the identifyed list over to processing. 
-		private int numberofconstruction;				//Number of projects it can have under construction simultaniasly.
+		private int projectprocesslimit;				//The agents maximum number of projects that can be identifyed or in concession/preconstruct each year. Thats from the potential list.
+		private int constructionlimit;					//Number of projects it can have under construction simultaniasly.
 		private double shareofprojectresourcesinNorway;	//Currently not in use. Should be more generic as the model could in the future need several regions. THis does not support this. 
+		private int sizecode;							//Code value indicationg if the DA has few=1, normal=2 og alot=3 of activities (projects) in the regions the company of that AA participates in
 		
 		
 		public DeveloperAgent() {
 			companyagent = this.companyagent;
+			sizecode = 2;								//By default all developmentagents have normal amount of activety.
+			projectprocesslimit = 5;					//Max number of project getting identifyed or getting in process.
+			constructionlimit = 2;						//Max number of projects getting in from moving to construction. 
 		}
+		
+		public int getsizecode() {return sizecode;}
+		public int getregionpartcode() {return regionpartcode;}
+		public CompanyAgent getmycompany() {return this.companyagent;}	
+		
 	}
 	
 	//Inner class CompanyAnalysisAgent. This agent consist of two other objects. MarketAnalysisAgent and VolumeAnalysisAgent. THe latter is an inner subclass.
@@ -220,16 +235,17 @@ public class CompanyAgent extends ParentAgent {
 		}
 	}
 		
-	//Back to CompanyAgent documentation
+	//CompanyAgent variables
 	private String companyname;
 	private ActiveAgent produceragent;
 	private ActiveAgent obligatedpurchaseragent;
 	private ActiveAgent traderagent;
+	private DeveloperAgent developeragent;
 	private CompanyAnalysisAgent companyanalysisagent;
 	private ArrayList<CompanyDemandShare> myDemandShares = new ArrayList<CompanyDemandShare>();
 	private ArrayList<PowerPlant> myPowerPlants = new ArrayList<PowerPlant>();
-	
-	private double WACC; //Company specific cost of capital
+	private int regionpartcode;			//Code indication which region the Company is active in. 1=Norway (region1), 2=Norway and Sweden, 3=Sweden. This number has to connection with AA sizecode, hence a company with big size and reigonpartcode=2 is large in both regions.
+	private double WACC; 				//Company specific cost of capital. Used to evaluate investment decisions. 
 	
 	
 	//default constructor not in use.
@@ -243,7 +259,8 @@ public class CompanyAgent extends ParentAgent {
 	
 	public CompanyAgent(boolean p, boolean op, boolean t) {
 		if (p==true) {
-			produceragent = new ActiveAgent(1);}
+			produceragent = new ActiveAgent(1);
+			developeragent = new DeveloperAgent();}				//By default all and just all companies with PA have a DA.
 		if (op==true) {
 			obligatedpurchaseragent = new ActiveAgent(2);}
 		if (t==true) {
@@ -264,6 +281,9 @@ public class CompanyAgent extends ParentAgent {
 	}
 	public ActiveAgent gettraderagent() {
 		return traderagent;
+	}
+	public DeveloperAgent getdeveloperagent() {
+		return developeragent;
 	}
 	public CompanyAnalysisAgent getcompanyanalysisagent() {
 		return companyanalysisagent;}

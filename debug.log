@@ -859,3 +859,27 @@ Caused by: java.lang.NullPointerException
 	at nemmprocesses.ShortTermMarket.runshorttermmarket(ShortTermMarket.java:78)
 	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:85)
 	... 9 more
+FATAL [Thread-5] 2014-10-23 13:33:50,515 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (0.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.NullPointerException
+	at nemmstrategy_shortterm.PAUtilityMethod.UtilFctn_ExpReturn(PAUtilityMethod.java:147)
+	at nemmstrategy_shortterm.PAUtilityMethod.CalcUtilityWithHistory(PAUtilityMethod.java:65)
+	at nemmstrategy_shortterm.SellStrategy1Tactic.calcUtilityForCurrentTick(SellStrategy1Tactic.java:180)
+	at nemmstrategy_shortterm.GenericTactic.updateTactic(GenericTactic.java:124)
+	at nemmstrategy_shortterm.GenericStrategy.updateUtilitiesAndParams(GenericStrategy.java:76)
+	at nemmprocesses.UtilitiesStrategiesTactics.calculatetilitiesandupdatebesttactics(UtilitiesStrategiesTactics.java:28)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:87)
+	... 9 more
