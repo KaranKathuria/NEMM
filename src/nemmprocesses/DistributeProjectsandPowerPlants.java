@@ -120,6 +120,7 @@ public class DistributeProjectsandPowerPlants {
 		ArrayList<PowerPlant> temp = new ArrayList<PowerPlant>();
 		temp.addAll(TheEnvironment.projectsidentifyed); temp.addAll(TheEnvironment.projectinprocess); 
 		temp.addAll(TheEnvironment.projectsawaitinginvestmentdecision);temp.addAll(TheEnvironment.projectsunderconstruction);
+		int breakpointtest = temp.size();
 		
 		//Assign the powerplants to agents according to the region and the respective arraylist. Notice the random uniform number used.
 		for (PowerPlant PP : temp)	{

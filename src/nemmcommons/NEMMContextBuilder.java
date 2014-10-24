@@ -32,15 +32,16 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	
 	@Override
 	public Context<Object> build(final Context<Object> context) {
-		//
+
 		//Initialize parameters
-		ParameterWrapper.reinit(); //Reads the parametervalues provided
+		ParameterWrapper.reinit(); 							//Reads the parametervalues provided
+		
 		//Create the Environment
-		TheEnvironment.InitEnvironment(); //Creates time and ArrayList of demand and powerplants.
-		TheEnvironment.GlobalValues.initglobalvalues(); //initiates the global values such as price by giving them the parametervalues from the above method. 
-		TheEnvironment.PopulateEnvironment(); //Reads and creates demand, powerplants etc.
-	
-		// Creates the Agents and adds them to context
+		TheEnvironment.InitEnvironment(); 					//Initiates ReadExcel, creates time and adds empty lists of Powerplants, projects and regions	
+		TheEnvironment.PopulateEnvironment(); 				//initiates ReadExcel and reads in region data (demand and power price) and Powerplant and projects data 
+		TheEnvironment.GlobalValues.initglobalvalues(); 	//Initiate the GlobalValues, thats the publicliy available market information in the model
+		
+		//Adds Agents to context. Notice that Agents specific data is not read in and only given through constructors.
 		for (int i = 0; i < getproduceragentsnumber(); ++i) {
 			final CompanyAgent agent = new CompanyAgent(true, false, false);
 			context.add(agent);}
@@ -53,21 +54,21 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 			final CompanyAgent agent = new CompanyAgent(false, false, true);
 			context.add(agent);}
 		
-		//Distributing of Power Plants and Demand Shares among the Agents are taken in the annual schedual
 			
  return context;}
 	
 // ========================================================================
 // === Simulation schedule ===========================================================
 
-	//The annual update of the project process as descried in the model specification. 
+	//Distribution and initiation 
 @ScheduledMethod(start = 0, priority = 3)
-	public void Distributions() {
-	DistributeProjectsandPowerPlants.distributeallpowerplants(AllVariables.powerplantdistributioncode);
-	DistributeProjectsandPowerPlants.distributeprojects(AllVariables.projectsdistributioncode);
-	DistributeDemandShares.distributedemand(AllVariables.demandsharedistrubutioncode);
-	//DistributeDemandShares.Uniformdemanddistribution(10, 10);	//Distributes the regional demand between the agents in each region. 
-	Forcast.initiatevolumeprognosis(); 							//Set the Company agents analysis agents, volume analysisagents prognosis of demand and production.	
+	public void DistributionandInitiation() {
+	//Distributing Plants, projects and demand among Agents
+	DistributeProjectsandPowerPlants.distributeallpowerplants(AllVariables.powerplantdistributioncode);		//Distribute all PowerPlants among the Copmanies with PAgents.
+	DistributeProjectsandPowerPlants.distributeprojects(AllVariables.projectsdistributioncode);				//Distribute all Projects among the Copmanies with DAgents.
+	DistributeDemandShares.distributedemand(AllVariables.demandsharedistrubutioncode);						//Distribute all demand among the Copmanies with OPAgents.
+
+	Forcast.initiatevolumeprognosis(); 																		//Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based	
 }
 
 //All annual updates to come below. Currently not in use.
