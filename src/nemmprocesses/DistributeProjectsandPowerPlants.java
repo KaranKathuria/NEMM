@@ -27,7 +27,7 @@ public class DistributeProjectsandPowerPlants {
 				if (numberofPA <= 0){
 				throw new IllegalArgumentException("Error: Zero CompanyAgents with production");}
 				
-		double[] distribution = new double[3]; //Only works with two regions.
+		int[] distribution = new int[3]; //Only works with two regions.
 		
 		//Assignes the probabilitydistribution used among the PAagents with various sizecodes.
 		switch (distcode) {
@@ -45,20 +45,22 @@ public class DistributeProjectsandPowerPlants {
 		//Fills the two arraylists with PA´s having apperance in that region and with copies according to probabilitydistribution;
 		for (ActiveAgent PA : CommonMethods.getPAgentList())	{
 			if (PA.getregionpartcode() > 3 || PA.getsizecode() > 3) {throw new IllegalArgumentException("Error: Regionrepcode or sizecode of PAgent not accepted");}
-			if (PA.getregionpartcode() < 3) {				//Thats Norway or Sweden and Norway
-				for (int i = 0; i <= distribution[PA.getsizecode()-1]; i++) {
+			if (PA.getregionpartcode() < 3) {				//Thats Norway and (Sweden and Norway)
+				for (int i = 1; i <= distribution[PA.getsizecode()-1]; i++) {
 					probadjustedagentlistNorway.add(PA);	//Adding the number of copies corresponding to the probability distirbution
 					}
 				}
 			if (PA.getregionpartcode() > 1) {			//Thats not just Norway (or Sweden and Sweden and Norway if you like)
-				for (int i = 0; i <= distribution[PA.getsizecode()-1]; i++) {
+				for (int i = 1; i <= distribution[PA.getsizecode()-1]; i++) {
 					probadjustedagentlistSweden.add(PA);
 							}
 				}
 			}
-		
-		int randintervalNorway = probadjustedagentlistNorway.size() -1;
+				
+		int randintervalNorway = probadjustedagentlistNorway.size() -1;   
 		int randintervalSweden = probadjustedagentlistSweden.size() -1;
+		
+		if (randintervalNorway < 0 || randintervalSweden < 0)  {throw new IllegalArgumentException("Error: No producers in either Norway or Sweden. How strange.");}
 		
 		//Asignes the powerplants to agents according to the region and the respective arraylist. Notice the random uniform number used.
 		for (PowerPlant PP : TheEnvironment.allPowerPlants)	{
@@ -81,7 +83,7 @@ public class DistributeProjectsandPowerPlants {
 			if (numberofDA <= 0){
 				throw new IllegalArgumentException("Error: Zero CompanyAgents with developmentagents");}
 		
-			double[] distribution = new double[3]; //Only works with two regions.
+			int[] distribution = new int[3]; //Only works with two regions.
 
 			//Assignes the probabilitydistribution used among the DAagents with various sizecodes.
 			switch (distcode) {
@@ -100,12 +102,12 @@ public class DistributeProjectsandPowerPlants {
 		for (DeveloperAgent DA : CommonMethods.getDAgentList())	{
 			if (DA.getregionpartcode() > 3 || DA.getsizecode() > 3) {throw new IllegalArgumentException("Error: Regionrepcode or sizecode of DAgent not accepted");}
 			if (DA.getregionpartcode() < 3) {				//Thats Norway or Sweden and Norway
-				for (int i = 0; i <= distribution[DA.getsizecode()-1]; i++) {
+				for (int i = 1; i <= distribution[DA.getsizecode()-1]; i++) {
 					probadjustedagentlistNorway.add(DA);	//Adding the number of copies corresponding to the probability distirbution
 			}
 		}
 			if (DA.getregionpartcode() > 1) {			//Thats not just Norway (or Sweden and Sweden and Norway if you like)
-				for (int i = 0; i <= distribution[DA.getsizecode()-1]; i++) {
+				for (int i = 1; i <= distribution[DA.getsizecode()-1]; i++) {
 					probadjustedagentlistSweden.add(DA);
 					}
 		}

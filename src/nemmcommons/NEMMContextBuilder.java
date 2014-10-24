@@ -66,7 +66,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	DistributeProjectsandPowerPlants.distributeallpowerplants(AllVariables.powerplantdistributioncode);
 	DistributeProjectsandPowerPlants.distributeprojects(AllVariables.projectsdistributioncode);
 	DistributeDemandShares.distributedemand(AllVariables.demandsharedistrubutioncode);
-	DistributeDemandShares.Uniformdemanddistribution(10, 10);	//Distributes the regional demand between the agents in each region. 
+	//DistributeDemandShares.Uniformdemanddistribution(10, 10);	//Distributes the regional demand between the agents in each region. 
 	Forcast.initiatevolumeprognosis(); 							//Set the Company agents analysis agents, volume analysisagents prognosis of demand and production.	
 }
 

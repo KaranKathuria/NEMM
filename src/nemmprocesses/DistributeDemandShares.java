@@ -52,11 +52,21 @@ public class DistributeDemandShares {
 	public static void distributedemand(int distcode) {
 		if (TheEnvironment.allRegions.size() != 2){throw new IllegalArgumentException("Error: Distribution of demand does not suite more than two regions");}
 					
-		int numberofAA = CommonMethods.getAAgentList().size();
-		if (numberofAA <= 0){
+		int numberofOPA = CommonMethods.getOPAgentList().size();
+		if (numberofOPA <= 0){
 		throw new IllegalArgumentException("Error: Zero Companies with OPAs");}
 		
-		double[] distribution = new double[3]; //Only works with two regions.
+		int[] distribution = new int[3]; //Only works with two regions.
+		
+		//Assignes the probabilitydistribution used among the OPAagents with various sizecodes.
+				switch (distcode) {
+					case 1: distribution[0] = 1; distribution[1] = 1; distribution[2] = 1;
+					break;
+					case 2: distribution[0] = 1; distribution[1] = 2; distribution[2] = 3;
+					break;
+					case 3: distribution[0] = 2; distribution[1] = 3; distribution[2] = 6;
+					break;
+					}
 		
 		ArrayList<ActiveAgent> probadjustedagentlistNorway = new ArrayList<ActiveAgent>();
 		ArrayList<ActiveAgent> probadjustedagentlistSweden = new ArrayList<ActiveAgent>();
@@ -65,31 +75,19 @@ public class DistributeDemandShares {
 		for (ActiveAgent OPA : CommonMethods.getOPAgentList())	{
 			if (OPA.getregionpartcode() > 3 || OPA.getsizecode() > 3) {throw new IllegalArgumentException("Error: Regionrepcode or sizecode of OPAS not accepted");}
 			if (OPA.getregionpartcode() < 3) {				//Thats Norway or Sweden and Norway
-				for (int i = 0; i <= distribution[OPA.getsizecode()-1]; i++) {
+				for (int i = 1; i <= distribution[OPA.getsizecode()-1]; i++) {
 					probadjustedagentlistNorway.add(OPA);	//Adding the number of copies corresponding to the probability distirbution
 					}
 				}
 			if (OPA.getregionpartcode() > 1) {			//Thats not just Norway (or Sweden and Sweden and Norway if you like)
-				for (int i = 0; i <= distribution[OPA.getsizecode()-1]; i++) {
+				for (int i = 1; i <= distribution[OPA.getsizecode()-1]; i++) {
 					probadjustedagentlistSweden.add(OPA);
 							}
 				}
 			}
 		
 		double demandshareunitreg1 = (double) 1/((double) probadjustedagentlistNorway.size());	//One unit of demandshare difined as 1 diveded but total number of OPA copies havin business in that region.
-		double demandshareunitreg2 = (double) 1/((double) probadjustedagentlistSweden.size());	//One unit of demandshare difined as 1 diveded but total number of OPA copies havin business in that region.
-		
-		
-		//Assignes the probabilitydistribution used among the OPAagents with various sizecodes.
-		switch (distcode) {
-			case 1: distribution[0] = 1; distribution[1] = 1; distribution[2] = 1;
-			break;
-			case 2: distribution[0] = 1; distribution[1] = 2; distribution[2] = 3;
-			break;
-			case 3: distribution[0] = 2; distribution[1] = 3; distribution[2] = 6;
-			break;
-			}
-		
+		double demandshareunitreg2 = (double) 1/((double) probadjustedagentlistSweden.size());	//One unit of demandshare difined as 1 diveded but total number of OPA copies havin business in that region.		
 
 	int randintervalNorway = probadjustedagentlistNorway.size() -1;		//Norway
 	int randintervalSweden = probadjustedagentlistSweden.size() -1;		//Sweden	

@@ -97,6 +97,7 @@ public class CompanyAgent extends ParentAgent {
 			this.utilitymethod.setmyAgent(ActiveAgent.this);
 			beststrategy = allstrategies.get(0); // Choose the first one initially 
 			numberofstrategies = allstrategies.size();
+			sizecode = 2;
 		}
 		
 		//Get methods for the ActiveAgent
@@ -269,6 +270,7 @@ public class CompanyAgent extends ParentAgent {
 		companyname = "Company " + this.getID();
 		companyanalysisagent = new CompanyAnalysisAgent();	
 		WACC = 0.10;
+		regionpartcode = 2;										//By default, all companies are active in both countries. 
 		
 		
 		}	
