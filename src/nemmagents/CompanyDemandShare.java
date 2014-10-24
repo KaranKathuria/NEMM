@@ -1,3 +1,12 @@
+/*
+ * Version info:
+ *     File defining the object demandshare. Thats the fraction of demand in a specific assigned to a particular agent. By definition an agent can have multiple demandshares 
+ *     for one region. The total demand for that region (for that agent) is than the sum of the products (total demand in region * demandshare).
+ *     
+ *     Last altered data: 20141001
+ *     Made by: Gavin Bell
+ */
+
 package nemmagents;
 
 import nemmcommons.TickArray;

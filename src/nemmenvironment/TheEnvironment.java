@@ -38,8 +38,7 @@ public final class TheEnvironment {
 	
 	// Initialise the environment ------------------------------------------------------------
 	public static void InitEnvironment(){
-		// Create & set up the time calendar and create the lists
-		// to hold the plants, companies, and regions
+		// Create & set up the time calendar and create the lists to hold plants, projects and regions.
 		inputreader.ReadExcel.InitReadExcel();
 		inputreader.ReadExcel.ReadCreateTime();
 		allPowerPlants = new ArrayList<PowerPlant>() ;
@@ -54,13 +53,105 @@ public final class TheEnvironment {
 	// Populate the Environment ------------------------------------------------------------
 	
 	public static void PopulateEnvironment(){
-		// This could be added to the constructor, or can be run immediately after
-		//This method should further read from file, hence use the methods in the inputreader packadge. 
 		inputreader.ReadExcel.ReadRegions();
 		inputreader.ReadExcel.ReadPowerPlants();
 	}
 		
-	// NEMMCALENDAR START ========================================================	
+	
+	public static class GlobalValues {
+		
+		public static TickArray certificateprice;
+		public static double currentmarketprice;
+		public static double currentinterestrate;   //risk free interest rate
+		public static double RRR; 					//Required rate of return for RE investments. 
+		public static int numberofbuyoffersstm;
+		public static int numberofselloffersstm;
+		// Future cert prices
+		public static double endofyearpluss1;
+		public static double endofyearpluss2;
+		public static double endofyearpluss3;
+		public static double endofyearpluss4;
+		public static double endofyearpluss5;
+		// Power prices (pp), current and future. 
+		public static double powerprice;
+		public static double ppendofyearpluss1;
+		public static double ppendofyearpluss2;
+		public static double ppendofyearpluss3;
+		public static double ppendofyearpluss4;
+		public static double ppendofyearpluss5;
+		
+		public static double producersphysicalposition = 0;
+		public static double tradersphysicalposition = 0;
+		public static double obligatedpurchasersphysiclaposition = 0;
+		public static double totalmarketphysicalposition = 0;
+		public static double bestbuyoffer1;
+		public static double bestbuyoffer2;
+		public static double bestselloffer1;
+		public static double bestselloffer2;
+		
+		public GlobalValues() {
+			currentmarketprice = ParameterWrapper.getpriceexpectation();
+		}
+		public static void initglobalvalues() {
+			
+			//Initiating globale values consisting of public market information
+			certificateprice = new TickArray();
+			currentmarketprice = ParameterWrapper.getpriceexpectation();
+			currentinterestrate = ParameterWrapper.getinitialinterestrate();
+			RRR = AllVariables.RRR;
+			
+			producersphysicalposition = 20000;					//Must be set to the sum of all agents startingposition. Just used for graph values.
+			tradersphysicalposition = 0;						//Must be set to the sum of all agents startingposition. Just used for graph values.
+			obligatedpurchasersphysiclaposition = -20000;		//Must be set to the sum of all agents startingposition. Just used for graph values.
+			totalmarketphysicalposition = 0;					//Must be set to the sum of all agents startingposition. Just used for graph values.
+			}
+		
+		public static void marketshock() {
+			//Modelling the effect of resetting the market price
+			currentmarketprice = ParameterWrapper.getpriceexpectation();
+			}
+		
+		// Monthly update of current global values
+		public static void monthlyglobalvalueupdate() {
+			currentmarketprice = ShortTermMarket.getcurrentmarketprice();
+			certificateprice.setElement(ShortTermMarket.getcurrentmarketprice(), theCalendar.getCurrentTick()); //Adds certPrice to history.
+			
+			//currentinterestrate = currentinterestrate + RandomHelper.nextDoubleFromTo(-0.002, 0.002); //Randomness in risk free interest rate.
+			numberofbuyoffersstm = ShortTermMarket.getnumberofbuyoffers();
+			numberofselloffersstm = ShortTermMarket.getnumberofselloffers();
+			
+			producersphysicalposition = 0;
+			tradersphysicalposition = 0;
+			obligatedpurchasersphysiclaposition = 0;
+			totalmarketphysicalposition = 0;
+			
+			for (ActiveAgent pa: CommonMethods.getPAgentList()){
+				producersphysicalposition = producersphysicalposition + pa.getphysicalnetposition();	
+			}
+			for (ActiveAgent opa: CommonMethods.getOPAgentList()){
+				obligatedpurchasersphysiclaposition = obligatedpurchasersphysiclaposition + opa.getphysicalnetposition();	
+			}
+			for (ActiveAgent ta: CommonMethods.getTAgentList()){
+				tradersphysicalposition = tradersphysicalposition + ta.getphysicalnetposition();	
+			}
+			totalmarketphysicalposition = tradersphysicalposition + obligatedpurchasersphysiclaposition + producersphysicalposition;
+			
+			
+		}
+		// Annual update of annual chaning global values
+		public static void annualglobalvalueupdate() {
+			endofyearpluss1 = currentmarketprice*(1+currentinterestrate);
+			endofyearpluss2 = currentmarketprice*Math.pow((1+currentinterestrate), 2);
+			endofyearpluss3 = currentmarketprice*Math.pow((1+currentinterestrate), 3);
+			endofyearpluss4 = currentmarketprice*Math.pow((1+currentinterestrate), 4);
+			endofyearpluss5 = currentmarketprice*Math.pow((1+currentinterestrate), 5);
+		}
+	}
+	
+	
+}
+
+//NEMMCALENDAR START ========================================================	
 	/*public static class NemmCalendar {
 		
 		private int startYear;
@@ -174,91 +265,3 @@ public final class TheEnvironment {
 	}
 	// NEMMCALENDAR END ========================================================	
 	*/
-	public static class GlobalValues {
-		
-		public static TickArray certificateprice;
-		public static double currentmarketprice;
-		public static double currentinterestrate;   //risk free interest rate
-		public static double RRR; 					//Required rate of return for RE investments. 
-		public static int numberofbuyoffersstm;
-		public static int numberofselloffersstm;
-		// Future cert prices
-		public static double endofyearpluss1;
-		public static double endofyearpluss2;
-		public static double endofyearpluss3;
-		public static double endofyearpluss4;
-		public static double endofyearpluss5;
-		// Power prices (pp), current and future. 
-		public static double powerprice;
-		public static double ppendofyearpluss1;
-		public static double ppendofyearpluss2;
-		public static double ppendofyearpluss3;
-		public static double ppendofyearpluss4;
-		public static double ppendofyearpluss5;
-		
-		public static double producersphysicalposition = 0;
-		public static double tradersphysicalposition = 0;
-		public static double obligatedpurchasersphysiclaposition = 0;
-		public static double totalmarketphysicalposition = 0;
-		public static double bestbuyoffer1;
-		public static double bestbuyoffer2;
-		public static double bestselloffer1;
-		public static double bestselloffer2;
-		
-		public GlobalValues() {
-			currentmarketprice = ParameterWrapper.getpriceexpectation();
-		}
-		public static void initglobalvalues() {
-			//Initially the global market price is set to that of the price expectations
-			certificateprice = new TickArray();
-			currentmarketprice = ParameterWrapper.getpriceexpectation();
-			currentinterestrate = ParameterWrapper.getinitialinterestrate();
-			RRR = AllVariables.RRR;
-			producersphysicalposition = 10000;
-			tradersphysicalposition = 0;
-			obligatedpurchasersphysiclaposition = -10000;
-			totalmarketphysicalposition = 0;
-			}
-		public static void marketshock() {
-			//Modelling the effect of resetting the market price
-			currentmarketprice = ParameterWrapper.getpriceexpectation();
-			}
-		
-		// Monthly update of current global values
-		public static void monthlyglobalvalueupdate() {
-			currentmarketprice = ShortTermMarket.getcurrentmarketprice();
-			certificateprice.setElement(ShortTermMarket.getcurrentmarketprice(), theCalendar.getCurrentTick()); //Adds certPrice to history.
-			//currentinterestrate = currentinterestrate + RandomHelper.nextDoubleFromTo(-0.002, 0.002); //Randomness in risk free interest rate.
-			numberofbuyoffersstm = ShortTermMarket.getnumberofbuyoffers();
-			numberofselloffersstm = ShortTermMarket.getnumberofselloffers();
-			
-			producersphysicalposition = 0;
-			tradersphysicalposition = 0;
-			obligatedpurchasersphysiclaposition = 0;
-			totalmarketphysicalposition = 0;
-			
-			for (ActiveAgent pa: CommonMethods.getPAgentList()){
-				producersphysicalposition = producersphysicalposition + pa.getphysicalnetposition();	
-			}
-			for (ActiveAgent opa: CommonMethods.getOPAgentList()){
-				obligatedpurchasersphysiclaposition = obligatedpurchasersphysiclaposition + opa.getphysicalnetposition();	
-			}
-			for (ActiveAgent ta: CommonMethods.getTAgentList()){
-				tradersphysicalposition = tradersphysicalposition + ta.getphysicalnetposition();	
-			}
-			totalmarketphysicalposition = tradersphysicalposition + obligatedpurchasersphysiclaposition + producersphysicalposition;
-			
-			
-		}
-		// Annual update of annual chaning global values
-		public static void annualglobalvalueupdate() {
-			endofyearpluss1 = currentmarketprice*(1+currentinterestrate);
-			endofyearpluss2 = currentmarketprice*Math.pow((1+currentinterestrate), 2);
-			endofyearpluss3 = currentmarketprice*Math.pow((1+currentinterestrate), 3);
-			endofyearpluss4 = currentmarketprice*Math.pow((1+currentinterestrate), 4);
-			endofyearpluss5 = currentmarketprice*Math.pow((1+currentinterestrate), 5);
-		}
-	}
-	
-	
-}

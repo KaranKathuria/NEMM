@@ -50,7 +50,7 @@ public class ReadExcel {
 	 private static String filePath;
 	 
  	public static void InitReadExcel() {
- 		filePath = working_directory + File.separator + "NEMM_realdata.xls"; 
+ 		filePath = working_directory + File.separator + "NEMM_realdata.xlsx"; 
  	}
  
 	public static void ReadExcel() {}
@@ -60,6 +60,7 @@ public class ReadExcel {
 		try{      
 			
 			//Workbook workbook = new XSSFWorkbook();
+			//XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(new File(filePath)));
 			Workbook workbook = WorkbookFactory.create(new File(filePath));
 			
 			// Read number of plants and technologies
@@ -172,7 +173,7 @@ public class ReadExcel {
 					double[] tempproduction = new double[ticks];
 					double[] expproduction = new double[ticks];
 					
-				/*	for(int i = 0; i < ticks; i++){
+					for(int i = 0; i < ticks; i++){
 						tempproduction[i] = production_sheet.getRow(5+i).getCell(3+j).getNumericCellValue();
 					}
 					
@@ -183,7 +184,7 @@ public class ReadExcel {
 					pp.setAllProduction(tempproduction);
 					//Add all expected production to tick array
 					pp.setAllExpectedProduction(expproduction);
-					*/
+					
 					
 					//Setting the powerplant/project to the relevant ArrayList. 
 					if (newstatus == 1) {

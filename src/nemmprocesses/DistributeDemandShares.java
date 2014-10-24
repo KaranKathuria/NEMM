@@ -7,6 +7,9 @@
 
 package nemmprocesses;
 
+import java.util.ArrayList;
+import repast.simphony.random.RandomHelper;
+import nemmagents.CompanyAgent.ActiveAgent;
 import nemmcommons.CommonMethods;
 import nemmenvironment.Region;
 import nemmenvironment.TheEnvironment;
@@ -17,9 +20,8 @@ public class DistributeDemandShares {
 	
 	public static void Uniformdemanddistribution(int agentsregion1, int agentsregion2) {
 		if (TheEnvironment.allRegions.size() == 2){
-		double demandshareregion1 = (double) (1/(double) agentsregion1);
+		double demandshareregion1 = (1/ agentsregion1);
 		double demandshareregion2 = (double) (1/(double) agentsregion2);
-		int numberofregions;
 		int numberofOPAgents = CommonMethods.getOPAgentList().size();
 		Region region1 = TheEnvironment.allRegions.get(0);
 		Region region2 = TheEnvironment.allRegions.get(1);
@@ -46,5 +48,62 @@ public class DistributeDemandShares {
 		}
 		
 	}
+	
+	public static void distributedemand(int distcode) {
+		if (TheEnvironment.allRegions.size() != 2){throw new IllegalArgumentException("Error: Distribution of demand does not suite more than two regions");}
+					
+		int numberofOPA = CommonMethods.getOPAgentList().size();
+		if (numberofOPA <= 0){
+		throw new IllegalArgumentException("Error: Zero Companies with OPAs");}
+		
+		int[] distribution = new int[3]; //Only works with two regions.
+		
+		//Assignes the probabilitydistribution used among the OPAagents with various sizecodes.
+				switch (distcode) {
+					case 1: distribution[0] = 1; distribution[1] = 1; distribution[2] = 1;
+					break;
+					case 2: distribution[0] = 1; distribution[1] = 2; distribution[2] = 3;
+					break;
+					case 3: distribution[0] = 2; distribution[1] = 3; distribution[2] = 6;
+					break;
+					}
+		
+		ArrayList<ActiveAgent> probadjustedagentlistNorway = new ArrayList<ActiveAgent>();
+		ArrayList<ActiveAgent> probadjustedagentlistSweden = new ArrayList<ActiveAgent>();
+		
+		//Fills the two arraylists with PA´s having apperance in that region and with copies according to probabilitydistribution;
+		for (ActiveAgent OPA : CommonMethods.getOPAgentList())	{
+			if (OPA.getregionpartcode() > 3 || OPA.getsizecode() > 3) {throw new IllegalArgumentException("Error: Regionrepcode or sizecode of OPAS not accepted");}
+			if (OPA.getregionpartcode() < 3) {				//Thats Norway or Sweden and Norway
+				for (int i = 1; i <= distribution[OPA.getsizecode()-1]; i++) {
+					probadjustedagentlistNorway.add(OPA);	//Adding the number of copies corresponding to the probability distirbution
+					}
+				}
+			if (OPA.getregionpartcode() > 1) {			//Thats not just Norway (or Sweden and Sweden and Norway if you like)
+				for (int i = 1; i <= distribution[OPA.getsizecode()-1]; i++) {
+					probadjustedagentlistSweden.add(OPA);
+							}
+				}
+			}
+		
+		double demandshareunitreg1 = (double) 1/((double) probadjustedagentlistNorway.size());	//One unit of demandshare difined as 1 diveded but total number of OPA copies havin business in that region.
+		double demandshareunitreg2 = (double) 1/((double) probadjustedagentlistSweden.size());	//One unit of demandshare difined as 1 diveded but total number of OPA copies havin business in that region.		
+
+	int randintervalNorway = probadjustedagentlistNorway.size() -1;		//Norway
+	int randintervalSweden = probadjustedagentlistSweden.size() -1;		//Sweden	
+	Region region1 = TheEnvironment.allRegions.get(0);					//Norway
+	Region region2 = TheEnvironment.allRegions.get(1);					//Sweden
+
+	
+	//Asignes the demandshares to agents according to their apperance in the probadjustedagentlists. An OPA can have multiple demand shares for one specific region.
+	for (int i = 0; i < probadjustedagentlistNorway.size() ; i++) {
+		int assign = RandomHelper.nextIntFromTo(0,randintervalNorway);
+		probadjustedagentlistNorway.get(assign).AddDemandShare(demandshareunitreg1, region1);} //THe randomly selected OPA object gets the demandshare. This is done as many times as there are demandshares. 
+		
+	for (int i = 0; i < probadjustedagentlistSweden.size() ; i++) {
+		int assign = RandomHelper.nextIntFromTo(0,randintervalSweden);
+		probadjustedagentlistNorway.get(assign).AddDemandShare(demandshareunitreg2, region2);} //THe randomly selected OPA object gets the demandshare. This is done as many times as there are demandshares. 
+		
+	}		
 
 }

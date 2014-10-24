@@ -144,7 +144,13 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 				}
 				// Add a copy of the result to the return ArrayList. We use a copy here because
 				// we will re-use the tmpArray object
-				retList.set(i,tmpArray.clone());
+				if(tmpArray != null) {
+					retList.set(i,tmpArray.clone());
+					}
+					else {
+						retList.set(i,null);
+					}
+
 			}
 				
 		}

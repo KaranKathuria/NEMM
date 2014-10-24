@@ -50,8 +50,8 @@ public class MarketPrognosis {
 		forcastweights[0] = w1;
 		
 		stpriceexpectation = ParameterWrapper.getpriceexpectation() * RandomHelper.nextDoubleFromTo(1, 1); //Random
-		mediumrunpriceexpectations =  0; //AllVariables.mediumrundpriceexpectations 
-		longrunpriceexpectatations = 0;  //AllVariables.longrundpriceexpectations;  
+		mediumrunpriceexpectations =  32; //AllVariables.mediumrundpriceexpectations 
+		longrunpriceexpectatations = 35;  //AllVariables.longrundpriceexpectations;  
 		expectedcertificateprice = new TickArray(); 
 		expectedcertificatedemand = new TickArray();
 		expectedpowerpricenorway = new YearArray();
@@ -65,9 +65,9 @@ public class MarketPrognosis {
 		
 		for (int i = 0; i < TheEnvironment.theCalendar.getNumYears(); ++i) {
 		expectedpowerpricenorway.setElement(TheEnvironment.allRegions.get(0).getMyPowerPrice().getValue(i), i);
-		expectedpowerpricesweden.setElement(TheEnvironment.allRegions.get(1).getMyPowerPrice().getValue(i), i);}
-			
+		expectedpowerpricesweden.setElement(TheEnvironment.allRegions.get(1).getMyPowerPrice().getValue(i), i);}		
 }	
+	
 	// The following method updates the STM price expectation for the next tick based on the forecast weights. Called each tick (through Forcast) and updates the market prognosis.
 	public void updatemarketprognosis() {
 		double nexttickcertprice;
