@@ -81,7 +81,10 @@ public class DistributeProjectsandPowerPlants {
 		
 			int numberofDA = CommonMethods.getDAgentList().size();
 			if (numberofDA <= 0){
-				throw new IllegalArgumentException("Error: Zero CompanyAgents with developmentagents");}
+				//throw new Exception("Error: Zero CompanyAgents with developmentagents");		//Noe need for exception because this is actually okey.
+				return;}
+			
+			else {
 		
 			int[] distribution = new int[3]; //Only works with two regions.
 
@@ -120,7 +123,7 @@ public class DistributeProjectsandPowerPlants {
 		ArrayList<PowerPlant> temp = new ArrayList<PowerPlant>();
 		temp.addAll(TheEnvironment.projectsidentifyed); temp.addAll(TheEnvironment.projectinprocess); 
 		temp.addAll(TheEnvironment.projectsawaitinginvestmentdecision);temp.addAll(TheEnvironment.projectsunderconstruction);
-		int breakpointtest = temp.size();
+		//int breakpointtest = temp.size();
 		
 		//Assign the powerplants to agents according to the region and the respective arraylist. Notice the random uniform number used.
 		for (PowerPlant PP : temp)	{
@@ -134,6 +137,7 @@ public class DistributeProjectsandPowerPlants {
 			}
 		}
 	
+		}
 		}
 	
 

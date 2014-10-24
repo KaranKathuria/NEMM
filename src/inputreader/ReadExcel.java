@@ -60,10 +60,11 @@ public class ReadExcel {
 		try{      
 			
 			//Workbook workbook = new XSSFWorkbook();
-			XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(new File(filePath)));
+			//XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(new File(filePath)));
+			Workbook workbook = WorkbookFactory.create(new File(filePath));
 			
 			// Read number of plants and technologies
-			XSSFSheet ctr_sheet = workbook.getSheet("Control");
+			Sheet ctr_sheet = workbook.getSheet("Control");
 			startyear = (int) ctr_sheet.getRow(8).getCell(2).getNumericCellValue();
 			endyear = (int) ctr_sheet.getRow(9).getCell(2).getNumericCellValue();
 			numobpdinyear = (int) ctr_sheet.getRow(10).getCell(2).getNumericCellValue();

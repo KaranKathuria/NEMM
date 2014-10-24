@@ -24,8 +24,8 @@ import nemmprocesses.DistributeDemandShares;
 import static nemmcommons.ParameterWrapper.*;
 
 
-//========================================================================
-//=== Building and initilizing the model =================================
+//================================================================================================================================================================================================
+//=== Building and initilizing the model =========================================================================================================================================================
 
 public class NEMMContextBuilder extends DefaultContext<Object> 
 		implements ContextBuilder<Object> {
@@ -33,13 +33,13 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	@Override
 	public Context<Object> build(final Context<Object> context) {
 
-		//Initialize parameters
-		ParameterWrapper.reinit(); 							//Reads the parametervalues provided
+		//Reads in parameters from the user interface
+		ParameterWrapper.reinit(); 														//Reads the parametervalues provided in the user interface
 		
 		//Create the Environment
-		TheEnvironment.InitEnvironment(); 					//Initiates ReadExcel, creates time and adds empty lists of Powerplants, projects and regions	
-		TheEnvironment.PopulateEnvironment(); 				//initiates ReadExcel and reads in region data (demand and power price) and Powerplant and projects data 
-		TheEnvironment.GlobalValues.initglobalvalues(); 	//Initiate the GlobalValues, thats the publicliy available market information in the model
+		TheEnvironment.InitEnvironment(); 												//Initiates ReadExcel, creates time and adds empty lists of Powerplants, projects and regions	
+		TheEnvironment.PopulateEnvironment(); 											//initiates ReadExcel and reads in region data (demand and power price) and Powerplant and projects data 
+		TheEnvironment.GlobalValues.initglobalvalues(); 								//Initiate the GlobalValues, thats the publicliy available market information in the model
 		
 		//Adds Agents to context. Notice that Agents specific data is not read in and only given through constructors.
 		for (int i = 0; i < getproduceragentsnumber(); ++i) {
@@ -53,23 +53,24 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 		for (int i = 0; i < gettraderagentsnumber(); ++i) {
 			final CompanyAgent agent = new CompanyAgent(false, false, true);
 			context.add(agent);}
-		
 			
  return context;}
 	
-// ========================================================================
-// === Simulation schedule ===========================================================
-
 	//Distribution and initiation 
-@ScheduledMethod(start = 0, priority = 3)
+	@ScheduledMethod(start = 0, priority = 3)
 	public void DistributionandInitiation() {
+		
 	//Distributing Plants, projects and demand among Agents
-	DistributeProjectsandPowerPlants.distributeallpowerplants(AllVariables.powerplantdistributioncode);		//Distribute all PowerPlants among the Copmanies with PAgents.
-	DistributeProjectsandPowerPlants.distributeprojects(AllVariables.projectsdistributioncode);				//Distribute all Projects among the Copmanies with DAgents.
-	DistributeDemandShares.distributedemand(AllVariables.demandsharedistrubutioncode);						//Distribute all demand among the Copmanies with OPAgents.
+	DistributeProjectsandPowerPlants.distributeallpowerplants(AllVariables.powerplantdistributioncode);	 //Distribute all PowerPlants among the Copmanies with PAgents.
+	DistributeProjectsandPowerPlants.distributeprojects(AllVariables.projectsdistributioncode);			 //Distribute all Projects among the Copmanies with DAgents.
+	DistributeDemandShares.distributedemand(AllVariables.demandsharedistrubutioncode);					 //Distribute all demand among the Copmanies with OPAgents.
 
-	Forcast.initiatevolumeprognosis(); 																		//Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based	
+	Forcast.initiatevolumeprognosis(); 																	 //Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based	
 }
+	
+// ============================================================================================================================================================================================
+// === Simulation schedule ====================================================================================================================================================================
+
 
 //All annual updates to come below. Currently not in use.
 @ScheduledMethod(start = 0, interval = 12, priority = 2)
@@ -80,7 +81,7 @@ public void annualmarketschedule() {
 		Forcast.updateMPEandLPE();									//Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
 }
 
-	//The monthly update
+//The monthly update
 @ScheduledMethod(start = 0, interval = 1, priority = 1)
 public void monthlymarketschedule() {
 	
