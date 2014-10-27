@@ -69,5 +69,9 @@ public class AllVariables {
 	public static double maxpricecerts = 1000;
 	public static double RRR = 0.06;
 	
+	// Generic Strategy
+	public static int MaxTacticPreferenceScore = 6;
+	public static int MinTacticPreferenceScore = 2;
+	
 }
 

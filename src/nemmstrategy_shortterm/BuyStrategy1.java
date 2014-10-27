@@ -24,6 +24,8 @@ public class BuyStrategy1 extends GenericStrategy {
 	
 	//Constructor for OPABidstrategy adding the four offers to arraylist of offers.
 	public BuyStrategy1() {
+		// Run the super constructor
+		super();
 		
 		strategyname = "BuyStrategy1";
 		strategyutilityscore.add(0.0);

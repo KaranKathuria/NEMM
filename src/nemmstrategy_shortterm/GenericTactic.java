@@ -78,6 +78,8 @@ public class GenericTactic {
 		// ago the data comes from (e.g. row 2 indexes the data from tick CurrentTick-2-1 (recall - indexes start
 		// at 0)). The first column (index = 0) is the datapoint's tickID, the second column (index = 1) is the utility.
 		double[][] utilityScores;
+		double curUtil;
+		int curTickID;
 		int nowTick = TheEnvironment.theCalendar.getCurrentTick();
 		// ensure that you dont try to get data from ticks before tickID = 0
 		int numTicksToGet = Math.min(nowTick+1,numTicks);
@@ -85,15 +87,26 @@ public class GenericTactic {
 		// return the last numTicksToGet utilities
 		for (int i = 0; i < numTicksToGet; ++i) {
 			int tickID = nowTick-i;
-			double curUtil = historictacticvalues.get(tickID).tacticutilityscore;
-			int curTickID = historictacticvalues.get(tickID).tickID;
+			// Get the historical utility if it exists, otherwise
+			// return a 0 utility
+			// I am not sure why the code should ask for a utility without having saved it...
+			if (historictacticvalues.size()>=tickID+1){
+				curUtil = historictacticvalues.get(tickID).tacticutilityscore;
+				curTickID = historictacticvalues.get(tickID).tickID;	
+					
 			// raise error if the tick IDs do not match (it means that we have incorrectly set up
 			// historictacticvalues
-			if (curTickID != tickID){
-				throw new IllegalArgumentException("Tick IDs do not match when trying to retrieve last tactic utility vals");
+				if (curTickID != tickID){
+					throw new IllegalArgumentException("Tick IDs do not match when trying to retrieve last tactic utility vals");
+				}
+				utilityScores[i][0]=tickID;
+				utilityScores[i][1]=curUtil;
 			}
-			utilityScores[i][0]=tickID;
-			utilityScores[i][1]=curUtil;
+			else {
+				utilityScores[i][0]=tickID;
+				utilityScores[i][1]=0;
+			}
+				
 		}	
 		
 		return utilityScores;

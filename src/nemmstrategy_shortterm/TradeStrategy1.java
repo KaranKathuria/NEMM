@@ -31,6 +31,8 @@ public class TradeStrategy1 extends GenericStrategy {
 	
 	//Constructor for TradeStrategy1
 	public TradeStrategy1() {
+		// Run the super constructor
+		super();
 		
 		strategyname = "TradeStrategy1";
 		strategyutilityscore.add(0.0);
