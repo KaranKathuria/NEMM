@@ -29,6 +29,9 @@ public class SellStrategy1 extends GenericStrategy {
 	//Constructor for OPABidstrategy adding the four offers to arraylist of offers.
 	public SellStrategy1() {
 		
+		// Run the super constructor
+		super();
+		
 		// Local variables
 		double randomMultStep;
 		double multRestPrice;
@@ -38,7 +41,7 @@ public class SellStrategy1 extends GenericStrategy {
 		double percMustSellVol;
 		double percRestVol;
 		double multMustSellPrice;
-		
+
 		strategyname = "SellStrategy1";
 		this.strategyutilityscore.add(0.0);
 		if (numMSSteps < 1) {numMSSteps = 1;}

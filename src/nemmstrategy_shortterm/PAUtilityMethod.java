@@ -108,7 +108,7 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 					tmpArray = s.get(i).getOfferUtility().clone();
 				}				
 				// Calculate the new utility if there was an offer made.
-				// If not offer was made, we just keep the previous utility
+				// If no offer was made, we just keep the previous utility
 				curOfferVol = s.get(i).getnumberofcert(); 
 				curOfferPrice = s.get(i).getSellOfferprice();
 				if (curOfferVol > 0) {
@@ -144,13 +144,14 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 				}
 				// Add a copy of the result to the return ArrayList. We use a copy here because
 				// we will re-use the tmpArray object
-				if(tmpArray != null) {
-					retList.set(i,tmpArray.clone());
-					}
-					else {
-						retList.set(i,null);
-					}
 
+				// A null value means there has been no utility set as yet
+				if(tmpArray != null) {
+				retList.set(i,tmpArray.clone());
+				}
+				else {
+					retList.set(i,null);
+				}
 			}
 				
 		}

@@ -9,6 +9,8 @@
 package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmcommons.AllVariables;
@@ -32,11 +34,42 @@ public abstract class GenericStrategy {
 	
 	protected int floorroofpricemultiplier; //Thus this strategy us a floor/roof [zero or one]
 	protected int numberofmonthsmaxpp; //This means that the maximum pp equalt this number of months expected demand or production.
-
+	protected int myPreferenceScore; // used to specify how conservative the strategy is in selecting a new tactic
+										 // The higher the number, the more conservative (that is, higher the chance the strategy
+										// will select the tactic with the best utility rather than try something else
+	
+// ---- INNER CLASSES
+	
+	protected class TacticUtilityListElement implements Comparable<TacticUtilityListElement> {
+		 	// Used to record, rank, weight and select tactics
+			protected int tacticID; // ID of the tactic in the strategy's tactic list
+			protected GenericTactic tacticPointer; // pointer to the tactic
+			protected double tacticUtility; // Utility for the tactic
+			protected double tacticWeight;
+			protected double tacticProbabilityCutoff;
+			@Override
+			public int compareTo(TacticUtilityListElement o) {
+				// Compare based on utility
+				int lastCmp;
+				if (tacticUtility == o.tacticUtility) {lastCmp = 0;}
+				else if (tacticUtility < o.tacticUtility) {lastCmp = -1;}
+				else {lastCmp = 1;}
+				return lastCmp;
+			}
+	 }	
+	
 // ---- CONSTRUCTOR	
 
 	//Constructor for parant class. Not sure about this. This construction will note be used as this class is abstract. 
-	public GenericStrategy() {}
+	public GenericStrategy() {
+		// Specify the tacticPreferenceScore
+		Random generator = new Random(); 
+		// Note: the +1 as the nextInt(x) gives a random number between [0,x) - e.g. x = 3 means a random int
+		// that is in (0,1,2).
+		int tacticPreferenceScore = generator.nextInt(AllVariables.MaxTacticPreferenceScore - 
+														AllVariables.MinTacticPreferenceScore+1) + 
+														AllVariables.MinTacticPreferenceScore;
+	}
 			
 // ---- GETS & SETS	
 	
@@ -61,6 +94,7 @@ public abstract class GenericStrategy {
 	public ArrayList<GenericTactic> getalltactics() {
 		return alltactics;}	
 	
+	
 
 // ----	UPDATE STRATEGY
 	
@@ -76,7 +110,7 @@ public abstract class GenericStrategy {
 			tactic.updateTactic();
 		}
 	}
-	public void updateBestTactic() {
+	public void updateBestTacticOLD() {
 		// Loop through the tactics and find the one with the highest utility
 		double candBestUtilityScore = -10000000000000.0;
 		double candBestUtility = 0.0;
@@ -108,6 +142,79 @@ public abstract class GenericStrategy {
 		besttactic = candBestTactic;	
 
 	};		
+	public void updateBestTactic() {
+		// Use a genetic algorithm-type approach to select the best tactic
+		// How this works:
+		// Rank the tactics from high to low utility
+		// Use a "weighting function" to calculate a weight for each tactic, with
+		// good utilities weighted highly, and poor utilities lowly
+		// Convert the weightings into probabilities
+		// Randomly choose a tactic using the probabilities
+		
+		// Create a list with the tactic and utility info
+		ArrayList<TacticUtilityListElement> tacticList = new ArrayList<TacticUtilityListElement>();
+		TacticUtilityListElement listElement;
+		double curUtilityScore;
+		int numPdsInUtilCalc;
+		int tacticID;
+		double[][] curUtilityArray;
+		double sumWeights = 0.0;
+		double tmpProb;
+		double tmpCumProb=0.0;
+		for (GenericTactic curTactic : alltactics) { 
+			listElement = new TacticUtilityListElement();
+			listElement.tacticPointer = curTactic;
+			curUtilityScore = 0;
+			// Sums the utility for the previous X ticks
+			numPdsInUtilCalc = Math.min(AllVariables.numofhistutilitiesincluded, TheEnvironment.theCalendar.getCurrentTick()+1);
+			curUtilityArray = curTactic.getUtilityScore(AllVariables.numofhistutilitiesincluded);
+			for (int i = 0; i < numPdsInUtilCalc;++i) {
+				curUtilityScore = curUtilityScore + curUtilityArray[i][1];
+			}
+			listElement.tacticUtility = curUtilityScore;
+			tacticList.add(listElement);
+		}
+		// Rank the tactics from high to low utility		
+		Collections.sort(tacticList); // sort using the TacticUtilityListElement comparator (see code above)
+		// Calculate the weights using the weight function
+		for (int i = 0; i< tacticList.size(); i++) { 
+			listElement = tacticList.get(i);
+			listElement.tacticWeight = (1/myPreferenceScore)^(i-1);
+			sumWeights = sumWeights + listElement.tacticWeight;			
+		}
+		// Calculate the probability cutoff. Idea is as follows:
+		// Let p = probability for current tactic, and Z be the cumulative probabilities for all
+		// tactics with a better utility than the current. 
+		// We store Z+p for the current tactic as the probability cut off
+		// Let x be a random number between 0 & 1
+		// Then i choose that tactic with the lowest cut off greater than x.
+		for(int i = 0; i< tacticList.size(); i++) {
+			listElement = tacticList.get(i);
+			tmpProb = listElement.tacticWeight/sumWeights;
+			tmpCumProb = tmpCumProb + tmpProb;
+			listElement.tacticProbabilityCutoff = tmpCumProb;
+		}
+		
+		// Randomly choose the tactic to use next time
+		Random generator = new Random(); 
+		double randX = generator.nextDouble();
+		int keeplooking = 1;
+		int curIndex=0;
+		besttactic = tacticList.get(0).tacticPointer; // Default chose the utility with the best tactic
+		while(keeplooking == 1) {
+			listElement = tacticList.get(curIndex);
+			if (listElement.tacticProbabilityCutoff >= randX) {
+				// use this one
+				besttactic = listElement.tacticPointer;
+				keeplooking = 0;
+			}
+			curIndex++;
+		}
+		// Store the utility from the current tick of the best tactic,
+		// in the strategy (this is also the strategy's utility)
+		strategyutilityscore.add(besttactic.getUtilityScore(1)[0][1]); 
+
+	}
 
 // ---- STRATEGY UTILITY	
 	

@@ -74,6 +74,9 @@ public class AllVariables {
 	public static int projectsdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 	public static int demandsharedistrubutioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 
+	// Generic Strategy
+	public static int MaxTacticPreferenceScore = 6;
+	public static int MinTacticPreferenceScore = 2;
 	
 }
 
