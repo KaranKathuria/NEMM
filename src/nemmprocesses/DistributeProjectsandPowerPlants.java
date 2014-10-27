@@ -56,7 +56,8 @@ public class DistributeProjectsandPowerPlants {
 							}
 				}
 			}
-				
+		int test = 2;
+		int test2 = TheEnvironment.allPowerPlants.size();
 		int randintervalNorway = probadjustedagentlistNorway.size() -1;   
 		int randintervalSweden = probadjustedagentlistSweden.size() -1;
 		

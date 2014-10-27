@@ -53,7 +53,6 @@ public class ProjectDevelopment {
 	//Method iterating through all projects awaiting investment decision and deciding which to invest investment decison.
 	public static void startconstrucion() {
 		//Should: Set start year. Should select the best projects according to certprice needed, limit and 
-		
 	}
 	
 	

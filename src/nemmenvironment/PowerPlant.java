@@ -38,7 +38,7 @@ public class PowerPlant implements Cloneable{
 	public PowerPlant() {}
 	
 	public PowerPlant(String newname, Region newregion, int newstatus, int newcapacity, double newloadfactor, int newtechnology, 
-					  int newlifetime, int newstartyear, int newearlieststartyear, double newcapex, double newopex, double newannualcostreduction) {
+					  int newlifetime, int newstartyear, int newearlieststartyear, double newcapex, double newopex, double newannualcostreduction, int newminyearinprocess, int newminconstructionyears) {
 		name = newname;
 		myRegion = newregion;
 		status = newstatus;
@@ -51,6 +51,8 @@ public class PowerPlant implements Cloneable{
 		capex = newcapex;
 		opex = newopex;
 		annualcostreduction = newannualcostreduction;
+		minyearinprocess = newminyearinprocess;
+		minconstructionyears = newminconstructionyears;
 		
 		if (startyear != 0) {									//null equals 0 for int in java This snippet takes care of exogenous plants and "overgangsordningen"
 			endyear = startyear + Math.min(lifetime, 15) - 1;}

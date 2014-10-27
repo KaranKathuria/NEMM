@@ -74,9 +74,12 @@ public class ShortTermMarket {
 			//Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers()); For the time being the producer does not have buyoffers.
 			
 			//For displaypurposes
-			selloffer1 = agent.getbeststrategy().getalltactics().get(0).getsellofferone().getSellOfferprice();
-			selloffer2[counts] = agent.getbeststrategy().getalltactics().get(0).getselloffertwo().getSellOfferprice();
-			bestselloffer2 = agent.getbeststrategy().getbesttactic().getselloffertwo().getSellOfferprice();
+			if (agent.getbeststrategy().getalltactics().get(0).getsellofferone() == null) {selloffer1 = 0;} else{ 		  //For handling null-offers from agents without prod.
+			selloffer1 = agent.getbeststrategy().getalltactics().get(0).getsellofferone().getSellOfferprice();}
+			if (agent.getbeststrategy().getalltactics().get(0).getselloffertwo() == null) {selloffer2[counts] = 0;} else{ //For handling null-offers from agents without prod.
+			selloffer2[counts] = agent.getbeststrategy().getalltactics().get(0).getselloffertwo().getSellOfferprice();}
+			if (agent.getbeststrategy().getbesttactic().getselloffertwo() == null) {bestselloffer2 = 0;} else{ 			  //For handling null-offers from agents without prod.
+			bestselloffer2 = agent.getbeststrategy().getbesttactic().getselloffertwo().getSellOfferprice();}
 			floor = agent.getbeststrategy().getalltactics().get(0).getfloorroofprice();
 			counts++;
 			
@@ -87,10 +90,13 @@ public class ShortTermMarket {
 			//Updates all bids for all agents
 			//Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers()); None sell offers from the OP agent list. 
 			Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers());
-			
-			buyoffer1 = agent.getbeststrategy().getalltactics().get(0).getbuyofferone().getBuyOfferprice(); 
-			buyoffer2[countb] = agent.getbeststrategy().getalltactics().get(0).getbuyoffertwo().getBuyOfferprice();
-			bestbuyoffer2 = agent.getbeststrategy().getbesttactic().getbuyoffertwo().getBuyOfferprice();
+
+			if (agent.getbeststrategy().getalltactics().get(0).getbuyofferone() == null) {buyoffer1 = 0;} else{  //For handling null-offers from agents without demand.
+			buyoffer1 = agent.getbeststrategy().getalltactics().get(0).getbuyofferone().getBuyOfferprice(); }
+			if (agent.getbeststrategy().getalltactics().get(0).getbuyoffertwo() == null) {buyoffer2[countb] = 0;} else{  //For handling null-offers from agents without demand.
+			buyoffer2[countb] = agent.getbeststrategy().getalltactics().get(0).getbuyoffertwo().getBuyOfferprice();}
+			if (agent.getbeststrategy().getbesttactic().getbuyoffertwo() == null) {bestbuyoffer2 = 0;} else{			 //For handling null-offers from agents without prod.
+			bestbuyoffer2 = agent.getbeststrategy().getbesttactic().getbuyoffertwo().getBuyOfferprice();}
 			roof = agent.getbeststrategy().getalltactics().get(0).getfloorroofprice();
 			countb++;
 		}

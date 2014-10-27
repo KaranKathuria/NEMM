@@ -50,7 +50,7 @@ public class ReadExcel {
 	 private static String filePath;
 	 
  	public static void InitReadExcel() {
- 		filePath = working_directory + File.separator + "NEMM_realdata.xlsx"; 
+ 		filePath = working_directory + File.separator + "NEMM_testdata.xls"; 
  	}
  
 	public static void ReadExcel() {}
@@ -155,10 +155,10 @@ public class ReadExcel {
 
 				for(int j = 0; j < plantsnumber; j++){
 					String newname = plant_sheet.getRow(3+j).getCell(1).getStringCellValue();
-					int newregion_ID = (int) plant_sheet.getRow(3+j).getCell(13).getNumericCellValue();
+					int newregion_ID = (int) plant_sheet.getRow(3+j).getCell(15).getNumericCellValue();
 					int newcapacity = (int) plant_sheet.getRow(3+j).getCell(3).getNumericCellValue();
 					double newloadfactor = plant_sheet.getRow(3+j).getCell(4).getNumericCellValue();
-					int newtechnology = (int) plant_sheet.getRow(3+j).getCell(14).getNumericCellValue();
+					int newtechnology = (int) plant_sheet.getRow(3+j).getCell(16).getNumericCellValue();
 					int newstatus = (int) plant_sheet.getRow(3+j).getCell(6).getNumericCellValue();
 					int newyearstarted = (int) plant_sheet.getRow(3+j).getCell(7).getNumericCellValue();
 					int newlifetime = (int) plant_sheet.getRow(3+j).getCell(8).getNumericCellValue();
@@ -166,9 +166,24 @@ public class ReadExcel {
 					double newcapex = plant_sheet.getRow(3+j).getCell(10).getNumericCellValue();
 					double newopex = plant_sheet.getRow(3+j).getCell(11).getNumericCellValue();
 					double newlearningrate = plant_sheet.getRow(3+j).getCell(12).getNumericCellValue();
+					int newminyearinprocess = (int) plant_sheet.getRow(3+j).getCell(13).getNumericCellValue();
+					int newminconstructionyears = (int) plant_sheet.getRow(3+j).getCell(14).getNumericCellValue();
 					
 					//newregion_ID starts by 1, hence to indexs it we subtract 1.
-					PowerPlant pp = new PowerPlant(newname, TheEnvironment.allRegions.get(newregion_ID-1), newstatus, newcapacity, newloadfactor, newtechnology, newlifetime, newyearstarted, newearlieststartyear, newcapex, newopex, newlearningrate);
+					PowerPlant pp = new PowerPlant(newname, TheEnvironment.allRegions.get(newregion_ID-1), newstatus, newcapacity, newloadfactor, newtechnology, newlifetime, newyearstarted, newearlieststartyear, newcapex, newopex, newlearningrate, newminyearinprocess, newminconstructionyears);
+					
+					//Setting the powerplant/project to the relevant ArrayList. 
+					if (newstatus == 1) {
+						TheEnvironment.allPowerPlants.add(pp);}
+					else if (newstatus == 2) {
+						TheEnvironment.projectsunderconstruction.add(pp);}
+					else if (newstatus == 3) {
+						TheEnvironment.projectsawaitinginvestmentdecision.add(pp);}
+					else if (newstatus == 4) {
+						TheEnvironment.projectinprocess.add(pp);}
+					else if (newstatus == 5) {
+						TheEnvironment.projectsidentifyed.add(pp);}
+					else {TheEnvironment.potentialprojects.add(pp);}
 					
 					double[] tempproduction = new double[ticks];
 					double[] expproduction = new double[ticks];
@@ -186,18 +201,7 @@ public class ReadExcel {
 					pp.setAllExpectedProduction(expproduction);
 					
 					
-					//Setting the powerplant/project to the relevant ArrayList. 
-					if (newstatus == 1) {
-						TheEnvironment.allPowerPlants.add(pp);}
-					else if (newstatus == 2) {
-						TheEnvironment.projectsunderconstruction.add(pp);}
-					else if (newstatus == 3) {
-						TheEnvironment.projectsawaitinginvestmentdecision.add(pp);}
-					else if (newstatus == 4) {
-						TheEnvironment.projectinprocess.add(pp);}
-					else if (newstatus == 5) {
-						TheEnvironment.projectsidentifyed.add(pp);}
-					else {TheEnvironment.potentialprojects.add(pp);}
+
 
 				}
 				
