@@ -197,7 +197,9 @@ public class CompanyAgent extends ParentAgent {
 		public void addproject(PowerPlant PP) {
 			myProjects.add(PP);	
 		}
-		
+		public ArrayList<PowerPlant> getmyprojects() {
+			return myProjects;
+		}
 		
 	}
 	

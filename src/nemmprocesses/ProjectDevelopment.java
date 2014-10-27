@@ -11,6 +11,8 @@ package nemmprocesses;
 import java.util.ArrayList;
 
 import repast.simphony.random.RandomHelper;
+import nemmagents.CompanyAgent.DeveloperAgent;
+import nemmcommons.CommonMethods;
 import nemmenvironment.PowerPlant;
 import nemmenvironment.TheEnvironment;
 
@@ -53,6 +55,28 @@ public class ProjectDevelopment {
 	//Method iterating through all projects awaiting investment decision and deciding which to invest investment decison.
 	public static void startconstrucion() {
 		//Should: Set start year. Should select the best projects according to certprice needed, limit and 
+		//for (PowerPlant PP : TheEnvironment.projectsawaitinginvestmentdecision) {
+		for (DeveloperAgent DA : CommonMethods.getDAgentList()) {
+			int temp_projectsunderconstruct = 0;
+			ArrayList<PowerPlant> templist = new ArrayList<PowerPlant>();
+			
+			//Collecting the projects that are awaiting investmetn decision (status = 3) and counting projects currently under construction.
+			for (PowerPlant PP : DA.getmyprojects()) {
+				if (PP.getstatus() == 3) {
+					templist.add(PP);}
+				if (PP.getstatus() == 2) {
+					temp_projectsunderconstruct = temp_projectsunderconstruct +1;
+				}
+			}
+			
+			//For all the relevant projects. Do the following:
+			for (PowerPlant PP : templist) {
+				
+					
+				}
+			}
+			
+		
 	}
 	
 	
