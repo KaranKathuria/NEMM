@@ -74,6 +74,9 @@ public class AllVariables {
 	public static int projectsdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 	public static int demandsharedistrubutioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 
+	//Regulations
+	public static boolean certificatespost2020_Norway = false;
+	public static boolean certificatespost2020_Sweden = true;
 	
 }
 

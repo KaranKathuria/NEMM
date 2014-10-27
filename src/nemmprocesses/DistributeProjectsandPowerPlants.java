@@ -67,10 +67,12 @@ public class DistributeProjectsandPowerPlants {
 			if (PP.getMyRegion() == TheEnvironment.allRegions.get(0)) {					 //Norway
 				int assign = RandomHelper.nextIntFromTo(0,randintervalNorway);
 				PP.setMyCompany(probadjustedagentlistNorway.get(assign).getmycompany()); //Sets the powerplants to a random company in the relevant arraylist of Norway.
-			}
+				probadjustedagentlistNorway.get(assign).addpowerplant(PP);				 //The same PowerPlant is also added to that specific agents production list.
+			}	
 			else { 																		//Sweden
 				int assign = RandomHelper.nextIntFromTo(0,randintervalSweden);
 				PP.setMyCompany(probadjustedagentlistSweden.get(assign).getmycompany()); //Sets the powerplants to a random company in the relevant arraylist of Sweden.
+				probadjustedagentlistNorway.get(assign).addpowerplant(PP);				 //The same PowerPlant is also added to that specific agents production list.
 			}
 		}
 			
@@ -129,11 +131,14 @@ public class DistributeProjectsandPowerPlants {
 		for (PowerPlant PP : temp)	{
 			if (PP.getMyRegion() == TheEnvironment.allRegions.get(0)) {					 //Norway
 				int assign = RandomHelper.nextIntFromTo(0,randintervalNorway);
-				PP.setMyCompany(probadjustedagentlistNorway.get(assign).getmycompany()); //Sets the powerplants to a random company in the relevant arraylist of Norway.
+				PP.setMyCompany(probadjustedagentlistNorway.get(assign).getmycompany()); //Sets the project to a random company in the relevant arraylist of Norway.
+				probadjustedagentlistNorway.get(assign).addproject(PP);   				 //Adds the same project to the CompanyAgents list myProjects.
 			}
 			else { 																		//Sweden
 				int assign = RandomHelper.nextIntFromTo(0,randintervalSweden);
-				PP.setMyCompany(probadjustedagentlistSweden.get(assign).getmycompany()); //Sets the powerplants to a random company in the relevant arraylist of Sweden.
+				PP.setMyCompany(probadjustedagentlistSweden.get(assign).getmycompany()); //Sets the project to a random company in the relevant arraylist of Sweden.
+				probadjustedagentlistNorway.get(assign).addproject(PP);   				 //Adds the same project to the CompanyAgents list myProjects.
+
 			}
 		}
 	

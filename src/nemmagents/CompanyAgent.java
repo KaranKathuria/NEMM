@@ -179,12 +179,10 @@ public class CompanyAgent extends ParentAgent {
 		
 		private CompanyAgent companyagent;
 		private int developmentcriteriaflag; 			//Flag indicationg the development criteria for the DA. 1 = The project must fullfill RRR with prognosed price 2 = The project must fullfill RRR with todays price. 3 = The project must fullfill RRR with both price 
-		private ArrayList<PowerPlant> myprojects;		//List of all projects owned by the agent regardless of project stage.
 		private int projectprocesslimit;				//The agents maximum number of projects that can be identifyed or in concession/preconstruct each year. Thats from the potential list.
 		private int constructionlimit;					//Number of projects it can have under construction simultaniasly.
-		private double shareofprojectresourcesinNorway;	//Currently not in use. Should be more generic as the model could in the future need several regions. THis does not support this. 
 		private int sizecode;							//Code value indicationg if the DA has few=1, normal=2 og alot=3 of activities (projects) in the regions the company of that AA participates in
-		
+		private double earlistageRRR;					//Required rate off return for project cut-off on earl-stage projects.
 		
 		public DeveloperAgent() {
 			companyagent = this.companyagent;
@@ -195,7 +193,11 @@ public class CompanyAgent extends ParentAgent {
 		
 		public int getsizecode() {return sizecode;}
 		public int getregionpartcode() {return regionpartcode;}
-		public CompanyAgent getmycompany() {return this.companyagent;}	
+		public CompanyAgent getmycompany() {return this.companyagent;}
+		public void addproject(PowerPlant PP) {
+			myProjects.add(PP);	
+		}
+		
 		
 	}
 	
@@ -244,9 +246,11 @@ public class CompanyAgent extends ParentAgent {
 	private DeveloperAgent developeragent;
 	private CompanyAnalysisAgent companyanalysisagent;
 	private ArrayList<CompanyDemandShare> myDemandShares = new ArrayList<CompanyDemandShare>();
-	private ArrayList<PowerPlant> myPowerPlants = new ArrayList<PowerPlant>();
+	private ArrayList<PowerPlant> myPowerPlants = new ArrayList<PowerPlant>();						//List of PowerPlants owned by the company regardless of project stage.
+	private ArrayList<PowerPlant> myProjects = new ArrayList<PowerPlant>();							//List of all projects owned by the company regardless of project stage.
+
 	private int regionpartcode;			//Code indication which region the Company is active in. 1=Norway (region1), 2=Norway and Sweden, 3=Sweden. This number has to connection with AA sizecode, hence a company with big size and reigonpartcode=2 is large in both regions.
-	private double WACC; 				//Company specific cost of capital. Used to evaluate investment decisions. 
+	private double investmentRRR; 				//Company specific cost of capital. Used to evaluate investment decisions. 
 	
 	
 	//default constructor not in use.
@@ -269,7 +273,7 @@ public class CompanyAgent extends ParentAgent {
 		
 		companyname = "Company " + this.getID();
 		companyanalysisagent = new CompanyAnalysisAgent();	
-		WACC = 0.10;
+		investmentRRR = 0.06;
 		regionpartcode = 2;										//By default, all companies are active in both countries. 
 		
 		
@@ -293,9 +297,15 @@ public class CompanyAgent extends ParentAgent {
 	public ArrayList<PowerPlant> getmypowerplants() {
 		return myPowerPlants;
 	}
+	public ArrayList<PowerPlant> getmyprojects() {
+		return myPowerPlants;
+	}
 	public ArrayList<CompanyDemandShare> getMyDemandShares() {
 		return myDemandShares;
-	}	
+	}
+	public double getInvestmentRRR() {
+		return investmentRRR;
+	}
 	
 }
 	

@@ -124,7 +124,7 @@ public class ReadExcel {
 				}
 				
 				for(int f = 0; f < years; f++){
-				temppowerprice[f] = powerPrice_sheet.getRow(2+f+(48*j)).getCell(3).getNumericCellValue();		 //49*j ensuring right startingpoint for second region.
+				temppowerprice[f] = powerPrice_sheet.getRow(2+f+(48*j)).getCell(3).getNumericCellValue();		 //48*j ensuring right startingpoint for second region.
 				for(int fw = 0; fw < years; fw++){
 				tempfwdprice[f][fw] = powerPrice_sheet.getRow(2+f+(48*j)+fw).getCell(4+f).getNumericCellValue(); //For each row, looping across the columns. Notice + fw as historic fwd does not make sense.
 				}
