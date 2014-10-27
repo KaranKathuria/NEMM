@@ -66,7 +66,7 @@ public abstract class GenericStrategy {
 		Random generator = new Random(); 
 		// Note: the +1 as the nextInt(x) gives a random number between [0,x) - e.g. x = 3 means a random int
 		// that is in (0,1,2).
-		int tacticPreferenceScore = generator.nextInt(AllVariables.MaxTacticPreferenceScore - 
+		myPreferenceScore = generator.nextInt(AllVariables.MaxTacticPreferenceScore - 
 														AllVariables.MinTacticPreferenceScore+1) + 
 														AllVariables.MinTacticPreferenceScore;
 	}
