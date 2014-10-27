@@ -77,11 +77,11 @@ public class FundamentalMarketAnalysis {
 		
 		//Calcuations begin
 		int currenttick = TheEnvironment.theCalendar.getCurrentTick();
-		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year + TheEnvironment.theCalendar.getStartYear();		//Gets the current year.
+		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year + TheEnvironment.theCalendar.getStartYear();	//Gets the current year.
 		int numberofyears = 2035 - currentyear + 1;
 		int numberofticksinyear = TheEnvironment.theCalendar.getNumTradePdsInYear();
 		
-		certificatebalance = TheEnvironment.GlobalValues.totalmarketphysicalposition; 							//Based on balance from previous year.
+		certificatebalance = TheEnvironment.GlobalValues.totalmarketphysicalposition; 												//Based on balance from previous year.
 				
 		for (int i = 0; i < numberofyears; ++i ) {
 			tempendogenousprojects.clear();
@@ -99,7 +99,7 @@ if (i < AllVariables.yearstoendogprojects) {
 		//Adding to allPowerPlants from the plants in process that will be finished. Notice that this is done BEFORE the sum annual production to include the ones finished this year.
 		for (PowerPlant PP : projectsunderconstruction_copy) {
 			if (PP.getstartyear() == currentyear+i) {									 //Currentyear + i is the iterated year. By definition projects are set in operation 1.1 for the start year.
-			PP.setendyear(Math.min(PP.getlifetime()+currentyear+i-1, currentyear+i+14));	 //Setting endyear in order to not count the certificates after 15 years. And take care of projects in overgangsperioden with lifetime = 1.
+			PP.setendyear(Math.min(PP.getlifetime()+currentyear+i-1, currentyear+i+14)); //Setting endyear in order to not count the certificates after 15 years. And take care of projects in overgangsperioden with lifetime = 1. Does not take care of Norway after 2020.
 			//PP.setstatus(1);															 Not needed. No need to remove the realized projects from the projectsunderconstruction_copy as only those with startyear are added. Hence no chance of doublecounting.
 			allPowerPlants_copy.add(PP);
 			}

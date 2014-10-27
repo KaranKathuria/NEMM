@@ -77,6 +77,10 @@ public class AllVariables {
 	// Generic Strategy
 	public static int MaxTacticPreferenceScore = 6;
 	public static int MinTacticPreferenceScore = 2;
+
+	//Regulations
+	public static boolean certificatespost2020_Norway = false;
+	public static boolean certificatespost2020_Sweden = true;
 	
 }
 

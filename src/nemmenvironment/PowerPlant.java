@@ -21,14 +21,19 @@ public class PowerPlant implements Cloneable{
 	private double capex;					//Total capex for project
 	private double opex;					//Opex per MWh for project, assumed that this does not vary with the fluctiations in annual production. 
 	private double annualcostreduction;		//Annual rate of cost reduction due to technology improvment. 
+	private int minyearinprocess;			//Projects specific. Min number of years this projects needs in process (preconstruction and concession)
+	private int minconstructionyears;		//Minimum number of years this project needs in construction.
+	
 	
 	private TickArray myProduction; 		//Future production (good given).
 	private TickArray ExpectedProduction;	//Expected production. This is the amount of certs the plant is expected to generate and used by the owners to estimate. 
 	
-	//Variables calculated
-	private int endyear; 					//THis is the last year eligable for certificates.
+	//Variables calculated/used in sumulation
+	private int endyear; 					//THis is the last year eligable for certificates (if 2020, it gets certs for that year).
 	private double LRMC; 					//Long run marginal cost for this powerplant build at a given year. This is update for each annual update.
 	private double certpriceneeded;			//Reason for having this field is that the projects cannot be sorted by LRMC as the region defines when its certificatesobligated.
+	private int starttick;					//The month/tick of a year that the production starts wihting the starting year.
+	
 	
 	public PowerPlant() {}
 	
@@ -88,6 +93,11 @@ public class PowerPlant implements Cloneable{
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
+	
+	public void setStarttick(int tickID) {
+		starttick = tickID;
+	}
+	public int getstatus() {return status;}
 
 	// Methods ------------------------------------------------------------------------
 	
