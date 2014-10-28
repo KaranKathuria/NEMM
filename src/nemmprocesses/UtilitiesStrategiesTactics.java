@@ -24,10 +24,19 @@ public class UtilitiesStrategiesTactics {
 		GenericTactic tempbesttactic = new GenericTactic();
  
 		for (ActiveAgent agent : CommonMethods.getAAgentList()) {
+			int tickID = TheEnvironment.theCalendar.getCurrentTick();
+			if (tickID==2){ 
+			@SuppressWarnings("unused")
+			Object tmpA = agent;
+			}
 			for (GenericStrategy strategy : agent.getallstrategies()) { //
 				strategy.updateUtilitiesAndParams();
+				if (tickID==2){ 
+					@SuppressWarnings("unused")
+					int z = 1;
+					}	
 				strategy.updateBestTactic();
-			
+		
 			}
 		}
 		
