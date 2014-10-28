@@ -31,7 +31,7 @@ public class PowerPlant implements Cloneable{
 	//Variables calculated/used in sumulation
 	private int endyear; 					//THis is the last year eligable for certificates (if 2020, it gets certs for that year).
 	private double LRMC; 					//Long run marginal cost for this powerplant build at a given year. This is update for each annual update.
-	private double certpriceneeded;			//Reason for having this field is that the projects cannot be sorted by LRMC as the region defines when its certificatesobligated.
+	private Double certpriceneeded;			//Reason for having this field is that the projects cannot be sorted by LRMC as the region defines when its certificatesobligated.
 	private int starttick;					//The month/tick of a year that the production starts wihting the starting year.
 	
 	
@@ -209,22 +209,33 @@ public class PowerPlant implements Cloneable{
 	
 	//THis method caluclates the LRMC and certificate price needed for a project realised in a given year. This is only usefull for endogenous projects, hence it does not have to take care of "overgangsordningen" projects. 
 	//Takes in the realisation year as this alters the LRMC and Certpriceneeeded through improvment in Capex. Also, now the current power price (simlation tick) is used as bases for certpriceneeded.
-	//Currently uses the in moment powerprice and global RRR.
-	public void calculateLRMCandcertpriceneeded(int currentyear) {
+	//Currently uses the either "in-moment powerprice", the owners expected powerprice or the fwd powerprice and global RRR.
+	public void calculateLRMCandcertpriceneeded(int currentyear, double RRR, int powerpricecode) {
+		//Not sure there is a good reason for not sending the powerprice directly in the method (KK). One advantage is that its implementation is easier to change later.
+		//Current year referes to actual year number (2012..), not YearID (0,1...)
+		double usedRRR = RRR;
+		double usedpowerprice = 0;
+		int futureyearspowerprice = currentyear - TheEnvironment.theCalendar.getStartYear() + 5;	//5 indication 5 years horizont.
 		
+		//Switch taking care of which powerprice assumption to use in the LRMC. 1=Current power price, 2=The Developers, companys, analysisagent expected power price in 5 years. 3=The 5 year fowardprice.
+		switch (powerpricecode) {
+			case 1: {usedpowerprice = myRegion.getMyPowerPrice().getValue();}							//Use current powerprice
+			case 2: {if (myRegion == TheEnvironment.allRegions.get(0)) {								//Use the MAA expected powerprice in 5 years from now
+						usedpowerprice = myCompany.getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getExpectedpowerpricenorway(futureyearspowerprice);}
+					else{usedpowerprice = myCompany.getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getExpectedpowerpricesweden(futureyearspowerprice);}
+					}
+			case 3: {usedpowerprice = myRegion.getMyForwardPrice(futureyearspowerprice-5).getValue(5);}	//Use the market forwardprices}
+		}
+			
 		//int currentyear = TheEnvironment.theCalendar.getTimeBlock(TheEnvironment.theCalendar.getCurrentTick()).year;
 		int yearsoftechnologyimprovment = currentyear - TheEnvironment.theCalendar.getStartYear();
 		
 		//Her is the certificatelogic
-		int yearswithcertificates = 15;
-			if (currentyear > 2020) {
-				if (myRegion.getRegionName() == "Norway") {
+		int yearswithcertificates = Math.min(15,(2035-currentyear));
+			if (!myRegion.getcertificatespost2020flag() && currentyear > 2020) { 				//If certflag is false and years is larger than 2020 (you get certs until 31.12.2020.)
 					yearswithcertificates = 0;}
-				else {
-					yearswithcertificates = 2035 - currentyear;
-			}}
 		
-		double newCapex = capex*Math.pow((1-annualcostreduction),yearsoftechnologyimprovment);			//Note that the Capex value of the powerplant is not set/updated.
+		double newCapex = capex*Math.pow((1-annualcostreduction),yearsoftechnologyimprovment);	//Note that the Capex value of the powerplant is not set/updated.
 		
 		double NPVfactor_lifetime = 0;
 		for (int i = 1; i <= lifetime; i++) {
@@ -235,40 +246,24 @@ public class PowerPlant implements Cloneable{
 		//Calculating the needed average cert price is not trival as the certificates are only valid for a subperiod of the lifetime. First take into account the yearsofcertificates
 		double NPVfactor_certyears = 0;
 		for (int i = 1; i <= yearswithcertificates; i++) {
-			NPVfactor_certyears = NPVfactor_certyears + 1/Math.pow((1+TheEnvironment.GlobalValues.RRR),i);}
+			NPVfactor_certyears = NPVfactor_certyears + 1/Math.pow((1+usedRRR),i);}
 		
 		//Calculating the needed price for certificates, with the correct assumptions of when the plant is eligable and the simulation-current local power price. T
-		certpriceneeded = (LRMC*NPVfactor_lifetime - myRegion.getMyPowerPrice().getValue()*NPVfactor_lifetime) / NPVfactor_certyears; //Drawback: IS the powerprice assumption okey?
-	
+		certpriceneeded = (LRMC*NPVfactor_lifetime - usedpowerprice*NPVfactor_lifetime) / NPVfactor_certyears; //Drawback: IS the powerprice assumption okey?
 	}
 	
+	//Get and set methods
+	public void setendyear(int e) {endyear = e;}
+	public void setstatus(int e) {endyear = e;}
+	public int getstartyear() {return startyear;}
+	public int getendyear() {return endyear;}
+	public int getearlieststartyear() {return earlieststartyear;}
+	public int getlifetime() {return lifetime;}
+	public double getestimannualprod() {return this.loadfactor*this.capacity*8760;}
+	public double getLRMC() {return LRMC;}
+	public Double getcertpriceneeded() {return certpriceneeded;}
+	public String getname() {return name;}
 	
-	public void setendyear(int e) {
-		endyear = e;}
-	public void setstatus(int e) {
-		endyear = e;
-	}
-	public int getstartyear() {
-		return startyear;}
-	public int getendyear() {
-		return endyear;}
-	public int getearlieststartyear() {
-		return earlieststartyear;
-	}
-	public int getlifetime() {
-		return lifetime;
-	}
-	public double getestimannualprod() {
-		return this.loadfactor*this.capacity*8760;
-	}
-	public double getLRMC() {
-		return LRMC;
-	}
-	public double getcertpriceneeded() {
-		return certpriceneeded;
-	}
-	public String getname() {
-		return name;}
-	}
+}
 	
 	

@@ -120,23 +120,30 @@ public static void markettransactions() {
 	
 	//Method that runs demand and production and adds this to the agents demand, production and physical position.
 public static void runproduction() {
-
+	
+	double testsum=0;
 	for (ActiveAgent AA : CommonMethods.getPAgentList()) { //For all Companies
 		double thistickprod = 0;
 	for (PowerPlant PP : AA.getmypowerplants()) { //For all PowerPlants
 		thistickprod = thistickprod + PP.getProduction();
 	}
-	AA.addtophysicalposition(thistickprod); // Pushes this ticks production to agents physical position and updates last tick production
+	AA.addtophysicalposition(thistickprod);// Pushes this ticks production to agents physical position and updates last tick production
+	testsum = testsum + thistickprod;
 	}
+	
 }
 
 public static void updatedemand() {
+	double testsum=0;
+
 	for (ActiveAgent AA : CommonMethods.getOPAgentList()) { //For all activeagents type obligatedpurchaser. THis could have been done for the Companyagent also, but this is faster.
 		double tempdemand = 0; //tempvalue
 		for (CompanyDemandShare CDS : AA.getMyDemandShares()) { //Go through all demandshares (which consists of a region and a share. 
-			tempdemand = tempdemand + CDS.getMyRegion().getMyDemand().getCertDemand() * CDS.getDemandShare(); //Sum the product of that regions demandshare with that regions demand, for current tick. 
+			tempdemand = tempdemand + (CDS.getMyRegion().getMyDemand().getCertDemand() * CDS.getDemandShare()); //Sum the product of that regions demandshare with that regions demand, for current tick. 
 		}
-		AA.addtophysicalposition(-tempdemand); //Note sure if you want to define a demand as a negative or positive number. 
+		AA.addtophysicalposition(-tempdemand); //Note sure if you want to define a demand as a negative or positive number.
+		testsum = testsum + -tempdemand;
+
 	}
 }
 

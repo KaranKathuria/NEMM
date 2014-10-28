@@ -9,8 +9,11 @@
 package nemmprocesses;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import repast.simphony.random.RandomHelper;
+import nemmagents.CompanyAgent.DeveloperAgent;
+import nemmcommons.CommonMethods;
 import nemmenvironment.PowerPlant;
 import nemmenvironment.TheEnvironment;
 
@@ -41,7 +44,7 @@ public class ProjectDevelopment {
 				
 				TheEnvironment.allPowerPlants.add(PP);			//Add to all operations powerplants
 				PP.getMyCompany().getmypowerplants().add(PP);	//Add to company`s list of powerplants
-				PP.getMyCompany().getmyprojects().remove(PP);	//Remove from company`s list of project
+				PP.getMyCompany().getmyprojects().remove(PP);	//Remove from company`s list of project. This should work as the iteration is through the "TheEnvironment.projectsunderconstruction"
 			}
 		}
 	    //To work around the problem of concurring operations, the removement of the project from the Underconstruction list must be done in another operation below.
@@ -50,10 +53,42 @@ public class ProjectDevelopment {
 			TheEnvironment.projectsunderconstruction.remove(i);}}
 	}
 	
-	//Method iterating through all projects awaiting investment decision and deciding which to invest investment decison.
+	//Method iterating through all projects awaiting investment decision and deciding which to invest investment decison. SHould be ran after process are finished, and after construction are finished.
 	public static void startconstrucion() {
 		//Should: Set start year. Should select the best projects according to certprice needed, limit and 
-	}
+		//for (PowerPlant PP : TheEnvironment.projectsawaitinginvestmentdecision) {
+		
+		int currenttick = TheEnvironment.theCalendar.getCurrentTick();
+		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year + TheEnvironment.theCalendar.getStartYear();	//Gets the current year.
+		
+		for (DeveloperAgent DA : CommonMethods.getDAgentList()) {
+			int temp_projectsunderconstruct = 0;
+			ArrayList<PowerPlant> templist = new ArrayList<PowerPlant>();
+			
+			double usedRRR = DA.getmycompany().getInvestmentRRR();
+			//Collecting the projects that are awaiting investmetn decision (status = 3) and counting projects currently under construction.
+			for (PowerPlant PP : DA.getmyprojects()) {
+				if (PP.getstatus() == 3) {
+					templist.add(PP);												//Adds all the projects, regardsless of having a cert price needed to high or low.
+					PP.calculateLRMCandcertpriceneeded(currentyear, usedRRR, 3);	//Using the market forward power price in that given reigon.
+				}
+				if (PP.getstatus() == 2) {
+					temp_projectsunderconstruct = temp_projectsunderconstruct +1;
+				}
+			}
+			
+			//For each DeveloperAgent For all the relevant projects. Do the following:			
+			Collections.sort(templist, new CommonMethods.customprojectcomparator());		//Sorting the of a DAs project awaiting from lowest certprie needed to highest cert price needed
+
+			
+				//IF good enough and available construction resources --> put in construction.
+				
+					
+				}
+			}
+			
+		
+	
 	
 	
 

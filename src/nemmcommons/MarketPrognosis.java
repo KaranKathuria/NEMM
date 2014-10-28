@@ -131,9 +131,13 @@ public class MarketPrognosis {
 	public double getExpectedcertificateprice(int tickID) {
 		return expectedcertificateprice.getElement(tickID);
 	}
+	
 	//Sets for powerprice
-	public void setExpectedpowerpricenorway(double cd, int tickID) {
-		expectedpowerpricenorway.setElement(cd, tickID);
+	public void setExpectedpowerpricenorway(double cd, int YearID) {
+		expectedpowerpricenorway.setElement(cd, YearID);
+	}
+	public void setExpectedpowerpricesweden(double cd, int YearID) {
+		expectedpowerpricesweden.setElement(cd, YearID);
 	}
 	public void InitiateAllExpectedpowerpricenorway(double[] cd) { //To set all expected future certprice
 		expectedpowerpricenorway.setArray(cd);
@@ -141,20 +145,18 @@ public class MarketPrognosis {
 	//public void updateFutureExpectedpowerpricenorway(double[] values) {		Marked out as this is not implemented for yeararray.
 	//	expectedpowerpricenorway.setFutureElements(values);
 	//}
-	public double getExpectedpowerpricenorway(int tickID) {
-		return expectedpowerpricenorway.getElement(tickID);
+	public double getExpectedpowerpricenorway(int YearID) {
+		return expectedpowerpricenorway.getElement(YearID);
 	}
-	public void setExpectedpowerpricesweden(double cd, int tickID) {
-		expectedpowerpricesweden.setElement(cd, tickID);
-	}
+	
 	public void InitiateAllExpectedpowerpricesweden(double[] cd) { //To set all expected future certprice
 		expectedpowerpricesweden.setArray(cd);
 	}
 	//public void updateFutureExpectedpowerpricesweden(double[] values) {
 	//	expectedpowerpricesweden.setFutureElements(values);
 	//}
-	public double getExpectedpowerpricesweden(int tickID) {
-		return expectedpowerpricesweden.getElement(tickID);
+	public double getExpectedpowerpricesweden(int YearID) {
+		return expectedpowerpricesweden.getElement(YearID);
 	}
 	
 }

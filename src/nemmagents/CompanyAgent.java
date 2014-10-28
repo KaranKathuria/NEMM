@@ -137,10 +137,11 @@ public class CompanyAgent extends ParentAgent {
 		//takes in either production (positiv) or demand (negative) amount of certs and updates "lasttickproduction" "lasttickdemand" and physicalposition
 		public void addtophysicalposition(double prodordemand) {
 			physicalnetposition = physicalnetposition + prodordemand;
-			if (prodordemand > 0) { //Implies production
+			if (prodordemand >= 0) { //Implies production as produciont cannot be negative.
 				lasttickproduction = prodordemand;
 			}
-			else {lasttickdemand = prodordemand;}
+			if (prodordemand <= 0) { //Implies demand as demand cannot be postive.
+				lasttickdemand = prodordemand;}
 		}
 		
 		public void setphysicalnetposition(double a) {
@@ -178,9 +179,10 @@ public class CompanyAgent extends ParentAgent {
 	public class DeveloperAgent extends ParentAgent {
 		
 		private CompanyAgent companyagent;
-		private int developmentcriteriaflag; 			//Flag indicationg the development criteria for the DA. 1 = The project must fullfill RRR with prognosed price 2 = The project must fullfill RRR with todays price. 3 = The project must fullfill RRR with both price 
-		private int projectprocesslimit;				//The agents maximum number of projects that can be identifyed or in concession/preconstruct each year. Thats from the potential list.
+		private int developmentcriteriaflag; 			//Flag indicationg the development criteria for the DA. 1 = The project must fullfill RRR with prognosed price 2 = The project must fullfill RRR with todays price. 3 = The project must fullfill RRR with both price.
+		private double totalcapacitylimit;				//Politically given roof for how much installed REC capacity is developed (Applicable for Swedish municipalities).
 		private int constructionlimit;					//Number of projects it can have under construction simultaniasly.
+		private int projectprocesslimit;				//The agents maximum number of projects that can be identifyed or in concession/preconstruct each year. Thats from the potential list.
 		private int sizecode;							//Code value indicationg if the DA has few=1, normal=2 og alot=3 of activities (projects) in the regions the company of that AA participates in
 		private double earlistageRRR;					//Required rate off return for project cut-off on earl-stage projects.
 		
@@ -191,13 +193,12 @@ public class CompanyAgent extends ParentAgent {
 			constructionlimit = 2;						//Max number of projects getting in from moving to construction. 
 		}
 		
+		//Add, set and get methods for DeveloperAgent
 		public int getsizecode() {return sizecode;}
 		public int getregionpartcode() {return regionpartcode;}
 		public CompanyAgent getmycompany() {return this.companyagent;}
-		public void addproject(PowerPlant PP) {
-			myProjects.add(PP);	
-		}
-		
+		public void addproject(PowerPlant PP) {myProjects.add(PP);	}
+		public ArrayList<PowerPlant> getmyprojects() {return myProjects;}
 		
 	}
 	

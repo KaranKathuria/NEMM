@@ -65,9 +65,10 @@ public class LRMCCurve {
 			throw new Error("No need for new projects when there is access certificates");
 			
 		} else {
-				
-		for (PowerPlant PP : tempendogenousprojects) {			//Loop creating and adding all relevant project info to the supplycurve.
-			PP.calculateLRMCandcertpriceneeded(yearsahead);		//Calculates the LRMC and needed Certificateprice based on the given year.
+		
+			double globalRRR = TheEnvironment.GlobalValues.RRR;			//Calculation uses the the global given RRR for FMA.
+		for (PowerPlant PP : tempendogenousprojects) {					//Loop creating and adding all relevant project info to the supplycurve.
+			PP.calculateLRMCandcertpriceneeded(yearsahead, globalRRR, 1);	//Calculates the LRMC and needed Certificateprice based on the given year.
 			Curvepair cp = new Curvepair(PP.getname(), PP.getLRMC(), PP.getcertpriceneeded(), PP.getestimannualprod());
 			projectsupplycurve.add(cp);
 		}
