@@ -42,7 +42,7 @@ public class MarketPrognosis {
 		// how well they preform. THe more multiple forecast weights the market prognosis would have, the bigger is the chance for forcasting the right price, hence the number of such forcast-weights array 
 		// could be used as a parameter for how "advanced" the analysisagents short term market prognosis would be. 
 		
-		double w3 = RandomHelper.nextDoubleFromTo(0.0, 1); 
+		double w3 = RandomHelper.nextDoubleFromTo(0.0,1); 
 		forcastweights[2] = w3;  //weight used for the previous price
 		double w2 = RandomHelper.nextDoubleFromTo(0.0,(1-w3));  
 		forcastweights[1] = w2; //weight used for the current tick - 2 price ...
@@ -99,6 +99,9 @@ public class MarketPrognosis {
 	
 	public double getmedumrundpriceexpectations() {
 		return mediumrunpriceexpectations;
+	}
+	public double getlongrunpriceexpectatations() {
+		return longrunpriceexpectatations;
 	}
 
 	public void setstpriceexpectation(double price) {

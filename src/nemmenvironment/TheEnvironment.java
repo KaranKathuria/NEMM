@@ -138,6 +138,7 @@ public final class TheEnvironment {
 			
 			
 		}
+		/*
 		// Annual update of annual chaning global values
 		public static void annualglobalvalueupdate() {
 			endofyearpluss1 = currentmarketprice*(1+currentinterestrate);
@@ -146,7 +147,9 @@ public final class TheEnvironment {
 			endofyearpluss4 = currentmarketprice*Math.pow((1+currentinterestrate), 4);
 			endofyearpluss5 = currentmarketprice*Math.pow((1+currentinterestrate), 5);
 		}
+		*/
 	}
+	
 	
 	
 }

@@ -17,6 +17,7 @@ import nemmenvironment.FundamentalMarketAnalysis;
 import nemmenvironment.TheEnvironment;
 import nemmprocesses.DistributeProjectsandPowerPlants;
 import nemmprocesses.Forcast;
+import nemmprocesses.ProjectDevelopment;
 import nemmprocesses.ShortTermMarket;
 import nemmprocesses.UpdatePhysicalPosition;
 import nemmprocesses.UtilitiesStrategiesTactics;
@@ -65,7 +66,10 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	DistributeProjectsandPowerPlants.distributeprojects(AllVariables.projectsdistributioncode);			 //Distribute all Projects among the Copmanies with DAgents.
 	DistributeDemandShares.distributedemand(AllVariables.demandsharedistrubutioncode);					 //Distribute all demand among the Copmanies with OPAgents.
 
-	Forcast.initiatevolumeprognosis(); 																	 //Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based	
+	Forcast.initiatevolumeprognosis(); 																	 //Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based
+//	FundamentalMarketAnalysis.runfundamentalmarketanalysis();											 //
+//	Forcast.updateMPEandLPE();																			 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
+	
 }
 	
 // ============================================================================================================================================================================================
@@ -73,12 +77,20 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 
 
 //All annual updates to come below. Currently not in use.
-@ScheduledMethod(start = 0, interval = 12, priority = 2)
+@ScheduledMethod(start = 0, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
 public void annualmarketschedule() {
-	//Priority 2 means that whenever the tick is 12 (annual tick) this will be ran first. If the priority is the same, the order is random. 
-		TheEnvironment.GlobalValues.annualglobalvalueupdate();
-	//	FundamentalMarketAnalysis.runfundamentalmarketanalysis();	//SHould the FMA be static or an object that then is added to GlobalValues. Keeping it static is also an idea, but then the values
-	//	Forcast.updateMPEandLPE();									//Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
+	
+//	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished
+//	ProjectDevelopment.receiveconcession();						//As this is given an not dependent on other stages
+//  ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.
+//	ProjectDevelopment.startconstruction();						//The investment decision
+//	ProjectDevelopment.identifyprojects();						//Given how many projects the DA has in concession-stage and the limit, receice new projects.
+//  ProjectDevelopment.updateDAgentsnumber();					//Not really needed, but okey for displaypurposes.
+
+	
+//	FundamentalMarketAnalysis.runfundamentalmarketanalysis();	//Running the fundamental analysis. Basis for all agents LPE and MPE
+//	Forcast.updateMPEandLPE();									//Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
+//	
 }
 
 //The monthly update

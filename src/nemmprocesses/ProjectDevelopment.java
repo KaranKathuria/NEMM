@@ -25,6 +25,7 @@ public class ProjectDevelopment {
 	
 	//Method finishind projects that are under construction and has a start year smaller or equal to current year. 
 	//FOr projects finishing the year, it adds the project to corrects lists, set as starttick and updates status.
+	
 	public static void finalizeprojects() {
 		//Should: Change status, distribute onwnership, set end-date
 		
@@ -44,7 +45,7 @@ public class ProjectDevelopment {
 				
 				TheEnvironment.allPowerPlants.add(PP);			//Add to all operations powerplants
 				PP.getMyCompany().getmypowerplants().add(PP);	//Add to company`s list of powerplants
-				PP.getMyCompany().getmyprojects().remove(PP);	//Remove from company`s list of project. This should work as the iteration is through the "TheEnvironment.projectsunderconstruction"
+				//PP.getMyCompany().getmyprojects().remove(PP);	//NOT Remving these from company`s list of project! Keeping these eases the controll and counting.
 			}
 		}
 	    //To work around the problem of concurring operations, the removement of the project from the Underconstruction list must be done in another operation below.
@@ -65,34 +66,57 @@ public class ProjectDevelopment {
 			int temp_projectsunderconstruct = 0;
 			ArrayList<PowerPlant> templist = new ArrayList<PowerPlant>();
 			
-			double usedRRR = DA.getmycompany().getInvestmentRRR();
+			double usedRRR = DA.getmycompany().getInvestmentRRR();					//Company specific RRR.
+			
 			//Collecting the projects that are awaiting investmetn decision (status = 3) and counting projects currently under construction.
 			for (PowerPlant PP : DA.getmyprojects()) {
 				if (PP.getstatus() == 3) {
-					templist.add(PP);												//Adds all the projects, regardsless of having a cert price needed to high or low.
-					PP.calculateLRMCandcertpriceneeded(currentyear, usedRRR, 3);	//Using the market forward power price in that given reigon.
+					templist.add(PP);															//Adds all the projects, regardsless of having a cert price needed to high or low.
+					PP.calculateLRMCandcertpriceneeded(currentyear, usedRRR, 3);				//Using the market forward power price in that given reigon.
 				}
-				if (PP.getstatus() == 2) {
-					temp_projectsunderconstruct = temp_projectsunderconstruct +1;
-				}
+
 			}
 			
 			//For each DeveloperAgent For all the relevant projects. Do the following:			
-			Collections.sort(templist, new CommonMethods.customprojectcomparator());		//Sorting the of a DAs project awaiting from lowest certprie needed to highest cert price needed
-
+			Collections.sort(templist, new CommonMethods.customprojectcomparator());			//Sorting the of a DAs project awaiting from lowest certprie needed to highest cert price needed
 			
+			//All the cirteria variables for the investment decision
+			double cutoffcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getlongrunpriceexpectatations(); //Should be discussed.
+			int maxnumberofconstrucprojects = DA.getconstructionlimit();
+			int constructionproject_counter = DA.getnumprojectsunderconstr();					//Newly updated values.
+			double maxcapacitydeveloped		= DA.gettotalcapacitylimit();
+			double capacitydeveloped_counter = DA.getcapacitydevorundrconstr();
+			int potentialprojects = templist.size();
+			int projects_pointer = 0;															//To ensure that the loop is not longer than number of objects.
+			
+			while ((constructionproject_counter < maxnumberofconstrucprojects) && (capacitydeveloped_counter < maxcapacitydeveloped) &&  (projects_pointer <= potentialprojects )) {
+				if (templist.get(projects_pointer).getcertpriceneeded() <= cutoffcertprice) {	//Starting with the best, if its worth investing...startconstruction.
+					
+					capacitydeveloped_counter = capacitydeveloped_counter + templist.get(projects_pointer).getCapacity();
+					constructionproject_counter = constructionproject_counter + 1;
+					
+					templist.get(projects_pointer).setstatus(2);												//Changing status for the project it is refering to.
+					TheEnvironment.projectinprocess.add(templist.get(projects_pointer));						//Add to the Environment list of projects in process.
+					TheEnvironment.projectsawaitinginvestmentdecision.remove(templist.get(projects_pointer));	//Removing form Environment list in 
+											//More.
+					projects_pointer++;
+					}
+				else {break;}																	//If the current project is not wort investing, the following are not either.
+				
+				
+			}
 				//IF good enough and available construction resources --> put in construction.
 				
 					
-				}
-			}
-			
+		}
+}
+	
+	//Method updating projects to receive concession.
+	public static void receivingconcession() {
 		
-	
-	
-	
-
-	
+		
+	}
+			
 	//An important issue to be decided is whether the status vairbale should define the project stage, the list its contained in, or both.What is the master. 
 	//For efficiency and cleanness it seems nice to have separate lists. At least for the LMCA. --> Best forslag: Lets keep status as the master, but also have lists for practial pruposes.
 	//Wheather to udate all lists at the same time at de end based on status, or to move them from lists can be decided.
@@ -123,6 +147,36 @@ public class ProjectDevelopment {
 	public static void applyforconcession() {
 		//This method takes project that are indetifyed an set the status for 
 	}
+	
+	//Simply updateing all endogenous variables for the DAagents.
+	public static void updateDAgentsnumber() {
+		
+		double capacitydevorundrconstr=0;
+		int numprojectsfinished=0;
+		int numprojectsunderconstr =0;
+		int numprojectsawaitingid=0;
+		int numprojectsinprocess=0;
+		int numprojectsidentyfied=0;
+		
+		for (DeveloperAgent DA : CommonMethods.getDAgentList()) {
+			for (PowerPlant PP : DA.getmyprojects()) {
+				if (PP.getstatus() == 1) {
+					numprojectsfinished = numprojectsfinished +1;
+					capacitydevorundrconstr = capacitydevorundrconstr + PP.getCapacity();}
+				if (PP.getstatus() == 2) {
+					numprojectsunderconstr = numprojectsunderconstr +1;
+					capacitydevorundrconstr = capacitydevorundrconstr + PP.getCapacity();}
+				if (PP.getstatus() == 3) {
+					numprojectsawaitingid = numprojectsawaitingid +1;}
+				if (PP.getstatus() == 4) {
+					numprojectsinprocess = numprojectsinprocess +1;}
+				if (PP.getstatus() == 5) {
+					numprojectsidentyfied = numprojectsidentyfied +1;}
+			}
+			DA.updateDAnumbers(capacitydevorundrconstr, numprojectsfinished, numprojectsunderconstr, numprojectsawaitingid, numprojectsinprocess, numprojectsidentyfied);
+		}
+	}
+		
 
 }
 

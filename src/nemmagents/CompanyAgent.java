@@ -182,15 +182,32 @@ public class CompanyAgent extends ParentAgent {
 		private int developmentcriteriaflag; 			//Flag indicationg the development criteria for the DA. 1 = The project must fullfill RRR with prognosed price 2 = The project must fullfill RRR with todays price. 3 = The project must fullfill RRR with both price.
 		private double totalcapacitylimit;				//Politically given roof for how much installed REC capacity is developed (Applicable for Swedish municipalities).
 		private int constructionlimit;					//Number of projects it can have under construction simultaniasly.
-		private int projectprocesslimit;				//The agents maximum number of projects that can be identifyed or in concession/preconstruct each year. Thats from the potential list.
+		private int projectprocessandidylimit;				//The agents maximum number of projects that can be identifyed or in concession/preconstruct each year. Thats from the potential list.
 		private int sizecode;							//Code value indicationg if the DA has few=1, normal=2 og alot=3 of activities (projects) in the regions the company of that AA participates in
 		private double earlistageRRR;					//Required rate off return for project cut-off on earl-stage projects.
+		
+		//Endogenous variables 
+		private double capacitydevorundrconstr;
+		private int numprojectsfinished;
+		private int numprojectsunderconstr;
+		private int numprojectsawaitingid;
+		private int numprojectsinprocess;
+		private int numprojectsidentyfied;
 		
 		public DeveloperAgent() {
 			companyagent = this.companyagent;
 			sizecode = 2;								//By default all developmentagents have normal amount of activety.
-			projectprocesslimit = 5;					//Max number of project getting identifyed or getting in process.
+			projectprocessandidylimit = 5;					//Max number of project getting identifyed or getting in process.
 			constructionlimit = 2;						//Max number of projects getting in from moving to construction. 
+		}
+		
+		public void updateDAnumbers(double cpdorconstr, int numpf, int numpuc, int numpaid, int numpip, int numpid) {
+			capacitydevorundrconstr = cpdorconstr;
+			numprojectsfinished = numpf;
+			numprojectsunderconstr = numpuc;
+			numprojectsawaitingid = numpaid;
+			numprojectsinprocess = numpip;
+			numprojectsidentyfied = numpid;
 		}
 		
 		//Add, set and get methods for DeveloperAgent
@@ -199,6 +216,11 @@ public class CompanyAgent extends ParentAgent {
 		public CompanyAgent getmycompany() {return this.companyagent;}
 		public void addproject(PowerPlant PP) {myProjects.add(PP);	}
 		public ArrayList<PowerPlant> getmyprojects() {return myProjects;}
+		public double gettotalcapacitylimit() {return totalcapacitylimit;}
+		public int getconstructionlimit() {return constructionlimit;}
+		public double getprojectprocessandidylimit() {return projectprocessandidylimit;}
+		public double getcapacitydevorundrconstr() {return capacitydevorundrconstr;}
+		public int getnumprojectsunderconstr() {return numprojectsunderconstr;}
 		
 	}
 	
