@@ -60,9 +60,10 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 					retList.add(null);
 				}
 			}			
-
+			break;
 		case 2:
 			retList = UtilFctn_ExpReturn( marketprice, s, shareofmarginaltoffersold);	
+			break;
 		}
 		return retList;
 	}	
@@ -74,8 +75,10 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 		switch (flagUtilityFunction){
 		case 1:
 			retVal = UtilFctn_VolOnly( marketprice, s, shareofmarginaltoffersold);
+			break;
 		case 2:
 			retVal = 0.0; // should not be using this function if you want the expected return utility
+			break;
 			
 		}
 		return retVal;
@@ -161,16 +164,15 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 	
 	//Takes in the given values and calculates the producers utility just based on how much of the variable sell offers are accepted in the short term market.
 	private Double UtilFctn_VolOnly(double marketprice, ArrayList<SellOffer> s, double shareofmarginaltoffersold) {
-		
+		double ret = 0.5;
 		double variableoffervolume = 0; //Offered volume at variable price. This is the sum of all offers but not the must sell offer (lowest priced offer)
 		double totalsoldcerts = 0;	//Total number of certs sold
 		double variablesoldtcerts = 0; //Total number of certs sold at variable price (not including must buy offer)
 		//double avrbidprice = 0;
-
-		s.removeAll(Collections.singleton(null)); //removes null bids (should not be the case, but...)
+		// s.removeAll(Collections.singleton(null)); //removes null bids (should not be the case, but...)
 		
-		if (s.size() < 2) { //In this case there is no variable bid or there is no bids at all (which could be because the PA has no volume to offer) Then utility is <0,1> so prices are unchanged
-			return 0.5;} //Just any number between 0 and 1 is fine as this would imply that the tactic is unchanged.
+//		if (s.size() < 2) { //In this case there is no variable bid or there is no bids at all (which could be because the PA has no volume to offer) Then utility is <0,1> so prices are unchanged
+//			return ret;} //Just any number between 0 and 1 is fine as this would imply that the tactic is unchanged.
 			
 		Collections.sort(s, new CommonMethods.customselloffercomparator()); //Sorts offers form lowest to highest price. The first bid is hence the must sell bid
 		
@@ -180,11 +182,16 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 		
 		totalsoldcerts = UpdatePhysicalPosition.returnsoldvolume(s, marketprice, shareofmarginaltoffersold).getSoldInSTMcert();
 		variablesoldtcerts = totalsoldcerts - s.get(0).getnumberofcert(); //Minus the must buy which would always be the first offer to be bought
-
-		double ret = (variablesoldtcerts/variableoffervolume); //Should always be a number [0,1]
-		if (ret > 1 && ret < 0) {
-			throw new IllegalArgumentException("Something is wrong with the volume offered");
+		if (variableoffervolume>0){ 
+			ret = (variablesoldtcerts/variableoffervolume); //Should always be a number [0,1]
+			if (ret > 1 && ret < 0) {
+				throw new IllegalArgumentException("Something is wrong with the volume offered");
+			}
 		}
+		else {
+			ret = 0.5; // No variable offer, so return a "no change" result
+		}
+		
 		return ret;
 		
 	}	

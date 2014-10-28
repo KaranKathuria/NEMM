@@ -46,11 +46,14 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	private BuyOffer creatBuyOfferone(double expectedprice, double physicalposition, double lasttickdemand) { //physicalpos and lasttickdem are negatie number.
 		BuyOffer ret = new BuyOffer();
 		//equals must buy
-		ret.setbuyoffervol(Math.max((shareboughtatdiscount*(-lasttickdemand)), (-physicalposition) - (-maxppvolume))); //-As the phisical position of buyer would in most cases be negative, but as the offer only has positive numbers. 
-		ret.setbuyofferprice((1+AllVariables.OPAgentmustbuypremium)*expectedprice); //Given must buy volume price. 
-		if (physicalposition == 0) {
-			ret = null;
+		if (lasttickdemand == 0) {
+			ret.setbuyoffervol(0.0);
 		}
+		else {
+			ret.setbuyoffervol(Math.max((shareboughtatdiscount*(-lasttickdemand)), (-physicalposition) - (-maxppvolume))); //-As the phisical position of buyer would in most cases be negative, but as the offer only has positive numbers. 
+		}
+		ret.setbuyofferprice((1+AllVariables.OPAgentmustbuypremium)*expectedprice); //Given must buy volume price. 
+
 		return ret;
 		}
 	
@@ -58,11 +61,13 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	private BuyOffer creatBuyOffertwo(double expectedprice, double physicalposition,  double lasttickdemand) {////physicalpos and lasttickdem are negatie number. 
 		BuyOffer ret = new BuyOffer();
 		double mustbuy = Math.max((shareboughtatdiscount*(-lasttickdemand)), (-physicalposition) - (-maxppvolume));
-		ret.setbuyoffervol(Math.max(0.0,Math.min(-maxoffervolume-mustbuy,-physicalposition-mustbuy))); //rest of the monthly production bought at expected price.
-		ret.setbuyofferprice(Math.min(expectedprice*pricemultiplier, floorroofprice)); //Most likely that the second offer is at at pricemultiplier. Hence they buy what they dont must, at a pricemultiplier.
 		if (physicalposition == 0) {
-			ret = null;
+			ret.setbuyoffervol(0.0);
 		}
+		else {
+			ret.setbuyoffervol(Math.max(0.0,Math.min(-maxoffervolume-mustbuy,-physicalposition-mustbuy))); //rest of the monthly production bought at expected price.
+		}
+		ret.setbuyofferprice(Math.min(expectedprice*pricemultiplier, floorroofprice)); //Most likely that the second offer is at at pricemultiplier. Hence they buy what they dont must, at a pricemultiplier.
 		return ret;
 		}
 	

@@ -106,6 +106,9 @@ public class SellStrategy1Tactic extends GenericTactic {
 		// Store the sell offers in the tacticselloffers arraylist
 		tacticselloffers.add(offerMustSellVol);
 		tacticselloffers.add(offerRestVol);
+		if (tacticselloffers.size()==1) {
+			throw new IllegalArgumentException("DEBUG: Shoudl not have a single sell offer");
+		}
 	}
 	
 	public void updateinputvalues() { //Calculates and updates the floorroofprice based on the agents risk adjusted rate and the risk free rate and the market prognosis future pric
@@ -124,11 +127,14 @@ public class SellStrategy1Tactic extends GenericTactic {
 		SellOffer ret = new SellOffer();
 		// Must sell is set to the maximum of the must sell share * last ticks production, and the difference between
 		// the physical position and the desired/target max physical position
-		ret.setselloffervol(Math.max(paramMustSellShare*lasttickproduction,physicalposition-maxppvolume)); //equals must sell
-		ret.setsellofferprice(paramMustSellPriceMult*expectedprice);
 		if (lasttickproduction == 0) {
-			ret = null;
+			ret.setselloffervol(0.0);
 		}
+		else {
+			ret.setselloffervol(Math.max(paramMustSellShare*lasttickproduction,physicalposition-maxppvolume)); //equals must sell			
+		}
+		ret.setsellofferprice(paramMustSellPriceMult*expectedprice);
+		
 		return ret;
 		}
 		
@@ -136,11 +142,13 @@ public class SellStrategy1Tactic extends GenericTactic {
 	private SellOffer createRestVolOffer(double expectedprice, double physicalposition,double lasttickproduction, double mustsell) {
 		// Should replace this with using the already calculated must sell
 		SellOffer ret = new SellOffer();
-		ret.setselloffervol(Math.max(0.0,Math.min(maxoffervolume-mustsell,physicalposition-mustsell))); //rest of the monthly production sold at expected price.
-		ret.setsellofferprice(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice)); //Prices not symmetric around expected price with must of the volume tried sold at at premium (1+discount)*expt.
 		if (physicalposition == 0) {
-			ret = null;
+			ret.setselloffervol(0.0);
+		} 
+		else {
+			ret.setselloffervol(Math.max(0.0,Math.min(maxoffervolume-mustsell,physicalposition-mustsell))); //rest of the monthly production sold at expected price.			
 		}
+		ret.setsellofferprice(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice)); //Prices not symmetric around expected price with must of the volume tried sold at at premium (1+discount)*expt.
 		return ret;
 		}
 	
@@ -174,7 +182,6 @@ public class SellStrategy1Tactic extends GenericTactic {
 		// Am using clone so that we get a copy, not a reference
 		// If there is no sell offer (it is null) then we skip this
 		addUtilitiesToOffers(numOffers);
-
 		// Calculate the utility for the current tick, using the utility function for the agent
 		
 		 retUtility = myStrategy.myAgent.getutilitymethod().CalcUtilityWithHistory(ShortTermMarket.getcurrentmarketprice(), tacticselloffers, ShortTermMarket.getshareofmarignaloffersold());
