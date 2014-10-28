@@ -154,7 +154,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 	
 // ---- TACTIC MEMORY	
 	
-	public void addTacticToHistory() {
+	public void addTacticValuesToHistory() {
 		// Store the sell offers for each tick
 		HistoricTacticValue a = new HistoricTacticValue();
 		a.tacticsbuyoffers = null;
