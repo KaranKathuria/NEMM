@@ -170,6 +170,13 @@ public static List<CompanyAgent> getCompanyAgenList() {
 	    }
 	}
 	
+	public static class customprojectcomparator implements Comparator<PowerPlant> {
+	    @Override
+	    public int compare(PowerPlant p1, PowerPlant p2) {
+	        return p1.getcertpriceneeded().compareTo(p2.getcertpriceneeded());
+	    }
+	}
+	
 
 	// ----------------------------------------------------------------------------
 		

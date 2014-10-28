@@ -54,7 +54,7 @@ public class AnnualMarketSeries {
 	}
 	
 	
-	// Return market series for a given tickID
+	// Return market series for a given YearID
 	public double getValue(int... Year) {
 		double pricecalc;
 		if (Year.length > 0) {	

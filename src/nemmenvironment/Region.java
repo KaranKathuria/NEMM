@@ -46,7 +46,7 @@ public class Region {
 		return myPowerPrice;
 	}
 	
-	public AnnualMarketSeries getMyForwardPrice(int i) {	//I refers to the year you are standing in looking at the forward prices.
+	public AnnualMarketSeries getMyForwardPrice(int i) {	//I refers to the year (0-23) you are standing in looking at the forward prices.
 		return myForwardPrice[i];
 	}
 
