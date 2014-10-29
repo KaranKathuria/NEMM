@@ -22,7 +22,7 @@ public class PowerPlant implements Cloneable{
 	private double opex;					//Opex per MWh for project, assumed that this does not vary with the fluctiations in annual production. 
 	private double annualcostreduction;		//Annual rate of cost reduction due to technology improvment. 
 	private int minyearinprocess;			//Projects specific. Min number of years this projects needs in process (preconstruction and concession)
-	private int minconstructionyears;		//Minimum number of years this project needs in construction.
+	private int minconstructionyears;		//Minimum number of years this project needs in construction. Currently this is used without variation, only adding starttick randomly. 
 	
 	
 	private TickArray myProduction; 		//Future production (good given).
@@ -32,8 +32,8 @@ public class PowerPlant implements Cloneable{
 	private int endyear; 					//THis is the last year eligable for certificates (if 2020, it gets certs for that year).
 	private double LRMC; 					//Long run marginal cost for this powerplant build at a given year. This is update for each annual update.
 	private Double certpriceneeded;			//Reason for having this field is that the projects cannot be sorted by LRMC as the region defines when its certificatesobligated.
-	private int starttick;					//The month/tick of a year that the production starts wihting the starting year.
-	
+	private int starttick;					//The month/tickid of a year that the production starts (the tick is in the starting year).
+	private int yearsincurrentstatus;		//Annual counter counting years in current status for the purpose of deciding if its ready for concession.
 	
 	public PowerPlant() {}
 	
@@ -99,7 +99,14 @@ public class PowerPlant implements Cloneable{
 	public void setStarttick(int tickID) {
 		starttick = tickID;
 	}
+	public void setstartyear(int sy) {startyear = sy;}
 	public int getstatus() {return status;}
+	public int getminconstructionyears() {return minconstructionyears;}
+	public int getminyearinprocess() {return minyearinprocess;}
+	public int getyearsincurrentstatus() {return yearsincurrentstatus;}
+	public void setyearsincurrentstatus(int a) { yearsincurrentstatus = a;}
+	public void addyearsincurrentstatus(int a) {yearsincurrentstatus = a;}
+
 
 	// Methods ------------------------------------------------------------------------
 	

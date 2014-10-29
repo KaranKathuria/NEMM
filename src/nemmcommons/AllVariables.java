@@ -78,9 +78,24 @@ public class AllVariables {
 	public static int MaxTacticPreferenceScore = 6;
 	public static int MinTacticPreferenceScore = 2;
 
-	//Regulations
+	//Regulations for certificates deadline
 	public static boolean certificatespost2020_Norway = false;
 	public static boolean certificatespost2020_Sweden = true;
 	
+	//The concession process
+	public static int maxyearsinconcessionqueue = 7;				//With minconcessionyear = 3, that 4 years with 0.3 chance of getting concession. If not, the project is droped.
+	public static double annualpropforreceivingconcession = 0.3;	//Only with one decimal.
+	
 }
+
+
+
+
+
+
+
+
+
+
+
 

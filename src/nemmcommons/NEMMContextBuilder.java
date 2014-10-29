@@ -77,13 +77,14 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 
 
 //All annual updates to come below. Currently not in use.
-@ScheduledMethod(start = 0, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
+@ScheduledMethod(start = 11, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
 public void annualmarketschedule() {
 	
 //	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished
-//	ProjectDevelopment.receiveconcession();						//As this is given an not dependent on other stages
+//	ProjectDevelopment.receiveconcession();						//As this is given an not dependent on other stages. Starting with adding on year in this status.
 //  ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.
-//	ProjectDevelopment.startconstruction();						//The investment decision
+//	ProjectDevelopment.startconstruction();						//The investment decision. This is ran after "receiveconcession", hence projects and investment decision can done the same year.
+//	ProjectDevelopment.startpreprojectandapplication();	        //The process of deciding which project to apply for concession. Like the startconcessions
 //	ProjectDevelopment.identifyprojects();						//Given how many projects the DA has in concession-stage and the limit, receice new projects.
 //  ProjectDevelopment.updateDAgentsnumber();					//Not really needed, but okey for displaypurposes.
 

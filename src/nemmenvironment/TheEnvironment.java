@@ -23,12 +23,14 @@ import nemmtime.NemmCalendar;
 public final class TheEnvironment {
 
 	// This class is used to hold all the stuff in the environment
+	public static ArrayList<PowerPlant> allPowerPlants; 					//allPowerPlants referes to all power plants that have been or are in operation. Before an object PowerPlant is in operation, its reffered to as a project.
 	public static ArrayList<PowerPlant> projectsunderconstruction;			//PowerPlants currently under construction (status = 2)
 	public static ArrayList<PowerPlant> projectsawaitinginvestmentdecision;	//PowerPlants projects awaiting investment decision (status = 3)
 	public static ArrayList<PowerPlant> projectinprocess;					//All powerplant in process of getting concession.  (status = 4)
 	public static ArrayList<PowerPlant> projectsidentifyed;					//All projects identifyed							(status = 5)
-	public static ArrayList<PowerPlant> potentialprojects;					//Auto-generated potential projects. Note distributed among development agents. 
-	public static ArrayList<PowerPlant> allPowerPlants; 					//allPowerPlants referes to all power plants that have been or are in operation. Before an object PowerPlant is in operation, its reffered to as a project.
+	public static ArrayList<PowerPlant> potentialprojects;					//Auto-generated potential projects. Note distributed among development agents. (status = 6).
+	public static ArrayList<PowerPlant> trashedprojects;					//Arraylist of projects not receiving concession (status = 0).
+	
 	public static ArrayList<Region> allRegions;
 	public static ArrayList<CompanyAgent> allCompanies;
 	public static NemmCalendar theCalendar;
