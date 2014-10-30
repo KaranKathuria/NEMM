@@ -104,12 +104,16 @@ public abstract class GenericStrategy {
 	//  - the strategy's best tactic (and utility)
 	
 	public void updateBidsAndOffers() {};
-	public void updateUtilitiesAndParams() { 
+	
+	public void updateStrategy() { 
+		// First update all the tactics using their update function
 		for (GenericTactic tactic : alltactics) { 
-			// Update the tactic
 			tactic.updateTactic();
 		}
+		// Then update the best tactic
+		updateBestTactic();
 	}
+	
 	public void updateBestTacticOLD() {
 		// Loop through the tactics and find the one with the highest utility
 		double candBestUtilityScore = -10000000000000.0;

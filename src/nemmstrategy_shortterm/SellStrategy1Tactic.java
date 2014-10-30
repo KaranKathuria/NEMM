@@ -231,7 +231,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 	
 // ---- PARAMETER LEARNING
 	
-	private void learnParameters() {
+	public void learnParameters() {
 		// Call the appropriate learning method
 		// if no learning, the method is 0 and nothing is called
 		if (paramLearningMethod == 1) {

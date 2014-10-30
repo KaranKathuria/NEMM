@@ -130,7 +130,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	public ArrayList<HistoricTacticValue> gethistorictacticvalues() {
 		return historictacticvalues;}
 	
-	private void learnParameters() {
+	public void learnParameters() {
 		// Call the appropriate learning method
 		if (paramLearningMethod == 1) {
 			learningMethod1();
@@ -160,16 +160,19 @@ public class BuyStrategy1Tactic extends GenericTactic {
 			pricemultiplier = pricemultiplier - deltapricemup;
 		}
 		else {
-		if (tacticutilityscore == 1)
-			pricemultiplier = pricemultiplier - deltapricemup; //reduce price
-		else if (tacticutilityscore == 0) {
-			pricemultiplier = pricemultiplier + deltapricemup; //increase price
+			if (tacticutilityscore == 1)
+				pricemultiplier = pricemultiplier - deltapricemup; //reduce price
+			else if (tacticutilityscore == 0) {
+				pricemultiplier = pricemultiplier + deltapricemup; //increase price
+			}
+			else {
+				//Unchanged
+			}
 		}
-		else {
-			//Unchanged
+		if (myStrategy.myAgent.getID() == 127) {
+			@SuppressWarnings("unused")
+			int tmpA = 1;
 		}
-		}
-		
 	}
 		
 	private void learningMethod2() {

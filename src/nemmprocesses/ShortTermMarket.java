@@ -9,9 +9,11 @@ package nemmprocesses;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmcommons.CommonMethods;
 import nemmstrategy_shortterm.BuyOffer;
+import nemmstrategy_shortterm.GenericStrategy;
 import nemmstrategy_shortterm.SellOffer;
 
 
@@ -45,7 +47,22 @@ public class ShortTermMarket {
 	
 	
 	public ShortTermMarket() {}
-			
+
+	// GJB This needs to be moved into ACTIVE AGENT
+	// it is here temporarily
+	public static void updateAllBidsAndOffers() {
+		for (final ActiveAgent agent : CommonMethods.getAAgentList()) {
+			for (GenericStrategy strategy : agent.getallstrategies()) {
+				// Update all the bids and offers for the strategy
+				// Note: we are assuming here that the strategy will update all B&O for each
+				// tactic. This is OK - we can assume that it is the strategy's responsibility
+				// to take care of its own tactics
+				strategy.updateBidsAndOffers();
+			}
+		}
+	}
+	// ===========================================
+	
 	public static void runshorttermmarket() {
 		shareofmarginalbuyofferbought = 1;
 		shareofmarignalselloffersold = 1;
@@ -60,16 +77,24 @@ public class ShortTermMarket {
 		buyoffer2 = new double[20];
 		selloffer2 = new double[20];
 		
-		
+// GJB This needs to be moved into ACTIVE AGENT
+// it is here temporarily 
+		updateAllBidsAndOffers();
+// ==============================================
 
 		Allselloffers.clear();
 		Allbuyoffers.clear();
 		//Update all analysisagents price expectations		
 		//Update and add all sell- and buy-offers.  
 		for (final ActiveAgent agent : CommonMethods.getPAgentList()) {
+/* GJB -- REMOVE --
 			//update their phusical net position
-			agent.getbeststrategy().updateBidsAndOffers();
+			agent.getbeststrategy().updateBidsAndOffers(); 
+*/
 			//Updates all bids for all agents
+/* NOTE: The following should be hidden inside the agent. That is, the agent should be asked
+ * for its sell offers. It is up to it to get the best offer.
+ */
 			Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers());
 			//Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers()); For the time being the producer does not have buyoffers.
 			
@@ -86,9 +111,13 @@ public class ShortTermMarket {
 		}
 		
 		for (final ActiveAgent agent : CommonMethods.getOPAgentList()) {
+			/* GJB -- REMOVE --
 			agent.getbeststrategy().updateBidsAndOffers();
+			*/
 			//Updates all bids for all agents
-			//Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers()); None sell offers from the OP agent list. 
+			/* NOTE: The following should be hidden inside the agent. That is, the agent should be asked
+			 * for its sell offers. It is up to it to get the best offer.
+			 */
 			Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers());
 
 			if (agent.getbeststrategy().getalltactics().get(0).getbuyofferone() == null) {buyoffer1 = 0;} else{  //For handling null-offers from agents without demand.
@@ -101,7 +130,12 @@ public class ShortTermMarket {
 			countb++;
 		}
 		for (final ActiveAgent agent : CommonMethods.getTAgentList()) {
+			/* GJB -- REMOVE --
 			agent.getbeststrategy().updateBidsAndOffers(); //Updates all bids for all agents
+			*/
+			/* NOTE: The following should be hidden inside the agent. That is, the agent should be asked
+			 * for its sell offers. It is up to it to get the best offer.
+			 */
 			Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers());
 			Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers());
 		}

@@ -158,7 +158,7 @@ public class GenericTactic {
 
 // ---- LEARNING
 
-	private void learnParameters() {};
+	public void learnParameters() {};
 	
 
 	
