@@ -49,7 +49,7 @@ public class ProjectDevelopment {
 		}
 	    //To work around the problem of concurring operations, the removement of the project from the Underconstruction list must be done in another operation below.
 		for (int i = 0; i < TheEnvironment.projectsunderconstruction.size(); i++) {
-			if (TheEnvironment.projectsunderconstruction.get(i).getstatus() == 1) {
+			if (TheEnvironment.projectsunderconstruction.get(i).getstatus() == 1) {					//If status indicates that its finished, remove from underconstruction.
 			TheEnvironment.projectsunderconstruction.remove(i);}}
 	}
 	
@@ -57,18 +57,14 @@ public class ProjectDevelopment {
 	//Method moving projects that fulfill investment criterieas from status=3 to status=2. Some projects are just unaltered.
 	//Method iterating through all projects awaiting investment decision and deciding which to invest investment decison. SHould be ran after process are finished, and after construction are finished.
 	public static void startconstrucion() {
-		//Should: Set start year. Should select the best projects according to certprice needed, limit and maxcap developed.
-		//for (PowerPlant PP : TheEnvironment.projectsawaitinginvestmentdecision) {
 		
 		int currenttick = TheEnvironment.theCalendar.getCurrentTick();
 		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year + TheEnvironment.theCalendar.getStartYear();	//Gets the current year.
 		
 		for (DeveloperAgent DA : CommonMethods.getDAgentList()) {
-			int temp_projectsunderconstruct = 0;
+			
 			ArrayList<PowerPlant> templist = new ArrayList<PowerPlant>();
-			
-			double usedRRR = DA.getmycompany().getInvestmentRRR();					//Company specific RRR.
-			
+			double usedRRR = DA.getmycompany().getInvestmentRRR();								//Company specific RRR.
 			//Collecting the projects that are awaiting investmetn decision (status = 3) and counting projects currently under construction.
 			for (PowerPlant PP : DA.getmyprojects()) {
 				if (PP.getstatus() == 3) {														//3=Awaiting investment decision.
@@ -76,9 +72,7 @@ public class ProjectDevelopment {
 					templist.add(PP);															//Adds all the projects, regardsless of having a cert price needed to high or low.
 					PP.calculateLRMCandcertpriceneeded(currentyear, usedRRR, 3);				//Using the market forward power price in that given reigon.
 				}
-
 			}
-			
 			//For each DeveloperAgent For all the relevant projects. Do the following:			
 			Collections.sort(templist, new CommonMethods.customprojectcomparator());			//Sorting the of a DAs project awaiting from lowest certprie needed to highest cert price needed
 			
@@ -89,7 +83,7 @@ public class ProjectDevelopment {
 			double maxcapacitydeveloped		= DA.gettotalcapacitylimit();
 			double capacitydeveloped_counter = DA.getcapacitydevorundrconstr();
 			int potentialprojects = templist.size();
-			int projects_pointer = 0;															//To ensure that the loop is not longer than number of objects.
+			int projects_pointer = 0;															//To ensure that the loop is not longer than number of objects.	
 			
 			//The critical investment decision.
 			while ((constructionproject_counter < maxnumberofconstrucprojects) && (capacitydeveloped_counter < maxcapacitydeveloped) &&  (projects_pointer <= potentialprojects )) {
@@ -102,7 +96,7 @@ public class ProjectDevelopment {
 					thisplant.setstatus(2);														//Changing status for the project (from 3=awaitingid to 2=underconstruction).
 					thisplant.setyearsincurrentstatus(0);  										//Setting this for consistency for project reaching new stag. This value is note used in later stages.
 					thisplant.setstartyear(currentyear + thisplant.getminconstructionyears());	//Adding a startdate. Notice that this is done here rather than in the finalizeprojects.
-					TheEnvironment.projectinprocess.add(thisplant);								//Add to the Environment list of projects in process.
+					TheEnvironment.projectsunderconstruction.add(thisplant);								//Add to the Environment list of projects in process.
 					TheEnvironment.projectsawaitinginvestmentdecision.remove(thisplant);		//Removing from Environment list of awaitinginvestmentsdecisions
 					
 					//No need for updating the developer number of projects as this is done in another method after this.
@@ -122,48 +116,42 @@ public class ProjectDevelopment {
 		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year + TheEnvironment.theCalendar.getStartYear();	//Get current year.
 		
 		for (PowerPlant PP : TheEnvironment.projectinprocess) {
-			PP.addyearsincurrentstatus(1);													//Increase number of years by one for all projects.
+			PP.addyearsincurrentstatus(1);														//Increase number of years by one for all projects.
 			
-			//If trashable
-			if (PP.getyearsincurrentstatus() >= AllVariables.maxyearsinconcessionqueue) {	//Have not received concession in so many years, it will nevere get it.
+			//If trashable due to no concession in 7 years.
+			if (PP.getyearsincurrentstatus() >= AllVariables.maxyearsinconcessionqueue) {		//Have not received concession in so many years, it will nevere get it.
 				
-				PP.setstatus(0);															//The project is trashed, hence status is 0.
-				PP.setyearsincurrentstatus(0); 												//Updating status means clearing years with this status.
-				TheEnvironment.trashedprojects.add(PP);										//Add to all operations powerplants
-				//PP.getMyCompany().getmyprojects().remove(PP);								//NOT Remving these from company`s list of project! Keeping these eases the controll and counting.
+				PP.setstatus(0);																//The project is trashed, hence status is 0.
+				PP.setyearsincurrentstatus(0); 													//Updating status means clearing years with this status.
+				TheEnvironment.trashedprojects.add(PP);											//Add to all operations powerplants
+				//PP.getMyCompany().getmyprojects().remove(PP);									//NOT Remving these from company`s list of project! Keeping these eases the controll and counting.
 				
 			    //To work around the problem of concurring operations, the removement of the project from the Underconstruction list must be done in another operation below.
 				for (int i = 0; i < TheEnvironment.projectinprocess.size(); i++) {
-					if (TheEnvironment.projectinprocess.get(i).getstatus() == 0) {
-					TheEnvironment.projectsunderconstruction.remove(i);}}
+					if (TheEnvironment.projectinprocess.get(i).getstatus() == 0) {				//If status indicates that its trashed, remove from process.
+					TheEnvironment.projectinprocess.remove(i);}}
 			}
 			
 			//If in the lottery for getting concession.
 			if ((PP.getyearsincurrentstatus() >= PP.getminyearinprocess()) && (PP.getyearsincurrentstatus() < AllVariables.maxyearsinconcessionqueue)) {
 				int rand = RandomHelper.nextIntFromTo(1, 10);
-				if (rand <= AllVariables.annualpropforreceivingconcession*10)	{ 			//Tricksy way of having a given chance for receiving concession. If concession:
+				if (rand <= AllVariables.annualprobforreceivingconcession*10)	{ 				//Tricksy way of having a given chance for receiving concession. If concession:
 					
-					PP.setstatus(3);														//The project is trashed, hence status is 0.
-					PP.setyearsincurrentstatus(0); 											//Updating status means clearing years with this status.
-					TheEnvironment.projectsawaitinginvestmentdecision.add(PP);				//Add to all operations powerplants
-					
+					PP.setstatus(3);															//The project is granted concession, hence status = 3.
+					PP.setyearsincurrentstatus(0); 												//Updating status means clearing years with this status.
+						TheEnvironment.projectsawaitinginvestmentdecision.add(PP);				//Add to all operations powerplants
+						
 					//To work around the problem of concurring operations, the removement of the project from the Underconstruction list must be done in another operation below.
 					for (int i = 0; i < TheEnvironment.projectinprocess.size(); i++) {
-						if (TheEnvironment.projectinprocess.get(i).getstatus() == 0) {
-						TheEnvironment.projectsunderconstruction.remove(i);}}
+						if (TheEnvironment.projectinprocess.get(i).getstatus() == 3) {			//If status indicates that its been given concession, hence remove from process.
+						TheEnvironment.projectinprocess.remove(i);}}
 				}
-				//No else
+				//No else. Nothing is done if the yearswithcurrent status does not fulfill the above criteria.
 			}
 			//No else
-		}
-					
+		}}
 	
-	}
-			
-	//An important issue to be decided is whether the status vairbale should define the project stage, the list its contained in, or both.What is the master. 
-		//All methods updates the lists and status. They also initially check for lists and status.
 	
-	//Method moving project from potential to identifyed, that means distribution of "made up" projects.
 	public static void projectidentification() {
 		//TBD: Methods taking all projects not assign to a DA (Development Agent), assigning it, calculating LRMC and Certpriceneeded for that DAs early stageRRR.
 		//Distribution new potential projects among the DAs companies. Notice that there is a maximum level of projects that can be identifyed due to limited resources. 
@@ -186,65 +174,60 @@ public class ProjectDevelopment {
 	}
 	//Method moving projects from identifyed to apply for concession. THis is in part equal to the method of start construcion, but with an premimum RRR and a different CAPEX due to learning.
 	//HENCE the currentyer for the LERMC should be current + expected concession period +1 or +2.
-	public static void applyforconcession() {
+	public static void startpreprojectandapplication() {
 		
-	//TOBEFICED!!!
 		int currenttick = TheEnvironment.theCalendar.getCurrentTick();
-		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year + TheEnvironment.theCalendar.getStartYear();	//Gets the current year.
+		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year + TheEnvironment.theCalendar.getStartYear(); //Get current year.
 		
 		for (DeveloperAgent DA : CommonMethods.getDAgentList()) {
-			int temp_projectsunderconstruct = 0;
-			ArrayList<PowerPlant> templist = new ArrayList<PowerPlant>();
-			
-			double usedRRR = DA.getmycompany().getInvestmentRRR();					//Company specific RRR.
-			
-			//Collecting the projects that are awaiting investmetn decision (status = 3) and counting projects currently under construction.
-			for (PowerPlant PP : DA.getmyprojects()) {
-				if (PP.getstatus() == 3) {														//3=Awaiting investment decision.
-					PP.addyearsincurrentstatus(1);												//Increasing number of years with this status with one.
-					templist.add(PP);															//Adds all the projects, regardsless of having a cert price needed to high or low.
-					PP.calculateLRMCandcertpriceneeded(currentyear, usedRRR, 3);				//Using the market forward power price in that given reigon.
-				}
 
-			}
+			ArrayList<PowerPlant> templist = new ArrayList<PowerPlant>();
+			double usedRRR = DA.getmycompany().getearlystageRRR();																 //Company specific
 			
+			//Collecting the projects that the DA have identrifyed
+			for (PowerPlant PP : DA.getmyprojects()) {
+				if (PP.getstatus() == 5) {																					     //5=Identyfied project.
+					PP.addyearsincurrentstatus(1);																				 //Increasing number of years with this status.
+					templist.add(PP);															
+					PP.calculateLRMCandcertpriceneeded((currentyear+AllVariables.expectedyersinconcession), usedRRR, 3);		 //3=Using the forward power price in the region of the project.
+					//Notice the "currentyear+AllVariables.expectedyersinconcession". The LRMC takes account for the years of construcion deciding the eligability for certifiates. Whereas the input here
+					//takes account for the years in concessions. Adding this up the DA then takes account for both the years in concess
+				}
+				//No else. Projects with other statuses should not be keept.
+			}
+	
 			//For each DeveloperAgent For all the relevant projects. Do the following:			
 			Collections.sort(templist, new CommonMethods.customprojectcomparator());			//Sorting the of a DAs project awaiting from lowest certprie needed to highest cert price needed
 			
 			//All the cirteria variables for the investment decision
 			double cutoffcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getlongrunpriceexpectatations(); //Should be discussed.
-			int maxnumberofconstrucprojects = DA.getconstructionlimit();
-			int constructionproject_counter = DA.getnumprojectsunderconstr();					//Newly updated values.
-			double maxcapacitydeveloped		= DA.gettotalcapacitylimit();
-			double capacitydeveloped_counter = DA.getcapacitydevorundrconstr();
+			int maxnumberofprocess = DA.getprojectprocessandidylimit();
+			int processprojects_counter = DA.getnumprojectsinprocess();							//Not newly updated required. Just that the Concession process is updated for this tick.
 			int potentialprojects = templist.size();
 			int projects_pointer = 0;															//To ensure that the loop is not longer than number of objects.
 			
 			//The critical investment decision.
-			while ((constructionproject_counter < maxnumberofconstrucprojects) && (capacitydeveloped_counter < maxcapacitydeveloped) &&  (projects_pointer <= potentialprojects )) {
-				if (templist.get(projects_pointer).getcertpriceneeded() <= cutoffcertprice) {	//Starting with the best, if its worth investing...startconstruction.
+			while ((processprojects_counter < maxnumberofprocess) &&  (projects_pointer <= potentialprojects )) {
+				if (templist.get(projects_pointer).getcertpriceneeded() <= cutoffcertprice) {	//Starting with the best, if its worth investing...apply for concession.
 					
 					PowerPlant thisplant = templist.get(projects_pointer);
-					capacitydeveloped_counter = capacitydeveloped_counter + thisplant.getCapacity();
-					constructionproject_counter = constructionproject_counter + 1;
+					processprojects_counter = processprojects_counter + 1;						//Temporary (local) counter for projects in concessionqueue for the Developer.
 					
-					thisplant.setstatus(2);														//Changing status for the project (from 3=awaitingid to 2=underconstruction).
+					thisplant.setstatus(4);														//Changing status for the project (from 5=identyfied to 4=preconstruction&process).
 					thisplant.setyearsincurrentstatus(0);  										//Setting this for consistency for project reaching new stag. This value is note used in later stages.
-					thisplant.setstartyear(currentyear + thisplant.getminconstructionyears());	//Adding a startdate. Notice that this is done here rather than in the finalizeprojects.
 					TheEnvironment.projectinprocess.add(thisplant);								//Add to the Environment list of projects in process.
-					TheEnvironment.projectsawaitinginvestmentdecision.remove(thisplant);		//Removing from Environment list of awaitinginvestmentsdecisions
-					
-					//No need for updating the developer number of projects as this is done in another method after this.
+					TheEnvironment.projectsidentifyed.remove(thisplant);						//Removing from Environment list of awaitinginvestmentsdecisions
 					projects_pointer++;
 					}
 				else {break;}																	//If the current project is not wort investing, the following are not either.
-	}
+			}
 		}}
 	
-	//Simply updateing all endogenous variables for the DAagents.
+	//Method updateing all endogenous variables for the DAagents.
 	public static void updateDAgentsnumber() {
 		
 		double capacitydevorundrconstr=0;
+		int numprojectstrashed=0;
 		int numprojectsfinished=0;
 		int numprojectsunderconstr =0;
 		int numprojectsawaitingid=0;
@@ -253,6 +236,8 @@ public class ProjectDevelopment {
 		
 		for (DeveloperAgent DA : CommonMethods.getDAgentList()) {
 			for (PowerPlant PP : DA.getmyprojects()) {
+				if (PP.getstatus() == 0) {
+					numprojectstrashed = numprojectstrashed +1;}
 				if (PP.getstatus() == 1) {
 					numprojectsfinished = numprojectsfinished +1;
 					capacitydevorundrconstr = capacitydevorundrconstr + PP.getCapacity();}
@@ -266,19 +251,10 @@ public class ProjectDevelopment {
 				if (PP.getstatus() == 5) {
 					numprojectsidentyfied = numprojectsidentyfied +1;}
 			}
-			DA.updateDAnumbers(capacitydevorundrconstr, numprojectsfinished, numprojectsunderconstr, numprojectsawaitingid, numprojectsinprocess, numprojectsidentyfied);
+			DA.updateDAnumbers(capacitydevorundrconstr, numprojectstrashed, numprojectsfinished, numprojectsunderconstr, numprojectsawaitingid, numprojectsinprocess, numprojectsidentyfied);
 		}
 	}
 		
 
 }
 
-/*
- * 	public static ArrayList<PowerPlant> projectsunderconstruction;			//PowerPlants currently under construction
-	public static ArrayList<PowerPlant> projectsawaitinginvestmentdecision;	//PowerPlants projects awaiting investment decision
-	public static ArrayList<PowerPlant> projectinprocess;					//All powerplant in process of getting concession.
-	public static ArrayList<PowerPlant> projectsidentifyed;					//All projects identifyed
-	public static ArrayList<PowerPlant> potentialprojects;					//Auto-generated potential projects. Note distributed among development agents. 
-		public static ArrayList<PowerPlant> allPowerPlants; 
-
-	*/

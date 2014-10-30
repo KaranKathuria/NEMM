@@ -82,9 +82,10 @@ public class AllVariables {
 	public static boolean certificatespost2020_Norway = false;
 	public static boolean certificatespost2020_Sweden = true;
 	
-	//The concession process
-	public static int maxyearsinconcessionqueue = 7;				//With minconcessionyear = 3, that 4 years with 0.3 chance of getting concession. If not, the project is droped.
-	public static double annualpropforreceivingconcession = 0.3;	//Only with one decimal.
+	//The concession and preconstruction process
+	public static int maxyearsinconcessionqueue = 7;				//With minconcessionyear = 3, that 4 years with 0.3 chance of getting concession. If not, the project is trashed.
+	public static double annualprobforreceivingconcession = 0.3;	//Only with one decimal as the random generater uses int.
+	public static int expectedyersinconcession = 5;					//When deciding for concession, how long to the developers expected the project to be in line. Needed due to learningcurve/CAPEX estimation.
 	
 }
 

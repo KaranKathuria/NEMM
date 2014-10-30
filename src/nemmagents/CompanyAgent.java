@@ -101,33 +101,15 @@ public class CompanyAgent extends ParentAgent {
 		}
 		
 		//Get methods for the ActiveAgent
-		public double getphysicalnetposition() {
-			return physicalnetposition;
-			}
-		public double getRAR() {
-			return RAR;
-		}
-		public int getsizecode() {
-			return sizecode;
-		}
-		public int getregionpartcode() {
-			return this.companyagent.regionpartcode;
-		}
-		public double getlasttickproduction() {
-			return this.lasttickproduction;
-		}
-		public double getlasttickdemand() {
-			return this.lasttickdemand;
-		}
-		public GenericStrategy getbeststrategy() {
-			return beststrategy;
-			}
-		public void setbeststrategy(GenericStrategy s) {
-			beststrategy = s;
-			}
-		public ArrayList<GenericStrategy> getallstrategies() {
-			return allstrategies;
-		}
+		public double getphysicalnetposition() {return physicalnetposition;}
+		public double getRAR() {return RAR;}
+		public int getsizecode() {return sizecode;}
+		public int getregionpartcode() {return this.companyagent.regionpartcode;}
+		public double getlasttickproduction() {return this.lasttickproduction;}
+		public double getlasttickdemand() {return this.lasttickdemand;}
+		public GenericStrategy getbeststrategy() {return beststrategy;}
+		public void setbeststrategy(GenericStrategy s) {beststrategy = s;}
+		public ArrayList<GenericStrategy> getallstrategies() {return allstrategies;}
 		
 		public void poststmupdate(double certificatessold, double certificatesbought) {
 			//Updates the portfoliocapital before the physical position. Also thes method requires that ShortTermMarket is ran, but not Globalvalues.
@@ -144,22 +126,11 @@ public class CompanyAgent extends ParentAgent {
 				lasttickdemand = prodordemand;}
 		}
 		
-		public void setphysicalnetposition(double a) {
-			physicalnetposition = a;
-			}
-		public CompanyAnalysisAgent getagentcompanyanalysisagent() {
-			return companyanalysisagent;
-			}
-		
-		public GenericUtilityMethod getutilitymethod() {
-			return utilitymethod;
-		}
-		public ArrayList<PowerPlant> getmypowerplants() {
-			return myPowerPlants;
-		}
-		public void addpowerplant(PowerPlant pp) {
-			myPowerPlants.add(pp);	
-		}
+		public void setphysicalnetposition(double a) {physicalnetposition = a;}
+		public CompanyAnalysisAgent getagentcompanyanalysisagent() {return companyanalysisagent;}
+		public GenericUtilityMethod getutilitymethod() {return utilitymethod;}
+		public ArrayList<PowerPlant> getmypowerplants() {return myPowerPlants;}
+		public void addpowerplant(PowerPlant pp) {myPowerPlants.add(pp);}
 		public void AddDemandShare(double defaultShare, Region demRegion){
 			CompanyDemandShare tempDS = new CompanyDemandShare(defaultShare, demRegion);
 			myDemandShares.add(tempDS);
@@ -182,12 +153,12 @@ public class CompanyAgent extends ParentAgent {
 		private int developmentcriteriaflag; 			//Flag indicationg the development criteria for the DA. 1 = The project must fullfill RRR with prognosed price 2 = The project must fullfill RRR with todays price. 3 = The project must fullfill RRR with both price.
 		private double totalcapacitylimit;				//Politically given roof for how much installed REC capacity is developed (Applicable for Swedish municipalities).
 		private int constructionlimit;					//Number of projects it can have under construction simultaniasly.
-		private int projectprocessandidylimit;				//The agents maximum number of projects that can be identifyed or in concession/preconstruct each year. Thats from the potential list.
+		private int projectprocessandidylimit;			//The agents maximum number of projects that can be identifyed or in concession/preconstruct each year. Thats from the potential list.
 		private int sizecode;							//Code value indicationg if the DA has few=1, normal=2 og alot=3 of activities (projects) in the regions the company of that AA participates in
-		private double earlistageRRR;					//Required rate off return for project cut-off on earl-stage projects.
 		
 		//Endogenous variables 
 		private double capacitydevorundrconstr;
+		private int numprojectstrashed;
 		private int numprojectsfinished;
 		private int numprojectsunderconstr;
 		private int numprojectsawaitingid;
@@ -197,12 +168,13 @@ public class CompanyAgent extends ParentAgent {
 		public DeveloperAgent() {
 			companyagent = this.companyagent;
 			sizecode = 2;								//By default all developmentagents have normal amount of activety.
-			projectprocessandidylimit = 5;					//Max number of project getting identifyed or getting in process.
+			projectprocessandidylimit = 5;				//Max number of project getting identifyed or getting in process.
 			constructionlimit = 2;						//Max number of projects getting in from moving to construction. 
 		}
 		
-		public void updateDAnumbers(double cpdorconstr, int numpf, int numpuc, int numpaid, int numpip, int numpid) {
+		public void updateDAnumbers(double cpdorconstr, int numpt, int numpf, int numpuc, int numpaid, int numpip, int numpid) {
 			capacitydevorundrconstr = cpdorconstr;
+			numprojectstrashed = numpt;
 			numprojectsfinished = numpf;
 			numprojectsunderconstr = numpuc;
 			numprojectsawaitingid = numpaid;
@@ -218,9 +190,11 @@ public class CompanyAgent extends ParentAgent {
 		public ArrayList<PowerPlant> getmyprojects() {return myProjects;}
 		public double gettotalcapacitylimit() {return totalcapacitylimit;}
 		public int getconstructionlimit() {return constructionlimit;}
-		public double getprojectprocessandidylimit() {return projectprocessandidylimit;}
+		public int getprojectprocessandidylimit() {return projectprocessandidylimit;}
 		public double getcapacitydevorundrconstr() {return capacitydevorundrconstr;}
 		public int getnumprojectsunderconstr() {return numprojectsunderconstr;}
+		public int getnumprojectsinprocess() {return numprojectsinprocess;}
+
 		
 	}
 	
@@ -271,10 +245,9 @@ public class CompanyAgent extends ParentAgent {
 	private ArrayList<CompanyDemandShare> myDemandShares = new ArrayList<CompanyDemandShare>();
 	private ArrayList<PowerPlant> myPowerPlants = new ArrayList<PowerPlant>();						//List of PowerPlants owned by the company regardless of project stage.
 	private ArrayList<PowerPlant> myProjects = new ArrayList<PowerPlant>();							//List of all projects owned by the company regardless of project stage.
-
-	private int regionpartcode;			//Code indication which region the Company is active in. 1=Norway (region1), 2=Norway and Sweden, 3=Sweden. This number has to connection with AA sizecode, hence a company with big size and reigonpartcode=2 is large in both regions.
-	private double investmentRRR; 				//Company specific cost of capital. Used to evaluate investment decisions. 
-	
+	private int regionpartcode;																		//Code indication which region the Company is active in. 1=Norway (region1), 2=Norway and Sweden, 3=Sweden. This number has a connection with AA sizecode, hence a company with big size and reigonpartcode=2 is large in both regions.
+	private double investmentRRR; 																	//Company specific cost of capital. Used to evaluate investment decisions. Defined before tax.
+	private double earlystageRRR;																	//Required rate off return for project cut-off on earl-stage projects. Defined before tax. Higher than InvestmentRRR as the risk is higher.
 	
 	//default constructor not in use.
 	public CompanyAgent() {
@@ -288,7 +261,7 @@ public class CompanyAgent extends ParentAgent {
 	public CompanyAgent(boolean p, boolean op, boolean t) {
 		if (p==true) {
 			produceragent = new ActiveAgent(1);
-			developeragent = new DeveloperAgent();}				//By default all and just all companies with PA have a DA.
+			developeragent = new DeveloperAgent();}													//By default all and just all companies with PA have a DA.
 		if (op==true) {
 			obligatedpurchaseragent = new ActiveAgent(2);}
 		if (t==true) {
@@ -296,39 +269,21 @@ public class CompanyAgent extends ParentAgent {
 		
 		companyname = "Company " + this.getID();
 		companyanalysisagent = new CompanyAnalysisAgent();	
-		investmentRRR = 0.06;
-		regionpartcode = 2;										//By default, all companies are active in both countries. 
-		
-		
+		investmentRRR = 0.06;									
+		regionpartcode = 2;																			//By default, all companies are active in both countries. 
 		}	
-	//CompanyAgents methods
-	public ActiveAgent getproduceragent() {
-		return produceragent;
-	}
-	public ActiveAgent getobligatedpurchaseragent() {
-		return obligatedpurchaseragent;
-	}
-	public ActiveAgent gettraderagent() {
-		return traderagent;
-	}
-	public DeveloperAgent getdeveloperagent() {
-		return developeragent;
-	}
-	public CompanyAnalysisAgent getcompanyanalysisagent() {
-		return companyanalysisagent;}
 	
-	public ArrayList<PowerPlant> getmypowerplants() {
-		return myPowerPlants;
-	}
-	public ArrayList<PowerPlant> getmyprojects() {
-		return myPowerPlants;
-	}
-	public ArrayList<CompanyDemandShare> getMyDemandShares() {
-		return myDemandShares;
-	}
-	public double getInvestmentRRR() {
-		return investmentRRR;
-	}
+	//CompanyAgents get methods
+	public ActiveAgent getproduceragent() {return produceragent;}
+	public ActiveAgent getobligatedpurchaseragent() {return obligatedpurchaseragent;}
+	public ActiveAgent gettraderagent() {return traderagent;}
+	public DeveloperAgent getdeveloperagent() {return developeragent;}
+	public CompanyAnalysisAgent getcompanyanalysisagent() {return companyanalysisagent;}
+	public ArrayList<PowerPlant> getmypowerplants() {return myPowerPlants;}
+	public ArrayList<PowerPlant> getmyprojects() {return myPowerPlants;}
+	public ArrayList<CompanyDemandShare> getMyDemandShares() {return myDemandShares;}
+	public double getInvestmentRRR() {return investmentRRR;}
+	public double getearlystageRRR() {return earlystageRRR;}
 	
 }
 	
