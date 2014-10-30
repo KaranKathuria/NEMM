@@ -107,7 +107,7 @@ if (i < AllVariables.yearstoendogprojects) {
 		
 		//Get total production from plants i operation, for iterated year. Notie the use of getestimannualprod() and not the exact or expected production. 
 																			
-		for (PowerPlant PP : allPowerPlants_copy) { 																//All operational PP. Notice that this is the original "allPowerPlants".
+		for (PowerPlant PP : allPowerPlants_copy) { 																	//All operational PP. Notice that this is the original "allPowerPlants".
 			if (PP.getendyear() >= (currentyear+i) ) {																	//Only count certificates when the plant is eligable. 
 			totalannucertproduction = totalannucertproduction + PP.getestimannualprod();} 								//Starting at year i. Later method returns the calculated normal year production.
 			}
@@ -140,9 +140,9 @@ else  {
 		}
 		
 		//Get total production from plants i operation, for iterated year.
-		for (PowerPlant PP : allPowerPlants_copy) { 																//All operational PP. Notice that this is the original "allPowerPlants".
+		for (PowerPlant PP : allPowerPlants_copy) { 																	//All operational PP. Notice that this is the original "allPowerPlants".
 			if (PP.getendyear() >= (currentyear+i) ) {																	//Only count certificates when the plant is eligable. 
-			totalannucertproduction = totalannucertproduction + PP.getestimannualprod();} 						//Starting at year i. Later method returns the calculated normal year production.
+			totalannucertproduction = totalannucertproduction + PP.getestimannualprod();} 								//Starting at year i. Later method returns the calculated normal year production.
 			}
 		
 		certificatebalance = certificatebalance - totalannudemand + totalannucertproduction;						//Give the current balance and hence how many new project needs to be realized.

@@ -16,13 +16,13 @@ public class PowerPlant implements Cloneable{
 	private double loadfactor;
 	private int technologyid; 				//Technology could also be a object/class in itself later if needed
 	private int lifetime; 					//Number of years expected as lifetime for project from startdate, that is even without certs. For Powerpland part of "overgangsordningen", the year indicates when they are out of the scheme.
-	private int startyear;					//If the Powerplant is in operation when simulation is ran, this indicates when it is put in operation. If 0, the start is endogenous in the model and set in the development game.
-	private int earlieststartyear;			//Given for all real projects (those identifyd). Must be set and updated each year. 
+	private int startyear;					//If the Powerplant is in operation or under construcion at start, this indicates when it is put in operation. If 0, the start is endogenous in the model and set in the development game.
+	private int earlieststartyear;			//Not in use in projectdevelopment after introducing minyearinprocess and minconstruction years, but used in FMA. 
 	private double capex;					//Total capex for project
 	private double opex;					//Opex per MWh for project, assumed that this does not vary with the fluctiations in annual production. 
 	private double annualcostreduction;		//Annual rate of cost reduction due to technology improvment. 
 	private int minyearinprocess;			//Projects specific. Min number of years this projects needs in process (preconstruction and concession)
-	private int minconstructionyears;		//Minimum number of years this project needs in construction.
+	private int minconstructionyears;		//Minimum number of years this project needs in construction. Currently this is used without variation, only adding starttick randomly. 
 	
 	
 	private TickArray myProduction; 		//Future production (good given).
@@ -32,8 +32,8 @@ public class PowerPlant implements Cloneable{
 	private int endyear; 					//THis is the last year eligable for certificates (if 2020, it gets certs for that year).
 	private double LRMC; 					//Long run marginal cost for this powerplant build at a given year. This is update for each annual update.
 	private Double certpriceneeded;			//Reason for having this field is that the projects cannot be sorted by LRMC as the region defines when its certificatesobligated.
-	private int starttick;					//The month/tick of a year that the production starts wihting the starting year.
-	
+	private int starttick;					//The month/tickid of a year that the production starts (the tick is in the starting year).
+	private int yearsincurrentstatus;		//Annual counter counting years in current status for the purpose of deciding if its ready for concession.
 	
 	public PowerPlant() {}
 	
@@ -99,7 +99,14 @@ public class PowerPlant implements Cloneable{
 	public void setStarttick(int tickID) {
 		starttick = tickID;
 	}
+	public void setstartyear(int sy) {startyear = sy;}
 	public int getstatus() {return status;}
+	public int getminconstructionyears() {return minconstructionyears;}
+	public int getminyearinprocess() {return minyearinprocess;}
+	public int getyearsincurrentstatus() {return yearsincurrentstatus;}
+	public void setyearsincurrentstatus(int a) { yearsincurrentstatus = a;}
+	public void addyearsincurrentstatus(int a) {yearsincurrentstatus = a;}
+
 
 	// Methods ------------------------------------------------------------------------
 	
@@ -208,40 +215,37 @@ public class PowerPlant implements Cloneable{
 		}	}
 	
 	//THis method caluclates the LRMC and certificate price needed for a project realised in a given year. This is only usefull for endogenous projects, hence it does not have to take care of "overgangsordningen" projects. 
-	//Takes in the realisation year as this alters the LRMC and Certpriceneeeded through improvment in Capex. Also, now the current power price (simlation tick) is used as bases for certpriceneeded.
-	//Currently uses the either "in-moment powerprice", the owners expected powerprice or the fwd powerprice and global RRR.
+	//Takes in the realisation year as this alters the LRMC and Certpriceneeeded through improvment in Capex. The powerprice used depends on the input.
 	public void calculateLRMCandcertpriceneeded(int currentyear, double RRR, int powerpricecode) {
 		//Not sure there is a good reason for not sending the powerprice directly in the method (KK). One advantage is that its implementation is easier to change later.
 		//Current year referes to actual year number (2012..), not YearID (0,1...)
 		double usedRRR = RRR;
 		double usedpowerprice = 0;
-		int futureyearspowerprice = currentyear - TheEnvironment.theCalendar.getStartYear() + 5;	//5 indication 5 years horizont.
+		int futureyearspowerprice = currentyear - TheEnvironment.theCalendar.getStartYear() + 5;		//5 indication 5 years horizont.
 		
 		//Switch taking care of which powerprice assumption to use in the LRMC. 1=Current power price, 2=The Developers, companys, analysisagent expected power price in 5 years. 3=The 5 year fowardprice.
 		switch (powerpricecode) {
 			case 1: {usedpowerprice = myRegion.getMyPowerPrice().getValue();}							//Use current powerprice
 			case 2: {if (myRegion == TheEnvironment.allRegions.get(0)) {								//Use the MAA expected powerprice in 5 years from now
 						usedpowerprice = myCompany.getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getExpectedpowerpricenorway(futureyearspowerprice);}
-					else{usedpowerprice = myCompany.getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getExpectedpowerpricesweden(futureyearspowerprice);}
-					}
+					else{usedpowerprice = myCompany.getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getExpectedpowerpricesweden(futureyearspowerprice);}}
 			case 3: {usedpowerprice = myRegion.getMyForwardPrice(futureyearspowerprice-5).getValue(5);}	//Use the market forwardprices}
 		}
 			
-		//int currentyear = TheEnvironment.theCalendar.getTimeBlock(TheEnvironment.theCalendar.getCurrentTick()).year;
 		int yearsoftechnologyimprovment = currentyear - TheEnvironment.theCalendar.getStartYear();
 		
 		//Her is the certificatelogic
-		int yearswithcertificates = Math.min(15,(2035-currentyear));
-			if (!myRegion.getcertificatespost2020flag() && currentyear > 2020) { 				//If certflag is false and years is larger than 2020 (you get certs until 31.12.2020.)
+		int yearswithcertificates = Math.min(15,(2035-(currentyear+minconstructionyears)));				//Notice the "+minconstructionyears" for taking account of buidingperiod when finding the certeligable period.
+			if (!myRegion.getcertificatespost2020flag() && (currentyear+minconstructionyears) > 2020) { //If certflag is false and years is larger than 31.12.2020.
 					yearswithcertificates = 0;}
 		
-		double newCapex = capex*Math.pow((1-annualcostreduction),yearsoftechnologyimprovment);	//Note that the Capex value of the powerplant is not set/updated.
+		double newCapex = capex*Math.pow((1-annualcostreduction),yearsoftechnologyimprovment);			//Note that the Capex value of the powerplant is not set/updated.
 		
 		double NPVfactor_lifetime = 0;
 		for (int i = 1; i <= lifetime; i++) {
 			NPVfactor_lifetime = NPVfactor_lifetime + 1/Math.pow((1+TheEnvironment.GlobalValues.RRR),i);}
 		
-		LRMC = (newCapex/(NPVfactor_lifetime*this.getestimannualprod()))+this.opex; 			//Calculates the average nominal income needed per MWh (Certprice + Powerprice) for the project lifetime.
+		LRMC = (newCapex/(NPVfactor_lifetime*this.getestimannualprod()))+this.opex; 					//Calculates the average nominal income needed per MWh (Certprice + Powerprice) for the project lifetime.
 		
 		//Calculating the needed average cert price is not trival as the certificates are only valid for a subperiod of the lifetime. First take into account the yearsofcertificates
 		double NPVfactor_certyears = 0;
