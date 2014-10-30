@@ -44,7 +44,9 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 		if (b.size() < 2) { //In this case there is no variable bid or there is no bids at all (which could be because the OPA has no volume to offer) Then utility is <0,1> so prices are unchanged
 			return 0.5;} //Just any number between 0 and 1 is fine as this would imply that the tactic is unchanged.
 			
-		Collections.sort(b, new CommonMethods.custombuyoffercomparator()); //Sorts offers form lowest to highest price. The last bid is hence the must buy bid
+//		Collections.sort(b, new CommonMethods.custombuyoffercomparator()); //Sorts offers form lowest to highest price. The last bid is hence the must buy bid
+		Collections.sort(b); //Sorts offers form lowest to highest price. The last bid is hence the must buy bid
+
 		int lastindx = b.size()-1;
 		
 		for (int i = 0; i < lastindx; ++i) {

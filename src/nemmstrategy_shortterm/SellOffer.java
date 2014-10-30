@@ -8,7 +8,7 @@
 
 package nemmstrategy_shortterm;
 
-public class SellOffer {
+public class SellOffer implements Comparable<SellOffer>{
 	
 	private double numberofcert;
 	private double price;
@@ -19,6 +19,20 @@ public class SellOffer {
 		numberofcert = 0;
 		price = 0;
 	}
+	
+	// ---- Comparator
+	
+	@Override
+	public int compareTo(SellOffer o) {
+		// Compare based on utility
+		int lastCmp;
+		if (price == o.getSellOfferprice()) {lastCmp = 0;}
+		else if (price < o.getSellOfferprice()) {lastCmp = -1;}
+		else {lastCmp = 1;}
+		return lastCmp;
+	}
+	
+	// ---- Gets & Sets
 	public Double getSellOfferprice() {
 		return price;
 	}

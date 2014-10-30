@@ -8,7 +8,7 @@
 
 package nemmstrategy_shortterm;
 
-public class BuyOffer {
+public class BuyOffer implements Comparable<BuyOffer> {
 	
 	private double numberofcert; //Needs to be public so this class can be reused.
 	private double price;
@@ -18,6 +18,21 @@ public class BuyOffer {
 		numberofcert = 0;
 		price = 0;
 	}
+
+	// ---- Comparator
+	
+	@Override
+	public int compareTo(BuyOffer o) {
+		// Compare based on utility
+		int lastCmp;
+		if (price == o.getBuyOfferprice()) {lastCmp = 0;}
+		else if (price < o.getBuyOfferprice()) {lastCmp = -1;}
+		else {lastCmp = 1;}
+		return lastCmp;
+	}
+	
+	// ---- Gets & Sets
+	
 	public Double getBuyOfferprice() {
 		return price;
 	}

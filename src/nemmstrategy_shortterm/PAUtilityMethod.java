@@ -174,7 +174,8 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 //		if (s.size() < 2) { //In this case there is no variable bid or there is no bids at all (which could be because the PA has no volume to offer) Then utility is <0,1> so prices are unchanged
 //			return ret;} //Just any number between 0 and 1 is fine as this would imply that the tactic is unchanged.
 			
-		Collections.sort(s, new CommonMethods.customselloffercomparator()); //Sorts offers form lowest to highest price. The first bid is hence the must sell bid
+//		Collections.sort(s, new CommonMethods.customselloffercomparator()); //Sorts offers form lowest to highest price. The first bid is hence the must sell bid
+		Collections.sort(s); //Sorts offers form lowest to highest price. The first bid is hence the must sell bid
 		
 		for (int i = 1; i < s.size(); ++i) { //Skips the first bid as this is must sell bid
 			variableoffervolume = variableoffervolume + s.get(i).getnumberofcert(); //Volume of variable offers

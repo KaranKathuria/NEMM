@@ -152,12 +152,17 @@ public class ShortTermMarket {
 		
 		int numberofbuyoffers = Allbuyoffers.size(); 
 		int numberofselloffers = Allselloffers.size();
-		if (numberofbuyoffers == 0 || numberofselloffers == 0){ //Sets price to null, and stops the execution in case one side of the market is null.
+		if (numberofbuyoffers == 0 || numberofselloffers == 0){ //Sets price to zero, and stops the execution in case one side of the market is null.
 			currentmarketprice = 0;
 			return;}
-		//Time for sorting the buy and selloffers. The comparator for objects sell and buyoffers are implementer in CommonMethods. Sort from lowest to highest. 
-		Collections.sort(Allselloffers, new CommonMethods.customselloffercomparator());
-		Collections.sort(Allbuyoffers, new CommonMethods.custombuyoffercomparator());
+		// Sort the buy and sell offers. 
+		// The comparator for objects sell and buyoffers are implemented in CommonMethods. 
+		// Sort from lowest to highest price. 
+		// GJB FIX THIS - should move the comparator to the buy/sell offer class
+//		Collections.sort(Allselloffers, new CommonMethods.customselloffercomparator());
+//		Collections.sort(Allbuyoffers, new CommonMethods.custombuyoffercomparator());
+		Collections.sort(Allselloffers);
+		Collections.sort(Allbuyoffers);
 		
 		
 		
@@ -222,15 +227,16 @@ public class ShortTermMarket {
 			}
 			else {
 				double accessdemand = marketdemand - marketsupply;
-			for (BuyOffer b : Allbuyoffers) { //Sums all supply for that price (lowest to highest).
-				if (b.getBuyOfferprice()>=(certprice) && b.getBuyOfferprice()<(certprice+pricestep)) {
-					marginaldemand = marginaldemand + b.getnumberofcert();}}
-			if (marginaldemand<accessdemand) {
-				shareofmarginalbuyofferbought = 0;}
-			else {
-				shareofmarginalbuyofferbought = (marginaldemand - accessdemand)/marginaldemand;
+				for (BuyOffer b : Allbuyoffers) { //Sums all supply for that price (lowest to highest).
+					if (b.getBuyOfferprice()>=(certprice) && b.getBuyOfferprice()<(certprice+pricestep)) {
+						marginaldemand = marginaldemand + b.getnumberofcert();}}
+				if (marginaldemand<accessdemand) {
+					shareofmarginalbuyofferbought = 0;}
+				else {
+					shareofmarginalbuyofferbought = (marginaldemand - accessdemand)/marginaldemand;
+				}
 			}
-		}}
+		}
 		double tempshb = shareofmarginalbuyofferbought;
 		double tempshs = shareofmarignalselloffersold;
 		currentmarketprice = certprice;
