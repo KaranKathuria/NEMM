@@ -17,13 +17,13 @@ public class PowerPlant implements Cloneable{
 	private int technologyid; 				//Technology could also be a object/class in itself later if needed
 	private int lifetime; 					//Number of years expected as lifetime for project from startdate, that is even without certs. For Powerpland part of "overgangsordningen", the year indicates when they are out of the scheme.
 	private int startyear;					//If the Powerplant is in operation or under construcion at start, this indicates when it is put in operation. If 0, the start is endogenous in the model and set in the development game.
-	private int earlieststartyear;			//Not in use in projectdevelopment after introducing minyearinprocess and minconstruction years, but used in FMA. 
+	private int earlieststartyear;			//31.10.2014: Not in use in projectdevelopment after introducing minyearinprocess and minconstruction years, but used in FMA. 
 	private double capex;					//Total capex for project
 	private double opex;					//Opex per MWh for project, assumed that this does not vary with the fluctiations in annual production. 
 	private double annualcostreduction;		//Annual rate of cost reduction due to technology improvment. 
 	private int minyearinprocess;			//Projects specific. Min number of years this projects needs in process (preconstruction and concession)
 	private int minconstructionyears;		//Minimum number of years this project needs in construction. Currently this is used without variation, only adding starttick randomly. 
-	
+	private double specificRRR;				//Technology, regional and Capex- adjuster RRR before tax. For practiacl reasons this is simply made project specific.
 	
 	private TickArray myProduction; 		//Future production (good given).
 	private TickArray ExpectedProduction;	//Expected production. This is the amount of certs the plant is expected to generate and used by the owners to estimate. 
@@ -38,7 +38,7 @@ public class PowerPlant implements Cloneable{
 	public PowerPlant() {}
 	
 	public PowerPlant(String newname, Region newregion, int newstatus, int newcapacity, double newloadfactor, int newtechnology, 
-					  int newlifetime, int newstartyear, int newearlieststartyear, double newcapex, double newopex, double newannualcostreduction, int newminyearinprocess, int newminconstructionyears) {
+					  int newlifetime, int newstartyear, double newcapex, double newopex, double newannualcostreduction, int newminyearinprocess, int newminconstructionyears) {
 		name = newname;
 		myRegion = newregion;
 		status = newstatus;
@@ -47,15 +47,24 @@ public class PowerPlant implements Cloneable{
 		technologyid = newtechnology;
 		lifetime = newlifetime;
 		startyear = newstartyear;
-		earlieststartyear = newearlieststartyear;
 		capex = newcapex;
 		opex = newopex;
 		annualcostreduction = newannualcostreduction;
 		minyearinprocess = newminyearinprocess;
 		minconstructionyears = newminconstructionyears;
 		
-		if (startyear != 0) {									//null equals 0 for int in java This snippet takes care of exogenous plants and "overgangsordningen"
+		if (startyear != 0) {												//null equals 0 for int in java. This part takes care of exogenous plants and "overgangsordningen"
 			endyear = startyear + Math.min(lifetime, 15) - 1;}
+		if (status == 1)	{												//Starttick is set in the project development for all other projects.
+			starttick = 0;
+			earlieststartyear = startyear;
+		}
+		if (status == 2)	{												//earlieststartyear is already determined by startyear as this is exognous. 
+			earlieststartyear = startyear;
+		}
+		if (status > 2)		{
+			earlieststartyear = minyearinprocess + minconstructionyears;	//This is really best case.
+		}
 			
 		myProduction = new TickArray();
 		ExpectedProduction = new TickArray();	
@@ -83,7 +92,9 @@ public class PowerPlant implements Cloneable{
 	public double getLoadfactor() {
 		return loadfactor;
 	}
-
+	public double getspecificRRR() {
+		return specificRRR;
+	}
 	public void setLoadfactor(double loadfactor) {
 		this.loadfactor = loadfactor;
 	}
@@ -216,6 +227,7 @@ public class PowerPlant implements Cloneable{
 	
 	//THis method caluclates the LRMC and certificate price needed for a project realised in a given year. This is only usefull for endogenous projects, hence it does not have to take care of "overgangsordningen" projects. 
 	//Takes in the realisation year as this alters the LRMC and Certpriceneeeded through improvment in Capex. The powerprice used depends on the input.
+	//Notice that the current year is the year the projects can take the investment decison, not the year the project is finised.
 	public void calculateLRMCandcertpriceneeded(int currentyear, double RRR, int powerpricecode) {
 		//Not sure there is a good reason for not sending the powerprice directly in the method (KK). One advantage is that its implementation is easier to change later.
 		//Current year referes to actual year number (2012..), not YearID (0,1...)

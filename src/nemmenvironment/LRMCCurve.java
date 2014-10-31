@@ -47,11 +47,10 @@ public class LRMCCurve {
 			return annualcertproduction;
 		}
 	}
-	
-	
+
 	public LRMCCurve(int runye, int yearsah) {
-		runyear = runye;
-		yearsahead = yearsah;
+		runyear = runye;										//This is the year of running the FMA in the simulation
+		yearsahead = yearsah;									//This is for which future year the LRMC curve is beeing calculated. 
 	}
 	//Methods
 	
@@ -66,9 +65,9 @@ public class LRMCCurve {
 			
 		} else {
 		
-			double globalRRR = TheEnvironment.GlobalValues.RRR;			//Calculation uses the the global given RRR for FMA.
-		for (PowerPlant PP : tempendogenousprojects) {					//Loop creating and adding all relevant project info to the supplycurve.
-			PP.calculateLRMCandcertpriceneeded(yearsahead, globalRRR, 1);	//Calculates the LRMC and needed Certificateprice based on the given year.
+			double globalRRR = TheEnvironment.GlobalValues.RRR;															//Calculation uses the the global given RRR for FMA.
+		for (PowerPlant PP : tempendogenousprojects) {																	//Loop creating and adding all relevant project info to the supplycurve.
+			PP.calculateLRMCandcertpriceneeded((yearsahead-PP.getminconstructionyears()), globalRRR, 1);				//Calculates the LRMC and needed Certificateprice based on the given year minus construction years due to the methods inputdefinitio.
 			Curvepair cp = new Curvepair(PP.getname(), PP.getLRMC(), PP.getcertpriceneeded(), PP.getestimannualprod());
 			projectsupplycurve.add(cp);
 		}

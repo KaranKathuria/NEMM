@@ -38,7 +38,7 @@ public class ProjectDevelopment {
 					if (!PP.getMyRegion().getcertificatespost2020flag() && currentyear > 2020) {	//Takes care of projecs post 2020 in regions without certs post 2020.
 						PP.setendyear(2020);}
 					else {
-						PP.setendyear(Math.min(PP.getlifetime()+currentyear-1, currentyear+14));
+						PP.setendyear(Math.min(PP.getlifetime()+currentyear-1, currentyear+14));	//Takes care of projects "in overgangsordningen" with 1 year lifetime.
 						PP.setStarttick(currenttick + RandomHelper.nextIntFromTo(0, TheEnvironment.theCalendar.getNumTradePdsInYear()-1));	//Randoml set starttick between now and 12 tick ahead.
 					}
 				
@@ -70,7 +70,7 @@ public class ProjectDevelopment {
 				if (PP.getstatus() == 3) {														//3=Awaiting investment decision.
 					PP.addyearsincurrentstatus(1);												//Increasing number of years with this status with one.
 					templist.add(PP);															//Adds all the projects, regardsless of having a cert price needed to high or low.
-					PP.calculateLRMCandcertpriceneeded(currentyear, usedRRR, 3);				//Using the market forward power price in that given reigon.
+					PP.calculateLRMCandcertpriceneeded(currentyear, usedRRR, 3);				//Using the market forward power price in that given reigon. Notice that this is calculated for when the year the project can be invested in, not the year it can be finished!!
 				}
 			}
 			//For each DeveloperAgent For all the relevant projects. Do the following:			

@@ -81,7 +81,7 @@ public class ReadExcel {
 	        System.out.println("!! Bang Timeerror !! xlRead() : " + e );
 	    }
 	}
-			
+		
 	public static void ReadRegions() {
 				
 		try{      
@@ -162,7 +162,7 @@ public class ReadExcel {
 					int newstatus = (int) plant_sheet.getRow(3+j).getCell(6).getNumericCellValue();
 					int newyearstarted = (int) plant_sheet.getRow(3+j).getCell(7).getNumericCellValue();
 					int newlifetime = (int) plant_sheet.getRow(3+j).getCell(8).getNumericCellValue();
-					int newearlieststartyear = (int) plant_sheet.getRow(3+j).getCell(9).getNumericCellValue();
+					//int newearlieststartyear = (int) plant_sheet.getRow(3+j).getCell(9).getNumericCellValue();
 					double newcapex = plant_sheet.getRow(3+j).getCell(10).getNumericCellValue();
 					double newopex = plant_sheet.getRow(3+j).getCell(11).getNumericCellValue();
 					double newlearningrate = plant_sheet.getRow(3+j).getCell(12).getNumericCellValue();
@@ -170,7 +170,7 @@ public class ReadExcel {
 					int newminconstructionyears = (int) plant_sheet.getRow(3+j).getCell(14).getNumericCellValue();
 					
 					//newregion_ID starts by 1, hence to indexs it we subtract 1.
-					PowerPlant pp = new PowerPlant(newname, TheEnvironment.allRegions.get(newregion_ID-1), newstatus, newcapacity, newloadfactor, newtechnology, newlifetime, newyearstarted, newearlieststartyear, newcapex, newopex, newlearningrate, newminyearinprocess, newminconstructionyears);
+					PowerPlant pp = new PowerPlant(newname, TheEnvironment.allRegions.get(newregion_ID-1), newstatus, newcapacity, newloadfactor, newtechnology, newlifetime, newyearstarted, newcapex, newopex, newlearningrate, newminyearinprocess, newminconstructionyears);
 					
 					//Setting the powerplant/project to the relevant ArrayList. 
 					if (newstatus == 1) {
@@ -211,6 +211,25 @@ public class ReadExcel {
 	    
 	    
 	}
+		public static void ReadRRR() {
+			
+			try{      
+				
+				//Workbook workbook = new XSSFWorkbook();
+				//XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(new File(filePath)));
+				Workbook workbook = WorkbookFactory.create(new File(filePath));
+				
+				// Read number of plants and technologies
+				Sheet ctr_sheet = workbook.getSheet("RRR");
+
+				
+				//Call constructorTheEnvironment.theCalendar = new NemmCalendar(startyear, endyear, numobpdinyear, numtrpdinyear);
+								
+						
+			}catch(Exception e) {
+		        System.out.println("!! Bang RRRError !! xlRead() : " + e );
+		    }
+		}
 }
  
 

@@ -38,9 +38,8 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 		ParameterWrapper.reinit(); 														//Reads the parametervalues provided in the user interface
 		
 		//Create the Environment
-		TheEnvironment.InitEnvironment(); 												//Initiates ReadExcel, creates time and adds empty lists of Powerplants, projects and regions	
+		TheEnvironment.InitEnvironment(); 												//Initiates ReadExcel, creates time and adds empty lists of Powerplants, projects and regions. Also initiates GlobalValues, the publicliy available market information in the model
 		TheEnvironment.PopulateEnvironment(); 											//initiates ReadExcel and reads in region data (demand and power price) and Powerplant and projects data 
-		TheEnvironment.GlobalValues.initglobalvalues(); 								//Initiate the GlobalValues, thats the publicliy available market information in the model
 		
 		//Adds Agents to context. Notice that Agents specific data is not read in and only given through constructors.
 		for (int i = 0; i < getproduceragentsnumber(); ++i) {

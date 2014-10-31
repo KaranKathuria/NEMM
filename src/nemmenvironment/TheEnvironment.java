@@ -33,6 +33,8 @@ public final class TheEnvironment {
 	
 	public static ArrayList<Region> allRegions;
 	public static ArrayList<CompanyAgent> allCompanies;
+	
+	public static ArrayList<ProjectRRR> alladjustedRRR;						//List containing alle the adjusted RRR. Used by Projects to look up their specific RRR.
 	public static NemmCalendar theCalendar;
 	
 	
@@ -43,6 +45,7 @@ public final class TheEnvironment {
 		// Create & set up the time calendar and create the lists to hold plants, projects and regions.
 		inputreader.ReadExcel.InitReadExcel();
 		inputreader.ReadExcel.ReadCreateTime();
+		GlobalValues.initglobalvalues();
 		allPowerPlants = new ArrayList<PowerPlant>() ;
 		potentialprojects = new ArrayList<PowerPlant>() ;
 		projectsidentifyed = new ArrayList<PowerPlant>() ;
@@ -50,6 +53,7 @@ public final class TheEnvironment {
 		projectsawaitinginvestmentdecision = new ArrayList<PowerPlant>() ;
 		projectsunderconstruction = new ArrayList<PowerPlant>() ;
 		allRegions = new ArrayList<Region>() ;	
+		alladjustedRRR = new ArrayList<ProjectRRR>();
 	}
 	
 	// Populate the Environment ------------------------------------------------------------
@@ -57,6 +61,7 @@ public final class TheEnvironment {
 	public static void PopulateEnvironment(){
 		inputreader.ReadExcel.ReadRegions();
 		inputreader.ReadExcel.ReadPowerPlants();
+		inputreader.ReadExcel.ReadRRR();
 	}
 		
 	
