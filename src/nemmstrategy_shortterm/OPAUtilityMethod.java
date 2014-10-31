@@ -53,7 +53,8 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 			variableoffervolume = variableoffervolume + b.get(i).getCertVolume(); //Volume of variable offers
 		}
 		
-		totalboughtcerts = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMcert();
+//		totalboughtcerts = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMcert();
+		totalboughtcerts = this.getmyAgent().getBoughtVolume();
 		variableboughtcerts = totalboughtcerts - b.get(lastindx).getCertVolume(); //Minus the must buy which would always be the first offer to be bought
 
 		double ret = (variableboughtcerts/variableoffervolume); //Should always be a number [0,1]

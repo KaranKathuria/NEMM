@@ -180,8 +180,8 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 		for (int i = 1; i < s.size(); ++i) { //Skips the first bid as this is must sell bid
 			variableoffervolume = variableoffervolume + s.get(i).getCertVolume(); //Volume of variable offers
 		}
-		
-		totalsoldcerts = UpdatePhysicalPosition.returnsoldvolume(s, marketprice, shareofmarginaltoffersold).getSoldInSTMcert();
+		totalsoldcerts = this.getmyAgent().getSoldVolume();
+//		totalsoldcerts = UpdatePhysicalPosition.returnsoldvolume(s, marketprice, shareofmarginaltoffersold).getSoldInSTMcert();
 		variablesoldtcerts = totalsoldcerts - s.get(0).getCertVolume(); //Minus the must buy which would always be the first offer to be bought
 		if (variableoffervolume>0){ 
 			ret = (variablesoldtcerts/variableoffervolume); //Should always be a number [0,1]

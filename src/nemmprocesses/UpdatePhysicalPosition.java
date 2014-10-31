@@ -68,7 +68,7 @@ public static void updateAllAgentPositions() {
 	//is for splitting the volume sold or bought which cannot be bought all because it not enough on the other side of the market. The only problem below are the cases where the access volume
 	// (the volume which has a price that means accepted, but the volume on the other side is limited) is larger than the volume bought or sold at the market price, so that dropping a share of the
 	// highest priced bid on the access side is not enough to balance the market. For now this is not taken care of. 
-	public static SoldInSTM returnsoldvolume(ArrayList<BidOffer> aso, double marketprice, double shareoflastoffersold) { //Method calculation the outcome of a selloffers array offered in a STM market
+/*	public static SoldInSTM returnsoldvolume(ArrayList<BidOffer> aso, double marketprice, double shareoflastoffersold) { //Method calculation the outcome of a selloffers array offered in a STM market
 		SoldInSTM ret = new SoldInSTM();
 		double soldcerts = 0;
 		double averageprice = 0;
@@ -133,7 +133,7 @@ public static void updateAllAgentPositions() {
 		return ret;
 		}
 	}
-	
+*/	
 	//Method that runs demand and production and adds this to the agents demand, production and physical position.
 /*public static void runproduction() {
 	

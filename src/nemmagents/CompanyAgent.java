@@ -185,6 +185,26 @@ public class CompanyAgent extends ParentAgent {
 			lasttickproduction = volProd;
 			lasttickdemand = -volDemand; // it expects demand to be negative
 		}
+		public double getSoldVolume() {
+			// Calculates and returns the volume sold in the last market round
+			double volSold = 0.0; 
+			if (beststrategy.getAgentsSellOffers() != null) {
+				 for (BidOffer m : beststrategy.getAgentsSellOffers()) {
+					 volSold = volSold + m.getCertVolume()*m.getShareCleared();
+				 }	 
+			 }
+			return volSold;
+		}
+		public double getBoughtVolume() {
+			// Calculates and returns the volume bought in the last market round
+			double volBought = 0.0;
+			 if (beststrategy.getAgentsBuyOffers() != null) {
+				 for (BidOffer m : beststrategy.getAgentsBuyOffers()) {
+					 volBought = volBought + m.getCertVolume()*m.getShareCleared();
+				 }
+			 } 
+			 return volBought;
+		}
 		 public void updateAgentPositions() {
 			 // Updates following market transactions, plant production and power sales
 			 // This occurs at the end of the tick (as the certificates do not accrue
@@ -195,19 +215,8 @@ public class CompanyAgent extends ParentAgent {
 			 double volDemand = 0.0;
 			 double priceDelta = 0.0;
 			 // Market transactions
-			 if (beststrategy.getAgentsSellOffers() != null) {
-				 for (BidOffer m : beststrategy.getAgentsSellOffers()) {
-					 if(m == null) {
-						 volSold = 1;
-					 }
-					 volSold = volSold + m.getCertVolume()*m.getShareCleared();
-				 }	 
-			 }
-			 if (beststrategy.getAgentsBuyOffers() != null) {
-				 for (BidOffer m : beststrategy.getAgentsBuyOffers()) {
-					 volBought = volBought + m.getCertVolume()*m.getShareCleared();
-				 }
-			 } 
+			 volSold = getSoldVolume();
+			 volBought = getBoughtVolume();
 			 // Production
 			if (myPowerPlants != null) {
 				for (PowerPlant PP : myPowerPlants) { 

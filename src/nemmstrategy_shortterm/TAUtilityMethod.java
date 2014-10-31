@@ -34,8 +34,10 @@ public class TAUtilityMethod extends GenericUtilityMethod{
 		double ret;
 		double soldcert;
 		double boughtcert;
-		soldcert = UpdatePhysicalPosition.returnsoldvolume(s, marketprice, shareofmarginaltoffersold).getSoldInSTMcert();
-		boughtcert = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMcert();
+		soldcert = this.getmyAgent().getSoldVolume();
+		boughtcert = this.getmyAgent().getBoughtVolume();
+//		soldcert = UpdatePhysicalPosition.returnsoldvolume(s, marketprice, shareofmarginaltoffersold).getSoldInSTMcert();
+//		boughtcert = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMcert();
 		ret = boughtcert + soldcert; //Maximize volume.
 		return ret;}
 }
