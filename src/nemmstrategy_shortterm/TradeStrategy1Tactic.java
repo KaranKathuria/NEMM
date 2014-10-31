@@ -26,12 +26,12 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	private double maxlongpos;
 	private double maxshortpos;
 	private double porfoliocapitalexitlimit;
-	private SellOffer sellofferone;
-	private SellOffer selloffertwo;
-	private BuyOffer buyofferone;
-	private BuyOffer buyoffertwo;
-	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 
-	private ArrayList<BuyOffer> tacticbuyoffers = new ArrayList<BuyOffer>(); // This tactics buyoffers.
+	private BidOffer sellofferone;
+	private BidOffer selloffertwo;
+	private BidOffer buyofferone;
+	private BidOffer buyoffertwo;
+	private ArrayList<BidOffer> tacticselloffers = new ArrayList<BidOffer>(); //This tactics selloffers. 
+	private ArrayList<BidOffer> tacticbuyoffers = new ArrayList<BidOffer>(); // This tactics buyoffers.
 
 	//Default constructor
 	TradeStrategy1Tactic() {}
@@ -46,43 +46,43 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	}
 	
 	//The buy and sell offer of these tactics are simply creating two buyoffers and two selloffers according to a random discount, premium and a share. 
-	private SellOffer creatSellOfferone(double expectedprice, double physicalposition) {
-		SellOffer ret = new SellOffer();
-		ret.setsellofferprice((1+premium)*expectedprice); 
-		ret.setselloffervol(400);//For now, they always buy or sell 1000 units, but they cannot go short. 
+	private BidOffer creatSellOfferone(double expectedprice, double physicalposition) {
+		BidOffer ret = new BidOffer();
+		ret.setPrice((1+premium)*expectedprice); 
+		ret.setCertVolume(400.0);//For now, they always buy or sell 1000 units, but they cannot go short. 
 		if (physicalposition < maxshortpos+(400)) {
-			ret = null;
+			ret.setCertVolume(0.0);;
 		}
 
 		return ret;
 		}
 	
-	private SellOffer creatSellOffertwo(double expectedprice, double physicalposition) {
-		SellOffer ret = new SellOffer();
-		ret.setsellofferprice((1+(premium/2))*expectedprice); 
-		ret.setselloffervol(400);//For now, they always buy or sell 200 units, but they cannot go short. 
+	private BidOffer creatSellOffertwo(double expectedprice, double physicalposition) {
+		BidOffer ret = new BidOffer();
+		ret.setPrice((1+(premium/2))*expectedprice); 
+		ret.setCertVolume(400);//For now, they always buy or sell 200 units, but they cannot go short. 
 		if (physicalposition < maxshortpos+(800)) { //As there are two selloffers.
-			ret = null;
+			ret.setCertVolume(0.0);;
 		}
 		return ret;
 		}
 	
-	private BuyOffer creatBuyOfferone(double expectedprice, double physicalposition) {
-		BuyOffer ret = new BuyOffer();
-		ret.setbuyoffervol(400); //int in order to only sell integer values of certs.
-		ret.setbuyofferprice((1-discount)*expectedprice); 
+	private BidOffer creatBuyOfferone(double expectedprice, double physicalposition) {
+		BidOffer ret = new BidOffer();
+		ret.setCertVolume(400); //int in order to only sell integer values of certs.
+		ret.setPrice((1-discount)*expectedprice); 
 		if (physicalposition > maxlongpos-(400)) {
-		ret = null; //If the physical position is larger than maximum physical position than you cannot by more. 
+		ret.setCertVolume(0.0);; //If the physical position is larger than maximum physical position than you cannot by more. 
 		} 
 		return ret;
 		}
 	
-	private BuyOffer creatBuyOffertwo(double expectedprice, double physicalposition) {
-		BuyOffer ret = new BuyOffer();
-		ret.setbuyoffervol(400); //int in order to only sell integer values of certs.
-		ret.setbuyofferprice((1-(discount/2))*expectedprice); 
+	private BidOffer creatBuyOffertwo(double expectedprice, double physicalposition) {
+		BidOffer ret = new BidOffer();
+		ret.setCertVolume(400); //int in order to only sell integer values of certs.
+		ret.setPrice((1-(discount/2))*expectedprice); 
 		if (physicalposition > maxlongpos-(800)) { //400 as its two.
-		ret = null; //If the physical position is larger than maximum physical position than you cannot by more. 
+		ret.setCertVolume(0.0); //If the physical position is larger than maximum physical position than you cannot by more. 
 		} return ret;
 		}
 	
@@ -137,22 +137,22 @@ public class TradeStrategy1Tactic extends GenericTactic {
 	// --End GJB Added
 
 	
-	public SellOffer getsellofferone() {
+	public BidOffer getsellofferone() {
 		return sellofferone;}
 	
-	public SellOffer getselloffertwo() {
+	public BidOffer getselloffertwo() {
 		return selloffertwo;}
 	
-	public BuyOffer getbuyofferone() {
+	public BidOffer getbuyofferone() {
 		return buyofferone;}
 	
-	public BuyOffer getbuyoffertwo() {
+	public BidOffer getbuyoffertwo() {
 		return buyoffertwo;}
 	
-	public ArrayList<SellOffer> gettacticselloffers() {
+	public ArrayList<BidOffer> gettacticselloffers() {
 		return tacticselloffers;}
 	
-	public ArrayList<BuyOffer> gettacticbuyoffers() {
+	public ArrayList<BidOffer> gettacticbuyoffers() {
 		return tacticbuyoffers;}
 	
 	

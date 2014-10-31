@@ -19,8 +19,8 @@ import nemmcommons.RandomWrapper;
 
 public class BuyStrategy1 extends GenericStrategy {
 	
-	private BuyOffer buyofferone;
-	private BuyOffer buyoffertwo;
+	private BidOffer buyofferone;
+	private BidOffer buyoffertwo;
 	
 	//Constructor for OPABidstrategy adding the four offers to arraylist of offers.
 	public BuyStrategy1() {
@@ -45,8 +45,8 @@ public class BuyStrategy1 extends GenericStrategy {
 		
 		besttactic = alltactics.get(RandomHelper.nextIntFromTo(0,numberoftactics-1));
 		
-		buyofferone = new BuyOffer();
-		buyoffertwo = new BuyOffer();
+		buyofferone = new BidOffer();
+		buyoffertwo = new BidOffer();
 		agentsbuyoffers.add(buyofferone);
 		agentsbuyoffers.add(buyoffertwo);
 

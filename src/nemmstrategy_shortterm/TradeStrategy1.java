@@ -22,10 +22,10 @@ public class TradeStrategy1 extends GenericStrategy {
 	//A simple buy strategy creating one sell offer and one buy offer. Buying at a discount and selling at a premium around the expected price. 
 	
 	
-	private SellOffer sellofferone;
-	private SellOffer selloffertwo;
-	private BuyOffer buyofferone;
-	private BuyOffer buyoffertwo;
+	private BidOffer sellofferone;
+	private BidOffer selloffertwo;
+	private BidOffer buyofferone;
+	private BidOffer buyoffertwo;
 	private double maximumshortpos; //Number of certs a trader using this strategy can be short
 	private double maximumlongpos;	//Number of certs a trader using this strategy can be long
 	
@@ -56,10 +56,10 @@ public class TradeStrategy1 extends GenericStrategy {
 		
 		besttactic = alltactics.get(RandomHelper.nextIntFromTo(0, numberoftactics-1)); //Randomly selects the initial best strategy.
 		
-		sellofferone = new SellOffer();
-		selloffertwo = new SellOffer();
-		buyofferone = new BuyOffer();
-		buyoffertwo = new BuyOffer();
+		sellofferone = new BidOffer();
+		selloffertwo = new BidOffer();
+		buyofferone = new BidOffer();
+		buyoffertwo = new BidOffer();
 		agentsselloffers.add(sellofferone);
 		agentsselloffers.add(selloffertwo);
 		agentsbuyoffers.add(buyofferone);

@@ -30,7 +30,7 @@ public class TAUtilityMethod extends GenericUtilityMethod{
 	}
 	
 	//Calculates the traders tactic utilities. Overrides the GenericUtilityMethods methods. 
-	public Double calculateutility(double marketprice, ArrayList<BuyOffer> b, ArrayList<SellOffer> s, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
+	public Double calculateutility(double marketprice, ArrayList<BidOffer> b, ArrayList<BidOffer> s, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
 		double ret;
 		double soldcert;
 		double boughtcert;

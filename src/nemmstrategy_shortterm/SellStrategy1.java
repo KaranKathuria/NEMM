@@ -22,8 +22,8 @@ public class SellStrategy1 extends GenericStrategy {
 	//A simple buy strategy creating two sell offers. One with a discount and one without.  
 	
 	
-	private SellOffer sellofferone;
-	private SellOffer selloffertwo;
+	private BidOffer sellofferone;
+	private BidOffer selloffertwo;
 	
 	
 	//Constructor for OPABidstrategy adding the four offers to arraylist of offers.
