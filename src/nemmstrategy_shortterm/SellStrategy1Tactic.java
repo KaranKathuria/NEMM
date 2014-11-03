@@ -38,9 +38,9 @@ public class SellStrategy1Tactic extends GenericTactic {
 	private double paramMustSellShare;
 	private double paramRestVolPriceMult;
 	private double paramMustSellPriceMult;
-	private SellOffer offerMustSellVol;
-	private SellOffer offerRestVol;
-	private ArrayList<SellOffer> tacticselloffers = new ArrayList<SellOffer>(); //This tactics selloffers. 	
+	private BidOffer offerMustSellVol;
+	private BidOffer offerRestVol;
+	private ArrayList<BidOffer> tacticselloffers = new ArrayList<BidOffer>(); //This tactics selloffers. 	
 	private ArrayList<double[]> curUtility; // stores the utilities for the latest offers
 
 // ---- CONSTRUCTORS
@@ -74,13 +74,13 @@ public class SellStrategy1Tactic extends GenericTactic {
 	
 // ---- GETS & SETS	
 	
-	public SellOffer getsellofferone() {
+	public BidOffer getsellofferone() {
 		return offerMustSellVol;}
 	
-	public SellOffer getselloffertwo() {
+	public BidOffer getselloffertwo() {
 		return offerRestVol;}
 	
-	public ArrayList<SellOffer> gettacticselloffers() {
+	public ArrayList<BidOffer> gettacticselloffers() {
 		return tacticselloffers;}
 	
 // ---- UPDATE THE TACTIC SELL OFFERS	
@@ -101,7 +101,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		tacticselloffers.clear();
 		// Calculate the sell offers
 		offerMustSellVol = createMustSellVolOffer(expectedprice,physicalnetposition,lasttickproduction);
-		double mustsellvol = offerMustSellVol.getnumberofcert();
+		double mustsellvol = offerMustSellVol.getCertVolume();
 		offerRestVol = createRestVolOffer(expectedprice,physicalnetposition, lasttickproduction, mustsellvol);
 		// Store the sell offers in the tacticselloffers arraylist
 		tacticselloffers.add(offerMustSellVol);
@@ -123,32 +123,32 @@ public class SellStrategy1Tactic extends GenericTactic {
 		
 	}
 	
-	private SellOffer createMustSellVolOffer(double expectedprice, double physicalposition,double lasttickproduction) {
-		SellOffer ret = new SellOffer();
+	private BidOffer createMustSellVolOffer(double expectedprice, double physicalposition,double lasttickproduction) {
+		BidOffer ret = new BidOffer();
 		// Must sell is set to the maximum of the must sell share * last ticks production, and the difference between
 		// the physical position and the desired/target max physical position
 		if (lasttickproduction == 0) {
-			ret.setselloffervol(0.0);
+			ret.setCertVolume(0.0);
 		}
 		else {
-			ret.setselloffervol(Math.max(paramMustSellShare*lasttickproduction,physicalposition-maxppvolume)); //equals must sell			
+			ret.setCertVolume(Math.max(paramMustSellShare*lasttickproduction,physicalposition-maxppvolume)); //equals must sell			
 		}
-		ret.setsellofferprice(paramMustSellPriceMult*expectedprice);
+		ret.setPrice(paramMustSellPriceMult*expectedprice);
 		
 		return ret;
 		}
 		
 		//In case of no last production the must sell volume is zero, but we still have a variable volume!
-	private SellOffer createRestVolOffer(double expectedprice, double physicalposition,double lasttickproduction, double mustsell) {
+	private BidOffer createRestVolOffer(double expectedprice, double physicalposition,double lasttickproduction, double mustsell) {
 		// Should replace this with using the already calculated must sell
-		SellOffer ret = new SellOffer();
+		BidOffer ret = new BidOffer();
 		if (physicalposition == 0) {
-			ret.setselloffervol(0.0);
+			ret.setCertVolume(0.0);
 		} 
 		else {
-			ret.setselloffervol(Math.max(0.0,Math.min(maxoffervolume-mustsell,physicalposition-mustsell))); //rest of the monthly production sold at expected price.			
+			ret.setCertVolume(Math.max(0.0,Math.min(maxoffervolume-mustsell,physicalposition-mustsell))); //rest of the monthly production sold at expected price.			
 		}
-		ret.setsellofferprice(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice)); //Prices not symmetric around expected price with must of the volume tried sold at at premium (1+discount)*expt.
+		ret.setPrice(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice)); //Prices not symmetric around expected price with must of the volume tried sold at at premium (1+discount)*expt.
 		return ret;
 		}
 	
@@ -219,10 +219,10 @@ public class SellStrategy1Tactic extends GenericTactic {
 		for(i = 0; i<numOffers; i++) {
 			if(tacticselloffers.get(i) != null) {
 				if(curUtility.get(i)!=null){
-					tacticselloffers.get(i).setOfferUtility(curUtility.get(i).clone());
+					tacticselloffers.get(i).setUtility(curUtility.get(i).clone());
 				}
 				else {
-					tacticselloffers.get(i).setOfferUtility(null);
+					tacticselloffers.get(i).setUtility(null);
 				}
 					
 			}
@@ -231,7 +231,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 	
 // ---- PARAMETER LEARNING
 	
-	private void learnParameters() {
+	public void learnParameters() {
 		// Call the appropriate learning method
 		// if no learning, the method is 0 and nothing is called
 		if (paramLearningMethod == 1) {
@@ -253,7 +253,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		
 		//Learning the adjustment of price multiplier
 		double deltapricemup;
-		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && (Math.abs(offerRestVol.getSellOfferprice() - ShortTermMarket.getcurrentmarketprice())/(ShortTermMarket.getcurrentmarketprice())) > 0.11) {
+		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && (Math.abs(offerRestVol.getPrice() - ShortTermMarket.getcurrentmarketprice())/(ShortTermMarket.getcurrentmarketprice())) > 0.11) {
 			 deltapricemup = 0.1;
 			}
 			else {
@@ -262,7 +262,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		
 		
 		//Exeption if the price offered last time is lower than close to the floor-price. 
-		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && offerRestVol.getSellOfferprice() - (deltapricemup*offerRestVol.getSellOfferprice()) <= floorroofprice) {
+		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && offerRestVol.getPrice() - (deltapricemup*offerRestVol.getPrice()) <= floorroofprice) {
 			paramRestVolPriceMult = paramRestVolPriceMult + deltapricemup;
 		} //Could cause failure if the price start below floorroofprice
 		else {

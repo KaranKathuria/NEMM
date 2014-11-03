@@ -22,12 +22,12 @@ public class GenericUtilityMethod {
 	public GenericUtilityMethod() {}
 	
 	//Method for scoring utility to be overwritten by subclass methods with same name. Hence this is never used.
-	public Double calculateutility(double marketprice, ArrayList<BuyOffer> b, ArrayList<SellOffer> s, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
+	public Double calculateutility(double marketprice, ArrayList<BidOffer> b, ArrayList<BidOffer> s, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
 		double ret = 1000;
 		return ret;
 	}
 	
-	public ArrayList<double[]> CalcUtilityWithHistory(double marketprice, ArrayList<SellOffer> s, double shareofmarginaltoffersold) {
+	public ArrayList<double[]> CalcUtilityWithHistory(double marketprice, ArrayList<BidOffer> s, double shareofmarginaltoffersold) {
 		ArrayList<double[]> retList = new ArrayList<double[]>();
 		double[] tempArray = new double[]{1.0,2.0,3.0};	
 		retList.add(tempArray);

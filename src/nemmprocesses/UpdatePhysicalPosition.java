@@ -25,18 +25,31 @@ public class UpdatePhysicalPosition {
 	
 public UpdatePhysicalPosition(){};
 	
+public static void updateAllAgentPositions() {
+
+	for (final ActiveAgent agent : CommonMethods.getAAgentList()) {
+		agent.updateAgentPositions();
+	}
+}
+
 //This method could be generalized to just iterate over all AAlist, and used a generic but overriden "postmupdate" method).
-public static void markettransactions() {
+/*public static void markettransactions() {
+	double totsold=0.0;
+	double totbought = 0.0;
 	for (final ActiveAgent agent : CommonMethods.getPAgentList()) {
 		double certssold = returnsoldvolume(agent.getbeststrategy().getAgentsSellOffers(),ShortTermMarket.getcurrentmarketprice(), ShortTermMarket.getshareofmarignaloffersold()).getSoldInSTMcert();
 		double certsbought = 0; // GenericStrategy.returnboughtvolume(agent.getbeststrategy().getAgentsBuyOffers(),currentmarketprice, shareofmarginalbuyofferbought).getBoughtInSTMnumberofcert();
 		agent.poststmupdate(certssold, certsbought);
+		totsold = totsold + certssold;
+		totbought = totbought + certsbought;
 	}
 	
 	for (final ActiveAgent agent : CommonMethods.getOPAgentList()) {
 		double certssold = 0; //GenericStrategy.returnsoldvolume(agent.getbeststrategy().getAgentsSellOffers(),currentmarketprice, shareofmarignalselloffersold).getSoldInSTMcert();
 		double certsbought = returnboughtvolume(agent.getbeststrategy().getAgentsBuyOffers(),ShortTermMarket.getcurrentmarketprice(), ShortTermMarket.getshareofmarignalofferbought()).getBoughtInSTMcert();
 		agent.poststmupdate(certssold, certsbought);
+		totsold = totsold + certssold;
+		totbought = totbought + certsbought;
 	}
 	
 	for (final ActiveAgent agent : CommonMethods.getTAgentList()) {
@@ -44,15 +57,18 @@ public static void markettransactions() {
 		double certsbought = returnboughtvolume(agent.getbeststrategy().getAgentsBuyOffers(),ShortTermMarket.getcurrentmarketprice(), ShortTermMarket.getshareofmarignalofferbought()).getBoughtInSTMcert();
 		//double deltacapitalbase = (certssold-certsbought)*ShortTermMarket.getcurrentmarketprice(); No need
 		agent.poststmupdate(certssold, certsbought);
+		totsold = totsold + certssold;
+		totbought = totbought + certsbought;
 	}
-
-}
+	int tmp=1;
+	tmp=2;
+} */
 
 //The following to methods estimates the result of a buy or sell offer array in the market. Hence it takes inn the offers, the outcome price and a "shareoflastoffer sold/bought. THe latter
 	//is for splitting the volume sold or bought which cannot be bought all because it not enough on the other side of the market. The only problem below are the cases where the access volume
 	// (the volume which has a price that means accepted, but the volume on the other side is limited) is larger than the volume bought or sold at the market price, so that dropping a share of the
 	// highest priced bid on the access side is not enough to balance the market. For now this is not taken care of. 
-	public static SoldInSTM returnsoldvolume(ArrayList<SellOffer> aso, double marketprice, double shareoflastoffersold) { //Method calculation the outcome of a selloffers array offered in a STM market
+/*	public static SoldInSTM returnsoldvolume(ArrayList<BidOffer> aso, double marketprice, double shareoflastoffersold) { //Method calculation the outcome of a selloffers array offered in a STM market
 		SoldInSTM ret = new SoldInSTM();
 		double soldcerts = 0;
 		double averageprice = 0;
@@ -60,18 +76,18 @@ public static void markettransactions() {
 		double tempvol = 0;
 		
 		aso.removeAll(Collections.singleton(null));
-		for (SellOffer s : aso) {
-			if (s.getSellOfferprice() <= (marketprice-ShortTermMarket.getpricestep())) { //In this case the offers was accepted in the market
-			averageprice = ((averageprice*soldcerts)+(s.getnumberofcert()*s.getSellOfferprice()))/(soldcerts+s.getnumberofcert()); //The new average price
-			soldcerts = soldcerts + s.getnumberofcert();	//Total number of certs sold is updated
+		for (BidOffer s : aso) {
+			if (s.getPrice() <= (marketprice-ShortTermMarket.getpricestep())) { //In this case the offers was accepted in the market
+			averageprice = ((averageprice*soldcerts)+(s.getCertVolume()*s.getPrice()))/(soldcerts+s.getCertVolume()); //The new average price
+			soldcerts = soldcerts + s.getCertVolume();	//Total number of certs sold is updated
 			}
-			if (s.getSellOfferprice() > marketprice-ShortTermMarket.getpricestep() && s.getSellOfferprice() <= marketprice) {
-				averageprice = ((averageprice*soldcerts)+(s.getnumberofcert()*s.getSellOfferprice()*shareoflastoffersold))/(soldcerts+(s.getnumberofcert()*shareoflastoffersold)); //The new average price
-				soldcerts = soldcerts + (s.getnumberofcert()*shareoflastoffersold);	//Total number of certs sold is updated
+			if (s.getPrice() > marketprice-ShortTermMarket.getpricestep() && s.getPrice() <= marketprice) {
+				averageprice = ((averageprice*soldcerts)+(s.getCertVolume()*s.getPrice()*shareoflastoffersold))/(soldcerts+(s.getCertVolume()*shareoflastoffersold)); //The new average price
+				soldcerts = soldcerts + (s.getCertVolume()*shareoflastoffersold);	//Total number of certs sold is updated
 			}
-			if (s.getSellOfferprice() > marketprice) {
-				avragepricenotaccepted = ((avragepricenotaccepted*tempvol) + (s.getSellOfferprice() * s.getnumberofcert())) / (tempvol + s.getnumberofcert());
-				tempvol = tempvol + s.getnumberofcert();
+			if (s.getPrice() > marketprice) {
+				avragepricenotaccepted = ((avragepricenotaccepted*tempvol) + (s.getPrice() * s.getCertVolume())) / (tempvol + s.getCertVolume());
+				tempvol = tempvol + s.getCertVolume();
 			}
 				
 		}
@@ -81,7 +97,7 @@ public static void markettransactions() {
 		return ret; //If the bids in selloffers are null, then this would return 0.0 for the values. This is okey for the market transactions but must be handled in the utiltities. 
 	}
 	
-	public static BoughtInSTM returnboughtvolume(ArrayList<BuyOffer> abo, double marketprice, double shareoflastofferbought) { //Method calculation the outcome of a selloffers array offered in a STM market
+	public static BoughtInSTM returnboughtvolume(ArrayList<BidOffer> abo, double marketprice, double shareoflastofferbought) { //Method calculation the outcome of a selloffers array offered in a STM market
 		BoughtInSTM ret = new BoughtInSTM();
 		if (marketprice == 0) { //All would have bought, but the price is zero.
 			ret.averageprice = 0.0;
@@ -96,18 +112,18 @@ public static void markettransactions() {
 		double tempvol = 0;
 		
 		abo.removeAll(Collections.singleton(null)); //Have no idea why there are null-offers in the buyoffers list, but this bug is temporarly corrected her.
-		for (BuyOffer b : abo) {
-			if (b.getBuyOfferprice() >= (marketprice+ShortTermMarket.getpricestep())) { //In this case the offers was accepted in the market
-			averageprice = ((averageprice*boughtcerts)+(b.getnumberofcert()*b.getBuyOfferprice()))/(boughtcerts+b.getnumberofcert()); //The new average price
-			boughtcerts = boughtcerts + b.getnumberofcert();	//Total number of certs sold is updated
+		for (BidOffer b : abo) {
+			if (b.getPrice() >= (marketprice+ShortTermMarket.getpricestep())) { //In this case the offers was accepted in the market
+			averageprice = ((averageprice*boughtcerts)+(b.getCertVolume()*b.getPrice()))/(boughtcerts+b.getCertVolume()); //The new average price
+			boughtcerts = boughtcerts + b.getCertVolume();	//Total number of certs sold is updated
 			}
-			if (b.getBuyOfferprice() >= (marketprice) && b.getBuyOfferprice() < (marketprice+ShortTermMarket.getpricestep())) {
-				averageprice = ((averageprice*boughtcerts)+(b.getnumberofcert()*b.getBuyOfferprice()*shareoflastofferbought))/(boughtcerts+(b.getnumberofcert()*shareoflastofferbought)); //The new average price
-				boughtcerts = boughtcerts + (b.getnumberofcert()*shareoflastofferbought);	//Total number of certs sold is updated
+			if (b.getPrice() >= (marketprice) && b.getPrice() < (marketprice+ShortTermMarket.getpricestep())) {
+				averageprice = ((averageprice*boughtcerts)+(b.getCertVolume()*b.getPrice()*shareoflastofferbought))/(boughtcerts+(b.getCertVolume()*shareoflastofferbought)); //The new average price
+				boughtcerts = boughtcerts + (b.getCertVolume()*shareoflastofferbought);	//Total number of certs sold is updated
 			}
-			if (b.getBuyOfferprice() < marketprice) {
-				avragepricenotaccepted = ((avragepricenotaccepted*tempvol) + (b.getBuyOfferprice() * b.getnumberofcert())) / (tempvol + b.getnumberofcert());
-				tempvol = tempvol + b.getnumberofcert();
+			if (b.getPrice() < marketprice) {
+				avragepricenotaccepted = ((avragepricenotaccepted*tempvol) + (b.getPrice() * b.getCertVolume())) / (tempvol + b.getCertVolume());
+				tempvol = tempvol + b.getCertVolume();
 			}
 			
 		}
@@ -117,9 +133,9 @@ public static void markettransactions() {
 		return ret;
 		}
 	}
-	
+*/	
 	//Method that runs demand and production and adds this to the agents demand, production and physical position.
-public static void runproduction() {
+/*public static void runproduction() {
 	
 	double testsum=0;
 	for (ActiveAgent AA : CommonMethods.getPAgentList()) { //For all Companies
@@ -145,7 +161,7 @@ public static void updatedemand() {
 		testsum = testsum + -tempdemand;
 
 	}
-}
+} */
 
 }
 

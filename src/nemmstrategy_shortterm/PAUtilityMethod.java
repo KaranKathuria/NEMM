@@ -40,7 +40,7 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 		}
 	}
 
-	public ArrayList<double[]> CalcUtilityWithHistory(double marketprice, ArrayList<SellOffer> s, double shareofmarginaltoffersold) {
+	public ArrayList<double[]> CalcUtilityWithHistory(double marketprice, ArrayList<BidOffer> s, double shareofmarginaltoffersold) {
 		
 		ArrayList<double[]> retList = new ArrayList<double[]>();
 		double retVal = 0;
@@ -69,7 +69,7 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 	}	
 	
 	
-	public Double calculateutility(double marketprice, ArrayList<BuyOffer> b, ArrayList<SellOffer> s, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
+	public Double calculateutility(double marketprice, ArrayList<BidOffer> b, ArrayList<BidOffer> s, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
 	
 		double retVal = 0;
 		switch (flagUtilityFunction){
@@ -84,7 +84,7 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 		return retVal;
 	}
 	
-	private ArrayList<double[]> UtilFctn_ExpReturn(double priceSpot, ArrayList<SellOffer> s, double shareofmarginaltoffersold) {
+	private ArrayList<double[]> UtilFctn_ExpReturn(double priceSpot, ArrayList<BidOffer> s, double shareofmarginaltoffersold) {
 
 		double curProfit = 0;
 		double curActivation = 0;
@@ -107,13 +107,13 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 				
 				// Initialise the utilities to be the previous values
 				tmpArray = null;
-				if(s.get(i).getOfferUtility()!=null){
-					tmpArray = s.get(i).getOfferUtility().clone();
+				if(s.get(i).getUtility()!=null){
+					tmpArray = s.get(i).getUtility().clone();
 				}				
 				// Calculate the new utility if there was an offer made.
 				// If no offer was made, we just keep the previous utility
-				curOfferVol = s.get(i).getnumberofcert(); 
-				curOfferPrice = s.get(i).getSellOfferprice();
+				curOfferVol = s.get(i).getCertVolume(); 
+				curOfferPrice = s.get(i).getCertVolume();
 				if (curOfferVol > 0) {
 					// Calculate the volume sold from the offer if an offer was made (vol >0)
 					if (curOfferPrice<priceSpot){
@@ -163,7 +163,7 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 	}
 	
 	//Takes in the given values and calculates the producers utility just based on how much of the variable sell offers are accepted in the short term market.
-	private Double UtilFctn_VolOnly(double marketprice, ArrayList<SellOffer> s, double shareofmarginaltoffersold) {
+	private Double UtilFctn_VolOnly(double marketprice, ArrayList<BidOffer> s, double shareofmarginaltoffersold) {
 		double ret = 0.5;
 		double variableoffervolume = 0; //Offered volume at variable price. This is the sum of all offers but not the must sell offer (lowest priced offer)
 		double totalsoldcerts = 0;	//Total number of certs sold
@@ -174,14 +174,15 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 //		if (s.size() < 2) { //In this case there is no variable bid or there is no bids at all (which could be because the PA has no volume to offer) Then utility is <0,1> so prices are unchanged
 //			return ret;} //Just any number between 0 and 1 is fine as this would imply that the tactic is unchanged.
 			
-		Collections.sort(s, new CommonMethods.customselloffercomparator()); //Sorts offers form lowest to highest price. The first bid is hence the must sell bid
+//		Collections.sort(s, new CommonMethods.customselloffercomparator()); //Sorts offers form lowest to highest price. The first bid is hence the must sell bid
+		Collections.sort(s); //Sorts offers form lowest to highest price. The first bid is hence the must sell bid
 		
 		for (int i = 1; i < s.size(); ++i) { //Skips the first bid as this is must sell bid
-			variableoffervolume = variableoffervolume + s.get(i).getnumberofcert(); //Volume of variable offers
+			variableoffervolume = variableoffervolume + s.get(i).getCertVolume(); //Volume of variable offers
 		}
-		
-		totalsoldcerts = UpdatePhysicalPosition.returnsoldvolume(s, marketprice, shareofmarginaltoffersold).getSoldInSTMcert();
-		variablesoldtcerts = totalsoldcerts - s.get(0).getnumberofcert(); //Minus the must buy which would always be the first offer to be bought
+		totalsoldcerts = this.getmyAgent().getSoldVolume();
+//		totalsoldcerts = UpdatePhysicalPosition.returnsoldvolume(s, marketprice, shareofmarginaltoffersold).getSoldInSTMcert();
+		variablesoldtcerts = totalsoldcerts - s.get(0).getCertVolume(); //Minus the must buy which would always be the first offer to be bought
 		if (variableoffervolume>0){ 
 			ret = (variablesoldtcerts/variableoffervolume); //Should always be a number [0,1]
 			if (ret > 1 && ret < 0) {

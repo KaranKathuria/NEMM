@@ -24,8 +24,8 @@ public abstract class GenericStrategy {
 	
 	//Variables. Notice that the generic strategy only contains the array of buy and sell offers and not the buy or sell offers itself because the number of these vary with the strategy. 
 	protected ActiveAgent myAgent;
-	protected ArrayList<BuyOffer> agentsbuyoffers = new ArrayList<BuyOffer>();
-	protected ArrayList<SellOffer> agentsselloffers = new ArrayList<SellOffer>();
+	protected ArrayList<BidOffer> agentsbuyoffers = new ArrayList<BidOffer>();
+	protected ArrayList<BidOffer> agentsselloffers = new ArrayList<BidOffer>();
 	protected int numberoftactics;
 	protected ArrayList<Double> strategyutilityscore = new ArrayList<Double>();
 	protected String strategyname; 
@@ -73,11 +73,11 @@ public abstract class GenericStrategy {
 			
 // ---- GETS & SETS	
 	
-	public ArrayList<BuyOffer> getAgentsBuyOffers() {
+	public ArrayList<BidOffer> getAgentsBuyOffers() {
 		return agentsbuyoffers;
 	}
 	
-	public ArrayList<SellOffer> getAgentsSellOffers() {
+	public ArrayList<BidOffer> getAgentsSellOffers() {
 		return agentsselloffers;}
 	
 	public void setmyAgent(ActiveAgent aa) {
@@ -104,12 +104,16 @@ public abstract class GenericStrategy {
 	//  - the strategy's best tactic (and utility)
 	
 	public void updateBidsAndOffers() {};
-	public void updateUtilitiesAndParams() { 
+	
+	public void updateStrategy() { 
+		// First update all the tactics using their update function
 		for (GenericTactic tactic : alltactics) { 
-			// Update the tactic
 			tactic.updateTactic();
 		}
+		// Then update the best tactic
+		updateBestTactic();
 	}
+	
 	public void updateBestTacticOLD() {
 		// Loop through the tactics and find the one with the highest utility
 		double candBestUtilityScore = -10000000000000.0;

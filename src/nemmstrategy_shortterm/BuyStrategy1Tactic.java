@@ -24,9 +24,9 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	 
 	private double shareboughtatdiscount;
 	private double pricemultiplier;
-	private BuyOffer buyofferone;
-	private BuyOffer buyoffertwo;
-	private ArrayList<BuyOffer> tacticbuyoffers = new ArrayList<BuyOffer>();
+	private BidOffer buyofferone;
+	private BidOffer buyoffertwo;
+	private ArrayList<BidOffer> tacticbuyoffers = new ArrayList<BidOffer>();
 	
 
 	//Default constructor. Not in use. 
@@ -43,31 +43,31 @@ public class BuyStrategy1Tactic extends GenericTactic {
 
 	}
 	
-	private BuyOffer creatBuyOfferone(double expectedprice, double physicalposition, double lasttickdemand) { //physicalpos and lasttickdem are negatie number.
-		BuyOffer ret = new BuyOffer();
+	private BidOffer creatBuyOfferone(double expectedprice, double physicalposition, double lasttickdemand) { //physicalpos and lasttickdem are negatie number.
+		BidOffer ret = new BidOffer();
 		//equals must buy
 		if (lasttickdemand == 0) {
-			ret.setbuyoffervol(0.0);
+			ret.setCertVolume(0.0);
 		}
 		else {
-			ret.setbuyoffervol(Math.max((shareboughtatdiscount*(-lasttickdemand)), (-physicalposition) - (-maxppvolume))); //-As the phisical position of buyer would in most cases be negative, but as the offer only has positive numbers. 
+			ret.setCertVolume(Math.max((shareboughtatdiscount*(-lasttickdemand)), (-physicalposition) - (-maxppvolume))); //-As the phisical position of buyer would in most cases be negative, but as the offer only has positive numbers. 
 		}
-		ret.setbuyofferprice((1+AllVariables.OPAgentmustbuypremium)*expectedprice); //Given must buy volume price. 
+		ret.setPrice((1+AllVariables.OPAgentmustbuypremium)*expectedprice); //Given must buy volume price. 
 
 		return ret;
 		}
 	
 
-	private BuyOffer creatBuyOffertwo(double expectedprice, double physicalposition,  double lasttickdemand) {////physicalpos and lasttickdem are negatie number. 
-		BuyOffer ret = new BuyOffer();
+	private BidOffer creatBuyOffertwo(double expectedprice, double physicalposition,  double lasttickdemand) {////physicalpos and lasttickdem are negatie number. 
+		BidOffer ret = new BidOffer();
 		double mustbuy = Math.max((shareboughtatdiscount*(-lasttickdemand)), (-physicalposition) - (-maxppvolume));
 		if (physicalposition == 0) {
-			ret.setbuyoffervol(0.0);
+			ret.setCertVolume(0.0);
 		}
 		else {
-			ret.setbuyoffervol(Math.max(0.0,Math.min(-maxoffervolume-mustbuy,-physicalposition-mustbuy))); //rest of the monthly production bought at expected price.
+			ret.setCertVolume(Math.max(0.0,Math.min(-maxoffervolume-mustbuy,-physicalposition-mustbuy))); //rest of the monthly production bought at expected price.
 		}
-		ret.setbuyofferprice(Math.min(expectedprice*pricemultiplier, floorroofprice)); //Most likely that the second offer is at at pricemultiplier. Hence they buy what they dont must, at a pricemultiplier.
+		ret.setPrice(Math.min(expectedprice*pricemultiplier, floorroofprice)); //Most likely that the second offer is at at pricemultiplier. Hence they buy what they dont must, at a pricemultiplier.
 		return ret;
 		}
 	
@@ -118,19 +118,19 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	}
 	// --End GJB Added
 	
-	public BuyOffer getbuyofferone() {
+	public BidOffer getbuyofferone() {
 		return buyofferone;}
 	
-	public BuyOffer getbuyoffertwo() {
+	public BidOffer getbuyoffertwo() {
 		return buyoffertwo;}
 	
-	public ArrayList<BuyOffer> gettacticbuyoffers() {
+	public ArrayList<BidOffer> gettacticbuyoffers() {
 		return tacticbuyoffers;}
 	
 	public ArrayList<HistoricTacticValue> gethistorictacticvalues() {
 		return historictacticvalues;}
 	
-	private void learnParameters() {
+	public void learnParameters() {
 		// Call the appropriate learning method
 		if (paramLearningMethod == 1) {
 			learningMethod1();
@@ -146,7 +146,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		
 		//Learning the adjustment of price multiplier
 		double deltapricemup;
-		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && (Math.abs(buyoffertwo.getBuyOfferprice() - ShortTermMarket.getcurrentmarketprice())/(ShortTermMarket.getcurrentmarketprice())) > 0.11) {
+		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && (Math.abs(buyoffertwo.getPrice() - ShortTermMarket.getcurrentmarketprice())/(ShortTermMarket.getcurrentmarketprice())) > 0.11) {
 		 deltapricemup = 0.1;
 		}
 		else {
@@ -156,20 +156,23 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		
 		
 		//If I reduce price with one step based on the offer price on last tick and the prices I get is lower than floor --> do the opposit.
-		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && buyoffertwo.getBuyOfferprice() + (deltapricemup*buyoffertwo.getBuyOfferprice()) >= floorroofprice) {
+		if (TheEnvironment.theCalendar.getCurrentTick() > 0 && buyoffertwo.getPrice() + (deltapricemup*buyoffertwo.getPrice()) >= floorroofprice) {
 			pricemultiplier = pricemultiplier - deltapricemup;
 		}
 		else {
-		if (tacticutilityscore == 1)
-			pricemultiplier = pricemultiplier - deltapricemup; //reduce price
-		else if (tacticutilityscore == 0) {
-			pricemultiplier = pricemultiplier + deltapricemup; //increase price
+			if (tacticutilityscore == 1)
+				pricemultiplier = pricemultiplier - deltapricemup; //reduce price
+			else if (tacticutilityscore == 0) {
+				pricemultiplier = pricemultiplier + deltapricemup; //increase price
+			}
+			else {
+				//Unchanged
+			}
 		}
-		else {
-			//Unchanged
+		if (myStrategy.myAgent.getID() == 127) {
+			@SuppressWarnings("unused")
+			int tmpA = 1;
 		}
-		}
-		
 	}
 		
 	private void learningMethod2() {

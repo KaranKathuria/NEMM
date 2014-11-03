@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import nemmagents.MarketAnalysisAgent;
 import nemmagents.ParentAgent;
 import nemmprocesses.ShortTermMarket;
+import nemmstrategy_shortterm.BidOffer;
 import nemmstrategy_shortterm.GenericUtilityMethod;
 import nemmstrategy_shortterm.OPAUtilityMethod;
 import nemmstrategy_shortterm.PAUtilityMethod;
@@ -144,6 +145,73 @@ public class CompanyAgent extends ParentAgent {
 		public double getportfoliocapital() {
 			return portfoliocapital;
 		}
+		// ---- GJB ADDED
+		private void updatePortfolioCapital(double mktPriceDelta) {
+			// Update the portfolio's M2M value
+			portfoliocapital = portfoliocapital + (physicalnetposition * mktPriceDelta);			
+		}
+		
+		private void updatePhysicalNetPosition(double volBought, double volSold, double volProd, double volDemand) {
+			physicalnetposition = physicalnetposition + volBought + volProd - volSold - volDemand;
+			lasttickproduction = volProd;
+			lasttickdemand = -volDemand; // it expects demand to be negative
+		}
+		public double getSoldVolume() {
+			// Calculates and returns the volume sold in the last market round
+			double volSold = 0.0; 
+			if (beststrategy.getAgentsSellOffers() != null) {
+				 for (BidOffer m : beststrategy.getAgentsSellOffers()) {
+					 volSold = volSold + m.getCertVolume()*m.getShareCleared();
+				 }	 
+			 }
+			return volSold;
+		}
+		public double getBoughtVolume() {
+			// Calculates and returns the volume bought in the last market round
+			double volBought = 0.0;
+			 if (beststrategy.getAgentsBuyOffers() != null) {
+				 for (BidOffer m : beststrategy.getAgentsBuyOffers()) {
+					 volBought = volBought + m.getCertVolume()*m.getShareCleared();
+				 }
+			 } 
+			 return volBought;
+		}
+		 public void updateAgentPositions() {
+			 // Updates following market transactions, plant production and power sales
+			 // This occurs at the end of the tick (as the certificates do not accrue
+			 // until the production is reported). This is not quite accurate, but ok for now
+			 double volBought = 0.0;
+			 double volSold = 0.0;
+			 double volProd = 0.0;
+			 double volDemand = 0.0;
+			 double priceDelta = 0.0;
+			 // Market transactions
+			 volSold = getSoldVolume();
+			 volBought = getBoughtVolume();
+			 // Production
+			if (myPowerPlants != null) {
+				for (PowerPlant PP : myPowerPlants) { 
+					// Add in the power plant's production for the current tick	
+					volProd = volProd + PP.getProduction();
+				}
+			}
+			 // Demand
+			if (myDemandShares != null) {
+				for (CompanyDemandShare CDS : myDemandShares) { 
+					//Go through all demandshares (which consists of a region and a share. 
+					//Sum the product of that regions demandshare with that regions demand, for current tick.
+					volDemand = volDemand + (CDS.getMyRegion().getMyDemand().getCertDemand() * CDS.getDemandShare());  
+				}
+			}
+			// Update the portfolio value 
+			priceDelta = GlobalValues.currentmarketprice - ShortTermMarket.getcurrentmarketprice();
+			updatePortfolioCapital(priceDelta);
+			// Update the agent's net physical position
+			updatePhysicalNetPosition(volBought, volSold, volProd, volDemand);
+			@SuppressWarnings("unused")
+			int tmp = 1;
+		 }
+		// ---- end GJB ADDED
 	}
 	
 	////DeveloperAgent defined as inner class of CompanyAgent in order to have access to company specific data.

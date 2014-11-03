@@ -32,7 +32,7 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 	}
 	
 	//Takes in the given values and calculates the producers utility based on how much of the offered volume at variable price (all bids without must buy bid) he managed to sell.
-	public Double calculateutility(double marketprice, ArrayList<BuyOffer> b, ArrayList<SellOffer> s, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
+	public Double calculateutility(double marketprice, ArrayList<BidOffer> b, ArrayList<BidOffer> s, double shareofmarginaltoffersold, double shareofmarginalofferbought) {
 		
 		double variableoffervolume = 0; //Offered volume at variable price. This is the sum of all offers but not the must buy offer (highest offer)
 		double totalboughtcerts = 0;	//Total number of certs bought
@@ -44,15 +44,18 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 		if (b.size() < 2) { //In this case there is no variable bid or there is no bids at all (which could be because the OPA has no volume to offer) Then utility is <0,1> so prices are unchanged
 			return 0.5;} //Just any number between 0 and 1 is fine as this would imply that the tactic is unchanged.
 			
-		Collections.sort(b, new CommonMethods.custombuyoffercomparator()); //Sorts offers form lowest to highest price. The last bid is hence the must buy bid
+//		Collections.sort(b, new CommonMethods.custombuyoffercomparator()); //Sorts offers form lowest to highest price. The last bid is hence the must buy bid
+		Collections.sort(b); //Sorts offers form lowest to highest price. The last bid is hence the must buy bid
+
 		int lastindx = b.size()-1;
 		
 		for (int i = 0; i < lastindx; ++i) {
-			variableoffervolume = variableoffervolume + b.get(i).getnumberofcert(); //Volume of variable offers
+			variableoffervolume = variableoffervolume + b.get(i).getCertVolume(); //Volume of variable offers
 		}
 		
-		totalboughtcerts = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMcert();
-		variableboughtcerts = totalboughtcerts - b.get(lastindx).getnumberofcert(); //Minus the must buy which would always be the first offer to be bought
+//		totalboughtcerts = UpdatePhysicalPosition.returnboughtvolume(b, marketprice, shareofmarginalofferbought).getBoughtInSTMcert();
+		totalboughtcerts = this.getmyAgent().getBoughtVolume();
+		variableboughtcerts = totalboughtcerts - b.get(lastindx).getCertVolume(); //Minus the must buy which would always be the first offer to be bought
 
 		double ret = (variableboughtcerts/variableoffervolume); //Should always be a number [0,1]
 		if (ret > 1 && ret < 0) {

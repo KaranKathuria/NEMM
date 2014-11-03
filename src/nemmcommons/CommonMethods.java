@@ -149,7 +149,7 @@ public static List<CompanyAgent> getCompanyAgenList() {
 		return ret;
 	}
 	//The following two methods makes it possible to compare sell and byoffers by price. 
-	public static class custombuyoffercomparator implements Comparator<BuyOffer> {
+/*	public static class custombuyoffercomparator implements Comparator<BuyOffer> {
 	    @Override
 	    public int compare(BuyOffer o1, BuyOffer o2) {
 	        return o1.getBuyOfferprice().compareTo(o2.getBuyOfferprice());
@@ -161,7 +161,7 @@ public static List<CompanyAgent> getCompanyAgenList() {
 	        return o1.getSellOfferprice().compareTo(o2.getSellOfferprice());
 	    }
 	}
-
+*/
 	//Defining the comparator for curvepair. These are implemented to enable sorting an array of curvepair by certprice needed. 
 	public static class customcurvepaircomparator implements Comparator<Curvepair> {
 	    @Override

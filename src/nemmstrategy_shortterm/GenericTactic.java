@@ -34,8 +34,8 @@ public class GenericTactic {
 	
 	protected class HistoricTacticValue {
 		 	// The tactic's memory - used to store buy & sell offers and utility scores
-			protected ArrayList<BuyOffer> tacticsbuyoffers;
-			protected ArrayList<SellOffer> tacticselloffers; //with fixed length given as a parameter. 
+			protected ArrayList<BidOffer> tacticsbuyoffers;
+			protected ArrayList<BidOffer> tacticselloffers; //with fixed length given as a parameter. 
 			protected double tacticutilityscore;
 			protected int tickID;
 	 }
@@ -49,15 +49,15 @@ public class GenericTactic {
 	public ArrayList<HistoricTacticValue> gethistorictacticvalues() {
 		return historictacticvalues;}
 	
-	public BuyOffer getbuyofferone() {return null;} //All these methods are overridden by the respective subtactics hence they do return something
-	public BuyOffer getbuyoffertwo() {return null;}
+	public BidOffer getbuyofferone() {return null;} //All these methods are overridden by the respective subtactics hence they do return something
+	public BidOffer getbuyoffertwo() {return null;}
 	public double getfloorroofprice() {return floorroofprice;}
 
-	public SellOffer getsellofferone() {return null;}
-	public SellOffer getselloffertwo() {return null;}
+	public BidOffer getsellofferone() {return null;}
+	public BidOffer getselloffertwo() {return null;}
 	
-	public ArrayList<BuyOffer> gettacticbuyoffers() {return null;}
-	public ArrayList<SellOffer> gettacticselloffers() {return null;}
+	public ArrayList<BidOffer> gettacticbuyoffers() {return null;}
+	public ArrayList<BidOffer> gettacticselloffers() {return null;}
 	
 	public void setmyStrategy(GenericStrategy gs) {
 		myStrategy = gs;
@@ -158,7 +158,7 @@ public class GenericTactic {
 
 // ---- LEARNING
 
-	private void learnParameters() {};
+	public void learnParameters() {};
 	
 
 	

@@ -24,7 +24,7 @@ public class AllVariables {
 	public static double OPAgentmustbuypremium = 0.5;
 //	public static double PAgentmustselldiscount = 0.5;
 //	public static double PAgentmustsellshare = 0.5;//RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
-	public static double OPAgentmustsellshare = 0.5; //RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
+	public static double OPAgentmustsellshare = 0.75; //RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
 	
 	public static double stdmediumrunpriceexpect = 0.1;     //The standard deviation in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.1;     //The standard deviation in the Normaly distributed error for MPE (where mean is the perfect foresight price)
@@ -38,7 +38,7 @@ public class AllVariables {
 //	public static double forcastweights[] = {0.2, 0.3, 0.5};  Not in used anymore as the AA have individually randomly generated forecastweights. 
 	
 	// Utilities
-	public static int utilityDefault_PA = 1; // default utility for a purchaser agent
+	public static int utilityDefault_PA = 2; // default utility for a purchaser agent
 	public static int utilityDefault_OP = 1; // default utility for a obligated agent
 	public static int utilityDefault_TR = 1; // default utility for a trader agent
 	
@@ -46,14 +46,14 @@ public class AllVariables {
 	// Note - not all of these need be used in any given tactic & strategy
 	public static double multOfferVol_PASellStrategy1 = 2; // default max fraction of that month's production than can be sold in the month
 	public static int tacticDefaultLearn_PASellStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
-	public static double tacticDefaultMustSellShare_PASellStrategy1 = 0.5; // Default must sell share for the producer tactics (if used)
+	public static double tacticDefaultMustSellShare_PASellStrategy1 = 1.0; // Default must sell share for the producer tactics (if used)
 	public static double tacticDefaultMustSellPriceMult_PASellStrategy1 = 0.5;  // Default must sell price multiplier for the producer tactics (if used)
-	public static double tacticMinMustSellPriceMult_PASellStrategy1 = 0.5;
-	public static double tacticMaxMustSellPriceMult_PASellStrategy1 = 0.5;
-	public static int tacticNumMustSellSteps_PASellStrategy1 = 1;
-	public static double tacticMinRestPriceMult_PASellStrategy1 = 0.8; // Specify the multiplier range
+	public static double tacticMinMustSellPriceMult_PASellStrategy1 = 0.7;
+	public static double tacticMaxMustSellPriceMult_PASellStrategy1 = 1.0;
+	public static int tacticNumMustSellSteps_PASellStrategy1 = 4;
+	public static double tacticMinRestPriceMult_PASellStrategy1 = 0.9; // Specify the multiplier range
 	public static double tacticMaxRestPriceMult_PASellStrategy1 = 1.5;
-	public static int tacticNumRestSteps_PASellStrategy1 = 8;
+	public static int tacticNumRestSteps_PASellStrategy1 = 7;
 //	public static int numTactics_PASellStrategy1 = 11; // The number of tactics to make
 	public static double tacticMinRestPriceStep_PASellStrategy1 = 0.025; // Step size range for the multiplier if learning is used
 	public static double tacticMaxRestPriceStep_PASellStrategy1 = 0.025;
