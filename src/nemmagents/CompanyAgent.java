@@ -26,6 +26,7 @@ import nemmstrategy_shortterm.TradeStrategy1;
 import nemmcommons.VolumePrognosis;
 import nemmenvironment.PowerPlant;
 import nemmenvironment.Region;
+import nemmenvironment.TheEnvironment;
 import nemmenvironment.TheEnvironment.GlobalValues;
 
 // Class definition
@@ -176,6 +177,30 @@ public class CompanyAgent extends ParentAgent {
 			 } 
 			 return volBought;
 		}
+		public double getProductionVolume() {
+			double volProd = 0.0;
+			int curTick = TheEnvironment.theCalendar.getCurrentTick();
+			if (myPowerPlants != null) {
+				for (PowerPlant PP : myPowerPlants) { 
+					// Add in the power plant's production for the current tick	
+					if(PP.getStartTick() >= curTick) {
+						volProd = volProd + PP.getProduction();
+					}
+				}
+			}
+			return volProd;
+		}
+		public double getDemandVolume() {
+			double volDemand = 0.0;
+			if (myDemandShares != null) {
+				for (CompanyDemandShare CDS : myDemandShares) { 
+					//Go through all demandshares (which consists of a region and a share. 
+					//Sum the product of that regions demandshare with that regions demand, for current tick.
+					volDemand = volDemand + (CDS.getMyRegion().getMyDemand().getCertDemand() * CDS.getDemandShare());  
+				}
+			}
+			return volDemand;
+		}
 		 public void updateAgentPositions() {
 			 // Updates following market transactions, plant production and power sales
 			 // This occurs at the end of the tick (as the certificates do not accrue
@@ -188,21 +213,10 @@ public class CompanyAgent extends ParentAgent {
 			 // Market transactions
 			 volSold = getSoldVolume();
 			 volBought = getBoughtVolume();
-			 // Production
-			if (myPowerPlants != null) {
-				for (PowerPlant PP : myPowerPlants) { 
-					// Add in the power plant's production for the current tick	
-					volProd = volProd + PP.getProduction();
-				}
-			}
-			 // Demand
-			if (myDemandShares != null) {
-				for (CompanyDemandShare CDS : myDemandShares) { 
-					//Go through all demandshares (which consists of a region and a share. 
-					//Sum the product of that regions demandshare with that regions demand, for current tick.
-					volDemand = volDemand + (CDS.getMyRegion().getMyDemand().getCertDemand() * CDS.getDemandShare());  
-				}
-			}
+			 // Physical production and demand
+			 volProd = getProductionVolume();
+			 volDemand = getDemandVolume();
+			
 			// Update the portfolio value 
 			priceDelta = GlobalValues.currentmarketprice - ShortTermMarket.getcurrentmarketprice();
 			updatePortfolioCapital(priceDelta);

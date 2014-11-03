@@ -24,7 +24,7 @@ public class AllVariables {
 	public static double OPAgentmustbuypremium = 0.5;
 //	public static double PAgentmustselldiscount = 0.5;
 //	public static double PAgentmustsellshare = 0.5;//RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
-	public static double OPAgentmustsellshare = 0.75; //RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
+	public static double OPAgentmustsellshare = 1.0; //RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
 	
 	public static double stdmediumrunpriceexpect = 0.1;     //The standard deviation in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.1;     //The standard deviation in the Normaly distributed error for MPE (where mean is the perfect foresight price)

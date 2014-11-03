@@ -75,6 +75,10 @@ public class PowerPlant implements Cloneable{
 	public Region getMyRegion() {
 		return myRegion;
 	}
+	
+	public int getStartTick() {
+		return starttick;
+	}
 
 /* Commented out as the region should not be able to be changed	
  * public void setMyRegion(Region myRegion) {
