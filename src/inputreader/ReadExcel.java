@@ -10,11 +10,13 @@
 package inputreader;
 
 import nemmenvironment.PowerPlant;
+import nemmenvironment.ProjectRRR;
 import nemmenvironment.Region;
 import nemmenvironment.TheEnvironment;
 import nemmtime.NemmCalendar;
 
 //import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 
 
 
@@ -220,14 +222,23 @@ public class ReadExcel {
 				Workbook workbook = WorkbookFactory.create(new File(filePath));
 				
 				// Read number of plants and technologies
-				Sheet ctr_sheet = workbook.getSheet("RRR");
-
+				Sheet RRR_sheet = workbook.getSheet("RRR");
 				
-				//Call constructorTheEnvironment.theCalendar = new NemmCalendar(startyear, endyear, numobpdinyear, numtrpdinyear);
-								
+				for (int j = 0; j < 16; j++) {
+					
+					int newregion_ID = (int) RRR_sheet.getRow(2+j).getCell(0).getNumericCellValue();
+					int newtech_ID = (int) RRR_sheet.getRow(2+j).getCell(1).getNumericCellValue();
+					int sizecat = (int) RRR_sheet.getRow(2+j).getCell(2).getNumericCellValue();
+					int costcat = (int) RRR_sheet.getRow(2+j).getCell(3).getNumericCellValue();
+					double RRR = RRR_sheet.getRow(2+j).getCell(4).getNumericCellValue();
+				
+				
+			ProjectRRR PR = new ProjectRRR(TheEnvironment.allRegions.get(newregion_ID-1), newtech_ID, sizecat, costcat, RRR); 
+			TheEnvironment.alladjustedRRR.add(PR);
+				}					
 						
 			}catch(Exception e) {
-		        System.out.println("!! Bang RRRError !! xlRead() : " + e );
+		        System.out.println("!! Bang RRR Error !! xlRead() : " + e );
 		    }
 		}
 }

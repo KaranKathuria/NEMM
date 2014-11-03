@@ -269,8 +269,10 @@ public class CompanyAgent extends ParentAgent {
 		
 		companyname = "Company " + this.getID();
 		companyanalysisagent = new CompanyAnalysisAgent();	
-		investmentRRR = 0.06;									
+		investmentRRR = 0.06;
+		earlystageRRR = 0.08;
 		regionpartcode = 2;																			//By default, all companies are active in both countries. 
+		
 		}	
 	
 	//CompanyAgents get methods

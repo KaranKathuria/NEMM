@@ -16,11 +16,13 @@ public class ProjectRRR {
 	private int costcategory_hydro;
 	private double specificRRR;
 	
-	public ProjectRRR(Region R, int t, int s, int c) {
-		technologyid = t;
+	public ProjectRRR(Region R, int t, int s, int c, double RRR) {
 		myRegion = R;
+		technologyid = t;
 		sizecategory_hydro = s;
 		costcategory_hydro = c;
+		specificRRR = RRR;
+		
 	}
 	
 public double getRRR() {return specificRRR;}
