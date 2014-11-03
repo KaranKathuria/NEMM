@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Physical Position</name>
+  <name>Best offers</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
@@ -16,38 +16,83 @@
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>ObligatedPurchaser</string>
+      <string>Buyoffer1</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>ObligatedPurchaser</id>
+        <id>Buyoffer1</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getobligatedpurchaserssphysicalposition</methodName>
+        <methodName>getalltacticbuyoffer1</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Producers</string>
+      <string>Buyoffer2</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Producers</id>
+        <id>Buyoffer2</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getproducersphysicalposition</methodName>
+        <methodName>getalltacticbuyoffer2</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Trader</string>
+      <string>Selloffer1</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Trader</id>
+        <id>Selloffer1</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>gettradersphysicalposition</methodName>
+        <methodName>getalltacticselloffer1</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Total</string>
+      <string>Selloffer2</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Total</id>
+        <id>Selloffer2</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>gettotalmarketphysicalposition</methodName>
+        <methodName>getalltacticselloffer2</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Best buyoffer2</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Best buyoffer2</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getbestbuyoffer2</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Best selloffer2</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Best selloffer2</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getbestselloffer2</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Market price</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Market price</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>currentmarketprice</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>floor</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>floor</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getfloor</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>roof</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>roof</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getroof</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

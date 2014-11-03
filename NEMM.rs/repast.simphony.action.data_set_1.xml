@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Certificate Price</name>
+  <name>Traded volume</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
@@ -16,38 +16,11 @@
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Cert price</string>
+      <string>Traded Volume</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Cert price</id>
+        <id>Traded Volume</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>currentmarketprice</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Expected price</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Expected price</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getpriceexpetations</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Floor</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Floor</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getfloor</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Roof</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Roof</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getroof</methodName>
+        <methodName>STMtradedvolume</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

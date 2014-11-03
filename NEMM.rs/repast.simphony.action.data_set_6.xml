@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Bidsoverandunder</name>
+  <name>Medium and long term price</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
@@ -11,25 +11,25 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1871723837</hashCode>
+    <hashCode>-38034576</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>BidsoverMP</string>
+      <string>MPE</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>BidsoverMP</id>
+        <id>MPE</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getbidsovermp</methodName>
+        <methodName>getmedimutermprice</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>BidsunderMP</string>
+      <string>LPE</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>BidsunderMP</id>
+        <id>LPE</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getbidsundermp</methodName>
+        <methodName>getlongtermprice</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

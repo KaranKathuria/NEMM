@@ -52,7 +52,7 @@ public class ReadExcel {
 	 private static String filePath;
 	 
  	public static void InitReadExcel() {
- 		filePath = working_directory + File.separator + "NEMM_testdata.xls"; 
+ 		filePath = working_directory + File.separator + "NEMM_realdata.xlsx"; 
  	}
  
 	public static void ReadExcel() {}

@@ -220,9 +220,7 @@ public void obligationsperiodshedule() {
 	}
 	
 // TO get all sell and buyoffers (with one tactic):
-	public double[] getallbuy() {
-		return ShortTermMarket.getbuyoffer2();
-	}
+	
 	public double getallvariablebuyoffers0() {
 		double ret = ShortTermMarket.getbuyoffer2()[0];
 		return ret;
@@ -303,6 +301,15 @@ public void obligationsperiodshedule() {
 		double ret = ShortTermMarket.getselloffer2()[9];
 		return ret;
 	}
+	public double getmedimutermprice() {
+		double ret = FundamentalMarketAnalysis.getMPE();
+		return ret;
+	}
+	public double getlongtermprice() {
+		double ret = FundamentalMarketAnalysis.getLPE();
+		return ret;
+	}
+	
 	public int getbidsovermp() {
 		int over = 0;
 		//int under = 0;
