@@ -183,7 +183,7 @@ public class CompanyAgent extends ParentAgent {
 			if (myPowerPlants != null) {
 				for (PowerPlant PP : myPowerPlants) { 
 					// Add in the power plant's production for the current tick	
-					if(PP.getStartTick() >= curTick) {
+					if(PP.getStartTick() <= curTick) {
 						volProd = volProd + PP.getProduction();
 					}
 				}

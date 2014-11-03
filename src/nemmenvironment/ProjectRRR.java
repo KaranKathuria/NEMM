@@ -26,6 +26,8 @@ public class ProjectRRR {
 	}
 	
 public double getRRR() {return specificRRR;}
+public Region getregion() {return this.myRegion;}
+public int gettechnologyid() {return this.technologyid;}
 
 
 }

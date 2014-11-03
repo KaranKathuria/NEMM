@@ -67,7 +67,10 @@ public class PowerPlant implements Cloneable{
 		}
 			
 		myProduction = new TickArray();
-		ExpectedProduction = new TickArray();	
+		ExpectedProduction = new TickArray();
+		specificRRR = 0.0;													//Default, but this is updated on the following line.
+		setprojectRRR();
+		
 	}
 
 	// Gets & Sets ------------------------------------------------------------------------
@@ -228,6 +231,19 @@ public class PowerPlant implements Cloneable{
 		else {
 			ExpectedProduction.setArray(newProd);
 		}	}
+	
+	public void setprojectRRR() {
+		if (this.status > 2) {
+		for (ProjectRRR PR : TheEnvironment.alladjustedRRR) {
+			if (PR.getregion() == this.myRegion && PR.gettechnologyid() == this.technologyid && this.technologyid > 1) {
+					this.specificRRR = PR.getRRR();
+					break;}
+			if (PR.getregion() == this.myRegion && PR.gettechnologyid() == this.technologyid && this.technologyid == 1) {	//Hydro
+				throw new Error("Taxlevels for endogenous hydroprojects are not implemented");}
+							
+		}
+	}
+}
 	
 	//THis method caluclates the LRMC and certificate price needed for a project realised in a given year. This is only usefull for endogenous projects, hence it does not have to take care of "overgangsordningen" projects. 
 	//Takes in the realisation year as this alters the LRMC and Certpriceneeeded through improvment in Capex. The powerprice used depends on the input.

@@ -60,8 +60,9 @@ public final class TheEnvironment {
 	
 	public static void PopulateEnvironment(){
 		inputreader.ReadExcel.ReadRegions();
-		inputreader.ReadExcel.ReadPowerPlants();
 		inputreader.ReadExcel.ReadRRR();
+		inputreader.ReadExcel.ReadPowerPlants();
+
 	}
 		
 	

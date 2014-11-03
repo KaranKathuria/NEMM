@@ -101,15 +101,7 @@ public void monthlymarketschedule() {
 	ShortTermMarket.runshorttermmarket(); 
 	//All agents strategies utilities are scored. Tactics learn and the best strategies update their best tactics. This is done before the physical update as the intial physical position is part of the utility calcualtion.
 	UtilitiesStrategiesTactics.calculatetilitiesandupdatebesttactics(); 
-	
-	// ---- GJB CHANGE
-	//Following "UpdatePhysicalPosition" methods updates the agents values based on the cleared market, powerplants and demand shares given as input initially. 
-/*	UpdatePhysicalPosition.markettransactions();//updates the physical position for all agents based on what they bidded into the market
-	UpdatePhysicalPosition.runproduction(); //Loops to all powerplants and adds this ticks prodution to the CompanyAgents producers agents physical position. 
-	UpdatePhysicalPosition.updatedemand(); //Adds demand to the CompanyAgents physicalposition
-*/
 	UpdatePhysicalPosition.updateAllAgentPositions();
-	// ---- END GJB CHANGE
 	
 	//Reads the values to the global values arrays. Also calcualtes display values.
 	TheEnvironment.GlobalValues.monthlyglobalvalueupdate();
@@ -228,6 +220,9 @@ public void obligationsperiodshedule() {
 	}
 	
 // TO get all sell and buyoffers (with one tactic):
+	public double[] getallbuy() {
+		return ShortTermMarket.getbuyoffer2();
+	}
 	public double getallvariablebuyoffers0() {
 		double ret = ShortTermMarket.getbuyoffer2()[0];
 		return ret;

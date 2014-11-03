@@ -19,15 +19,15 @@ import nemmenvironment.TheEnvironment;
 public class VolumePrognosis {
 	
 	private double nexttickcertproduction;
-	private double nexttwelvetickscertproduction;
-	private int ticks = 12; //How many future ticks are included in the "nexttwelvetickscertproduction"
+	private double thisobligationsperiodproduction;
+	private int ticks = TheEnvironment.theCalendar.getNumTradePdsInObligatedPd(); 								//How many tick there intially are inlucluded in an obligation period.
 	private double nexttickcertdemand;
-	private double nexttwelvetickscertdemand;
+	private double thisobligationsperioddemand;
 	//Do we need the same for power?
 	private VolumeAnalysisAgent myVolumeAnalysisAgent;
 
 	public VolumePrognosis() {
-		ticks = 12;
+		ticks = TheEnvironment.theCalendar.getNumTradePdsInObligatedPd();
 	}
 	
 	//Methods
@@ -39,10 +39,10 @@ public class VolumePrognosis {
 	}
 	
 	public double getnexttwelvetickscertproduction() {
-		return nexttwelvetickscertproduction;
+		return thisobligationsperiodproduction;
 	}
 	public double getnexttwelvetickscertdemand() {
-		return nexttwelvetickscertdemand;
+		return thisobligationsperioddemand;
 	}
 	
 	public void initiatevolumeprognosis() { //To be run before first tick
@@ -52,23 +52,23 @@ public class VolumePrognosis {
 		double dtempticks = 0;
 		
 		for (PowerPlant pp : myVolumeAnalysisAgent.getmyCompany().getmypowerplants()) {
-			temp1 = temp1 + pp.getExpectedProduction(0); //Tick 0 is the next tick
+			temp1 = temp1 + pp.getExpectedProduction(0); 															//Next tick
 			for (int i = 0; i < ticks; ++i) {
-			tempticks = tempticks + pp.getExpectedProduction(i); //The ticks next tick
+			tempticks = tempticks + pp.getExpectedProduction(i); 													//The ticks next tick
 			}
 		}
 		for (CompanyDemandShare CDS : this.myVolumeAnalysisAgent.getmyCompany().getMyDemandShares()) {
 			dtemp1 = dtemp1 + (CDS.getDemandShare(0) * CDS.getMyRegion().getMyDemand().getCertDemand(0));
 			for (int i = 0; i < ticks; ++i) {
-			dtempticks = dtempticks + (CDS.getDemandShare(i) * CDS.getMyRegion().getMyDemand().getCertDemand(i)); //The ticks next ticks
+			dtempticks = dtempticks + (CDS.getDemandShare(i) * CDS.getMyRegion().getMyDemand().getCertDemand(i)); 	//The ticks next ticks
 				}	
 			
 		}
 		
 		nexttickcertproduction = temp1;
-		nexttwelvetickscertproduction = tempticks;
+		thisobligationsperiodproduction = tempticks;
 		nexttickcertdemand = -dtemp1;
-		nexttwelvetickscertdemand = -dtempticks;
+		thisobligationsperioddemand = -dtempticks;
 
 	}
 	
@@ -78,12 +78,17 @@ public class VolumePrognosis {
 		double dtemp1 = 0;
 		double dtempticks = 0;
 		int from = TheEnvironment.theCalendar.getCurrentTick() + 1;
+		int tickleftinoblipd = TheEnvironment.theCalendar.getTimeBlock(from).tradepdID - TheEnvironment.theCalendar.getNumTradePdsInObligatedPd(); //Calculates the number of ticks to inlude (1-12).
 		for (PowerPlant pp : myVolumeAnalysisAgent.getmyCompany().getmypowerplants()) {
-			temp1 = temp1 + pp.getExpectedProduction(from);
 			
-			for (int i = from; i < ticks+from; ++i) {
+			if (pp.getStartTick() <= from) {						 //Only count production if the plant has actually started.
+			temp1 = temp1 + pp.getExpectedProduction(from);
+			}
+			
+			for (int i = from; i < from+tickleftinoblipd; ++i) {
+				if (pp.getStartTick() <= (from+i)) {				 //Only count production if the plant has actually started.
 				tempticks = tempticks + pp.getExpectedProduction(i); //The ticks next ticks
-				}		
+				}	}	
 		}
 		
 		for (CompanyDemandShare CDS : this.myVolumeAnalysisAgent.getmyCompany().getMyDemandShares()) {
@@ -95,9 +100,9 @@ public class VolumePrognosis {
 			
 		}
 		nexttickcertproduction = temp1;
-		nexttwelvetickscertproduction = tempticks;
+		thisobligationsperiodproduction = tempticks;
 		nexttickcertdemand = -dtemp1;
-		nexttwelvetickscertdemand = -dtempticks;
+		thisobligationsperioddemand = -dtempticks;
 		
 }
 	
