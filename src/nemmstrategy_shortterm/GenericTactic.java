@@ -21,11 +21,11 @@ public class GenericTactic {
 	protected double tacticutilityscore;
 	protected ArrayList<HistoricTacticValue> historictacticvalues = new ArrayList<HistoricTacticValue>();
 	protected int paramLearningMethod; // GJB LEARNING
-	protected int numberoflearningmethods; 
+	protected int numLearningMethods; 
 	protected double floorroofprice;
 	protected double maxppvolume; //calculated based on the numberof months given from strategy
-	protected double maxoffervolume; //calculated in tactics based on internal number and last months production
-	protected double maxoffervolumemultiplier;
+	protected double maxBidOfferVolume; //calculated in tactics based on internal number and last months production
+	protected double maxBidOfferVolumeMultiplier;
 	protected double deltapricemultiplier; //Used for learning and adjusting bid prices (currenly by PA and OPA only). 
 	
 	//This class could have had all the selloffers and buyoffers form the respective tactics...
@@ -117,7 +117,7 @@ public class GenericTactic {
 	}
 
 	public void setParamLearningMethod(int paramLearningMethod) {
-		if (paramLearningMethod <0 || paramLearningMethod > numberoflearningmethods-1 ){
+		if (paramLearningMethod <0 || paramLearningMethod > numLearningMethods-1 ){
 			throw new IllegalArgumentException("Illegal learning method");
 		}
 		

@@ -26,7 +26,7 @@ public class GenericUtilityMethod {
 		double ret = 1000;
 		return ret;
 	}
-	
+	// This needs to be overwritten for each utility method
 	public ArrayList<double[]> CalcUtilityWithHistory(double marketprice, ArrayList<BidOffer> s, double shareofmarginaltoffersold) {
 		ArrayList<double[]> retList = new ArrayList<double[]>();
 		double[] tempArray = new double[]{1.0,2.0,3.0};	

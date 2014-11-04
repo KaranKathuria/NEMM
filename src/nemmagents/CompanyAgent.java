@@ -10,6 +10,7 @@ package nemmagents;
 
 //Import section for other methods
 import java.util.ArrayList;
+import java.util.Random;
 
 import nemmagents.MarketAnalysisAgent;
 import nemmagents.ParentAgent;
@@ -23,6 +24,7 @@ import nemmstrategy_shortterm.BuyStrategy1;
 import nemmstrategy_shortterm.GenericStrategy;
 import nemmstrategy_shortterm.SellStrategy1;
 import nemmstrategy_shortterm.TradeStrategy1;
+import nemmcommons.AllVariables;
 import nemmcommons.VolumePrognosis;
 import nemmenvironment.PowerPlant;
 import nemmenvironment.Region;
@@ -48,7 +50,9 @@ public class CompanyAgent extends ParentAgent {
 		private double portfoliocapital;
 		private int sizecode;			//Code value indicationg if the AA has few=1, normal=2 og alot=3 of activities (powerplants or demandshares) in the regions the company of that AA participates in
 		private double RAR;				//Agentspecific risk adjusted rate used to discount the future price of certificates to floor/roof prices in STM bidding. Not to be confused with the company specific RRR which is the companies investmentcriteria.
-
+		// ---- GJB Added
+		private int numTicksToEmptyPosition; // number of ticks the agent will try to empty its position over
+		// ---- end GJB Added
 		
 		// Null constructor for ActiveAgent. Should not be used as this does not specify type of agent.
 		public ActiveAgent() {
@@ -70,6 +74,19 @@ public class CompanyAgent extends ParentAgent {
 				sellstrategy.setmyAgent(ActiveAgent.this);
 				allstrategies.add(sellstrategy);
 				portfoliocapital = 0;
+				// ---- GJB Added
+				// Goal is to set some agents who try to exit their physical position 
+				// quickly, others who can hold it for a while, and others who can hold for a long time
+				// Specify the type and get the number of ticks
+				Random generator = new Random(); 
+				double dPhysRnd = generator.nextDouble();
+				for (int stratID=AllVariables.numPAExitStrategies-1; stratID>=0; stratID--){
+					if (dPhysRnd <= AllVariables.cutoffPAExit[stratID]) {
+						numTicksToEmptyPosition = AllVariables.numTicksPAExit[stratID];
+					}
+				}
+
+				// ---- end GJB Added
 												
 			} else if (type == 2) {
 				activeagenttypename = "ObligatedPurchaserAgent";
@@ -82,6 +99,20 @@ public class CompanyAgent extends ParentAgent {
 				buystrategy.setmyAgent(ActiveAgent.this);
 				allstrategies.add(buystrategy);
 				portfoliocapital = 0;
+				
+				// ---- GJB Added
+				// Goal is to set some agents who try to exit their physical position 
+				// quickly, others who can hold it for a while, and others who can hold for a long time
+				// Specify the type and get the number of ticks
+				Random generator = new Random(); 
+				double dPhysRnd = generator.nextDouble();
+				for (int stratID=AllVariables.numOPExitStrategies-1; stratID>=0; stratID--){
+					if (dPhysRnd <= AllVariables.cutoffOPExit[stratID]) {
+						numTicksToEmptyPosition = AllVariables.numTicksOPExit[stratID];
+					}
+				}
+				
+				// ---- end GJB Added
 				
 			} else { //Notice that else is all other added as Trader agents. This is okey for now but should call an expetion later. 
 				activeagenttypename = "TraderAgent";
@@ -112,6 +143,12 @@ public class CompanyAgent extends ParentAgent {
 		public GenericStrategy getbeststrategy() {return beststrategy;}
 		public void setbeststrategy(GenericStrategy s) {beststrategy = s;}
 		public ArrayList<GenericStrategy> getallstrategies() {return allstrategies;}
+		
+		// ---- GJB Added
+		public int getNumTicksToEmptyPosition() {
+			return numTicksToEmptyPosition;
+		}
+		// ---- end GJB Added
 		
 		public void poststmupdate(double certificatessold, double certificatesbought) {
 			//Updates the portfoliocapital before the physical position. Also thes method requires that ShortTermMarket is ran, but not Globalvalues.
@@ -183,7 +220,7 @@ public class CompanyAgent extends ParentAgent {
 			if (myPowerPlants != null) {
 				for (PowerPlant PP : myPowerPlants) { 
 					// Add in the power plant's production for the current tick	
-					if(PP.getStartTick() >= curTick) {
+					if(PP.getStartTick() <= curTick) {
 						volProd = volProd + PP.getProduction();
 					}
 				}

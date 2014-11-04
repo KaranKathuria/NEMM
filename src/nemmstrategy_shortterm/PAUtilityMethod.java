@@ -34,9 +34,11 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 		switch (flagUtilityFunction){
 			case 1:
 				// No specific initialisation required
+				break;
 			case 2:
 				alpha = 0.5;
 				flagFirstPd = 1;
+				break;
 		}
 	}
 
@@ -91,6 +93,7 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 		double curOfferVol = 0;
 		double curOfferPrice = 0;
 		double curOfferSold = 0;
+		double curOfferShareCleared = 0;
 		
 		ArrayList<double[]> retList = new ArrayList<double[]>();
 		double[] tmpArray;
@@ -114,17 +117,10 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 				// If no offer was made, we just keep the previous utility
 				curOfferVol = s.get(i).getCertVolume(); 
 				curOfferPrice = s.get(i).getCertVolume();
+				curOfferShareCleared = s.get(i).getShareCleared();
 				if (curOfferVol > 0) {
 					// Calculate the volume sold from the offer if an offer was made (vol >0)
-					if (curOfferPrice<priceSpot){
-						curOfferSold = curOfferVol;
-					}
-					else if (curOfferPrice == priceSpot) {
-						curOfferSold = curOfferVol*shareofmarginaltoffersold;
-					}
-					else {
-						curOfferSold = 0;
-					}
+					curOfferSold = curOfferVol*curOfferShareCleared;
 					curProfit = curOfferSold*curOfferPrice; // Profit
 					curActivation = curOfferSold/curOfferVol; // Activation
 					// Exponential smoothing
