@@ -21,10 +21,10 @@ public class AllVariables {
 	public static int numberoftacticsBuyStrategy1 = 1;
 //	public static int numberoftacticsSellStrategy1 = 1;
 	public static int numberoftacticsTraderStrategy1 = 8;
-	public static double OPAgentmustbuypremium = 0.5;
+//	public static double OPAgentmustbuypremium = 0.5;
 //	public static double PAgentmustselldiscount = 0.5;
 //	public static double PAgentmustsellshare = 0.5;//RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
-	public static double OPAgentmustsellshare = 0.75; //RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
+//	public static double OPAgentmustsellshare = 0.75; //RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
 	
 	public static double stdmediumrunpriceexpect = 0.1;     //The standard deviation in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.1;     //The standard deviation in the Normaly distributed error for MPE (where mean is the perfect foresight price)
@@ -49,11 +49,11 @@ public class AllVariables {
 	public static int numOPExitStrategies = 2;
 	// distribution cutoffs used for assigning a strategy to a given agent
 	public static double[] cutoffPAExit = new double[]{0.5,0.8,1.0};
-	public static double[] cutoffOPExit = new double[]{0.5,1.0};
+	public static double[] cutoffOPExit = new double[]{0.9,1.0};
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
 	// over the next 12 ticks - i.e. it will sell 1/12th in the next tick
 	public static int[] numTicksPAExit = new int[]{1,6,12};
-	public static int[] numTicksOPExit = new int[]{6,12};
+	public static int[] numTicksOPExit = new int[]{1,2};
 	// ---- end GJB Added
 	
 	
@@ -77,13 +77,13 @@ public class AllVariables {
 	public static double multOfferVol_OPBuyStrategy1 = 2; // default max fraction of that month's production than can be sold in the month
 	public static int tacticDefaultLearn_OPBuyStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
 	public static double tacticDefaultMustBuyShare_OPBuyStrategy1 = 1.0; // Default must Buy share for the producer tactics (if used)
-	public static double tacticDefaultMustBuyPriceMult_OPBuyStrategy1 = 0.5;  // Default must Buy price multiplier for the producer tactics (if used)
-	public static double tacticMinMustBuyPriceMult_OPBuyStrategy1 = 0.7;
-	public static double tacticMaxMustBuyPriceMult_OPBuyStrategy1 = 1.0;
-	public static int tacticNumMustBuySteps_OPBuyStrategy1 = 4;
-	public static double tacticMinRestPriceMult_OPBuyStrategy1 = 0.9; // Specify the multiplier range
-	public static double tacticMaxRestPriceMult_OPBuyStrategy1 = 1.5;
-	public static int tacticNumRestSteps_OPBuyStrategy1 = 7;
+	public static double tacticDefaultMustBuyPriceMult_OPBuyStrategy1 = 1.5;  // Default must Buy price multiplier for the producer tactics (if used)
+	public static double tacticMinMustBuyPriceMult_OPBuyStrategy1 = 1.0;
+	public static double tacticMaxMustBuyPriceMult_OPBuyStrategy1 = 1.4;
+	public static int tacticNumMustBuySteps_OPBuyStrategy1 = 6;
+	public static double tacticMinRestPriceMult_OPBuyStrategy1 = 0.6; // Specify the multiplier range
+	public static double tacticMaxRestPriceMult_OPBuyStrategy1 = 1.0;
+	public static int tacticNumRestSteps_OPBuyStrategy1 = 5;
 //	public static int numTactics_OPBuyStrategy1 = 11; // The number of tactics to make
 	public static double tacticMinRestPriceStep_OPBuyStrategy1 = 0.025; // Step size range for the multiplier if learning is used
 	public static double tacticMaxRestPriceStep_OPBuyStrategy1 = 0.025;	

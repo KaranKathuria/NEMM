@@ -106,6 +106,12 @@ public class BuyStrategy1 extends GenericStrategy {
 				alltactics.add(tactic);
 			}
 		}
+		besttactic = alltactics.get(RandomHelper.nextIntFromTo(0,numberoftactics-1));
+		
+		buyofferone = new BidOffer();
+		buyoffertwo = new BidOffer();
+		agentsbuyoffers.add(buyofferone);
+		agentsbuyoffers.add(buyoffertwo);
 	}
 		
 		

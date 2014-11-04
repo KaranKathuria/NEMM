@@ -75,10 +75,12 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 
 		double curProfit = 0;
 		double curActivation = 0;
+		double curReturn = 0.0;
 		double curBidVol = 0;
 		double curBidPrice = 0;
 		double curBidPurchased = 0;
 		double curBidShareCleared = 0;
+		double[] penaltyPrice;
 		
 		ArrayList<double[]> retList = new ArrayList<double[]>();
 		double[] tmpArray;
@@ -89,9 +91,23 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 			retList.add(null);
 		}
 		
+		// Calculate the penalties
+		// Note: this is a certificate value (like a water value), and represents the chance and cost of being short
+		// and of paying more in the future for something you could buy today
+		// These will be set to:
+		// index 0 = expected shortfall price (as you need to buy the certificates today)
+		// all others = expected price of the next tick
+		// They should be obtained from the analysis agent
+		penaltyPrice = new double[s.size()];
+		penaltyPrice[0]=200;
+		for ( i=1;i<s.size();i++) {
+			penaltyPrice[i]=32;
+		}
+		
 		for ( i=0;i<s.size();i++) {
 			if(s.get(i) != null) {
 				// There is a bid, so we need to calculate the new utility measures
+				// Note: there should be bids, and the first bid should be the "must buy" bid
 				
 				// Initialise the utilities to be the previous values
 				tmpArray = null;
@@ -103,27 +119,28 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 				// Note - if the previous utility is null, this still works
 				curBidVol = s.get(i).getCertVolume(); 
 				curBidPrice = s.get(i).getCertVolume();
-				curBidShareCleared = s.get(i).getShareCleared();
+//				curBidShareCleared = s.get(i).getShareCleared();
+				curBidShareCleared = 1;
 				if (curBidVol > 0) {
-					// Calculate the volume sold from the offer if an offer was made (vol >0)
-					curBidPurchased = curBidVol*curBidShareCleared;
-					
-					curProfit = -curBidPurchased*curBidPrice; // Profit is negative as it is a cost
+					// Calculate the volume purchased from the bid
+					curBidPurchased = curBidVol*curBidShareCleared;			
+					curProfit = -curBidPurchased*curBidPrice; // negative as it is a cost
 					curActivation = curBidPurchased/curBidVol; // Activation
+					curReturn = -curBidPurchased*(penaltyPrice[i]*(1-curActivation)+curBidPrice*curActivation);
 					// Exponential smoothing
 					if (tmpArray != null) {
-						tmpArray[1] = tmpArray[1] + alpha*(curProfit-tmpArray[1]); // Profit
+						tmpArray[1] = tmpArray[1] + alpha*(curProfit-tmpArray[1]); // Profit (cost)
 						tmpArray[2] = tmpArray[2] + alpha*(curActivation-tmpArray[2]); // Activation
-						tmpArray[0] = tmpArray[1]*tmpArray[2]; // Return						
+						tmpArray[0] = tmpArray[0] + alpha*(curReturn-tmpArray[1]);; // Return						
 					}
 					else {
-						// This will occur if there has been no utility set for this sell offer as yet
+						// This will occur if there has been no utility set for this bid as yet
 						// In this case, we will simply set the utilities to be the current offer's profit
 						// and activation and return
 						tmpArray = new double[3];
 						tmpArray[1] = curProfit;
 						tmpArray[2] = curActivation;
-						tmpArray[0] = tmpArray[1]*tmpArray[2];
+						tmpArray[0] = curReturn;
 					}
 						
 
@@ -138,6 +155,9 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 				else {
 					retList.set(i,null);
 				}
+			}
+			else {
+				throw new IllegalArgumentException("OPAUtilityMethod: Null Bid encountered!");
 			}
 				
 		}

@@ -90,6 +90,7 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 
 		double curProfit = 0;
 		double curActivation = 0;
+		double curReturn = 0.0;
 		double curOfferVol = 0;
 		double curOfferPrice = 0;
 		double curOfferSold = 0;
@@ -117,17 +118,19 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 				// If no offer was made, we just keep the previous utility
 				curOfferVol = s.get(i).getCertVolume(); 
 				curOfferPrice = s.get(i).getCertVolume();
-				curOfferShareCleared = s.get(i).getShareCleared();
+//				curOfferShareCleared = s.get(i).getShareCleared();
+				curOfferShareCleared = 1.0;
 				if (curOfferVol > 0) {
 					// Calculate the volume sold from the offer if an offer was made (vol >0)
 					curOfferSold = curOfferVol*curOfferShareCleared;
 					curProfit = curOfferSold*curOfferPrice; // Profit
 					curActivation = curOfferSold/curOfferVol; // Activation
+					curReturn = curProfit*curActivation;
 					// Exponential smoothing
 					if (tmpArray != null) {
 						tmpArray[1] = tmpArray[1] + alpha*(curProfit-tmpArray[1]); // Profit
 						tmpArray[2] = tmpArray[2] + alpha*(curActivation-tmpArray[2]); // Activation
-						tmpArray[0] = tmpArray[1]*tmpArray[2]; // Return						
+						tmpArray[0] = tmpArray[0] + alpha*(curReturn-tmpArray[1]); ; // Return						
 					}
 					else {
 						// This will occur if there has been no utility set for this sell offer as yet
@@ -136,7 +139,7 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 						tmpArray = new double[3];
 						tmpArray[1] = curProfit;
 						tmpArray[2] = curActivation;
-						tmpArray[0] = tmpArray[1]*tmpArray[2];
+						tmpArray[0] = curReturn;
 					}
 						
 
@@ -151,6 +154,9 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 				else {
 					retList.set(i,null);
 				}
+			}
+			else {
+				throw new IllegalArgumentException("PAUtilityMethod: Null Bid encountered!");
 			}
 				
 		}
