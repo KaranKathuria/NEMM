@@ -1,4 +1,4 @@
-package nemmenvironment;
+	package nemmenvironment;
 
 
 import nemmagents.CompanyAgent;
@@ -33,6 +33,7 @@ public class PowerPlant implements Cloneable{
 	private double LRMC; 					//Long run marginal cost for this powerplant build at a given year. This is update for each annual update.
 	private Double certpriceneeded;			//Reason for having this field is that the projects cannot be sorted by LRMC as the region defines when its certificatesobligated.
 	private int starttick;					//The month/tickid of a year that the production starts (the tick is in the starting year).
+	private int endtick; 					//The tickid of a year that the production ends (including this tick).
 	private int yearsincurrentstatus;		//Annual counter counting years in current status for the purpose of deciding if its ready for concession.
 	
 	public PowerPlant() {}
@@ -57,6 +58,7 @@ public class PowerPlant implements Cloneable{
 			endyear = startyear + Math.min(lifetime, 15) - 1;}
 		if (status == 1)	{												//Starttick is set in the project development for all other projects.
 			starttick = 0;
+			endtick = 0 + Math.min(lifetime, 15)*TheEnvironment.theCalendar.getNumTradePdsInYear();
 			earlieststartyear = startyear;
 		}
 		if (status == 2)	{												//earlieststartyear is already determined by startyear as this is exognous. 
@@ -117,6 +119,7 @@ public class PowerPlant implements Cloneable{
 	public void setStarttick(int tickID) {
 		starttick = tickID;
 	}
+	public void setendtick(int tickID) {endtick = tickID;}
 	public void setstartyear(int sy) {startyear = sy;}
 	public int getstatus() {return status;}
 	public int getminconstructionyears() {return minconstructionyears;}
@@ -253,14 +256,15 @@ public class PowerPlant implements Cloneable{
 		//Current year referes to actual year number (2012..), not YearID (0,1...)
 		double usedRRR = RRR;
 		double usedpowerprice = 0;
-		int futureyearspowerprice = currentyear - TheEnvironment.theCalendar.getStartYear() + 5;		//5 indication 5 years horizont.
+		int futureyearspowerprice = 5 + currentyear - TheEnvironment.theCalendar.getStartYear();		//5 indication 5 years horizont.
 		
 		//Switch taking care of which powerprice assumption to use in the LRMC. 1=Current power price, 2=The Developers, companys, analysisagent expected power price in 5 years. 3=The 5 year fowardprice.
 		switch (powerpricecode) {
-			case 1: {usedpowerprice = myRegion.getMyPowerPrice().getValue();}							//Use current powerprice
+			case 1: {usedpowerprice = myRegion.getMyPowerPrice().getValue(); break;}					//Use current powerprice
 			case 2: {if (myRegion == TheEnvironment.allRegions.get(0)) {								//Use the MAA expected powerprice in 5 years from now
 						usedpowerprice = myCompany.getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getExpectedpowerpricenorway(futureyearspowerprice);}
-					else{usedpowerprice = myCompany.getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getExpectedpowerpricesweden(futureyearspowerprice);}}
+					else{usedpowerprice = myCompany.getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getExpectedpowerpricesweden(futureyearspowerprice);}
+			break;}
 			case 3: {usedpowerprice = myRegion.getMyForwardPrice(futureyearspowerprice-5).getValue(5);}	//Use the market forwardprices}
 		}
 			
@@ -290,9 +294,10 @@ public class PowerPlant implements Cloneable{
 	
 	//Get and set methods
 	public void setendyear(int e) {endyear = e;}
-	public void setstatus(int e) {endyear = e;}
+	public void setstatus(int e) {status = e;}
 	public int getstartyear() {return startyear;}
 	public int getendyear() {return endyear;}
+	public int getendtick() {return endtick;}
 	public int getearlieststartyear() {return earlieststartyear;}
 	public int getlifetime() {return lifetime;}
 	public double getestimannualprod() {return this.loadfactor*this.capacity*8760;}

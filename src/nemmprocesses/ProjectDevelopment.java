@@ -30,27 +30,30 @@ public class ProjectDevelopment {
 		
 		int currenttick = TheEnvironment.theCalendar.getCurrentTick();
 		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year + TheEnvironment.theCalendar.getStartYear();	//Get current year.
-		
+		ArrayList<PowerPlant> tempremoval = new ArrayList<PowerPlant>();															//Templist for removing projects.
 		//Updating information for projects finished this year.
 		for (PowerPlant PP : TheEnvironment.projectsunderconstruction) {
-			if (PP.getstartyear() <= currentyear) {
+			if (PP.getstartyear() == currentyear) {
 				PP.setstatus(1);
 					if (!PP.getMyRegion().getcertificatespost2020flag() && currentyear > 2020) {	//Takes care of projecs post 2020 in regions without certs post 2020.
-						PP.setendyear(2020);}
+						PP.setendyear(2020);
+						PP.setStarttick(currenttick+1);
+						PP.setendtick(currenttick);}												//Setting this back in time, hence these certs are never produced.
 					else {
 						PP.setendyear(Math.min(PP.getlifetime()+currentyear-1, currentyear+14));	//Takes care of projects "in overgangsordningen" with 1 year lifetime.
-						PP.setStarttick(currenttick + RandomHelper.nextIntFromTo(0, TheEnvironment.theCalendar.getNumTradePdsInYear()-1));	//Randoml set starttick between now and 12 tick ahead.
+						int temp = currenttick + RandomHelper.nextIntFromTo(0, TheEnvironment.theCalendar.getNumTradePdsInYear()-1);
+						PP.setStarttick(temp);	//Randoml set starttick between now and 12 tick ahead.
+						PP.setendtick(temp+(TheEnvironment.theCalendar.getNumTradePdsInYear()*Math.min(PP.getlifetime(), 15)));
 					}
 				
 				TheEnvironment.allPowerPlants.add(PP);			//Add to all operations powerplants
 				PP.getMyCompany().getmypowerplants().add(PP);	//Add to company`s list of powerplants
+				tempremoval.add(PP);
 				//PP.getMyCompany().getmyprojects().remove(PP);	//NOT Remving these from company`s list of project! Keeping these eases the controll and counting.
 			}
 		}
 	    //To work around the problem of concurring operations, the removement of the project from the Underconstruction list must be done in another operation below.
-		for (int i = 0; i < TheEnvironment.projectsunderconstruction.size(); i++) {
-			if (TheEnvironment.projectsunderconstruction.get(i).getstatus() == 1) {					//If status indicates that its finished, remove from underconstruction.
-			TheEnvironment.projectsunderconstruction.remove(i);}}
+			TheEnvironment.projectsunderconstruction.removeAll(tempremoval);
 	}
 	
 	
@@ -64,13 +67,15 @@ public class ProjectDevelopment {
 		for (DeveloperAgent DA : CommonMethods.getDAgentList()) {
 			
 			ArrayList<PowerPlant> templist = new ArrayList<PowerPlant>();
-			double usedRRR = DA.getmycompany().getInvestmentRRR();								//Company specific RRR.
+			
 			//Collecting the projects that are awaiting investmetn decision (status = 3) and counting projects currently under construction.
 			for (PowerPlant PP : DA.getmyprojects()) {
+			double usedRRR = DA.getmycompany().getInvestmentRRR()*PP.getspecificRRR();			//Company specific RRR multiplied with company`s investment RRR.
+
 				if (PP.getstatus() == 3) {														//3=Awaiting investment decision.
 					PP.addyearsincurrentstatus(1);												//Increasing number of years with this status with one.
 					templist.add(PP);															//Adds all the projects, regardsless of having a cert price needed to high or low.
-					PP.calculateLRMCandcertpriceneeded(currentyear, usedRRR, 3);				//Using the market forward power price in that given reigon. Notice that this is calculated for when the year the project can be invested in, not the year it can be finished!!
+					PP.calculateLRMCandcertpriceneeded(currentyear, usedRRR, 1);				//Using the market forward power price in that given reigon. Notice that this is calculated for when the year the project can be invested in, not the year it can be finished!!
 				}
 			}
 			//For each DeveloperAgent For all the relevant projects. Do the following:			
@@ -114,42 +119,41 @@ public class ProjectDevelopment {
 		
 		int currenttick = TheEnvironment.theCalendar.getCurrentTick();
 		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year + TheEnvironment.theCalendar.getStartYear();	//Get current year.
+		ArrayList<PowerPlant> tempremoval = new ArrayList<PowerPlant>();															//Templist for removing projects.
 		
 		for (PowerPlant PP : TheEnvironment.projectinprocess) {
 			PP.addyearsincurrentstatus(1);														//Increase number of years by one for all projects.
 			
 			//If trashable due to no concession in 7 years.
-			if (PP.getyearsincurrentstatus() >= AllVariables.maxyearsinconcessionqueue) {		//Have not received concession in so many years, it will nevere get it.
+			int maxyearsinconcessionqueue = PP.getminyearinprocess() + AllVariables.maxyearsinconcessionqueue;     //Max years depends on the project estimated minconcession years.
+			if (PP.getyearsincurrentstatus() >= maxyearsinconcessionqueue) { //Have not received concession in so many years, it will nevere get it.
 				
 				PP.setstatus(0);																//The project is trashed, hence status is 0.
 				PP.setyearsincurrentstatus(0); 													//Updating status means clearing years with this status.
 				TheEnvironment.trashedprojects.add(PP);											//Add to all operations powerplants
-				//PP.getMyCompany().getmyprojects().remove(PP);									//NOT Remving these from company`s list of project! Keeping these eases the controll and counting.
+				tempremoval.add(PP);															//Add to removal list.
 				
-			    //To work around the problem of concurring operations, the removement of the project from the Underconstruction list must be done in another operation below.
-				for (int i = 0; i < TheEnvironment.projectinprocess.size(); i++) {
-					if (TheEnvironment.projectinprocess.get(i).getstatus() == 0) {				//If status indicates that its trashed, remove from process.
-					TheEnvironment.projectinprocess.remove(i);}}
+
 			}
 			
 			//If in the lottery for getting concession.
-			if ((PP.getyearsincurrentstatus() >= PP.getminyearinprocess()) && (PP.getyearsincurrentstatus() < AllVariables.maxyearsinconcessionqueue)) {
+			if ((PP.getyearsincurrentstatus() >= PP.getminyearinprocess()) && (PP.getyearsincurrentstatus() < maxyearsinconcessionqueue)) {
 				int rand = RandomHelper.nextIntFromTo(1, 10);
 				if (rand <= AllVariables.annualprobforreceivingconcession*10)	{ 				//Tricksy way of having a given chance for receiving concession. If concession:
 					
 					PP.setstatus(3);															//The project is granted concession, hence status = 3.
 					PP.setyearsincurrentstatus(0); 												//Updating status means clearing years with this status.
-						TheEnvironment.projectsawaitinginvestmentdecision.add(PP);				//Add to all operations powerplants
-						
-					//To work around the problem of concurring operations, the removement of the project from the Underconstruction list must be done in another operation below.
-					for (int i = 0; i < TheEnvironment.projectinprocess.size(); i++) {
-						if (TheEnvironment.projectinprocess.get(i).getstatus() == 3) {			//If status indicates that its been given concession, hence remove from process.
-						TheEnvironment.projectinprocess.remove(i);}}
+					TheEnvironment.projectsawaitinginvestmentdecision.add(PP);					//Add to all operations powerplants
+					tempremoval.add(PP);
+
 				}
 				//No else. Nothing is done if the yearswithcurrent status does not fulfill the above criteria.
 			}
 			//No else
-		}}
+		}
+		TheEnvironment.projectinprocess.removeAll(tempremoval);
+		
+	}
 	
 	
 	public static void projectidentification() {
@@ -182,14 +186,14 @@ public class ProjectDevelopment {
 		for (DeveloperAgent DA : CommonMethods.getDAgentList()) {
 
 			ArrayList<PowerPlant> templist = new ArrayList<PowerPlant>();
-			double usedRRR = DA.getmycompany().getearlystageRRR();																 //Company specific
 			
 			//Collecting the projects that the DA have identrifyed
 			for (PowerPlant PP : DA.getmyprojects()) {
+				double usedRRR = DA.getmycompany().getearlystageRRR() * PP.getspecificRRR();									 //Company specific multipled with earlistage corrctor.
 				if (PP.getstatus() == 5) {																					     //5=Identyfied project.
 					PP.addyearsincurrentstatus(1);																				 //Increasing number of years with this status.
 					templist.add(PP);															
-					PP.calculateLRMCandcertpriceneeded((currentyear+AllVariables.expectedyersinconcession), usedRRR, 3);		 //3=Using the forward power price in the region of the project.
+					PP.calculateLRMCandcertpriceneeded((currentyear+AllVariables.expectedyersinconcession), usedRRR, 1);		 //3=Using the forward power price in the region of the project.
 					//Notice the "currentyear+AllVariables.expectedyersinconcession". The LRMC takes account for the years of construcion deciding the eligability for certifiates. Whereas the input here
 					//takes account for the years in concessions. Adding this up the DA then takes account for both the years in concess
 				}

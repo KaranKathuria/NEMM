@@ -52,6 +52,7 @@ public final class TheEnvironment {
 		projectinprocess = new ArrayList<PowerPlant>() ;
 		projectsawaitinginvestmentdecision = new ArrayList<PowerPlant>() ;
 		projectsunderconstruction = new ArrayList<PowerPlant>() ;
+		trashedprojects = new ArrayList<PowerPlant>();
 		allRegions = new ArrayList<Region>() ;	
 		alladjustedRRR = new ArrayList<ProjectRRR>();
 	}
@@ -62,7 +63,7 @@ public final class TheEnvironment {
 		inputreader.ReadExcel.ReadRegions();
 		inputreader.ReadExcel.ReadRRR();
 		inputreader.ReadExcel.ReadPowerPlants();
-
+																		
 	}
 		
 	
@@ -89,9 +90,12 @@ public final class TheEnvironment {
 		public static double ppendofyearpluss5;
 		
 		public static double producersphysicalposition = 0;
+		public static double totaltickproduction = 0;
 		public static double tradersphysicalposition = 0;
 		public static double obligatedpurchasersphysiclaposition = 0;
+		public static double totaltickdemand = 0;
 		public static double totalmarketphysicalposition = 0;
+		public static double ticksupplyanddemandbalance = 0;
 		public static double bestbuyoffer1;
 		public static double bestbuyoffer2;
 		public static double bestselloffer1;
@@ -104,13 +108,15 @@ public final class TheEnvironment {
 			
 			//Initiating globale values consisting of public market information
 			certificateprice = new TickArray();
-			currentmarketprice = ParameterWrapper.getpriceexpectation();
+			currentmarketprice = ParameterWrapper.getpriceexpectation();			//This is the initial expected short term price at simulation start.
 			currentinterestrate = ParameterWrapper.getinitialinterestrate();
-			RRR = AllVariables.RRR;
+			//RRR = AllVariables.RRR;
 			
 			producersphysicalposition = 20000;					//Must be set to the sum of all agents startingposition. Just used for graph values.
+			totaltickproduction = 0;
 			tradersphysicalposition = 0;						//Must be set to the sum of all agents startingposition. Just used for graph values.
 			obligatedpurchasersphysiclaposition = -20000;		//Must be set to the sum of all agents startingposition. Just used for graph values.
+			totaltickdemand = 0;
 			totalmarketphysicalposition = 0;					//Must be set to the sum of all agents startingposition. Just used for graph values.
 			}
 		
@@ -128,22 +134,27 @@ public final class TheEnvironment {
 			numberofbuyoffersstm = ShortTermMarket.getnumberofbuyoffers();
 			numberofselloffersstm = ShortTermMarket.getnumberofselloffers();
 			
+			totaltickproduction = 0;
+			totaltickdemand = 0;
 			producersphysicalposition = 0;
 			tradersphysicalposition = 0;
 			obligatedpurchasersphysiclaposition = 0;
 			totalmarketphysicalposition = 0;
+			ticksupplyanddemandbalance= 0;
 			
 			for (ActiveAgent pa: CommonMethods.getPAgentList()){
-				producersphysicalposition = producersphysicalposition + pa.getphysicalnetposition();	
+				producersphysicalposition = producersphysicalposition + pa.getphysicalnetposition();
+				totaltickproduction = totaltickproduction + pa.getlasttickproduction();
 			}
 			for (ActiveAgent opa: CommonMethods.getOPAgentList()){
 				obligatedpurchasersphysiclaposition = obligatedpurchasersphysiclaposition + opa.getphysicalnetposition();	
+				totaltickdemand = totaltickdemand + opa.getlasttickdemand();
 			}
 			for (ActiveAgent ta: CommonMethods.getTAgentList()){
 				tradersphysicalposition = tradersphysicalposition + ta.getphysicalnetposition();	
 			}
 			totalmarketphysicalposition = tradersphysicalposition + obligatedpurchasersphysiclaposition + producersphysicalposition;
-			
+			ticksupplyanddemandbalance = totaltickproduction + totaltickdemand;
 			
 		}
 		/*

@@ -62,12 +62,12 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 		
 	//Distributing Plants, projects and demand among Agents
 	DistributeProjectsandPowerPlants.distributeallpowerplants(AllVariables.powerplantdistributioncode);	 //Distribute all PowerPlants among the Copmanies with PAgents.
-	DistributeProjectsandPowerPlants.distributeprojects(AllVariables.projectsdistributioncode);			 //Distribute all Projects among the Copmanies with DAgents.
-	DistributeDemandShares.distributedemand(AllVariables.demandsharedistrubutioncode);					 //Distribute all demand among the Copmanies with OPAgents.
+	DistributeProjectsandPowerPlants.distributeprojects(AllVariables.projectsdistributioncode);			 //Distribute all Projects among the Companies with DAgents.
+	DistributeDemandShares.distributedemand(AllVariables.demandsharedistrubutioncode);					 //Distribute all demand among the Companies with OPAgents.
 
-	Forcast.initiatevolumeprognosis(); 																	 //Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based
-//	FundamentalMarketAnalysis.runfundamentalmarketanalysis();											 //
-//	Forcast.updateMPEandLPE();																			 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
+	Forcast.initiatevolumeprognosis(); 																	 //Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based om expected prodution for the future year
+	FundamentalMarketAnalysis.runfundamentalmarketanalysis();											 //
+	Forcast.updateMPEandLPE();																			 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
 	
 }
 	
@@ -76,20 +76,19 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 
 
 //All annual updates to come below. Currently not in use.
-@ScheduledMethod(start = 11, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
+@ScheduledMethod(start = 12, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
 public void annualmarketschedule() {
 	
-//	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished
-//	ProjectDevelopment.receiveconcession();						//As this is given an not dependent on other stages. Starting with adding on year in this status.
-//  ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.
-//	ProjectDevelopment.startconstruction();						//The investment decision. This is ran after "receiveconcession", hence projects and investment decision can done the same year.
-//	ProjectDevelopment.startpreprojectandapplication();	        //The process of deciding which project to apply for concession. Like the startconcessions
+	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished
+	ProjectDevelopment.receivingconcession();					//As this is given an not dependent on other stages. Starting with adding on year in this status.
+	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.
+	ProjectDevelopment.startconstrucion();						//The investment decision. This is ran after "receiveconcession", hence projects and investment decision can done the same year.
+	ProjectDevelopment.startpreprojectandapplication();	        //The process of deciding which project to apply for concession. Like the startconcessions
 //	ProjectDevelopment.identifyprojects();						//Given how many projects the DA has in concession-stage and the limit, receice new projects.
-//  ProjectDevelopment.updateDAgentsnumber();					//Not really needed, but okey for displaypurposes.
+	ProjectDevelopment.updateDAgentsnumber();					//Not really needed, but okey for displaypurposes.
 
-	
-//	FundamentalMarketAnalysis.runfundamentalmarketanalysis();	//Running the fundamental analysis. Basis for all agents LPE and MPE
-//	Forcast.updateMPEandLPE();									//Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
+	FundamentalMarketAnalysis.runfundamentalmarketanalysis();	//Running the fundamental analysis. Basis for all agents LPE and MPE
+	Forcast.updateMPEandLPE();									//Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
 //	
 }
 
@@ -171,6 +170,9 @@ public void obligationsperiodshedule() {
 	
 	public double getproducersphysicalposition() {
 		return TheEnvironment.GlobalValues.producersphysicalposition;
+	}
+	public double gettotaltickproducion() {
+		return TheEnvironment.GlobalValues.totaltickproduction;
 	}	
 	public double gettradersphysicalposition() {
 		return TheEnvironment.GlobalValues.tradersphysicalposition;
@@ -178,9 +180,44 @@ public void obligationsperiodshedule() {
 	public double getobligatedpurchaserssphysicalposition() {
 		return TheEnvironment.GlobalValues.obligatedpurchasersphysiclaposition;
 	}
+	public double gettotaltickdemand() {
+		return TheEnvironment.GlobalValues.totaltickdemand;
+	}
 	public double gettotalmarketphysicalposition() {
 		return TheEnvironment.GlobalValues.totalmarketphysicalposition;
 	}
+	public double getticksupplyanddemandbalance() {
+		return TheEnvironment.GlobalValues.ticksupplyanddemandbalance;
+	}
+	public int gettotalnumberofpowerplantsinoperation() {
+		return TheEnvironment.allPowerPlants.size();
+	}
+	public int gettotalnumberofprojectsunderconstruction() {
+		return TheEnvironment.projectsunderconstruction.size();
+	}
+	public int gettotalnumberofprojectsawatingID() {
+		return TheEnvironment.projectsawaitinginvestmentdecision.size();
+	}
+	public int gettotalnumberofprojectsinconcessionqueue() {
+		return TheEnvironment.projectinprocess.size();
+	}
+	public int gettotalnumberofprojectsidentifyed() {
+		return TheEnvironment.projectsidentifyed.size();
+	}
+	public int gettotalnumberofpotentialprojects() {
+		return TheEnvironment.potentialprojects.size();
+	}
+	public int gettotalnumberofprojectstrashed() {
+		if (TheEnvironment.trashedprojects.isEmpty()) {
+		return 0;}
+		return TheEnvironment.trashedprojects.size();
+	}
+	public int gettotalnumberofpowerplantandprojeects() {
+		int temp = TheEnvironment.trashedprojects.size() + TheEnvironment.potentialprojects.size() + TheEnvironment.projectsidentifyed.size() + TheEnvironment.projectinprocess.size() + TheEnvironment.projectsawaitinginvestmentdecision.size() +
+				TheEnvironment.allPowerPlants.size() + TheEnvironment.projectsunderconstruction.size();
+		return temp;
+	}
+	
 	
 	//The flowing methods gets the buy and sell offer prices of the last PA and OPA agents best strategy, and first tactic.
 	//The getbest also gets the variable offer of the best tactic. 

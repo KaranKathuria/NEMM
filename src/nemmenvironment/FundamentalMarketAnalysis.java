@@ -108,14 +108,17 @@ public class FundamentalMarketAnalysis {
 		
 		//Get total production from plants i operation, for iterated year. Notie the use of getestimannualprod() and not the exact or expected production. 
 																			
-		for (PowerPlant PP : allPowerPlants_copy) { 															//All operational PP.
-			if (PP.getstartyear() == (currentyear+i) ) {														//Special rule if the plant startet "this" iteration-year. 
-				totalannucertproduction = totalannucertproduction + (PP.getestimannualprod() * 0.5);}			//This is sexy! On average the projects finished this year is estimated to start in june.
+		for (PowerPlant PP : allPowerPlants_copy) { 																		//All operational PP.
+			if (PP.getstartyear() == (currentyear+i) && PP.getstartyear() != TheEnvironment.theCalendar.getStartYear()) {	//Special rule if the plant startet "this" iteration-year. But not for start year as projects in operation at start should be counted at start and not by *0.5
+				totalannucertproduction = totalannucertproduction + (PP.getestimannualprod() * 0.5);}						//This is sexy! On average the projects finished this year is estimated to start in june.
 			else {
-				if (PP.getendyear() > (currentyear+i) ) {														//If started earlier, only count certs for eligable years (recall that Norway post2020 might be mistakenly counted if here, but, they would noe be invested inn) 
-			totalannucertproduction = totalannucertproduction + PP.getestimannualprod();} 						//Starting at year i. Later method returns the calculated normal year production.
+				if (PP.getendyear() >= (currentyear+i) ) {																	//If started earlier, only count certs for eligable years (recall that Norway post2020 might be mistakenly counted if here, but, they would noe be invested inn) 
+			totalannucertproduction = totalannucertproduction + PP.getestimannualprod();} }									//Starting at year i. Later method returns the calculated normal year production.
+			
+			if (PP.getendyear()+1 == (currentyear+i) && PP.getstartyear() != TheEnvironment.theCalendar.getStartYear()) {	//Extreamly sexy. For counting the years at end, we need to add the 50 % that where cut in the start year. 
+			totalannucertproduction = totalannucertproduction + (PP.getestimannualprod() * 0.5);} 
 			}	
-		}
+		
 		
 		//Calculate the certificatebalance before new investments are made. 
 		certificatebalance = certificatebalance + totalannucertproduction - totalannudemand;
@@ -152,6 +155,9 @@ else  {
 				if (PP.getendyear() >= (currentyear+i) ) {														//Only count certificates when the plant is eligable. 
 					totalannucertproduction = totalannucertproduction + PP.getestimannualprod();} 				//Starting at year i. Later method returns the calculated normal year production.
 			}
+			if (PP.getendyear()+1 == (currentyear+i)) {															//Extreamly sexy. For counting the years at end, we need to add the 50 % that where cut in the start year. 
+				totalannucertproduction = totalannucertproduction + (PP.getestimannualprod() * 0.5);} 
+				
 		}
 		
 		certificatebalance = certificatebalance - totalannudemand + totalannucertproduction;					//Give the current balance and hence how many new project needs to be realized.
@@ -189,7 +195,7 @@ else  {
 	//THe final operation of FMA: Setting the MPE and LPE. 
 	int at = equilibriumpricesyearsahead.size();
 	ArrayList<Double> test = new ArrayList<Double>();
-	test = equilibriumpricesyearsahead;
+	test = equilibriumpricesyearsahead;													//For testing purposes.
 	
 	int MPEcount = 2;  //Startingpoint year for Medium term price
 	MPE = 0;
@@ -209,6 +215,7 @@ else  {
 	
 	double m = MPE;
 	double l = LPE;
+	int a = 2;
 
 	}
 

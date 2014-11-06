@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import org.piccolo2d.util.PPickPath;
+
 import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
 import nemmstrategy_shortterm.SellOffer;
@@ -64,10 +66,9 @@ public class LRMCCurve {
 			throw new Error("No need for new projects when there is access certificates");
 			
 		} else {
-		
-			double globalRRR = TheEnvironment.GlobalValues.RRR;															//Calculation uses the the global given RRR for FMA.
+		double usedRRR = AllVariables.RRR;
 		for (PowerPlant PP : tempendogenousprojects) {																	//Loop creating and adding all relevant project info to the supplycurve.
-			PP.calculateLRMCandcertpriceneeded((yearsahead-PP.getminconstructionyears()), globalRRR, 1);				//Calculates the LRMC and needed Certificateprice based on the given year minus construction years due to the methods inputdefinitio.
+			PP.calculateLRMCandcertpriceneeded((yearsahead-PP.getminconstructionyears()), usedRRR, 1);		//Calculates the LRMC and needed Certificateprice based on the given year minus construction years due to the methods inputdefinitio.
 			Curvepair cp = new Curvepair(PP.getname(), PP.getLRMC(), PP.getcertpriceneeded(), PP.getestimannualprod());
 			projectsupplycurve.add(cp);
 		}

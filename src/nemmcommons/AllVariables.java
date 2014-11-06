@@ -67,7 +67,7 @@ public class AllVariables {
 	//FundamentalMarketAnalysis
 	public static int yearstoendogprojects = 4;
 	public static double maxpricecerts = 1000;
-	public static double RRR = 0.06;
+	public static double RRR = 0.085;
 	
 	//Initial distribution of powerplants, projects and demandshares.
 	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
@@ -83,7 +83,7 @@ public class AllVariables {
 	public static boolean certificatespost2020_Sweden = true;
 	
 	//The concession and preconstruction process
-	public static int maxyearsinconcessionqueue = 7;				//With minconcessionyear = 3, that 4 years with 0.3 chance of getting concession. If not, the project is trashed.
+	public static int maxyearsinconcessionqueue = 3;				//Number of years in addition to minimum number of years in concession queue given as input from excel. After this, if not having received concession, the project is trashed.
 	public static double annualprobforreceivingconcession = 0.3;	//Only with one decimal as the random generater uses int.
 	public static int expectedyersinconcession = 5;					//When deciding for concession, how long to the developers expected the project to be in line. Needed due to learningcurve/CAPEX estimation.
 	

@@ -1,0 +1,40 @@
+<repast.simphony.data2.engine.DataSetDescriptor>
+  <name>Medium and long term price</name>
+  <type>AGGREGATE</type>
+  <inclTick>true</inclTick>
+  <inclBatchRun>false</inclBatchRun>
+  <inclRandomSeed>false</inclRandomSeed>
+  <scheduleParams>
+    <start>1.0</start>
+    <interval>1.0</interval>
+    <priority>-Infinity</priority>
+    <pType>LAST</pType>
+    <duration>-1.0</duration>
+    <frequency>REPEAT</frequency>
+    <hashCode>-38034576</hashCode>
+  </scheduleParams>
+  <atEnd>false</atEnd>
+  <methodDataSources class="linked-hash-map">
+    <entry>
+      <string>MPE</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>MPE</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getmedimutermprice</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>LPE</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>LPE</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getlongtermprice</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+  </methodDataSources>
+  <countSources class="linked-hash-map"/>
+  <customNADataSources class="linked-hash-map"/>
+  <customAggDataSources class="linked-hash-map"/>
+</repast.simphony.data2.engine.DataSetDescriptor>

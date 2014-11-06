@@ -183,7 +183,7 @@ public class CompanyAgent extends ParentAgent {
 			if (myPowerPlants != null) {
 				for (PowerPlant PP : myPowerPlants) { 
 					// Add in the power plant's production for the current tick	
-					if(PP.getStartTick() <= curTick) {
+					if((PP.getStartTick() <= curTick) && (PP.getendtick() >= curTick)) {
 						volProd = volProd + PP.getProduction();
 					}
 				}
@@ -248,10 +248,10 @@ public class CompanyAgent extends ParentAgent {
 		private int numprojectsidentyfied;
 		
 		public DeveloperAgent() {
-			companyagent = this.companyagent;
+			companyagent = CompanyAgent.this;
 			sizecode = 2;								//By default all developmentagents have normal amount of activety.
-			projectprocessandidylimit = 5;				//Max number of project getting identifyed or getting in process.
-			constructionlimit = 2;						//Max number of projects getting in from moving to construction. 
+			projectprocessandidylimit = 5;				//Max number of project getting identifyed or in proecss.
+			constructionlimit = 6;						//Max number of projects getting in from moving to construction. 
 		}
 		
 		public void updateDAnumbers(double cpdorconstr, int numpt, int numpf, int numpuc, int numpaid, int numpip, int numpid) {
@@ -337,7 +337,8 @@ public class CompanyAgent extends ParentAgent {
 		produceragent = null;
 		obligatedpurchaseragent = null;
 		traderagent = null;
-		companyanalysisagent = null;}
+		companyanalysisagent = null;
+		developeragent = null;}
 	
 	
 	public CompanyAgent(boolean p, boolean op, boolean t) {
@@ -351,8 +352,8 @@ public class CompanyAgent extends ParentAgent {
 		
 		companyname = "Company " + this.getID();
 		companyanalysisagent = new CompanyAnalysisAgent();	
-		investmentRRR = 0.06;
-		earlystageRRR = 0.08;
+		investmentRRR = 1;																			//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
+		earlystageRRR = 1.05;																		//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
 		regionpartcode = 2;																			//By default, all companies are active in both countries. 
 		
 		}	
@@ -368,6 +369,15 @@ public class CompanyAgent extends ParentAgent {
 	public ArrayList<CompanyDemandShare> getMyDemandShares() {return myDemandShares;}
 	public double getInvestmentRRR() {return investmentRRR;}
 	public double getearlystageRRR() {return earlystageRRR;}
+	public double getphysicalnetposition() {double temp = 0;
+	if (produceragent != null) {
+		temp = temp + produceragent.physicalnetposition;}
+	if (obligatedpurchaseragent != null) {
+		temp = temp + obligatedpurchaseragent.physicalnetposition;}
+	if (traderagent != null) {
+		temp = temp + traderagent.physicalnetposition;}
+	return temp;}
 	
-}
-	
+	}
+			
+

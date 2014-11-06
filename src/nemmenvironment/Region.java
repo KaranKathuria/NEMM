@@ -23,7 +23,7 @@ public class Region {
 		this.myDemand = new MarketDemand();
 		this.myPowerPrice = new AnnualMarketSeries();
 		this.myForwardPrice = new AnnualMarketSeries[TheEnvironment.theCalendar.getNumYears()];
-			if (regionName == "Norway") {
+			if (regionName.equals("Norway")) {
 			certificatespost2020 = AllVariables.certificatespost2020_Norway;}
 			else { certificatespost2020 = AllVariables.certificatespost2020_Sweden;}
 		for (int i=0; i < myForwardPrice.length;i++) {

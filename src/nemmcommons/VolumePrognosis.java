@@ -54,7 +54,7 @@ public class VolumePrognosis {
 		for (PowerPlant pp : myVolumeAnalysisAgent.getmyCompany().getmypowerplants()) {
 			temp1 = temp1 + pp.getExpectedProduction(0); 															//Next tick
 			for (int i = 0; i < ticks; ++i) {
-			tempticks = tempticks + pp.getExpectedProduction(i); 													//The ticks next tick
+			tempticks = tempticks + pp.getExpectedProduction(i); 													//The ticks next tick. No plant starts or closes without production in current year.
 			}
 		}
 		for (CompanyDemandShare CDS : this.myVolumeAnalysisAgent.getmyCompany().getMyDemandShares()) {
@@ -78,15 +78,15 @@ public class VolumePrognosis {
 		double dtemp1 = 0;
 		double dtempticks = 0;
 		int from = TheEnvironment.theCalendar.getCurrentTick() + 1;
-		int tickleftinoblipd = TheEnvironment.theCalendar.getTimeBlock(from).tradepdID - TheEnvironment.theCalendar.getNumTradePdsInObligatedPd(); //Calculates the number of ticks to inlude (1-12).
+		int tickleftinoblipd = TheEnvironment.theCalendar.getNumTradePdsInObligatedPd() - TheEnvironment.theCalendar.getTimeBlock(from).tradepdID ; //Calculates the number of ticks to inlude (1-12).
 		for (PowerPlant pp : myVolumeAnalysisAgent.getmyCompany().getmypowerplants()) {
 			
-			if (pp.getStartTick() <= from) {						 //Only count production if the plant has actually started.
+			if ((pp.getStartTick() <= from) && (pp.getendtick() >= from)) {						 //Only count production if the plant has actually started and not close.
 			temp1 = temp1 + pp.getExpectedProduction(from);
 			}
 			
 			for (int i = from; i < from+tickleftinoblipd; ++i) {
-				if (pp.getStartTick() <= (from+i)) {				 //Only count production if the plant has actually started.
+				if (pp.getStartTick() <= (from+i) && (pp.getendtick() >= from+1) ) {			//Only count production if the plant has actually started and not closed.
 				tempticks = tempticks + pp.getExpectedProduction(i); //The ticks next ticks
 				}	}	
 		}

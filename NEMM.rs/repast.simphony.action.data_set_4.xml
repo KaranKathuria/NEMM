@@ -1,206 +1,98 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>All offers</name>
+  <name>Best offers</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
-    <start>1.0</start>
+    <start>0.0</start>
     <interval>1.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-2020931749</hashCode>
+    <hashCode>1804531736</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>sell1</string>
+      <string>Buyoffer1</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>sell1</id>
+        <id>Buyoffer1</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariableselloffers0</methodName>
+        <methodName>getalltacticbuyoffer1</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>sell 2</string>
+      <string>Buyoffer2</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>sell 2</id>
+        <id>Buyoffer2</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariableselloffers1</methodName>
+        <methodName>getalltacticbuyoffer2</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>sell 3</string>
+      <string>Selloffer1</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>sell 3</id>
+        <id>Selloffer1</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariableselloffers2</methodName>
+        <methodName>getalltacticselloffer1</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>sell 4</string>
+      <string>Selloffer2</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>sell 4</id>
+        <id>Selloffer2</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariableselloffers3</methodName>
+        <methodName>getalltacticselloffer2</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Market Price</string>
+      <string>Best buyoffer2</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Market Price</id>
+        <id>Best buyoffer2</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getbestbuyoffer2</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Best selloffer2</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Best selloffer2</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getbestselloffer2</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Market price</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Market price</id>
         <className>nemmcommons.NEMMContextBuilder</className>
         <methodName>currentmarketprice</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>sell 5</string>
+      <string>floor</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>sell 5</id>
+        <id>floor</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariableselloffers4</methodName>
+        <methodName>getfloor</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>sell 6</string>
+      <string>roof</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>sell 6</id>
+        <id>roof</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariableselloffers5</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>sell 7</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>sell 7</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariableselloffers6</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>sel 8</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>sel 8</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariableselloffers7</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>sell 9</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>sell 9</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariableselloffers8</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>sell 10</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>sell 10</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariableselloffers9</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>buy 1</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>buy 1</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariablebuyoffers0</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>buy 2</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>buy 2</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariablebuyoffers1</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>buy 3</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>buy 3</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariablebuyoffers2</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>buy 4</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>buy 4</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariablebuyoffers3</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>buy 5</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>buy 5</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariablebuyoffers4</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>buy 6</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>buy 6</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariablebuyoffers5</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>buy 7</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>buy 7</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariablebuyoffers6</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>buy 8</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>buy 8</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariablebuyoffers7</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>buy 9</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>buy 9</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariablebuyoffers8</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>buy 10</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>buy 10</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallvariablebuyoffers9</methodName>
+        <methodName>getroof</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

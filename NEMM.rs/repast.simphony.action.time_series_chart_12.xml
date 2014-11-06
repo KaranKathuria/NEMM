@@ -1,9 +1,9 @@
 <repast.simphony.chart2.engine.TimeSeriesChartDescriptor>
-  <name>All variable bids</name>
-  <dataSet>All offers</dataSet>
+  <name>Banked certificates</name>
+  <dataSet>Physical Position</dataSet>
   <xAxisLabel>Tick Count</xAxisLabel>
-  <yAxisLabel>Certificate price</yAxisLabel>
-  <chartTitle>All variable bids</chartTitle>
+  <yAxisLabel>Number of banked certificates (aggregate)</yAxisLabel>
+  <chartTitle>Banked certificates per agent type</chartTitle>
   <type>TIME_SERIES</type>
   <background>
     <red>255</red>
@@ -21,228 +21,54 @@
   <showLegend>true</showLegend>
   <seriesIds>
     <entry>
-      <string>sell1</string>
+      <string>Trader</string>
       <SeriesData>
-        <label>Variable selloffer</label>
+        <label>Trader</label>
         <color>
-          <red>204</red>
-          <green>255</green>
-          <blue>204</blue>
+          <red>51</red>
+          <green>102</green>
+          <blue>255</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>
     </entry>
     <entry>
-      <string>sell 6</string>
+      <string>ObligatedPurchaser</string>
       <SeriesData>
-        <label>Variable selloffer</label>
-        <color>
-          <red>204</red>
-          <green>255</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 2</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
+        <label>ObligatedPurchaser</label>
         <color>
           <red>255</red>
-          <green>204</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>sell 7</string>
-      <SeriesData>
-        <label>Variable selloffer</label>
-        <color>
-          <red>153</red>
-          <green>255</green>
-          <blue>153</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 3</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
-        <color>
-          <red>255</red>
-          <green>204</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 4</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
-        <color>
-          <red>255</red>
-          <green>204</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>sell 9</string>
-      <SeriesData>
-        <label>Variable selloffer</label>
-        <color>
-          <red>204</red>
-          <green>255</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 5</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
-        <color>
-          <red>255</red>
-          <green>204</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>sell 10</string>
-      <SeriesData>
-        <label>Variable selloffer</label>
-        <color>
-          <red>153</red>
-          <green>255</green>
-          <blue>153</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 6</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
-        <color>
-          <red>255</red>
-          <green>153</green>
-          <blue>153</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 7</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
-        <color reference="../../../entry[3]/SeriesData/color"/>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>Market Price</string>
-      <SeriesData>
-        <label>Market Price</label>
-        <color>
-          <red>0</red>
-          <green>0</green>
-          <blue>0</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>sel 8</string>
-      <SeriesData>
-        <label>Variable selloffer</label>
-        <color>
-          <red>204</red>
-          <green>255</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 8</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
-        <color reference="../../../entry[6]/SeriesData/color"/>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 9</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
-        <color reference="../../../entry[8]/SeriesData/color"/>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>sell 2</string>
-      <SeriesData>
-        <label>Variable selloffer</label>
-        <color>
-          <red>204</red>
-          <green>255</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>sell 3</string>
-      <SeriesData>
-        <label>Variable selloffer</label>
-        <color>
-          <red>0</red>
-          <green>255</green>
-          <blue>0</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>sell 4</string>
-      <SeriesData>
-        <label>Variable selloffer</label>
-        <color>
-          <red>102</red>
-          <green>255</green>
+          <green>102</green>
           <blue>102</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>
     </entry>
     <entry>
-      <string>buy 10</string>
+      <string>Producers</string>
       <SeriesData>
-        <label>Variable buyoffer </label>
-        <color reference="../../../entry[3]/SeriesData/color"/>
+        <label>Producers</label>
+        <color>
+          <red>153</red>
+          <green>255</green>
+          <blue>153</blue>
+          <alpha>255</alpha>
+        </color>
       </SeriesData>
     </entry>
     <entry>
-      <string>sell 5</string>
+      <string>Total</string>
       <SeriesData>
-        <label>Variable selloffer</label>
-        <color reference="../../../entry[2]/SeriesData/color"/>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 1</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
-        <color reference="../../../entry[3]/SeriesData/color"/>
+        <label>Total</label>
+        <color>
+          <red>255</red>
+          <green>0</green>
+          <blue>255</blue>
+          <alpha>255</alpha>
+        </color>
       </SeriesData>
     </entry>
   </seriesIds>
   <dataValueIds/>
-  <plotRangeLength>-1</plotRangeLength>
+  <plotRangeLength>0</plotRangeLength>
 </repast.simphony.chart2.engine.TimeSeriesChartDescriptor>

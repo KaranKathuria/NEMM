@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Physical Position</name>
+  <name>Traded volume</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
@@ -16,38 +16,11 @@
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>ObligatedPurchaser</string>
+      <string>Traded Volume</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>ObligatedPurchaser</id>
+        <id>Traded Volume</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getobligatedpurchaserssphysicalposition</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Producers</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Producers</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getproducersphysicalposition</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Trader</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Trader</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>gettradersphysicalposition</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Total</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Total</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>gettotalmarketphysicalposition</methodName>
+        <methodName>STMtradedvolume</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

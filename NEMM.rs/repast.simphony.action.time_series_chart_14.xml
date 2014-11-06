@@ -1,9 +1,9 @@
 <repast.simphony.chart2.engine.TimeSeriesChartDescriptor>
-  <name>Medium and Long Term Prices</name>
-  <dataSet>Medium and long term price</dataSet>
-  <xAxisLabel>Tick</xAxisLabel>
-  <yAxisLabel>Real EURO</yAxisLabel>
-  <chartTitle>Medioum and Long Term Price</chartTitle>
+  <name>Bidding behavior</name>
+  <dataSet>Best offers</dataSet>
+  <xAxisLabel>Tick Count</xAxisLabel>
+  <yAxisLabel>Bid price</yAxisLabel>
+  <chartTitle>Bidding behavior</chartTitle>
   <type>TIME_SERIES</type>
   <background>
     <red>255</red>
@@ -17,15 +17,46 @@
     <blue>255</blue>
     <alpha>255</alpha>
   </gridLineColor>
-  <showGrid>false</showGrid>
+  <showGrid>true</showGrid>
   <showLegend>true</showLegend>
   <seriesIds>
     <entry>
-      <string>MPE</string>
+      <string>roof</string>
       <SeriesData>
-        <label>MPE</label>
+        <label>roof</label>
+        <color>
+          <red>204</red>
+          <green>204</green>
+          <blue>204</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Selloffer2</string>
+      <SeriesData>
+        <label>Variable sell</label>
         <color>
           <red>153</red>
+          <green>255</green>
+          <blue>153</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>floor</string>
+      <SeriesData>
+        <label>floor</label>
+        <color reference="../../../entry/SeriesData/color"/>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Buyoffer2</string>
+      <SeriesData>
+        <label>Variable buy</label>
+        <color>
+          <red>255</red>
           <green>153</green>
           <blue>153</blue>
           <alpha>255</alpha>
@@ -33,9 +64,21 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>LPE</string>
+      <string>Selloffer1</string>
       <SeriesData>
-        <label>LPE</label>
+        <label>Must sell</label>
+        <color>
+          <red>204</red>
+          <green>255</green>
+          <blue>204</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Market price</string>
+      <SeriesData>
+        <label>Market price</label>
         <color>
           <red>0</red>
           <green>0</green>
@@ -44,7 +87,19 @@
         </color>
       </SeriesData>
     </entry>
+    <entry>
+      <string>Buyoffer1</string>
+      <SeriesData>
+        <label>Must buy</label>
+        <color>
+          <red>255</red>
+          <green>204</green>
+          <blue>204</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
   </seriesIds>
   <dataValueIds/>
-  <plotRangeLength>-1</plotRangeLength>
+  <plotRangeLength>0</plotRangeLength>
 </repast.simphony.chart2.engine.TimeSeriesChartDescriptor>

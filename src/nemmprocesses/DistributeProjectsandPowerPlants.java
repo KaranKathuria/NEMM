@@ -56,8 +56,6 @@ public class DistributeProjectsandPowerPlants {
 							}
 				}
 			}
-		int test = 2;
-		int test2 = TheEnvironment.allPowerPlants.size();
 		int randintervalNorway = probadjustedagentlistNorway.size() -1;   
 		int randintervalSweden = probadjustedagentlistSweden.size() -1;
 		
@@ -70,7 +68,7 @@ public class DistributeProjectsandPowerPlants {
 				PP.setMyCompany(probadjustedagentlistNorway.get(assign).getmycompany()); //Sets the powerplants to a random company in the relevant arraylist of Norway.
 				probadjustedagentlistNorway.get(assign).addpowerplant(PP);				 //The same PowerPlant is also added to that specific agents production list.
 			}	
-			else { 																		//Sweden
+			else { 																		 //Sweden
 				int assign = RandomHelper.nextIntFromTo(0,randintervalSweden);
 				PP.setMyCompany(probadjustedagentlistSweden.get(assign).getmycompany()); //Sets the powerplants to a random company in the relevant arraylist of Sweden.
 				probadjustedagentlistNorway.get(assign).addpowerplant(PP);				 //The same PowerPlant is also added to that specific agents production list.
