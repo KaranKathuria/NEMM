@@ -288,8 +288,9 @@ public class CompanyAgent extends ParentAgent {
 		public DeveloperAgent() {
 			companyagent = CompanyAgent.this;
 			sizecode = 2;								//By default all developmentagents have normal amount of activety.
-			projectprocessandidylimit = 5;				//Max number of project getting identifyed or in proecss.
-			constructionlimit = 6;						//Max number of projects getting in from moving to construction. 
+			projectprocessandidylimit = 10;		//func of sizecode		//Max number of project getting identifyed or in proecss.
+			constructionlimit = 8;						//Max number of projects getting in from moving to construction. 
+			totalcapacitylimit = 100000000;
 		}
 		
 		public void updateDAnumbers(double cpdorconstr, int numpt, int numpf, int numpuc, int numpaid, int numpip, int numpid) {
@@ -364,7 +365,7 @@ public class CompanyAgent extends ParentAgent {
 	private CompanyAnalysisAgent companyanalysisagent;
 	private ArrayList<CompanyDemandShare> myDemandShares = new ArrayList<CompanyDemandShare>();
 	private ArrayList<PowerPlant> myPowerPlants = new ArrayList<PowerPlant>();						//List of PowerPlants owned by the company regardless of project stage.
-	private ArrayList<PowerPlant> myProjects = new ArrayList<PowerPlant>();							//List of all projects owned by the company regardless of project stage.
+	private ArrayList<PowerPlant> myProjects = new ArrayList<PowerPlant>();							//List of all projects owned by the company regardless of project stage. Trashed projects are not included.
 	private int regionpartcode;																		//Code indication which region the Company is active in. 1=Norway (region1), 2=Norway and Sweden, 3=Sweden. This number has a connection with AA sizecode, hence a company with big size and reigonpartcode=2 is large in both regions.
 	private double investmentRRR; 																	//Company specific cost of capital. Used to evaluate investment decisions. Defined before tax.
 	private double earlystageRRR;																	//Required rate off return for project cut-off on earl-stage projects. Defined before tax. Higher than InvestmentRRR as the risk is higher.
@@ -415,7 +416,8 @@ public class CompanyAgent extends ParentAgent {
 	if (traderagent != null) {
 		temp = temp + traderagent.physicalnetposition;}
 	return temp;}
-	
+	public int getnumberofpowerplants() {return myPowerPlants.size();}
+	public int getnumberofprojects() {return myProjects.size();}
 	}
 			
 

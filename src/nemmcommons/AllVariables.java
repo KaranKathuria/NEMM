@@ -43,17 +43,18 @@ public class AllVariables {
 	public static int utilityDefault_TR = 1; // default utility for a trader agent
 	
 	// ---- GJB Added
-	// Tactics - number of ticks to exit positions
-	// Number of exit strategies for each agent type
-	public static int numPAExitStrategies = 3;
-	public static int numOPExitStrategies = 2;
+	
 	// distribution cutoffs used for assigning a strategy to a given agent
-	public static double[] cutoffPAExit = new double[]{0.5,0.8,1.0};
+	public static double[] cutoffPAExit = new double[]{0.33,0.66,1.0};
 	public static double[] cutoffOPExit = new double[]{0.9,1.0};
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
 	// over the next 12 ticks - i.e. it will sell 1/12th in the next tick
-	public static int[] numTicksPAExit = new int[]{1,6,12};
+	public static int[] numTicksPAExit = new int[]{1,12,36};
 	public static int[] numTicksOPExit = new int[]{1,2};
+	// Tactics - number of ticks to exit positions
+	// Number of exit strategies for each agent type
+	public static int numPAExitStrategies = numTicksPAExit.length;
+	public static int numOPExitStrategies = numTicksOPExit.length;
 	// ---- end GJB Added
 	
 	
@@ -61,7 +62,7 @@ public class AllVariables {
 	// Note - not all of these need be used in any given tactic & strategy
 	public static double multOfferVol_PASellStrategy1 = 2; // default max fraction of that month's production than can be sold in the month
 	public static int tacticDefaultLearn_PASellStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
-	public static double tacticDefaultMustSellShare_PASellStrategy1 = 1.0; // Default must sell share for the producer tactics (if used)
+	public static double tacticDefaultMustSellShare_PASellStrategy1 = 0.25; // Default must sell share for the producer tactics (if used)
 	public static double tacticDefaultMustSellPriceMult_PASellStrategy1 = 0.5;  // Default must sell price multiplier for the producer tactics (if used)
 	public static double tacticMinMustSellPriceMult_PASellStrategy1 = 0.7;
 	public static double tacticMaxMustSellPriceMult_PASellStrategy1 = 1.0;
@@ -90,21 +91,18 @@ public class AllVariables {
 	
 	//public static double randomfactorinintialstpriceexpectations = X; //Se market prognoisis constructor
 	//public static double randomfactorininmediummrundpriceexpectations = X; //Se market prognoisis constructor //This two could have the same random numer!
-	
-	//public static double mediumrundpriceexpectations = 220; //2 year expected price. Used by tactics to calculate floor on variable bids. This together with the risk free rate and the agents RAR.
-	//public static double longrundpriceexpectations = 300; //10 year expected price - not in use.
-	
+
 	//FundamentalMarketAnalysis
-	public static int yearstoendogprojects = 4;
-	public static double maxpricecerts = 1000;
-	public static double RRR = 0.085;
+	public static int yearstoendogprojects = 2;			//Just to save time in the FMA.
+	public static double maxpricecerts = 1000;			//To not get an errror in the FMA.
+	public static double initialRRRcorrector = 1;		//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis
 	
-	//Initial distribution of powerplants, projects and demandshares.
+	//Initial distribution of powerplants, projects and demandshares per region.
 	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 	public static int projectsdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 	public static int demandsharedistrubutioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 
-	// Generic Strategy
+	// Generic Strategy 
 	public static int MaxTacticPreferenceScore = 6;
 	public static int MinTacticPreferenceScore = 2;
 
@@ -113,8 +111,8 @@ public class AllVariables {
 	public static boolean certificatespost2020_Sweden = true;
 	
 	//The concession and preconstruction process
-	public static int maxyearsinconcessionqueue = 3;				//Number of years in addition to minimum number of years in concession queue given as input from excel. After this, if not having received concession, the project is trashed.
-	public static double annualprobforreceivingconcession = 0.3;	//Only with one decimal as the random generater uses int.
+	public static int maxyearsinconcessionqueue = 4;				//Number of years in addition to minimum number of years in concession queue given as input from excel. After this, if not having received concession, the project is trashed.
+	public static double annualprobforreceivingconcession = 0.4;	//Only with one decimal as the random generater uses int.
 	public static int expectedyersinconcession = 5;					//When deciding for concession, how long to the developers expected the project to be in line. Needed due to learningcurve/CAPEX estimation.
 	
 }
