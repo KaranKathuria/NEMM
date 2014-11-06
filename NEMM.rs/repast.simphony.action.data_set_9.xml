@@ -1,0 +1,94 @@
+<repast.simphony.data2.engine.DataSetDescriptor>
+  <name>PowerPlants and Projects</name>
+  <type>AGGREGATE</type>
+  <inclTick>true</inclTick>
+  <inclBatchRun>false</inclBatchRun>
+  <inclRandomSeed>false</inclRandomSeed>
+  <scheduleParams>
+    <start>0.0</start>
+    <interval>1.0</interval>
+    <priority>-Infinity</priority>
+    <pType>LAST</pType>
+    <duration>-1.0</duration>
+    <frequency>REPEAT</frequency>
+    <hashCode>70811299</hashCode>
+  </scheduleParams>
+  <atEnd>false</atEnd>
+  <methodDataSources class="linked-hash-map">
+    <entry>
+      <string>In operation</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>In operation</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gettotalnumberofpowerplantsinoperation</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Projects under construction</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Projects under construction</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gettotalnumberofprojectsunderconstruction</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Projects awaiting investment decision</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Projects awaiting investment decision</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gettotalnumberofprojectsawatingID</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Projects in concession queue</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Projects in concession queue</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gettotalnumberofprojectsinconcessionqueue</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Projects identifyed</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Projects identifyed</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gettotalnumberofprojectsidentifyed</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Potential projects</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Potential projects</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gettotalnumberofpotentialprojects</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Projects trashed</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Projects trashed</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gettotalnumberofprojectstrashed</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Total plants and projects</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Total plants and projects</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gettotalnumberofpowerplantandprojeects</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+  </methodDataSources>
+  <countSources class="linked-hash-map"/>
+  <customNADataSources class="linked-hash-map"/>
+  <customAggDataSources class="linked-hash-map"/>
+</repast.simphony.data2.engine.DataSetDescriptor>
