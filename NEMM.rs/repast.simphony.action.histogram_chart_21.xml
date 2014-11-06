@@ -1,0 +1,34 @@
+<repast.simphony.chart2.engine.HistogramChartDescriptor>
+  <name>Projects per Agent</name>
+  <dataSet>Agent`s plants and project</dataSet>
+  <xAxisLabel>Number of projects</xAxisLabel>
+  <yAxisLabel>Number of agents</yAxisLabel>
+  <chartTitle>Projects per Agents</chartTitle>
+  <type>HISTOGRAM</type>
+  <background>
+    <red>255</red>
+    <green>255</green>
+    <blue>255</blue>
+    <alpha>255</alpha>
+  </background>
+  <gridLineColor>
+    <red>255</red>
+    <green>255</green>
+    <blue>255</blue>
+    <alpha>255</alpha>
+  </gridLineColor>
+  <showGrid>true</showGrid>
+  <showLegend>true</showLegend>
+  <histType>STATIC</histType>
+  <binCount>30</binCount>
+  <sourceId>numberofprojects</sourceId>
+  <outOfRange>ADD</outOfRange>
+  <min>0.0</min>
+  <max>30.0</max>
+  <barColor>
+    <red>204</red>
+    <green>204</green>
+    <blue>204</blue>
+    <alpha>255</alpha>
+  </barColor>
+</repast.simphony.chart2.engine.HistogramChartDescriptor>
