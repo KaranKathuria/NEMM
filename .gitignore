@@ -38,3 +38,4 @@ Icon
 # Java class files
 *.class
 
+/debug.log

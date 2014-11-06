@@ -34,9 +34,11 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 		switch (flagUtilityFunction){
 			case 1:
 				// No specific initialisation required
+				break;
 			case 2:
 				alpha = 0.5;
 				flagFirstPd = 1;
+				break;
 		}
 	}
 
@@ -88,9 +90,12 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 
 		double curProfit = 0;
 		double curActivation = 0;
+		double curReturn = 0.0;
 		double curOfferVol = 0;
 		double curOfferPrice = 0;
 		double curOfferSold = 0;
+		double curOfferShareCleared = 0;
+		double[] certValue;
 		
 		ArrayList<double[]> retList = new ArrayList<double[]>();
 		double[] tmpArray;
@@ -99,6 +104,19 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 		// Initialise the return array list with null objects.
 		for ( i=0;i<s.size();i++) {
 			retList.add(null);
+		}
+		
+		// Calculate the residual values of the certificates
+		// Note: this is a certificate value (like a water value), and represents the chance and cost of being short
+		// and of paying more in the future for something you could buy today
+		// These will be set to:
+		// index 0 = expected shortfall price (as you need to buy the certificates today)
+		// all others = expected price of the next tick
+		// They should be obtained from the analysis agent
+		certValue = new double[s.size()];
+		certValue[0]=0; // assumes that certs are worth nothing if you cannot sell them (extreme, but ok for now)
+		for ( i=1;i<s.size();i++) {
+			certValue[i]=priceSpot; // for now take the market price as the best guess of the cert value
 		}
 		
 		for ( i=0;i<s.size();i++) {
@@ -113,25 +131,28 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 				// Calculate the new utility if there was an offer made.
 				// If no offer was made, we just keep the previous utility
 				curOfferVol = s.get(i).getCertVolume(); 
-				curOfferPrice = s.get(i).getCertVolume();
+				curOfferPrice = s.get(i).getPrice();
+//				curOfferShareCleared = s.get(i).getShareCleared();
+				curOfferShareCleared = 1.0;
 				if (curOfferVol > 0) {
 					// Calculate the volume sold from the offer if an offer was made (vol >0)
 					if (curOfferPrice<priceSpot){
 						curOfferSold = curOfferVol;
 					}
 					else if (curOfferPrice == priceSpot) {
-						curOfferSold = curOfferVol*shareofmarginaltoffersold;
+						curOfferSold = curOfferVol*curOfferShareCleared;
 					}
 					else {
 						curOfferSold = 0;
 					}
-					curProfit = curOfferSold*curOfferPrice; // Profit
-					curActivation = curOfferSold/curOfferVol; // Activation
+					curProfit = curOfferVol*curOfferPrice; // Profit if all was sold
+					curActivation = curOfferSold/curOfferVol; // Activation (prob of sale)
+					curReturn = curOfferVol*((1-curActivation)*certValue[i]+curActivation*curOfferPrice); // Return (utility)
 					// Exponential smoothing
 					if (tmpArray != null) {
 						tmpArray[1] = tmpArray[1] + alpha*(curProfit-tmpArray[1]); // Profit
 						tmpArray[2] = tmpArray[2] + alpha*(curActivation-tmpArray[2]); // Activation
-						tmpArray[0] = tmpArray[1]*tmpArray[2]; // Return						
+						tmpArray[0] = tmpArray[0] + alpha*(curReturn-tmpArray[0]); ; // Return						
 					}
 					else {
 						// This will occur if there has been no utility set for this sell offer as yet
@@ -140,7 +161,7 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 						tmpArray = new double[3];
 						tmpArray[1] = curProfit;
 						tmpArray[2] = curActivation;
-						tmpArray[0] = tmpArray[1]*tmpArray[2];
+						tmpArray[0] = curReturn;
 					}
 						
 
@@ -155,6 +176,9 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 				else {
 					retList.set(i,null);
 				}
+			}
+			else {
+				throw new IllegalArgumentException("PAUtilityMethod: Null Bid encountered!");
 			}
 				
 		}

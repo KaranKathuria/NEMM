@@ -178,6 +178,10 @@ public abstract class GenericStrategy {
 			listElement.tacticUtility = curUtilityScore;
 			tacticList.add(listElement);
 		}
+		if(TheEnvironment.theCalendar.getCurrentTick()>0){
+			int tmp1 = 1;
+			tmp1 = 2;
+		}
 		// Rank the tactics from high to low utility		
 		Collections.sort(tacticList); // sort using the TacticUtilityListElement comparator (see code above)
 		// Calculate the weights using the weight function

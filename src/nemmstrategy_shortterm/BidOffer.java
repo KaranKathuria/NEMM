@@ -2,6 +2,10 @@ package nemmstrategy_shortterm;
 
 public class BidOffer implements Comparable<BidOffer> {
 
+	// Holds all information regarding a bid or offer in the market
+	// Note that currently all bids and offer volumes are positive
+	// numbers (although this should be changed later I think)
+	
 	private double certVolume;
 	private double price;
 	private double[] utility;

@@ -51,17 +51,17 @@ public class SellStrategy1Tactic extends GenericTactic {
 	//Used constructor
 	SellStrategy1Tactic(double multOfferVol, double sbd, double multMustSellPrice, double multRestPrice, int learnID) {
 		// This should not really be here...
-		numberoflearningmethods = 4; //  Learning method IDs are 0 thru 3
+		numLearningMethods = 4; //  Learning method IDs are 0 thru 3
 		// These are set in the constructor only
 		paramMustSellShare = sbd;
 		paramMustSellPriceMult = multMustSellPrice;
 		paramRestVolPriceMult = multRestPrice;
 		paramLearningMethod = learnID; // Default learning method ID is 1
-		if (learnID < 0 || learnID > numberoflearningmethods-1) {
+		if (learnID < 0 || learnID > numLearningMethods-1) {
 			paramLearningMethod = 0; // default is no learning
 		}
 		tacticutilityscore = 0.5; //To ensure no change the first tick
-		maxoffervolumemultiplier = multOfferVol; //Indicates how much the maximum offer volume compared is to last ticks production.
+		maxBidOfferVolumeMultiplier = multOfferVol; //Indicates how much the maximum offer volume compared is to last ticks production.
 		// Create the curUtility array list to store utilities
 		// The first item is the utility info for the must sell
 		// The second item is the utility info for the rest volume
@@ -92,9 +92,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		
 		if (physicalnetposition <= 0){
 			physicalnetposition = 0.0;} //To not get crazy selloffers
-		
-		
-//		parameterLearning(); // Remove this (GJB)
+
 		updateinputvalues();
 		
 		// Delete the previous sell offers stored in the tacticselloffers arraylist
@@ -107,7 +105,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		tacticselloffers.add(offerMustSellVol);
 		tacticselloffers.add(offerRestVol);
 		if (tacticselloffers.size()==1) {
-			throw new IllegalArgumentException("DEBUG: Shoudl not have a single sell offer");
+			throw new IllegalArgumentException("DEBUG: Should not have only one sell offer");
 		}
 	}
 	
@@ -118,7 +116,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		tempdisc = TheEnvironment.GlobalValues.currentinterestrate + this.getmyStrategy().getmyAgent().getRAR(); //For Sellers/Producers this is added + (instead of minus)
 		
 		floorroofprice = twoyearahead/Math.pow(tempdisc + 1, 2); //Hence this equals the discounted future expected cert price. Discounted with a risk free rate and a risk rate //In other words, the seller will not sell the variable part unless the sell price is better than the discounted future price expectations. In that case he would hold the certificates in two years.
-		maxoffervolume = maxoffervolumemultiplier * this.getmyStrategy().getmyAgent().getlasttickproduction(); // * //What i produced the last tick
+		maxBidOfferVolume = maxBidOfferVolumeMultiplier * this.getmyStrategy().getmyAgent().getlasttickproduction(); // * //What i produced the last tick
 		maxppvolume = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getnexttwelvetickscertproduction(); //The max pp volume is equal to the expected production of the twelve next ticks. This value itself is produced in the volumeanalysis agent.
 		
 	}
@@ -131,7 +129,9 @@ public class SellStrategy1Tactic extends GenericTactic {
 			ret.setCertVolume(0.0);
 		}
 		else {
-			ret.setCertVolume(Math.max(paramMustSellShare*lasttickproduction,physicalposition-maxppvolume)); //equals must sell			
+//			ret.setCertVolume(Math.max(paramMustSellShare*lasttickproduction,physicalposition-maxppvolume)); //equals must sell	
+			int tmpTicks = myStrategy.getmyAgent().getNumTicksToEmptyPosition();
+			ret.setCertVolume(Math.max(paramMustSellShare*lasttickproduction,Math.max(0.0, physicalposition/myStrategy.getmyAgent().getNumTicksToEmptyPosition())));
 		}
 		ret.setPrice(paramMustSellPriceMult*expectedprice);
 		
@@ -146,7 +146,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 			ret.setCertVolume(0.0);
 		} 
 		else {
-			ret.setCertVolume(Math.max(0.0,Math.min(maxoffervolume-mustsell,physicalposition-mustsell))); //rest of the monthly production sold at expected price.			
+			ret.setCertVolume(Math.max(0.0,Math.min(maxBidOfferVolume-mustsell,physicalposition-mustsell))); //rest of the monthly production sold at expected price.			
 		}
 		ret.setPrice(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice)); //Prices not symmetric around expected price with must of the volume tried sold at at premium (1+discount)*expt.
 		return ret;
@@ -173,7 +173,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		
 		// Check that the tacticselloffers and the utility arraylists are the same size
 		if(tacticselloffers.size()!=curUtility.size()) {
-			throw new IllegalArgumentException("DEBUG(UpdateUtilityScore: tacticseloffers and curUtility are different sizes.");
+			throw new IllegalArgumentException("DEBUG(calcUtilityForCurrentTick: tacticseloffers and curUtility are different sizes.");
 		}
 		numOffers = tacticselloffers.size();
 		// Append the (previous tick's) utility to the current sell offers
@@ -187,7 +187,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		 retUtility = myStrategy.myAgent.getutilitymethod().CalcUtilityWithHistory(ShortTermMarket.getcurrentmarketprice(), tacticselloffers, ShortTermMarket.getshareofmarignaloffersold());
 		 // Check that retUtility is returned with size = numBids
 		if(retUtility.size()!=numOffers) {
-				throw new IllegalArgumentException("DEBUG(UpdateUtilityScore: Returned utility not expected size");
+				throw new IllegalArgumentException("DEBUG(calcUtilityForCurrentTick: Returned utility not expected size");
 		}
 		 
 		// Store the returned utility if there is an offer and a non-null utility returned, otherwise just keep the 

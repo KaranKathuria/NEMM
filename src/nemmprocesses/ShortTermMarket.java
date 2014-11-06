@@ -12,6 +12,7 @@ import java.util.Collections;
 
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmcommons.CommonMethods;
+import nemmenvironment.TheEnvironment;
 import nemmstrategy_shortterm.BidOffer;
 import nemmstrategy_shortterm.BuyOffer;
 import nemmstrategy_shortterm.GenericStrategy;
@@ -96,7 +97,7 @@ public class ShortTermMarket {
 // it is here temporarily 
 		updateAllBidsAndOffers();
 // ==============================================
-
+		int tmpT = TheEnvironment.theCalendar.getCurrentTick();
 		Allselloffers.clear();
 		Allbuyoffers.clear();
 		//Update all analysisagents price expectations		
@@ -246,7 +247,8 @@ public class ShortTermMarket {
 					if (indexOffer >=Allselloffers.size()) {
 						flagMarketCleared = 1;
 					}
-					else{
+					else
+					{
 						curOffer = ExtractBidOfferData(Allselloffers.get(indexOffer));
 					}	
 				}
@@ -289,7 +291,7 @@ public class ShortTermMarket {
 		tradedvolume = clearedVolume;
 		marketsupply = clearedVolume;
 		marketdemand = clearedVolume;
-		
+			
 		int i;
 		// set all offers cheaper than the marginal offer to be fully cleared
 		for(i=0;i<indexOffer;i++) {
@@ -300,18 +302,22 @@ public class ShortTermMarket {
 			Allbuyoffers.get(i).setShareCleared(1.0);
 		}		
 		// calculate the amount of the marginal offers cleared
-		if(curOffer.maxVol > 0) {
-			Allselloffers.get(indexOffer).setShareCleared(curOffer.tradedVol/curOffer.maxVol);	
+		if (indexOffer<Allselloffers.size()) {
+			if(curOffer.maxVol > 0) {
+				Allselloffers.get(indexOffer).setShareCleared(curOffer.tradedVol/curOffer.maxVol);	
+			}
+			else {
+				Allselloffers.get(indexOffer).setShareCleared(1.0);
+			}
 		}
-		else {
-			Allselloffers.get(indexOffer).setShareCleared(1.0);
+		if (indexBid>=0) {
+			if(curBid.maxVol > 0) {
+				Allbuyoffers.get(indexBid).setShareCleared(curBid.tradedVol/curBid.maxVol);	
+			}
+			else {
+				Allbuyoffers.get(indexBid).setShareCleared(1.0);
+			}	
 		}
-		if(curBid.maxVol > 0) {
-			Allbuyoffers.get(indexBid).setShareCleared(curBid.tradedVol/curBid.maxVol);	
-		}
-		else {
-			Allbuyoffers.get(indexBid).setShareCleared(1.0);
-		}	
 		
 		// Set the share of the marginal offer sold and the share of the marginal offer purchased
 		// GJB - remove this once checked that it is no longer used
