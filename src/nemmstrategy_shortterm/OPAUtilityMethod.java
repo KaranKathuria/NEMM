@@ -80,7 +80,7 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 		double curBidPrice = 0;
 		double curBidPurchased = 0;
 		double curBidShareCleared = 0;
-		double[] penaltyPrice;
+		double[] certValue;
 		
 		ArrayList<double[]> retList = new ArrayList<double[]>();
 		double[] tmpArray;
@@ -98,10 +98,10 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 		// index 0 = expected shortfall price (as you need to buy the certificates today)
 		// all others = expected price of the next tick
 		// They should be obtained from the analysis agent
-		penaltyPrice = new double[s.size()];
-		penaltyPrice[0]=200;
+		certValue = new double[s.size()];
+		certValue[0]=priceSpot*5; // I have made this bigger than the "penalty" to reflect risk aversion to being short 
 		for ( i=1;i<s.size();i++) {
-			penaltyPrice[i]=32;
+			certValue[i]=priceSpot; // for now, take the market price as the best guess of the certificate value
 		}
 		
 		for ( i=0;i<s.size();i++) {
@@ -118,20 +118,28 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 				// If no offer was made, we just keep the previous utility
 				// Note - if the previous utility is null, this still works
 				curBidVol = s.get(i).getCertVolume(); 
-				curBidPrice = s.get(i).getCertVolume();
+				curBidPrice = s.get(i).getPrice();
 //				curBidShareCleared = s.get(i).getShareCleared();
 				curBidShareCleared = 1;
 				if (curBidVol > 0) {
-					// Calculate the volume purchased from the bid
-					curBidPurchased = curBidVol*curBidShareCleared;			
-					curProfit = -curBidPurchased*curBidPrice; // negative as it is a cost
-					curActivation = curBidPurchased/curBidVol; // Activation
-					curReturn = -curBidPurchased*(penaltyPrice[i]*(1-curActivation)+curBidPrice*curActivation);
+					// Calculate the volume sold from the offer if an offer was made (vol >0)
+					if (curBidPrice>priceSpot){
+						curBidPurchased = curBidVol;
+					}
+					else if (curBidPrice == priceSpot) {
+						curBidPurchased = curBidVol*curBidShareCleared;
+					}
+					else {
+						curBidPurchased = 0;
+					}			
+					curProfit = -curBidVol*curBidPrice; // Profit (cost as -ve) if all was purchased
+					curActivation = curBidPurchased/curBidVol; // Activation (prob. of purchase)
+					curReturn = -curBidVol*(certValue[i]*(1-curActivation)+curBidPrice*curActivation); // Return (Utility)
 					// Exponential smoothing
 					if (tmpArray != null) {
 						tmpArray[1] = tmpArray[1] + alpha*(curProfit-tmpArray[1]); // Profit (cost)
 						tmpArray[2] = tmpArray[2] + alpha*(curActivation-tmpArray[2]); // Activation
-						tmpArray[0] = tmpArray[0] + alpha*(curReturn-tmpArray[1]);; // Return						
+						tmpArray[0] = tmpArray[0] + alpha*(curReturn-tmpArray[0]);; // Return						
 					}
 					else {
 						// This will occur if there has been no utility set for this bid as yet

@@ -173,9 +173,16 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		// Store the returned utility if there is an offer and a non-null utility returned, otherwise just keep the 
 		// existing utility	
 		for(i = 0; i<numBids; i++) {
-			if(tacticbuyoffers.get(i) != null && retUtility.get(i) != null) {
-				curUtility.set(i, retUtility.get(i).clone());
+			if(tacticbuyoffers.get(i) != null) {
+				if( retUtility.get(i) != null) {
+					curUtility.set(i, retUtility.get(i).clone());
+				}
 			}
+			else {
+				throw new IllegalArgumentException("DEBUG(calcUtilityForCurrentTick: null buy offers");
+			}
+				
+			
 		}
 		
 		// Add the calculated utility (that is, the utility for this tick) to each of the tick's offers

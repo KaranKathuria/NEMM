@@ -76,7 +76,7 @@ public class AllVariables {
 	// Supplier (Obligated Purchaser) strategies and tactics
 	public static double multOfferVol_OPBuyStrategy1 = 2; // default max fraction of that month's production than can be sold in the month
 	public static int tacticDefaultLearn_OPBuyStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
-	public static double tacticDefaultMustBuyShare_OPBuyStrategy1 = 1.0; // Default must Buy share for the producer tactics (if used)
+	public static double tacticDefaultMustBuyShare_OPBuyStrategy1 = 0.75; // Default must Buy share for the producer tactics (if used)
 	public static double tacticDefaultMustBuyPriceMult_OPBuyStrategy1 = 1.5;  // Default must Buy price multiplier for the producer tactics (if used)
 	public static double tacticMinMustBuyPriceMult_OPBuyStrategy1 = 1.0;
 	public static double tacticMaxMustBuyPriceMult_OPBuyStrategy1 = 1.4;
