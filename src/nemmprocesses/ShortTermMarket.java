@@ -90,8 +90,8 @@ public class ShortTermMarket {
 		// For display purposes
 		int counts = 0;
 		int countb = 0;
-		buyoffer2 = new double[20];
-		selloffer2 = new double[20];
+		buyoffer2 = new double[40];
+		selloffer2 = new double[40];
 		
 // GJB This needs to be moved into ACTIVE AGENT
 // it is here temporarily 

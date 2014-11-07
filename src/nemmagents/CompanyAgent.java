@@ -12,6 +12,7 @@ package nemmagents;
 import java.util.ArrayList;
 import java.util.Random;
 
+import repast.simphony.random.RandomHelper;
 import nemmagents.MarketAnalysisAgent;
 import nemmagents.ParentAgent;
 import nemmprocesses.ShortTermMarket;
@@ -391,8 +392,8 @@ public class CompanyAgent extends ParentAgent {
 		
 		companyname = "Company " + this.getID();
 		companyanalysisagent = new CompanyAnalysisAgent();	
-		investmentRRR = 1;																			//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
-		earlystageRRR = 1.05;																		//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
+		investmentRRR = RandomHelper.nextDoubleFromTo(0.85, 1.15);									//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
+		earlystageRRR = investmentRRR + 0.05;														//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
 		regionpartcode = 2;																			//By default, all companies are active in both countries. 
 		
 		}	
