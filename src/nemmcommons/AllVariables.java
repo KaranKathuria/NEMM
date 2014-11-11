@@ -26,9 +26,6 @@ public class AllVariables {
 //	public static double PAgentmustsellshare = 0.5;				//RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
 //	public static double OPAgentmustsellshare = 0.75; 		 //RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
 	
-	public static double stdmediumrunpriceexpect = 0.1;     //The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	public static double stdlongrunpriceexpect = 0.1;     	 //The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	 
 	public static double tradermaximumshortpos = -5000; //These values should have some realtion to the initial portfoliovalue by allowing traders
 	public static double tradermaximumlongpos = 5000;	//to go bust.
 	public static double portfoliocapitalexitlimit = 100000; //reaching this limit triggers and "exit" behavior. This each reach with strong price drop/increase
@@ -92,12 +89,18 @@ public class AllVariables {
 	//public static double randomfactorinintialstpriceexpectations = X; //Se market prognoisis constructor
 	//public static double randomfactorininmediummrundpriceexpectations = X; //Se market prognoisis constructor //This two could have the same random numer!
 
-	//FundamentalMarketAnalysis
-	public static int yearstoendogprojects = 2;			//Just to save time in the FMA.
-	public static double maxpricecerts = 1000;			//To not get an errror in the FMA.
-	public static double initialRRRcorrector = 1;		//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis
-	public static int MPECount = 16;					//Number of futuer years seen by the MPE-analysis
-	public static int LPECount = 24;					//Number of futuer years seen by the LPE-analysis
+	//FundamentalMarketAnalysis and Project Developement
+	public static int yearstoendogprojects = 2;				//Just to save time in the FMA.
+	public static double maxpricecerts = 1000;				//To not get an errror in the FMA.
+	public static double initialRRRcorrector = 1;			//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis
+	public static double RRRpostpondpremium = 0.02;			//Risk premium (basispoints 0.01 = 1%) need to be covered if the investment decision is to be postpond. 
+	public static int minpostpondyears = 1;				//How long the investment decision is postpond if postponed.Cannot see why this should be larger than 1. (only argument is if this is the real deal).
+	public static int MPECount = 17;						//Number of futuer years seen by the MPE-analysis. THats 15 + verage construction yers.
+	public static int LPECount = 24;						//Number of futuer years seen by the LPE-analysis
+	public static double stdmediumrunpriceexpect = 0.05;    //The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
+	public static double stdlongrunpriceexpect = 0.15;       //The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
+	
+	 
 	
 	//Initial distribution of powerplants, projects and demandshares per region.
 	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2

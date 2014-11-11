@@ -64,18 +64,20 @@ public class ProjectDevelopment {
 		int currenttick = TheEnvironment.theCalendar.getCurrentTick();
 		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year + TheEnvironment.theCalendar.getStartYear();	//Gets the current year.
 		
-		int test = CommonMethods.getDAgentList().size();
 		for (DeveloperAgent DA : CommonMethods.getDAgentList()) {
 			
 			ArrayList<PowerPlant> templist = new ArrayList<PowerPlant>();
+			ArrayList<Double> RRRpostponedtemplist = new ArrayList<Double>();
 			
 			//Collecting the projects that are awaiting investmetn decision (status = 3) and counting projects currently under construction.
 			for (PowerPlant PP : DA.getmyprojects()) {
 			double usedRRR = DA.getmycompany().getInvestmentRRR()*PP.getspecificRRR();			//Company specific RRR multiplied with company`s investment RRR.
+			double postponedRRR = usedRRR + AllVariables.RRRpostpondpremium;					//If postponed, there should be a risk premium
 
 				if (PP.getstatus() == 3) {														//3=Awaiting investment decision.
 					PP.addyearsincurrentstatus(1);												//Increasing number of years with this status with one.
 					templist.add(PP);															//Adds all the projects, regardsless of having a cert price needed to high or low.
+					RRRpostponedtemplist.add(postponedRRR);										//A not so good workaround for saving the projet specific postponedRRR
 					PP.calculateLRMCandcertpriceneeded(currentyear, usedRRR, 3);				//Using the market forward power price in that given reigon. Notice that this is calculated for when the year the project can be invested in, not the year it can be finished!!
 				}
 			}
@@ -83,7 +85,8 @@ public class ProjectDevelopment {
 			Collections.sort(templist, new CommonMethods.customprojectcomparator());			//Sorting the of a DAs project awaiting from lowest certprie needed to highest cert price needed
 			
 			//All the cirteria variables for the investment decision
-			double cutoffcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations(); //Should be discussed.
+			double cutoffcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations(); 
+			double postpondedcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getlongrunpriceexpectatations(); 
 			int maxnumberofconstrucprojects = DA.getconstructionlimit();
 			int constructionproject_counter = DA.getnumprojectsunderconstr();					//Newly updated values.
 			double maxcapacitydeveloped		= DA.gettotalcapacitylimit();
@@ -93,7 +96,15 @@ public class ProjectDevelopment {
 			
 			//The critical investment decision.
 			while ((constructionproject_counter < maxnumberofconstrucprojects) && (capacitydeveloped_counter < maxcapacitydeveloped) &&  (projects_pointer < potentialprojects )) {
-				if (templist.get(projects_pointer).getcertpriceneeded() <= cutoffcertprice) {	//Starting with the best, if its worth investing...startconstruction.
+					double certpriceneedednow = templist.get(projects_pointer).getcertpriceneeded();
+				if (certpriceneedednow <= cutoffcertprice) {													//Starting with the best, if its worth investing...
+					
+					//Okey. If its worth investing now, is it more lucrative to postpond the investment?
+					double postponedRRR = RRRpostponedtemplist.get(projects_pointer);
+					templist.get(projects_pointer).calculateLRMCandcertpriceneeded(currentyear+AllVariables.minpostpondyears, postponedRRR, 3);
+					double certpriceneededpostpond = templist.get(projects_pointer).getcertpriceneeded();
+					int a = 22;
+					if ((cutoffcertprice-certpriceneedednow)>(postpondedcertprice-certpriceneededpostpond)) {	//Only if its better to invest now than postponed, invest:
 					
 					PowerPlant thisplant = templist.get(projects_pointer);
 					capacitydeveloped_counter = capacitydeveloped_counter + thisplant.getCapacity();
@@ -106,7 +117,8 @@ public class ProjectDevelopment {
 					TheEnvironment.projectsawaitinginvestmentdecision.remove(thisplant);		//Removing from Environment list of awaitinginvestmentsdecisions
 					
 					//No need for updating the developer number of projects as this is done in another method after this.
-					projects_pointer++;
+					projects_pointer++;}
+					else {break;}
 					}
 				else {break;}																	//If the current project is not wort investing, the following are not either.
 			}			
@@ -153,27 +165,44 @@ public class ProjectDevelopment {
 		
 	}
 	
-	
-	public static void projectidentification() {
-		//TBD: Methods taking all projects not assign to a DA (Development Agent), assigning it, calculating LRMC and Certpriceneeded for that DAs early stageRRR.
-		//Distribution new potential projects among the DAs companies. Notice that there is a maximum level of projects that can be identifyed due to limited resources. 
-		//Should also only be distributed projects for their region.
+		public static void projectidentification() {
 		
-		/*
-		For each developer/for all projects in the potentialproject-list.
-			Input: The distribution of the number of new projects sourced per year by the developer, and the Norway/Sweden split. Projects in "potential projects".
-			This may be a function of the number of projects the developer has in the new build process and/or in operation
-			
-			Calculate: Randomly select x Norway projects and y Sweden projects from the Potential Projects collection and allocate these to the developer. 
-			The random selection follows the input distribution. 
-			
-			Calculate: Add these projects to the developer’s Identified Projects collection and change the statuses to 
-			
-			Projects into identifyed projects.
+		//Ønsker å fordele prosjekter til DAs en etter en, helt til de har fylt opp kvoten sin
 
-		 */
+		//getnumprojectsinprocess()
+		ArrayList<DeveloperAgent> identifyingdevelopers = new ArrayList<DeveloperAgent>();
+		ArrayList<PowerPlant> tempremovelist = new ArrayList<PowerPlant>();
+
+		int maxprojectidentifyed = 0;
 		
+		for (DeveloperAgent DA : CommonMethods.getDAgentList()) {
+			if (DA.getnumprojectsinprocess() < DA.getprojectprocessandidylimit()) {
+				identifyingdevelopers.add(DA);
+				maxprojectidentifyed = maxprojectidentifyed + (DA.getprojectprocessandidylimit() - DA.getnumprojectsinprocess());
+			}
+		}
+		int numberofdevelopers = identifyingdevelopers.size();
+		int maxiterations = Math.min(maxprojectidentifyed, TheEnvironment.potentialprojects.size());	//Cannot identify more project than there are nor the DAs resourcess can allow
+		int a = 0;
+		for (int i = 0; i < maxiterations; i++) {
+			DeveloperAgent DA = identifyingdevelopers.get(a);
+			PowerPlant PA = TheEnvironment.potentialprojects.get(i);
+			tempremovelist.add(PA);
+			TheEnvironment.projectsidentifyed.add(PA);
+			PA.setstatus(5);
+			
+			PA.setMyCompany(DA.getmycompany());
+			DA.getmycompany().getmyprojects().add(PA);
+			
+			a = a+1;
+			if (a==(numberofdevelopers-1)) {
+				a = 0;
+			}	
+		}
+		TheEnvironment.potentialprojects.removeAll(tempremovelist);
+
 	}
+		
 	//Method moving projects from identifyed to apply for concession. THis is in part equal to the method of start construcion, but with an premimum RRR and a different CAPEX due to learning.
 	//HENCE the currentyer for the LERMC should be current + expected concession period +1 or +2.
 	public static void startpreprojectandapplication() {

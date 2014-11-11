@@ -51,9 +51,9 @@ public class MarketPrognosis {
 		forcastweights[0] = w1;
 		
 		stpriceexpectation = ParameterWrapper.getpriceexpectation() * RandomHelper.nextDoubleFromTo(1, 1); //Random
-		mediumrunpriceexpectations =  20; //These are updated
-		longrunpriceexpectatations = 20;  //AllVariables.longrundpriceexpectations;  
-		maxpriceexpectation = 20;
+		mediumrunpriceexpectations =  16; //These are updated
+		longrunpriceexpectatations = 16;  //AllVariables.longrundpriceexpectations;  
+		maxpriceexpectation = 12;
 		expectedcertificateprice = new TickArray(); 
 		expectedcertificatedemand = new TickArray();
 		expectedpowerpricenorway = new YearArray();
@@ -89,11 +89,19 @@ public class MarketPrognosis {
 		
 		double MPE = FundamentalMarketAnalysis.getMPE();
 		double LPE = FundamentalMarketAnalysis.getLPE();
+		
 		//Calculates standardeviation based on the magnitude of the price. Creates a random normal distribution and retrives the next double. Not good programing!
+		//In order to have a consisten market view (bullish or berish) the same sign before the offset is to be used.
+
 		RandomHelper.createNormal(MPE, AllVariables.stdmediumrunpriceexpect*MPE);
-		mediumrunpriceexpectations = Math.max(0, RandomHelper.getNormal().nextDouble()); 
+		mediumrunpriceexpectations = Math.max(0.0, RandomHelper.getNormal().nextDouble()); 
+		int posnegative = (int) ((mediumrunpriceexpectations-MPE)/(Math.abs(mediumrunpriceexpectations-MPE)));	//-1 = negative offset +1 = postive offset.
+		
 		RandomHelper.createNormal(LPE, AllVariables.stdlongrunpriceexpect*LPE);
-		longrunpriceexpectatations = Math.max(0,RandomHelper.getNormal().nextDouble()); 
+		double templongrunexpectations = Math.max(0,RandomHelper.getNormal().nextDouble()); 
+		double tempoffset = Math.abs(templongrunexpectations - LPE);
+		longrunpriceexpectatations = (posnegative * tempoffset) + LPE;
+		
 		maxpriceexpectation = Math.max(maxpriceexpectation, longrunpriceexpectatations);
 		int f = 1;
 	}

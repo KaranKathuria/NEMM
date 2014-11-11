@@ -810,3 +810,63 @@ Caused by: java.lang.Error: Unresolved compilation problem:
 	at nemmprocesses.ProjectDevelopment.startpreprojectandapplication(ProjectDevelopment.java:223)
 	at nemmcommons.NEMMContextBuilder.DistributionandInitiation(NEMMContextBuilder.java:72)
 	... 9 more
+FATAL [Thread-5] 2014-11-11 16:16:48,137 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.ArrayIndexOutOfBoundsException: -1
+	at java.util.ArrayList.elementData(Unknown Source)
+	at java.util.ArrayList.get(Unknown Source)
+	at nemmtime.NemmCalendar.getTimeBlock(NemmCalendar.java:66)
+	at nemmenvironment.PowerPlant.calculateLRMCandcertpriceneeded(PowerPlant.java:259)
+	at nemmprocesses.ProjectDevelopment.startconstrucion(ProjectDevelopment.java:104)
+	at nemmcommons.NEMMContextBuilder.annualmarketschedule(NEMMContextBuilder.java:88)
+	... 9 more
+FATAL [Thread-7] 2014-11-11 16:34:20,491 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (36.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.ArrayIndexOutOfBoundsException
+FATAL [Thread-5] 2014-11-11 17:10:38,656 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (48.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IndexOutOfBoundsException: Index: 13, Size: 12
+	at java.util.ArrayList.rangeCheck(Unknown Source)
+	at java.util.ArrayList.get(Unknown Source)
+	at nemmprocesses.ProjectDevelopment.projectidentification(ProjectDevelopment.java:187)
+	at nemmcommons.NEMMContextBuilder.annualmarketschedule(NEMMContextBuilder.java:92)
+	... 9 more
