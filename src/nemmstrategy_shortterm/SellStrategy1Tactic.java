@@ -116,7 +116,8 @@ public class SellStrategy1Tactic extends GenericTactic {
 		tempdisc = TheEnvironment.GlobalValues.currentinterestrate + this.getmyStrategy().getmyAgent().getRAR(); //For Sellers/Producers this is added + (instead of minus)
 		
 		floorroofprice = twoyearahead/Math.pow(tempdisc + 1, 2); //Hence this equals the discounted future expected cert price. Discounted with a risk free rate and a risk rate //In other words, the seller will not sell the variable part unless the sell price is better than the discounted future price expectations. In that case he would hold the certificates in two years.
-		maxBidOfferVolume = maxBidOfferVolumeMultiplier * this.getmyStrategy().getmyAgent().getlasttickproduction(); // * //What i produced the last tick
+//		maxBidOfferVolume = maxBidOfferVolumeMultiplier * this.getmyStrategy().getmyAgent().getlasttickproduction(); // * //What i produced the last tick
+//		
 		maxppvolume = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getnexttwelvetickscertproduction(); //The max pp volume is equal to the expected production of the twelve next ticks. This value itself is produced in the volumeanalysis agent.
 		
 	}
@@ -131,9 +132,15 @@ public class SellStrategy1Tactic extends GenericTactic {
 		else {
 //			ret.setCertVolume(Math.max(paramMustSellShare*lasttickproduction,physicalposition-maxppvolume)); //equals must sell	
 			int tmpTicks = myStrategy.getmyAgent().getNumTicksToEmptyPosition();
-			ret.setCertVolume(Math.max(paramMustSellShare*lasttickproduction,Math.max(0.0, physicalposition/myStrategy.getmyAgent().getNumTicksToEmptyPosition())));
+//			ret.setCertVolume(Math.max(paramMustSellShare*lasttickproduction,Math.max(0.0, physicalposition/myStrategy.getmyAgent().getNumTicksToEmptyPosition())));
+			ret.setCertVolume(Math.max(0.0, physicalposition/myStrategy.getmyAgent().getNumTicksToEmptyPosition()));
 		}
 		ret.setPrice(paramMustSellPriceMult*expectedprice);
+		
+		if (TheEnvironment.theCalendar.getCurrentTick() == 50) {
+			int temp=0;
+			temp = 1;
+		}
 		
 		return ret;
 		}
@@ -146,9 +153,16 @@ public class SellStrategy1Tactic extends GenericTactic {
 			ret.setCertVolume(0.0);
 		} 
 		else {
-			ret.setCertVolume(Math.max(0.0,Math.min(maxBidOfferVolume-mustsell,physicalposition-mustsell))); //rest of the monthly production sold at expected price.			
+//			ret.setCertVolume(Math.max(0.0,Math.min(maxBidOfferVolume-mustsell,physicalposition-mustsell))); //rest of the monthly production sold at expected price.			
+			ret.setCertVolume(Math.max(0.0,Math.min(1.0, maxBidOfferVolumeMultiplier)*physicalposition-mustsell)); //rest of the monthly production sold at expected price.			
 		}
 		ret.setPrice(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice)); //Prices not symmetric around expected price with must of the volume tried sold at at premium (1+discount)*expt.
+
+		if (TheEnvironment.theCalendar.getCurrentTick() == 50) {
+			int temp=0;
+			temp = 1;
+		}
+		
 		return ret;
 		}
 	
