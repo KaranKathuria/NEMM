@@ -53,10 +53,12 @@ public class LRMCCurve {
 	public LRMCCurve(int runye, int yearsah) {
 		runyear = runye;										//This is the year of running the FMA in the simulation
 		yearsahead = yearsah;									//This is for which future year the LRMC curve is beeing calculated. 
+		int tmp = 1;
 	}
-	//Methods
+	//Methodsds
 	
 	//Method calculating the certificateprice needed for the marginal project in the list and setting the equilibrium price. 
+	// Comment
 	public void calculatelrmccurve(ArrayList<PowerPlant> tempendogenousprojects, double certbalance) {
 		certificatebalance = certbalance;
 		
@@ -66,9 +68,10 @@ public class LRMCCurve {
 			throw new Error("No need for new projects when there is access certificates");
 			
 		} else {
-		double usedRRR = AllVariables.RRR;
-		for (PowerPlant PP : tempendogenousprojects) {																	//Loop creating and adding all relevant project info to the supplycurve.
-			PP.calculateLRMCandcertpriceneeded((yearsahead-PP.getminconstructionyears()), usedRRR, 1);		//Calculates the LRMC and needed Certificateprice based on the given year minus construction years due to the methods inputdefinitio.
+		
+		for (PowerPlant PP : tempendogenousprojects) {														//Loop creating and adding all relevant project info to the supplycurve.
+			double usedRRR = PP.getspecificRRR() * TheEnvironment.GlobalValues.RRRcorrector;				//RRR is the specific corrected RRR with a value.
+			PP.calculateLRMCandcertpriceneeded((yearsahead-PP.getminconstructionyears()), usedRRR, 3);		//Calculates the LRMC and needed Certificateprice based on the given year minus construction years due to the methods inputdefinitio.
 			Curvepair cp = new Curvepair(PP.getname(), PP.getLRMC(), PP.getcertpriceneeded(), PP.getestimannualprod());
 			projectsupplycurve.add(cp);
 		}
