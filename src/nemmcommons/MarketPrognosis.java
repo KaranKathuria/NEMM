@@ -24,7 +24,7 @@ public class MarketPrognosis {
 	private double forcastweights[] = new double[3];// = AllVariables.forcastweights;
 	private double stpriceexpectation;
 	
-	private double maxpriceexpectation;
+	private double maxpriceexpectation;		   //For use in the STM. This is defined as the max of historical longrunpriceexpectatations. Thats the higest average cert price needed for the mariginal project invested in. 
 	private double mediumrunpriceexpectations; //Highest fundamental price for the future year 3 or 4. Based on FMA and a errorterm. 
 	private double longrunpriceexpectatations; //Highest fundamental price for the future year 10 or 11. Based on FMA and a errorterm.
 	
@@ -53,6 +53,7 @@ public class MarketPrognosis {
 		stpriceexpectation = ParameterWrapper.getpriceexpectation() * RandomHelper.nextDoubleFromTo(1, 1); //Random
 		mediumrunpriceexpectations =  0; //These are updated
 		longrunpriceexpectatations = 0;  //AllVariables.longrundpriceexpectations;  
+		maxpriceexpectation = 0;
 		expectedcertificateprice = new TickArray(); 
 		expectedcertificatedemand = new TickArray();
 		expectedpowerpricenorway = new YearArray();
@@ -93,6 +94,7 @@ public class MarketPrognosis {
 		mediumrunpriceexpectations = Math.max(0, RandomHelper.getNormal().nextDouble()); 
 		RandomHelper.createNormal(LPE, AllVariables.stdlongrunpriceexpect*LPE);
 		longrunpriceexpectatations = Math.max(0,RandomHelper.getNormal().nextDouble()); 
+		maxpriceexpectation = Math.max(maxpriceexpectation, longrunpriceexpectatations);
 		int f = 1;
 	}
 	
@@ -165,6 +167,10 @@ public class MarketPrognosis {
 	//}
 	public double getExpectedpowerpricesweden(int YearID) {
 		return expectedpowerpricesweden.getElement(YearID);
+	}
+	
+	public double getmaxpriceexpectation() {
+		return maxpriceexpectation;
 	}
 	
 }

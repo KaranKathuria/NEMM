@@ -83,7 +83,7 @@ public class ProjectDevelopment {
 			Collections.sort(templist, new CommonMethods.customprojectcomparator());			//Sorting the of a DAs project awaiting from lowest certprie needed to highest cert price needed
 			
 			//All the cirteria variables for the investment decision
-			double cutoffcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getlongrunpriceexpectatations(); //Should be discussed.
+			double cutoffcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations(); //Should be discussed.
 			int maxnumberofconstrucprojects = DA.getconstructionlimit();
 			int constructionproject_counter = DA.getnumprojectsunderconstr();					//Newly updated values.
 			double maxcapacitydeveloped		= DA.gettotalcapacitylimit();
@@ -191,7 +191,7 @@ public class ProjectDevelopment {
 				if (PP.getstatus() == 5) {																					     //5=Identyfied project.
 					PP.addyearsincurrentstatus(1);																				 //Increasing number of years with this status.
 					templist.add(PP);															
-					PP.calculateLRMCandcertpriceneeded((currentyear+AllVariables.expectedyersinconcession), usedRRR, 1);		 //3=Using the forward power price in the region of the project.
+					PP.calculateLRMCandcertpriceneeded((currentyear+AllVariables.expectedyersinconcession), usedRRR, 3);		 //3=Using the forward power price in the region of the project.
 					//Notice the "currentyear+AllVariables.expectedyersinconcession". The LRMC takes account for the years of construcion deciding the eligability for certifiates. Whereas the input here
 					//takes account for the years in concessions. Adding this up the DA then takes account for both the years in concess
 				}

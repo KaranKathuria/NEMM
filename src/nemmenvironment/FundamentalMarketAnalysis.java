@@ -193,24 +193,27 @@ else  {
 }
 	//End of iteration-year iteration.
 	//THe final operation of FMA: Setting the MPE and LPE. 
-	int at = equilibriumpricesyearsahead.size();
 	ArrayList<Double> test = new ArrayList<Double>();
 	test = equilibriumpricesyearsahead;													//For testing purposes.
 	
-	int MPEcount = 2;  //Startingpoint year for Medium term price
+	int MPEcount = Math.min(AllVariables.MPECount, numberofyears);  					//MPE "sees" only XX years ahead
+	int LPEcount = Math.min(AllVariables.LPECount, numberofyears); 						//Startingpoint year for Long term price			//LPE "sees" all the future
+
 	MPE = 0;
 	LPE = 0;
-	while ((MPE < 0.1) && MPEcount < Math.min(9, numberofyears)) {
-		MPE = equilibriumpricesyearsahead.get(MPEcount);
-		MPEcount++;
+	
+	double temp=0;
+	for (int k = 2; k < MPEcount; k++) {
+		if(equilibriumpricesyearsahead.get(k) > MPE){
+		temp = equilibriumpricesyearsahead.get(k);}
+		MPE = temp;
 	}
 	//Select the Long term fundamental price
-	double temp=0;
-	int LPEcount = Math.min(12, numberofyears);	//Startingpoint year for Long term price
+	double temp2=0;
 	for (int k = 2; k < LPEcount; k++) {
 		if(equilibriumpricesyearsahead.get(k) > LPE){
-		temp = equilibriumpricesyearsahead.get(k);}
-		LPE = temp;
+		temp2 = equilibriumpricesyearsahead.get(k);}
+		LPE = temp2;
 	}
 	
 	double m = MPE;

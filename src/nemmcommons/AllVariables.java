@@ -96,6 +96,8 @@ public class AllVariables {
 	public static int yearstoendogprojects = 2;			//Just to save time in the FMA.
 	public static double maxpricecerts = 1000;			//To not get an errror in the FMA.
 	public static double initialRRRcorrector = 1;		//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis
+	public static int MPECount = 16;					//Number of futuer years seen by the MPE-analysis
+	public static int LPECount = 24;					//Number of futuer years seen by the LPE-analysis
 	
 	//Initial distribution of powerplants, projects and demandshares per region.
 	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2

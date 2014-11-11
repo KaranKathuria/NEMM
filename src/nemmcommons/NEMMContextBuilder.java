@@ -89,10 +89,7 @@ public void annualmarketschedule() {
 	ProjectDevelopment.startpreprojectandapplication();	        //The process of deciding which project to apply for concession. In the same manner as start construction
 //	ProjectDevelopment.identifyprojects();						//Given how many projects the DA has in concession-stage and the limit, receice new projects.
 	ProjectDevelopment.updateDAgentsnumber();					//Not really needed at end, but okey for displaypurposes.
-
-	//FundamentalMarketAnalysis.runfundamentalmarketanalysis();	//Running the fundamental analysis. Basis for all agents LPE and MPE
-	//Forcast.updateMPEandLPE();									//Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
-//	
+	
 }
 
 //The monthly update
