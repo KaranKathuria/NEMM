@@ -51,9 +51,9 @@ public class MarketPrognosis {
 		forcastweights[0] = w1;
 		
 		stpriceexpectation = ParameterWrapper.getpriceexpectation() * RandomHelper.nextDoubleFromTo(1, 1); //Random
-		mediumrunpriceexpectations =  0; //These are updated
-		longrunpriceexpectatations = 0;  //AllVariables.longrundpriceexpectations;  
-		maxpriceexpectation = 0;
+		mediumrunpriceexpectations =  20; //These are updated
+		longrunpriceexpectatations = 20;  //AllVariables.longrundpriceexpectations;  
+		maxpriceexpectation = 20;
 		expectedcertificateprice = new TickArray(); 
 		expectedcertificatedemand = new TickArray();
 		expectedpowerpricenorway = new YearArray();
