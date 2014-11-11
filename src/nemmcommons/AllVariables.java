@@ -23,11 +23,11 @@ public class AllVariables {
 	public static int numberoftacticsTraderStrategy1 = 8;
 //	public static double OPAgentmustbuypremium = 0.5;
 //	public static double PAgentmustselldiscount = 0.5;
-//	public static double PAgentmustsellshare = 0.5;//RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
-//	public static double OPAgentmustsellshare = 0.75; //RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
+//	public static double PAgentmustsellshare = 0.5;				//RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
+//	public static double OPAgentmustsellshare = 0.75; 		 //RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
 	
-	public static double stdmediumrunpriceexpect = 0.1;     //The standard deviation in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	public static double stdlongrunpriceexpect = 0.1;     //The standard deviation in the Normaly distributed error for MPE (where mean is the perfect foresight price)
+	public static double stdmediumrunpriceexpect = 0.1;     //The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
+	public static double stdlongrunpriceexpect = 0.1;     	 //The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	 
 	public static double tradermaximumshortpos = -5000; //These values should have some realtion to the initial portfoliovalue by allowing traders
 	public static double tradermaximumlongpos = 5000;	//to go bust.
@@ -49,7 +49,7 @@ public class AllVariables {
 	public static double[] cutoffOPExit = new double[]{0.4,1.0};
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
 	// over the next 12 ticks - i.e. it will sell 1/12th in the next tick
-	public static int[] numTicksPAExit = new int[]{1,6,36};
+	public static int[] numTicksPAExit = new int[]{1,6,24};
 	public static int[] numTicksOPExit = new int[]{1,2};
 	// Tactics - number of ticks to exit positions
 	// Number of exit strategies for each agent type
@@ -60,9 +60,9 @@ public class AllVariables {
 	
 	// Producer Strategies & Tactics
 	// Note - not all of these need be used in any given tactic & strategy
-	public static double multOfferVol_PASellStrategy1 = 2; // default max fraction of that month's production than can be sold in the month
+	public static double multOfferVol_PASellStrategy1 = 10; // default max fraction of that month's production than can be sold in the month
 	public static int tacticDefaultLearn_PASellStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
-	public static double tacticDefaultMustSellShare_PASellStrategy1 = 0.25; // Default must sell share for the producer tactics (if used)
+	public static double tacticDefaultMustSellShare_PASellStrategy1 = 0.75; // Default must sell share for the producer tactics (if used)
 	public static double tacticDefaultMustSellPriceMult_PASellStrategy1 = 0.5;  // Default must sell price multiplier for the producer tactics (if used)
 	public static double tacticMinMustSellPriceMult_PASellStrategy1 = 0.7;
 	public static double tacticMaxMustSellPriceMult_PASellStrategy1 = 1.0;
@@ -75,7 +75,7 @@ public class AllVariables {
 	public static double tacticMaxRestPriceStep_PASellStrategy1 = 0.025;
 
 	// Supplier (Obligated Purchaser) strategies and tactics
-	public static double multOfferVol_OPBuyStrategy1 = 2; // default max fraction of that month's production than can be sold in the month
+	public static double multOfferVol_OPBuyStrategy1 = 10; // default max fraction of that month's production than can be sold in the month
 	public static int tacticDefaultLearn_OPBuyStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
 	public static double tacticDefaultMustBuyShare_OPBuyStrategy1 = 0.75; // Default must Buy share for the producer tactics (if used)
 	public static double tacticDefaultMustBuyPriceMult_OPBuyStrategy1 = 1.5;  // Default must Buy price multiplier for the producer tactics (if used)
@@ -112,7 +112,7 @@ public class AllVariables {
 	
 	//The concession and preconstruction process
 	public static int maxyearsinconcessionqueue = 4;				//Number of years in addition to minimum number of years in concession queue given as input from excel. After this, if not having received concession, the project is trashed.
-	public static double annualprobforreceivingconcession = 0.4;	//Only with one decimal as the random generater uses int.
+	public static double annualprobforreceivingconcession = 0.3;	//Only with one decimal as the random generater uses int.
 	public static int expectedyersinconcession = 5;					//When deciding for concession, how long to the developers expected the project to be in line. Needed due to learningcurve/CAPEX estimation.
 	
 }

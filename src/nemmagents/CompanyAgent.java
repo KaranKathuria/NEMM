@@ -276,6 +276,7 @@ public class CompanyAgent extends ParentAgent {
 		private int constructionlimit;					//Number of projects it can have under construction simultaniasly.
 		private int projectprocessandidylimit;			//The agents maximum number of projects that can be identifyed or in concession/preconstruct each year. Thats from the potential list.
 		private int sizecode;							//Code value indicationg if the DA has few=1, normal=2 og alot=3 of activities (projects) in the regions the company of that AA participates in
+		private int investmentdecisiontype;				//Code defining what kind of certprice the agent uses to evaluate the investment decision.
 		
 		//Endogenous variables 
 		private double capacitydevorundrconstr;
@@ -288,9 +289,9 @@ public class CompanyAgent extends ParentAgent {
 		
 		public DeveloperAgent() {
 			companyagent = CompanyAgent.this;
-			sizecode = 2;								//By default all developmentagents have normal amount of activety.
-			projectprocessandidylimit = 10;		//func of sizecode		//Max number of project getting identifyed or in proecss.
-			constructionlimit = 8;						//Max number of projects getting in from moving to construction. 
+			sizecode = 2;								//By default all developmentagents have normal amount of activety. (1= few, 2=normal, 3=alot) used in intial distribution of projects.
+			projectprocessandidylimit = 4+sizecode*Math.max(2, this.companyagent.regionpartcode);	//func of sizecode: = 3*sizecode. Problem as sizecode only defines size in one region. whereas //Max number of project getting identifyed or in proecss.
+			constructionlimit = sizecode*Math.max(2, this.companyagent.regionpartcode)*3;			//Max number of projects getting in from moving to construction. 
 			totalcapacitylimit = 100000000;
 		}
 		
@@ -316,6 +317,7 @@ public class CompanyAgent extends ParentAgent {
 		public double getcapacitydevorundrconstr() {return capacitydevorundrconstr;}
 		public int getnumprojectsunderconstr() {return numprojectsunderconstr;}
 		public int getnumprojectsinprocess() {return numprojectsinprocess;}
+//		public void addpro
 
 		
 	}
@@ -392,8 +394,8 @@ public class CompanyAgent extends ParentAgent {
 		
 		companyname = "Company " + this.getID();
 		companyanalysisagent = new CompanyAnalysisAgent();	
-		investmentRRR = RandomHelper.nextDoubleFromTo(0.85, 1.15);									//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
-		earlystageRRR = investmentRRR + 0.05;														//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
+		investmentRRR = RandomHelper.nextDoubleFromTo(0.99, 1.01);									//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
+		earlystageRRR = investmentRRR + 0.02;														//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
 		regionpartcode = 2;																			//By default, all companies are active in both countries. 
 		
 		}	
