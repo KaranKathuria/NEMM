@@ -57,6 +57,10 @@ public class NemmCalendar {
 		// will grab this from repast
 		return (int) RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 	}
+	
+	public int getCurrentYear() {
+		return startYear + getTimeBlock((int) RunEnvironment.getInstance().getCurrentSchedule().getTickCount()).year;
+	}
 
 	public NemmTime getTimeBlock(int tickID){
 		return timeBlocks.get(tickID);

@@ -71,8 +71,8 @@ public final class TheEnvironment {
 		
 		public static TickArray certificateprice;
 		public static double currentmarketprice;
-		public static double currentinterestrate;   //risk free interest rate
-		public static double RRR; 					//Required rate of return for RE investments. 
+		public static double RRRcorrector;  			 //Corrector for the project specific RRR. Initially set, then altered by randomness
+		public static double currentinterestrate;		//Not in use.
 		public static int numberofbuyoffersstm;
 		public static int numberofselloffersstm;
 		// Future cert prices
@@ -110,8 +110,7 @@ public final class TheEnvironment {
 			certificateprice = new TickArray();
 			currentmarketprice = ParameterWrapper.getpriceexpectation();			//This is the initial expected short term price at simulation start.
 			currentinterestrate = ParameterWrapper.getinitialinterestrate();
-			//RRR = AllVariables.RRR;
-			
+			RRRcorrector = AllVariables.initialRRRcorrector;
 			producersphysicalposition = 20000;					//Must be set to the sum of all agents startingposition. Just used for graph values.
 			totaltickproduction = 0;
 			tradersphysicalposition = 0;						//Must be set to the sum of all agents startingposition. Just used for graph values.
@@ -129,8 +128,8 @@ public final class TheEnvironment {
 		public static void monthlyglobalvalueupdate() {
 			currentmarketprice = ShortTermMarket.getcurrentmarketprice();
 			certificateprice.setElement(ShortTermMarket.getcurrentmarketprice(), theCalendar.getCurrentTick()); //Adds certPrice to history.
+			RRRcorrector = RRRcorrector * RandomHelper.nextDoubleFromTo(0.99, 1.01);							//To include a randomness in the RRRused in FMA.
 			
-			//currentinterestrate = currentinterestrate + RandomHelper.nextDoubleFromTo(-0.002, 0.002); //Randomness in risk free interest rate.
 			numberofbuyoffersstm = ShortTermMarket.getnumberofbuyoffers();
 			numberofselloffersstm = ShortTermMarket.getnumberofselloffers();
 			

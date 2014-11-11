@@ -65,7 +65,7 @@ public class PowerPlant implements Cloneable{
 			earlieststartyear = startyear;
 		}
 		if (status > 2)		{
-			earlieststartyear = minyearinprocess + minconstructionyears;	//This is really best case.
+			earlieststartyear = minyearinprocess + minconstructionyears + TheEnvironment.theCalendar.getStartYear();	//This is really best case.
 		}
 			
 		myProduction = new TickArray();
@@ -126,7 +126,7 @@ public class PowerPlant implements Cloneable{
 	public int getminyearinprocess() {return minyearinprocess;}
 	public int getyearsincurrentstatus() {return yearsincurrentstatus;}
 	public void setyearsincurrentstatus(int a) { yearsincurrentstatus = a;}
-	public void addyearsincurrentstatus(int a) {yearsincurrentstatus = a;}
+	public void addyearsincurrentstatus(int a) {yearsincurrentstatus = yearsincurrentstatus + a;}
 
 
 	// Methods ------------------------------------------------------------------------
@@ -256,18 +256,24 @@ public class PowerPlant implements Cloneable{
 		//Current year referes to actual year number (2012..), not YearID (0,1...)
 		double usedRRR = RRR;
 		double usedpowerprice = 0;
-		int futureyearspowerprice = 5 + currentyear - TheEnvironment.theCalendar.getStartYear();		//5 indication 5 years horizont.
+		int futureyearspowerprice = 5 + TheEnvironment.theCalendar.getTimeBlock(TheEnvironment.theCalendar.getCurrentTick()).year;		//5 indication 5 years horizont from when either the investment decision or the FMA i ran. That is, all Powerprices are regarded from the year ran.
 		
 		//Switch taking care of which powerprice assumption to use in the LRMC. 1=Current power price, 2=The Developers, companys, analysisagent expected power price in 5 years. 3=The 5 year fowardprice.
 		switch (powerpricecode) {
 			case 1: {usedpowerprice = myRegion.getMyPowerPrice().getValue(); break;}					//Use current powerprice
-			case 2: {if (myRegion == TheEnvironment.allRegions.get(0)) {								//Use the MAA expected powerprice in 5 years from now
+			case 2: {if (myRegion == TheEnvironment.allRegions.get(0)) {								//Use the MAA expected powerprice in 5 years from now. Now as in simulation tick
 						usedpowerprice = myCompany.getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getExpectedpowerpricenorway(futureyearspowerprice);}
 					else{usedpowerprice = myCompany.getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getExpectedpowerpricesweden(futureyearspowerprice);}
 			break;}
-			case 3: {usedpowerprice = myRegion.getMyForwardPrice(futureyearspowerprice-5).getValue(5);}	//Use the market forwardprices}
-		}
+			case 3: {double temp = ((myRegion.getMyForwardPrice(futureyearspowerprice-5).getValue(1) + myRegion.getMyForwardPrice(futureyearspowerprice-5).getValue(2) 
+					+ myRegion.getMyForwardPrice(futureyearspowerprice-5).getValue(3) + myRegion.getMyForwardPrice(futureyearspowerprice-5).getValue(4))
+					+ (myRegion.getMyForwardPrice(futureyearspowerprice-5).getValue(5)*16))/20;
+					usedpowerprice = temp;
+					break;
 			
+			}	//Use the market forwardprices for the 5 following years, and then the 5th year price in the next 16.}
+		}
+
 		int yearsoftechnologyimprovment = currentyear - TheEnvironment.theCalendar.getStartYear();
 		
 		//Her is the certificatelogic
@@ -279,7 +285,7 @@ public class PowerPlant implements Cloneable{
 		
 		double NPVfactor_lifetime = 0;
 		for (int i = 1; i <= lifetime; i++) {
-			NPVfactor_lifetime = NPVfactor_lifetime + 1/Math.pow((1+TheEnvironment.GlobalValues.RRR),i);}
+			NPVfactor_lifetime = NPVfactor_lifetime + 1/Math.pow((1+usedRRR),i);}
 		
 		LRMC = (newCapex/(NPVfactor_lifetime*this.getestimannualprod()))+this.opex; 					//Calculates the average nominal income needed per MWh (Certprice + Powerprice) for the project lifetime.
 		
@@ -290,6 +296,18 @@ public class PowerPlant implements Cloneable{
 		
 		//Calculating the needed price for certificates, with the correct assumptions of when the plant is eligable and the simulation-current local power price. T
 		certpriceneeded = (LRMC*NPVfactor_lifetime - usedpowerprice*NPVfactor_lifetime) / NPVfactor_certyears; //Drawback: IS the powerprice assumption okey?
+	}
+	
+	public void updateearlieststartyear() {
+		if (status == 3) {
+			earlieststartyear = minconstructionyears + TheEnvironment.theCalendar.getTimeBlock(TheEnvironment.theCalendar.getCurrentTick()).year + TheEnvironment.theCalendar.getStartYear();
+		}
+		if (status == 4) {
+			earlieststartyear = minconstructionyears + this.minyearinprocess - this.yearsincurrentstatus + TheEnvironment.theCalendar.getTimeBlock(TheEnvironment.theCalendar.getCurrentTick()).year + TheEnvironment.theCalendar.getStartYear();
+		}
+		if (status == 5 || status == 6){
+			earlieststartyear = minconstructionyears + minyearinprocess + TheEnvironment.theCalendar.getTimeBlock(TheEnvironment.theCalendar.getCurrentTick()).year + TheEnvironment.theCalendar.getStartYear();
+	}
 	}
 	
 	//Get and set methods

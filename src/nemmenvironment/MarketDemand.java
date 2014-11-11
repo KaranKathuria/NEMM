@@ -34,7 +34,7 @@ public class MarketDemand {
 		setCertDemand(certdem);		
 		setExpectedCertDemand(expectedcertdem);
 	}
-	
+	//blah
 	public void setCertDemand(double[] cd) {
 		certDemand.setArray(cd);	
 	}

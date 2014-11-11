@@ -64,6 +64,7 @@ public class ProjectDevelopment {
 		int currenttick = TheEnvironment.theCalendar.getCurrentTick();
 		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year + TheEnvironment.theCalendar.getStartYear();	//Gets the current year.
 		
+		int test = CommonMethods.getDAgentList().size();
 		for (DeveloperAgent DA : CommonMethods.getDAgentList()) {
 			
 			ArrayList<PowerPlant> templist = new ArrayList<PowerPlant>();
@@ -75,7 +76,7 @@ public class ProjectDevelopment {
 				if (PP.getstatus() == 3) {														//3=Awaiting investment decision.
 					PP.addyearsincurrentstatus(1);												//Increasing number of years with this status with one.
 					templist.add(PP);															//Adds all the projects, regardsless of having a cert price needed to high or low.
-					PP.calculateLRMCandcertpriceneeded(currentyear, usedRRR, 1);				//Using the market forward power price in that given reigon. Notice that this is calculated for when the year the project can be invested in, not the year it can be finished!!
+					PP.calculateLRMCandcertpriceneeded(currentyear, usedRRR, 3);				//Using the market forward power price in that given reigon. Notice that this is calculated for when the year the project can be invested in, not the year it can be finished!!
 				}
 			}
 			//For each DeveloperAgent For all the relevant projects. Do the following:			
@@ -91,7 +92,7 @@ public class ProjectDevelopment {
 			int projects_pointer = 0;															//To ensure that the loop is not longer than number of objects.	
 			
 			//The critical investment decision.
-			while ((constructionproject_counter < maxnumberofconstrucprojects) && (capacitydeveloped_counter < maxcapacitydeveloped) &&  (projects_pointer <= potentialprojects )) {
+			while ((constructionproject_counter < maxnumberofconstrucprojects) && (capacitydeveloped_counter < maxcapacitydeveloped) &&  (projects_pointer < potentialprojects )) {
 				if (templist.get(projects_pointer).getcertpriceneeded() <= cutoffcertprice) {	//Starting with the best, if its worth investing...startconstruction.
 					
 					PowerPlant thisplant = templist.get(projects_pointer);
@@ -132,7 +133,6 @@ public class ProjectDevelopment {
 				PP.setyearsincurrentstatus(0); 													//Updating status means clearing years with this status.
 				TheEnvironment.trashedprojects.add(PP);											//Add to all operations powerplants
 				tempremoval.add(PP);															//Add to removal list.
-				
 
 			}
 			
@@ -146,9 +146,7 @@ public class ProjectDevelopment {
 					TheEnvironment.projectsawaitinginvestmentdecision.add(PP);					//Add to all operations powerplants
 					tempremoval.add(PP);
 
-				}
-				//No else. Nothing is done if the yearswithcurrent status does not fulfill the above criteria.
-			}
+				}	}
 			//No else
 		}
 		TheEnvironment.projectinprocess.removeAll(tempremoval);
@@ -204,14 +202,14 @@ public class ProjectDevelopment {
 			Collections.sort(templist, new CommonMethods.customprojectcomparator());			//Sorting the of a DAs project awaiting from lowest certprie needed to highest cert price needed
 			
 			//All the cirteria variables for the investment decision
-			double cutoffcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getlongrunpriceexpectatations(); //Should be discussed.
+			double cutoffcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getlongrunpriceexpectatations(); 
 			int maxnumberofprocess = DA.getprojectprocessandidylimit();
 			int processprojects_counter = DA.getnumprojectsinprocess();							//Not newly updated required. Just that the Concession process is updated for this tick.
 			int potentialprojects = templist.size();
 			int projects_pointer = 0;															//To ensure that the loop is not longer than number of objects.
 			
 			//The critical investment decision.
-			while ((processprojects_counter < maxnumberofprocess) &&  (projects_pointer <= potentialprojects )) {
+			while ((processprojects_counter < maxnumberofprocess) &&  (projects_pointer < potentialprojects )) {
 				if (templist.get(projects_pointer).getcertpriceneeded() <= cutoffcertprice) {	//Starting with the best, if its worth investing...apply for concession.
 					
 					PowerPlant thisplant = templist.get(projects_pointer);
@@ -222,6 +220,7 @@ public class ProjectDevelopment {
 					TheEnvironment.projectinprocess.add(thisplant);								//Add to the Environment list of projects in process.
 					TheEnvironment.projectsidentifyed.remove(thisplant);						//Removing from Environment list of awaitinginvestmentsdecisions
 					projects_pointer++;
+					//DA.
 					}
 				else {break;}																	//If the current project is not wort investing, the following are not either.
 			}

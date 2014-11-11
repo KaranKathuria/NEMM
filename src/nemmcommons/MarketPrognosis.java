@@ -24,6 +24,7 @@ public class MarketPrognosis {
 	private double forcastweights[] = new double[3];// = AllVariables.forcastweights;
 	private double stpriceexpectation;
 	
+	private double maxpriceexpectation;
 	private double mediumrunpriceexpectations; //Highest fundamental price for the future year 3 or 4. Based on FMA and a errorterm. 
 	private double longrunpriceexpectatations; //Highest fundamental price for the future year 10 or 11. Based on FMA and a errorterm.
 	
@@ -50,8 +51,8 @@ public class MarketPrognosis {
 		forcastweights[0] = w1;
 		
 		stpriceexpectation = ParameterWrapper.getpriceexpectation() * RandomHelper.nextDoubleFromTo(1, 1); //Random
-		mediumrunpriceexpectations =  32; //AllVariables.mediumrundpriceexpectations 
-		longrunpriceexpectatations = 35;  //AllVariables.longrundpriceexpectations;  
+		mediumrunpriceexpectations =  0; //These are updated
+		longrunpriceexpectatations = 0;  //AllVariables.longrundpriceexpectations;  
 		expectedcertificateprice = new TickArray(); 
 		expectedcertificatedemand = new TickArray();
 		expectedpowerpricenorway = new YearArray();
@@ -85,10 +86,14 @@ public class MarketPrognosis {
 	public void updatefunamentalmarketprognosis() {
 		// Updates the medium and long run priceexpectations.
 		
-		//Calculates standardeviation based on the magnitude of the price. Creates a random normal distribution and retrives the next double:
-		mediumrunpriceexpectations = FundamentalMarketAnalysis.getMPE(); //RandomWrapper.getmyNormalDistMPE().nextDouble(); 
-		longrunpriceexpectatations = FundamentalMarketAnalysis.getLPE(); //RandomWrapper.getmyNormalDistLPE().nextDouble(); 
-		
+		double MPE = FundamentalMarketAnalysis.getMPE();
+		double LPE = FundamentalMarketAnalysis.getLPE();
+		//Calculates standardeviation based on the magnitude of the price. Creates a random normal distribution and retrives the next double. Not good programing!
+		RandomHelper.createNormal(MPE, AllVariables.stdmediumrunpriceexpect*MPE);
+		mediumrunpriceexpectations = Math.max(0, RandomHelper.getNormal().nextDouble()); 
+		RandomHelper.createNormal(LPE, AllVariables.stdlongrunpriceexpect*LPE);
+		longrunpriceexpectatations = Math.max(0,RandomHelper.getNormal().nextDouble()); 
+		int f = 1;
 	}
 	
 	
@@ -148,7 +153,7 @@ public class MarketPrognosis {
 	//public void updateFutureExpectedpowerpricenorway(double[] values) {		Marked out as this is not implemented for yeararray.
 	//	expectedpowerpricenorway.setFutureElements(values);
 	//}
-	public double getExpectedpowerpricenorway(int YearID) {
+	public double getExpectedpowerpricenorway(int YearID) { //0-24
 		return expectedpowerpricenorway.getElement(YearID);
 	}
 	

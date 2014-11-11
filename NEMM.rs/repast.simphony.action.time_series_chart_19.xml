@@ -33,18 +33,6 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Projects trashed</string>
-      <SeriesData>
-        <label>Projects trashed</label>
-        <color>
-          <red>255</red>
-          <green>102</green>
-          <blue>102</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
       <string>Projects identifyed</string>
       <SeriesData>
         <label>Projects identifyed</label>
@@ -57,25 +45,13 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Total plants and projects</string>
+      <string>Projects trashed</string>
       <SeriesData>
-        <label>Total plants and projects</label>
+        <label>Projects trashed</label>
         <color>
           <red>255</red>
-          <green>51</green>
-          <blue>255</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>Projects under construction</string>
-      <SeriesData>
-        <label>Projects under construction</label>
-        <color>
-          <red>0</red>
-          <green>0</green>
-          <blue>153</blue>
+          <green>102</green>
+          <blue>102</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>
@@ -88,6 +64,18 @@
           <red>0</red>
           <green>0</green>
           <blue>204</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Projects under construction</string>
+      <SeriesData>
+        <label>Projects under construction</label>
+        <color>
+          <red>0</red>
+          <green>0</green>
+          <blue>153</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>

@@ -2,12 +2,12 @@
 <parameters>
 
 	<parameter name="randomSeed" displayName="Default Random Seed" type="int" defaultValue="103" /><parameter
-		defaultValue="20" type="int" name="produceragentsnumber" displayName="Number of ProducerAgents">
+		defaultValue="40" type="int" name="produceragentsnumber" displayName="Number of ProducerAgents">
 </parameter>
-	<parameter defaultValue="20" name="obligatedpurchaseragentsnumber" displayName="Number of ObligatedPurchaserAgents" type="int"></parameter>
+	<parameter defaultValue="40" name="obligatedpurchaseragentsnumber" displayName="Number of ObligatedPurchaserAgents" type="int"></parameter>
 	<parameter defaultValue="1" name="analysisagentsnumber" displayName="Number of AnalysisAgents" type="int"></parameter>
 	<parameter defaultValue="5" type="int" displayName="Number of TraderAgents" name="traderagentsnumber"/>
-	<parameter defaultValue="22" name="priceexpectation" displayName="Price Expectation" type="double"></parameter>
+	<parameter defaultValue="16.7" name="priceexpectation" displayName="Price Expectation" type="double"></parameter>
 	<parameter defaultValue="0.020" displayName="Intial market interest rate" name="initialinterestrate" type="double"></parameter>
 
 </parameters>
