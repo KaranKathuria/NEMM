@@ -132,8 +132,8 @@ public class SellStrategy1Tactic extends GenericTactic {
 		else {
 //			ret.setCertVolume(Math.max(paramMustSellShare*lasttickproduction,physicalposition-maxppvolume)); //equals must sell	
 			int tmpTicks = myStrategy.getmyAgent().getNumTicksToEmptyPosition();
-//			ret.setCertVolume(Math.max(paramMustSellShare*lasttickproduction,Math.max(0.0, physicalposition/myStrategy.getmyAgent().getNumTicksToEmptyPosition())));
-			ret.setCertVolume(Math.max(0.0, physicalposition/myStrategy.getmyAgent().getNumTicksToEmptyPosition()));
+			ret.setCertVolume(Math.max(paramMustSellShare*lasttickproduction,Math.max(0.0, physicalposition/myStrategy.getmyAgent().getNumTicksToEmptyPosition())));
+//			ret.setCertVolume(Math.max(0.0, physicalposition/myStrategy.getmyAgent().getNumTicksToEmptyPosition()));
 		}
 		ret.setPrice(paramMustSellPriceMult*expectedprice);
 		
@@ -153,8 +153,8 @@ public class SellStrategy1Tactic extends GenericTactic {
 			ret.setCertVolume(0.0);
 		} 
 		else {
-//			ret.setCertVolume(Math.max(0.0,Math.min(maxBidOfferVolume-mustsell,physicalposition-mustsell))); //rest of the monthly production sold at expected price.			
-			ret.setCertVolume(Math.max(0.0,Math.min(1.0, maxBidOfferVolumeMultiplier)*physicalposition-mustsell)); //rest of the monthly production sold at expected price.			
+			ret.setCertVolume(Math.max(0.0,Math.min(maxBidOfferVolume-mustsell,physicalposition-mustsell))); //rest of the monthly production sold at expected price.			
+//			ret.setCertVolume(Math.max(0.0,Math.min(1.0, maxBidOfferVolumeMultiplier)*physicalposition-mustsell)); //rest of the monthly production sold at expected price.			
 		}
 		ret.setPrice(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice)); //Prices not symmetric around expected price with must of the volume tried sold at at premium (1+discount)*expt.
 
