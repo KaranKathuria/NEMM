@@ -152,7 +152,7 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 					if (tmpArray != null) {
 						tmpArray[1] = tmpArray[1] + alpha*(curProfit-tmpArray[1]); // Profit
 						tmpArray[2] = tmpArray[2] + alpha*(curActivation-tmpArray[2]); // Activation
-						tmpArray[0] = tmpArray[0] + alpha*(curReturn-tmpArray[0]); ; // Return						
+						tmpArray[0] = tmpArray[0] + alpha*(curReturn-tmpArray[0]);  // Return						
 					}
 					else {
 						// This will occur if there has been no utility set for this sell offer as yet
