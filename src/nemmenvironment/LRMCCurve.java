@@ -2,7 +2,7 @@
  * Version info:
  *     A class creating the perfect foresight version of the LRMC-curve. The curve is based on fundamental modelling. 
  *     
- *     Last altered data: 20141009
+ *     Last altered data: 20141010
  *     Made by: Karan Kathuria
  */
 
