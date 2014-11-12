@@ -203,14 +203,14 @@ else  {
 	LPE = 0;
 	
 	double temp=0;
-	for (int k = 2; k < MPEcount; k++) {
+	for (int k = 1; k < MPEcount; k++) {
 		if(equilibriumpricesyearsahead.get(k) > MPE){
 		temp = equilibriumpricesyearsahead.get(k);}
 		MPE = temp;
 	}
 	//Select the Long term fundamental price
 	double temp2=0;
-	for (int k = 2; k < LPEcount; k++) {
+	for (int k = 1; k < LPEcount; k++) {
 		if(equilibriumpricesyearsahead.get(k) > LPE){
 		temp2 = equilibriumpricesyearsahead.get(k);}
 		LPE = temp2;

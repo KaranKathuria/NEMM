@@ -69,7 +69,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	Forcast.initiatevolumeprognosis(); 																	 //Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based om expected prodution for the future year
 	FundamentalMarketAnalysis.runfundamentalmarketanalysis();											 //
 	Forcast.updateMPEandLPE();																			 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
-	ProjectDevelopment.startconstrucion();																 //Take 
+	ProjectDevelopment.startconstrucion();																 // 
 	ProjectDevelopment.startpreprojectandapplication();	 
 }
 	

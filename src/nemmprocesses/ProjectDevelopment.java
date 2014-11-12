@@ -68,25 +68,42 @@ public class ProjectDevelopment {
 			
 			ArrayList<PowerPlant> templist = new ArrayList<PowerPlant>();
 			ArrayList<Double> RRRpostponedtemplist = new ArrayList<Double>();
+			double estimateRRR = 0;
+			int numberofyearcertscanbehedged = AllVariables.numberofyearcertscanbehedged;
 			
 			//Collecting the projects that are awaiting investmetn decision (status = 3) and counting projects currently under construction.
 			for (PowerPlant PP : DA.getmyprojects()) {
 			double usedRRR = DA.getmycompany().getInvestmentRRR()*PP.getspecificRRR();			//Company specific RRR multiplied with company`s investment RRR.
 			double postponedRRR = usedRRR + AllVariables.RRRpostpondpremium;					//If postponed, there should be a risk premium
+			
 
 				if (PP.getstatus() == 3) {														//3=Awaiting investment decision.
 					PP.addyearsincurrentstatus(1);												//Increasing number of years with this status with one.
 					templist.add(PP);															//Adds all the projects, regardsless of having a cert price needed to high or low.
 					RRRpostponedtemplist.add(postponedRRR);										//A not so good workaround for saving the projet specific postponedRRR
 					PP.calculateLRMCandcertpriceneeded(currentyear, usedRRR, 3);				//Using the market forward power price in that given reigon. Notice that this is calculated for when the year the project can be invested in, not the year it can be finished!!
+					estimateRRR = usedRRR;
 				}
 			}
+			
 			//For each DeveloperAgent For all the relevant projects. Do the following:			
 			Collections.sort(templist, new CommonMethods.customprojectcomparator());			//Sorting the of a DAs project awaiting from lowest certprie needed to highest cert price needed
 			
-			//All the cirteria variables for the investment decision
+			//All the cirteria variables for the investment decision. Assumin default DA.getinvestmentdecisiontype() == 1
 			double cutoffcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations(); 
 			double postpondedcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getlongrunpriceexpectatations(); 
+			
+			if (DA.getinvestmentdecisiontype() == 2) {
+				cutoffcertprice = TheEnvironment.GlobalValues.avrhistcertprice;
+				postpondedcertprice = -1; 											//There is not an option to postponed if investmentdecisiontype = 0, hence this is set to -1;
+				}
+			if (DA.getinvestmentdecisiontype() == 3) {								//Only assuming the current average certprice for 2 years. 0 thereafter. //Need to create NPV equvalent
+				double equivivalentfactor = PowerPlant.calculateNPVfactor(15, estimateRRR)/PowerPlant.calculateNPVfactor(numberofyearcertscanbehedged, estimateRRR);
+				cutoffcertprice = equivivalentfactor * TheEnvironment.GlobalValues.avrhistcertprice;
+				postpondedcertprice = -1; 											//There is not an option to postponed if investmentdecisiontype = 0, hence this is set to -1;
+				}
+		
+		
 			int maxnumberofconstrucprojects = DA.getconstructionlimit();
 			int constructionproject_counter = DA.getnumprojectsunderconstr();					//Newly updated values.
 			double maxcapacitydeveloped		= DA.gettotalcapacitylimit();

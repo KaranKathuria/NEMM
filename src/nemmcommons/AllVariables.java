@@ -90,17 +90,21 @@ public class AllVariables {
 	//public static double randomfactorininmediummrundpriceexpectations = X; //Se market prognoisis constructor //This two could have the same random numer!
 
 	//FundamentalMarketAnalysis and Project Developement
-	public static int yearstoendogprojects = 2;				//Just to save time in the FMA.
-	public static double maxpricecerts = 1000;				//To not get an errror in the FMA.
-	public static double initialRRRcorrector = 1;			//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis
-	public static double RRRpostpondpremium = 0.02;			//Risk premium (basispoints 0.01 = 1%) need to be covered if the investment decision is to be postpond. 
-	public static int minpostpondyears = 1;				//How long the investment decision is postpond if postponed.Cannot see why this should be larger than 1. (only argument is if this is the real deal).
-	public static int MPECount = 17;						//Number of futuer years seen by the MPE-analysis. THats 15 + verage construction yers.
-	public static int LPECount = 24;						//Number of futuer years seen by the LPE-analysis
-	public static double stdmediumrunpriceexpect = 0.05;    //The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	public static double stdlongrunpriceexpect = 0.15;       //The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	
-	 
+	public static int yearstoendogprojects = 2;						//Just to save time in the FMA.
+	public static double maxpricecerts = 1000;						//To not get an errror in the FMA.
+	public static double initialRRRcorrector = 1;					//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis
+	public static double RRRpostpondpremium = 0.02;					//Risk premium (basispoints 0.01 = 1%) need to be covered if the investment decision is to be postpond. 
+	public static int minpostpondyears = 1;							//How long the investment decision is postpond if postponed.Cannot see why this should be larger than 1. (only argument is if this is the real deal).
+	public static int MPECount = 17;								//Number of futuer years seen by the MPE-analysis. THats 15 + verage construction yers.
+	public static int LPECount = 24;								//Number of futuer years seen by the LPE-analysis
+	public static double stdmediumrunpriceexpect = 0.05;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
+	public static double stdlongrunpriceexpect = 0.15;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
+	public static double[] developerinvestmenttypedistribution = new double[]{0.5, 0.8, 1.0};	//Share of type 1, 2 and 3
+	public static int numberoftickstocalculatehistcertprice = 6;	
+	public static int numberofyearcertscanbehedged = 2;
+	public static int constructionconstraints = 2; 				//2->12	//Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 2), 2 = 2*(sizecode*regioncode + 2), etc  
+	public static int preprojectandidentifyconstraint = 2;		//2->16 //Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 4), etc
+
 	
 	//Initial distribution of powerplants, projects and demandshares per region.
 	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2

@@ -291,10 +291,17 @@ public class CompanyAgent extends ParentAgent {
 		public DeveloperAgent() {
 			companyagent = CompanyAgent.this;
 			sizecode = 2;								//By default all developmentagents have normal amount of activety. (1= few, 2=normal, 3=alot) used in intial distribution of projects.
-			projectprocessandidylimit = 4+sizecode*Math.max(2, this.companyagent.regionpartcode);	//func of sizecode: = 3*sizecode. Problem as sizecode only defines size in one region. whereas //Max number of project getting identifyed or in proecss.
-			constructionlimit = sizecode*Math.max(2, this.companyagent.regionpartcode)*3;			//Max number of projects getting in from moving to construction. 
+			projectprocessandidylimit = (4+sizecode*Math.max(2, this.companyagent.regionpartcode))*AllVariables.preprojectandidentifyconstraint;	//func of sizecode: = 3*sizecode. Problem as sizecode only defines size in one region. whereas //Max number of project getting identifyed or in proecss.
+			constructionlimit = (2+sizecode*Math.max(2, this.companyagent.regionpartcode))*AllVariables.constructionconstraints;					//Max number of projects getting in from moving to construction. 
 			totalcapacitylimit = 100000000;
-		}
+			//1=invest based on long term price of certs (Fundamental based), 2=Invest based on curren cert price, 3=Invest based on current cert price for two years
+			double investdecrand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
+					if (investdecrand <= AllVariables.developerinvestmenttypedistribution[0]) {
+						investmentdecisiontype = 1;}
+					if (investdecrand > AllVariables.developerinvestmenttypedistribution[0] && investdecrand <= AllVariables.developerinvestmenttypedistribution[1]) {
+						investmentdecisiontype = 2;}
+					if (investdecrand > AllVariables.developerinvestmenttypedistribution[1])
+						investmentdecisiontype = 3;}
 		
 		public void updateDAnumbers(double cpdorconstr, int numpt, int numpf, int numpuc, int numpaid, int numpip, int numpid) {
 			capacitydevorundrconstr = cpdorconstr;
@@ -318,6 +325,7 @@ public class CompanyAgent extends ParentAgent {
 		public double getcapacitydevorundrconstr() {return capacitydevorundrconstr;}
 		public int getnumprojectsunderconstr() {return numprojectsunderconstr;}
 		public int getnumprojectsinprocess() {return numprojectsinprocess;}
+		public int getinvestmentdecisiontype() {return investmentdecisiontype;}
 //		public void addpro
 
 		

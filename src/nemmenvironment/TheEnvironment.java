@@ -72,9 +72,11 @@ public final class TheEnvironment {
 		public static TickArray certificateprice;
 		public static double currentmarketprice;
 		public static double RRRcorrector;  			 //Corrector for the project specific RRR. Initially set, then altered by randomness
-		public static double currentinterestrate;		//Not in use.
+		public static double currentinterestrate;		 //Not in use.
 		public static int numberofbuyoffersstm;
 		public static int numberofselloffersstm;
+		public static double avrhistcertprice; 			//Average historic cert price based on x number of ticks, where X is given by AllVariables.numberoftickstocalculatehistcertprice
+		
 		// Future cert prices
 		public static double endofyearpluss1;
 		public static double endofyearpluss2;
@@ -109,6 +111,7 @@ public final class TheEnvironment {
 			//Initiating globale values consisting of public market information
 			certificateprice = new TickArray();
 			currentmarketprice = ParameterWrapper.getpriceexpectation();			//This is the initial expected short term price at simulation start.
+			avrhistcertprice = currentmarketprice;									//Initially
 			currentinterestrate = ParameterWrapper.getinitialinterestrate();
 			RRRcorrector = AllVariables.initialRRRcorrector;
 			producersphysicalposition = 20000;					//Must be set to the sum of all agents startingposition. Just used for graph values.
@@ -129,6 +132,7 @@ public final class TheEnvironment {
 			currentmarketprice = ShortTermMarket.getcurrentmarketprice();
 			certificateprice.setElement(ShortTermMarket.getcurrentmarketprice(), theCalendar.getCurrentTick()); //Adds certPrice to history.
 			RRRcorrector = RRRcorrector * RandomHelper.nextDoubleFromTo(0.99, 1.01);							//To include a randomness in the RRRused in FMA.
+			updateavrhistoriccertprice();																		//Updates the averagecertprice
 			
 			numberofbuyoffersstm = ShortTermMarket.getnumberofbuyoffers();
 			numberofselloffersstm = ShortTermMarket.getnumberofselloffers();
@@ -154,8 +158,28 @@ public final class TheEnvironment {
 			}
 			totalmarketphysicalposition = tradersphysicalposition + obligatedpurchasersphysiclaposition + producersphysicalposition;
 			ticksupplyanddemandbalance = totaltickproduction + totaltickdemand;
-			
 		}
+		
+	
+		
+		public static void updateavrhistoriccertprice() {
+			if (TheEnvironment.theCalendar.getCurrentTick() <= AllVariables.numberoftickstocalculatehistcertprice) {
+				avrhistcertprice = currentmarketprice;									//If the tick is less, then we just take the prevoius price as average.
+			}
+			else { 																		//Take the average of last X ticks
+				double tempcutoff = 0;
+				int startindex = TheEnvironment.theCalendar.getCurrentTick() - AllVariables.numberoftickstocalculatehistcertprice;
+				for (int i = 0; i < AllVariables.numberoftickstocalculatehistcertprice; i++) {
+					tempcutoff = tempcutoff + certificateprice.getElement(startindex+i); }
+				avrhistcertprice = tempcutoff/AllVariables.numberoftickstocalculatehistcertprice;
+		}
+		}
+		
+	}
+	
+	
+	}
+		
 		/*
 		// Annual update of annual chaning global values
 		public static void annualglobalvalueupdate() {
@@ -166,11 +190,9 @@ public final class TheEnvironment {
 			endofyearpluss5 = currentmarketprice*Math.pow((1+currentinterestrate), 5);
 		}
 		*/
-	}
 	
 	
-	
-}
+
 
 //NEMMCALENDAR START ========================================================	
 	/*public static class NemmCalendar {
