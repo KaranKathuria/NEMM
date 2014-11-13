@@ -125,7 +125,7 @@ public class CompanyAgent extends ParentAgent {
 				TradeStrategy1 tradestrategy = new TradeStrategy1();
 				tradestrategy.setmyAgent(ActiveAgent.this);
 				allstrategies.add(tradestrategy);
-				portfoliocapital = 1000000; 
+				portfoliocapital = 500000; 
 			} 
 			RAR = 0.07; //quite risk avers
 			companyagent = CompanyAgent.this;

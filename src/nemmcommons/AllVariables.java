@@ -26,8 +26,8 @@ public class AllVariables {
 //	public static double PAgentmustsellshare = 0.5;				//RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
 //	public static double OPAgentmustsellshare = 0.75; 		 //RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
 	
-	public static double tradermaximumshortpos = -5000; //These values should have some realtion to the initial portfoliovalue by allowing traders
-	public static double tradermaximumlongpos = 5000;	//to go bust.
+	public static double tradermaximumshortpos = -4000; //These values should have some realtion to the initial portfoliovalue by allowing traders
+	public static double tradermaximumlongpos = 4000;	//to go bust.
 	public static double portfoliocapitalexitlimit = 100000; //reaching this limit triggers and "exit" behavior. This each reach with strong price drop/increase
 	
 	public static int numofhistutilitiesincluded = 3; //Used by method that deterines the tactics best utility.
@@ -42,8 +42,8 @@ public class AllVariables {
 	// ---- GJB Added
 	
 	// distribution cutoffs used for assigning a strategy to a given agent
-	public static double[] cutoffPAExit = new double[]{0.4,0.8,1.0};
-	public static double[] cutoffOPExit = new double[]{0.4,1.0};
+	public static double[] cutoffPAExit = new double[]{0.25,0.75,1.0};
+	public static double[] cutoffOPExit = new double[]{0.6,1.0};
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
 	// over the next 12 ticks - i.e. it will sell 1/12th in the next tick
 	public static int[] numTicksPAExit = new int[]{1,6,24};
@@ -61,11 +61,11 @@ public class AllVariables {
 	public static int tacticDefaultLearn_PASellStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
 	public static double tacticDefaultMustSellShare_PASellStrategy1 = 0.75; // Default must sell share for the producer tactics (if used)
 	public static double tacticDefaultMustSellPriceMult_PASellStrategy1 = 0.5;  // Default must sell price multiplier for the producer tactics (if used)
-	public static double tacticMinMustSellPriceMult_PASellStrategy1 = 0.7;
-	public static double tacticMaxMustSellPriceMult_PASellStrategy1 = 1.0;
-	public static int tacticNumMustSellSteps_PASellStrategy1 = 4;
-	public static double tacticMinRestPriceMult_PASellStrategy1 = 0.9; // Specify the multiplier range
-	public static double tacticMaxRestPriceMult_PASellStrategy1 = 1.5;
+	public static double tacticMinMustSellPriceMult_PASellStrategy1 = 0.9;
+	public static double tacticMaxMustSellPriceMult_PASellStrategy1 = 1.1;
+	public static int tacticNumMustSellSteps_PASellStrategy1 = 5;
+	public static double tacticMinRestPriceMult_PASellStrategy1 = 0.8; // Specify the multiplier range
+	public static double tacticMaxRestPriceMult_PASellStrategy1 = 1.4;
 	public static int tacticNumRestSteps_PASellStrategy1 = 7;
 //	public static int numTactics_PASellStrategy1 = 11; // The number of tactics to make
 	public static double tacticMinRestPriceStep_PASellStrategy1 = 0.025; // Step size range for the multiplier if learning is used
@@ -76,12 +76,12 @@ public class AllVariables {
 	public static int tacticDefaultLearn_OPBuyStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
 	public static double tacticDefaultMustBuyShare_OPBuyStrategy1 = 0.75; // Default must Buy share for the producer tactics (if used)
 	public static double tacticDefaultMustBuyPriceMult_OPBuyStrategy1 = 1.5;  // Default must Buy price multiplier for the producer tactics (if used)
-	public static double tacticMinMustBuyPriceMult_OPBuyStrategy1 = 1.0;
-	public static double tacticMaxMustBuyPriceMult_OPBuyStrategy1 = 1.4;
-	public static int tacticNumMustBuySteps_OPBuyStrategy1 = 6;
+	public static double tacticMinMustBuyPriceMult_OPBuyStrategy1 = 0.9;
+	public static double tacticMaxMustBuyPriceMult_OPBuyStrategy1 = 1.1;
+	public static int tacticNumMustBuySteps_OPBuyStrategy1 = 5;
 	public static double tacticMinRestPriceMult_OPBuyStrategy1 = 0.6; // Specify the multiplier range
-	public static double tacticMaxRestPriceMult_OPBuyStrategy1 = 1.0;
-	public static int tacticNumRestSteps_OPBuyStrategy1 = 5;
+	public static double tacticMaxRestPriceMult_OPBuyStrategy1 = 1.2;
+	public static int tacticNumRestSteps_OPBuyStrategy1 = 7;
 //	public static int numTactics_OPBuyStrategy1 = 11; // The number of tactics to make
 	public static double tacticMinRestPriceStep_OPBuyStrategy1 = 0.025; // Step size range for the multiplier if learning is used
 	public static double tacticMaxRestPriceStep_OPBuyStrategy1 = 0.025;	

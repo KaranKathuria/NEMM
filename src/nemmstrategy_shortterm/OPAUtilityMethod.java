@@ -99,7 +99,7 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 		// all others = expected price of the next tick
 		// They should be obtained from the analysis agent
 		certValue = new double[s.size()];
-		certValue[0]=priceSpot*5; // I have made this bigger than the "penalty" to reflect risk aversion to being short 
+		certValue[0]=priceSpot*2; // I have made this bigger than the "penalty" to reflect risk aversion to being short 
 		for ( i=1;i<s.size();i++) {
 			certValue[i]=priceSpot; // for now, take the market price as the best guess of the certificate value
 		}
