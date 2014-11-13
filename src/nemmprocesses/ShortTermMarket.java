@@ -12,6 +12,7 @@ import java.util.Collections;
 
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmcommons.CommonMethods;
+import nemmcommons.ParameterWrapper;
 import nemmenvironment.TheEnvironment;
 import nemmstrategy_shortterm.BidOffer;
 import nemmstrategy_shortterm.BuyOffer;
@@ -90,8 +91,8 @@ public class ShortTermMarket {
 		// For display purposes
 		int counts = 0;
 		int countb = 0;
-		buyoffer2 = new double[40];
-		selloffer2 = new double[40];
+		buyoffer2 = new double[ParameterWrapper.getobligatedpurchaseragentsnumber()];
+		selloffer2 = new double[ParameterWrapper.getobligatedpurchaseragentsnumber()];
 		
 // GJB This needs to be moved into ACTIVE AGENT
 // it is here temporarily 

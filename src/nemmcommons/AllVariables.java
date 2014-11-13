@@ -99,10 +99,10 @@ public class AllVariables {
 	public static int LPECount = 24;								//Number of futuer years seen by the LPE-analysis
 	public static double stdmediumrunpriceexpect = 0.05;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.15;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	public static double[] developerinvestmenttypedistribution = new double[]{0.5, 0.8, 1.0};	//Share of type 1, 2 and 3
+	public static double[] developerinvestmenttypedistribution = new double[]{0.4,0.8,1.0};	//Share of type 1, 2 and 3. 1 is the fundamental, 2 is the current price for all years, 3 is current price for x years.
 	public static int numberoftickstocalculatehistcertprice = 6;	
 	public static int numberofyearcertscanbehedged = 2;
-	public static int constructionconstraints = 2; 				//2->12	//Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 2), 2 = 2*(sizecode*regioncode + 2), etc  
+	public static int constructionconstraints = 6; 				//2->12	//Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 2), 2 = 2*(sizecode*regioncode + 2), etc  
 	public static int preprojectandidentifyconstraint = 2;		//2->16 //Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 4), etc
 
 	

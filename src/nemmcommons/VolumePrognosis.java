@@ -78,10 +78,12 @@ public class VolumePrognosis {
 		double dtemp1 = 0;
 		double dtempticks = 0;
 		int from = TheEnvironment.theCalendar.getCurrentTick() + 1;
+		int maksticks = TheEnvironment.theCalendar.getNumTicks();
 		int tickleftinoblipd = TheEnvironment.theCalendar.getNumTradePdsInObligatedPd() - TheEnvironment.theCalendar.getTimeBlock(from).tradepdID ; //Calculates the number of ticks to inlude (1-12).
+		if (from >= TheEnvironment.theCalendar.getNumTicks()) {return;}							//Handels last tick cases.
 		for (PowerPlant pp : myVolumeAnalysisAgent.getmyCompany().getmypowerplants()) {
 			
-			if ((pp.getStartTick() <= from) && (pp.getendtick() >= from)) {						 //Only count production if the plant has actually started and not close.
+			if ((pp.getStartTick() <= from) && (pp.getendtick() >= from)) {						//Only count production if the plant has actually started and not close.
 			temp1 = temp1 + pp.getExpectedProduction(from);
 			}
 			
@@ -94,8 +96,8 @@ public class VolumePrognosis {
 		for (CompanyDemandShare CDS : this.myVolumeAnalysisAgent.getmyCompany().getMyDemandShares()) {
 			dtemp1 = dtemp1 + (CDS.getDemandShare(from) * CDS.getMyRegion().getMyDemand().getCertDemand(from));
 			
-			for (int i = from; i < ticks+from; ++i) {
-				dtempticks = dtempticks + (CDS.getDemandShare(i) * CDS.getMyRegion().getMyDemand().getCertDemand(i)); //The ticks next ticks
+			for (int i = from; i < Math.min(ticks+from,maksticks); ++i) {
+				dtempticks = dtempticks + (CDS.getDemandShare(i) * CDS.getMyRegion().getMyDemand().getCertDemand(i)); //The tick`s next ticks
 				}	
 			
 		}

@@ -215,19 +215,36 @@ else  {
 		temp2 = equilibriumpricesyearsahead.get(k);}
 		LPE = temp2;
 	}
-	
 	double m = MPE;
 	double l = LPE;
 	int a = 2;
-
 	}
-
+	
+	
 	public static double getMPE() {
 		return MPE;
 	}
 	public static double getLPE() {
 		return LPE;
 	}
+
+	
+	//Method calculationg the expected supply/demand balance of certificates at current tick and at the given future tick.
+	public double[] getcertbalanceratio(int thetick) {
+		//returning supply over demand
+	
+		double[] ret = new double[2];
+		
+		//Just for now
+		double currentsupplyratio = 0.8;
+		double futuresupplyratio = 0.25;
+		ret[0] = currentsupplyratio;
+		ret[1] = futuresupplyratio;
+		
+		return ret;
+	}
+	
+	
 		
 }
 		

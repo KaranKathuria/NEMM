@@ -295,7 +295,7 @@ public class CompanyAgent extends ParentAgent {
 			constructionlimit = (2+sizecode*Math.max(2, this.companyagent.regionpartcode))*AllVariables.constructionconstraints;					//Max number of projects getting in from moving to construction. 
 			totalcapacitylimit = 100000000;
 			//1=invest based on long term price of certs (Fundamental based), 2=Invest based on curren cert price, 3=Invest based on current cert price for two years
-			double investdecrand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
+			double investdecrand = RandomHelper.nextDoubleFromTo(0.0, AllVariables.developerinvestmenttypedistribution[2]);
 					if (investdecrand <= AllVariables.developerinvestmenttypedistribution[0]) {
 						investmentdecisiontype = 1;}
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution[0] && investdecrand <= AllVariables.developerinvestmenttypedistribution[1]) {
