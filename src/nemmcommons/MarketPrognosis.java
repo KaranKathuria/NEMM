@@ -197,4 +197,13 @@ public class MarketPrognosis {
 		return myPrognosis;
 	}
 	
+	public double[] getCertificateRatio(int numTicksAhead) {
+		// returns the prognosis of the certificate ratio for a given number
+		// of ticks ahead
+		// Later: need to add in randomness element here
+		double[] elRatio = new double[2];
+		elRatio = FundamentalMarketAnalysis.getcertbalanceratio(numTicksAhead);
+		return elRatio;
+	}
+	
 }

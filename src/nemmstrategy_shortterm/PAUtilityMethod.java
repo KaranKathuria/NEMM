@@ -91,14 +91,16 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 		double curProfit = 0;
 		double curActivation = 0;
 		double curReturn = 0.0;
+		double curRestVal = 0.0;
 		double curOfferVol = 0;
 		double curOfferPrice = 0;
 		double curOfferSold = 0;
 		double curOfferShareCleared = 0;
-		double[] certValue;
+		double certValue;
 		double valueEnd;
 		double valueStart;
 		int numTicksToEmpty; 
+		double probSale = 1;
 		
 		ArrayList<double[]> retList = new ArrayList<double[]>();
 		double[] tmpArray;
@@ -116,17 +118,16 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 		// index 0 = expected shortfall price (as you need to buy the certificates today)
 		// all others = expected price of the next tick
 		// They should be obtained from the analysis agent
-		certValue = new double[s.size()];
-		certValue[0]=priceSpot*0.75; // assumes that certs are worth nothing if you cannot sell them (extreme, but ok for now)
-		for ( i=1;i<s.size();i++) {
-			certValue[i]=priceSpot; // for now take the market price as the best guess of the cert value
+//		for ( i=1;i<s.size();i++) {
+//			numTicksToEmpty = myAgent.getNumTicksToEmptyPosition();
+			//			certValue[i]=priceSpot; // for now take the market price as the best guess of the cert value
 			// The certificate value is set to be the average price over the hold period, as the 
 			// expectation is that the certificate will be sold at some point over the period
 /*			numTicksToEmpty = myAgent.getNumTicksToEmptyPosition();
 			valueEnd=myAgent.getagentcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getPricePrognosis(numTicksToEmpty);
 			valueStart = myAgent.getagentcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getPricePrognosis(0);
 			certValue[i] = 0.5*(valueEnd+valueStart);*/
-		}
+//		}
 		
 		for ( i=0;i<s.size();i++) {
 			if(s.get(i) != null) {
@@ -156,7 +157,17 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 					}
 					curProfit = curOfferVol*curOfferPrice; // Profit if all was sold
 					curActivation = curOfferSold/curOfferVol; // Activation (prob of sale)
-					curReturn = curOfferVol*((1-curActivation)*certValue[i]+curActivation*curOfferPrice); // Return (utility)
+					// Calculate the certificate value given the latest activation
+					if (i==0) {
+						certValue = priceSpot*0.5; // this is temporary - to expand on later
+					}
+					else {
+						numTicksToEmpty = myAgent.getNumTicksToEmptyPosition();
+						certValue=myAgent.getagentcompanyanalysisagent().getmarketanalysisagent().getCertificateValue(numTicksToEmpty,curActivation);
+					}					
+					curRestVal = curOfferVol*certValue; // value of unsold certificates
+//					curReturn = curOfferVol*((1-curActivation)*certValue[i]+curActivation*curOfferPrice); // Return (utility)
+					curReturn = curProfit*curActivation + curRestVal*(1-curActivation);
 					// Exponential smoothing
 					if (tmpArray != null) {
 						tmpArray[1] = tmpArray[1] + alpha*(curProfit-tmpArray[1]); // Profit

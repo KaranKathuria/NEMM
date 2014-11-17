@@ -230,7 +230,7 @@ else  {
 
 	
 	//Method calculationg the expected supply/demand balance of certificates at current tick and at the given future tick.
-	public double[] getcertbalanceratio(int thetick) {
+	public static double[] getcertbalanceratio(int thetick) {
 		//returning supply over demand
 	
 		double[] ret = new double[2];

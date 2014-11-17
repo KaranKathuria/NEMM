@@ -73,6 +73,10 @@ public class AllVariables {
 //	public static int numTactics_PASellStrategy1 = 11; // The number of tactics to make
 	public static double tacticMinRestPriceStep_PASellStrategy1 = 0.025; // Step size range for the multiplier if learning is used
 	public static double tacticMaxRestPriceStep_PASellStrategy1 = 0.025;
+	
+	// Certificate value calculation parameters
+	public static double certMaxPrice = 100;
+	public static double certMinPrice = 0;
 
 	// Supplier (Obligated Purchaser) strategies and tactics
 	public static double multOfferVol_OPBuyStrategy1 = 2; // default max fraction of that month's production than can be sold in the month
