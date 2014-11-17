@@ -17,7 +17,7 @@ import nemmstrategy_shortterm.SoldInSTM;
 //Class definition
 public class GenericUtilityMethod {
 	
-	private ActiveAgent myAgent;
+	protected ActiveAgent myAgent;
 	
 	public GenericUtilityMethod() {}
 	

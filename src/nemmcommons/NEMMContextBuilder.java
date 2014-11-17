@@ -66,10 +66,12 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	DistributeDemandShares.distributedemand(AllVariables.demandsharedistrubutioncode);					 //Distribute all demand among the Companies with OPAgents.
 	ProjectDevelopment.updateDAgentsnumber();
 	
-	Forcast.initiatevolumeprognosis(); 																	 //Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based om expected prodution for the future year
-	FundamentalMarketAnalysis.runfundamentalmarketanalysis();											 //
-	Forcast.updateMPEandLPE();																			 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
-	ProjectDevelopment.startconstrucion();																 // 
+	Forcast.initiatevolumeprognosis(); 	//Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based om expected prodution for the future year
+	if (!AllVariables.useTestData){
+		FundamentalMarketAnalysis.runfundamentalmarketanalysis();											 //
+		Forcast.updateMPEandLPE();																			 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
+	}
+	ProjectDevelopment.startconstrucion();																 //Take 
 	ProjectDevelopment.startpreprojectandapplication();	 
 }
 	
@@ -80,9 +82,10 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 //All annual updates to come below. Currently not in use.
 @ScheduledMethod(start = 12, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
 public void annualmarketschedule() {
-	FundamentalMarketAnalysis.runfundamentalmarketanalysis();							
-	Forcast.updateMPEandLPE();									 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
-	
+	if (!AllVariables.useTestData){
+		FundamentalMarketAnalysis.runfundamentalmarketanalysis();							
+		Forcast.updateMPEandLPE();									 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
+	}
 	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
 	ProjectDevelopment.receivingconcession();					//As this is given an not dependent on other stages. Starting with adding on year in this status.
 	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.

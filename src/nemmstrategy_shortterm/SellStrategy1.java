@@ -94,7 +94,8 @@ public class SellStrategy1 extends GenericStrategy {
 				// may change at a later date.
 				SellStrategy1Tactic tactic = new SellStrategy1Tactic(AllVariables.multOfferVol_PASellStrategy1, 
 						percMustSellVol, multMustSellPrice, 
-						multRestPrice, AllVariables.tacticDefaultLearn_PASellStrategy1);
+						multRestPrice, AllVariables.tacticDefaultMaxPhysPosMult_PASellStrategy1, 
+						AllVariables.tacticDefaultLearn_PASellStrategy1);
 				
 				// Set the step size for the rest price multiplier (used if learning turned on) 
 				multRestPriceStep = RandomHelper.nextDouble()*(AllVariables.tacticMaxRestPriceStep_PASellStrategy1 - 

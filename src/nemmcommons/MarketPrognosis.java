@@ -181,4 +181,20 @@ public class MarketPrognosis {
 		return maxpriceexpectation;
 	}
 	
+	public double getPricePrognosis(int numTicksAhead) {
+		// returns a prognosis for the requested number of ticks ahead
+		// Calculates this via a linear interpolation between the long term
+		// price prognosis and the short term price prognosis
+		// Note the interpretation of maxpriceexpectation. It is the expected highest LRMC required
+		// to meet the quota - and therefore in a fundamental view should be the lon run average price
+		// level. The prognosis assumes a number of years to reach this level, and the interpolation
+		// is based on this.
+		int numYearsAheadLT = 10; // How many years ahead assumed before hitting the LT prognosis
+		int numTicksPerYear = TheEnvironment.theCalendar.getNumTradePdsInYear();
+		double myPrognosis;
+		
+		myPrognosis = stpriceexpectation + numTicksAhead*(maxpriceexpectation-stpriceexpectation)/(numYearsAheadLT*numTicksPerYear);
+		return myPrognosis;
+	}
+	
 }

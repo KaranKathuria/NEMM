@@ -9,6 +9,7 @@
 
 package inputreader;
 
+import nemmcommons.AllVariables;
 import nemmenvironment.PowerPlant;
 import nemmenvironment.ProjectRRR;
 import nemmenvironment.Region;
@@ -16,6 +17,7 @@ import nemmenvironment.TheEnvironment;
 import nemmtime.NemmCalendar;
 
 //import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 
 
 
@@ -52,7 +54,14 @@ public class ReadExcel {
 	 private static String filePath;
 	 
  	public static void InitReadExcel() {
- 		filePath = working_directory + File.separator + "NEMM_realdata.xlsx"; 
+
+ 		if (AllVariables.useTestData){
+ 			filePath = working_directory + File.separator + "NEMM_testdata.xls"; 
+ 		}
+ 		else {
+ 			filePath = working_directory + File.separator + "NEMM_realdata.xlsx"; 
+ 		}
+
  	}
  
 	public static void ReadExcel() {}

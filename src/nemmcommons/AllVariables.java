@@ -48,7 +48,7 @@ public class AllVariables {
 
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
 	// over the next 12 ticks - i.e. it will sell 1/12th in the next tick
-	public static int[] numTicksPAExit = new int[]{1,6,12};
+	public static int[] numTicksPAExit = new int[]{1,12,24};
 	public static int[] numTicksOPExit = new int[]{1,2};
 	// Tactics - number of ticks to exit positions
 	// Number of exit strategies for each agent type
@@ -59,22 +59,23 @@ public class AllVariables {
 	
 	// Producer Strategies & Tactics
 	// Note - not all of these need be used in any given tactic & strategy
-	public static double multOfferVol_PASellStrategy1 = 0.5; // default max fraction of that month's physical position than can be sold in the month
+	public static double multOfferVol_PASellStrategy1 = 2; // default max fraction of that month's physical position than can be sold in the month
 	public static int tacticDefaultLearn_PASellStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
-	public static double tacticDefaultMustSellShare_PASellStrategy1 = 0.25; // Default must sell share for the producer tactics (if used)
+	public static double tacticDefaultMustSellShare_PASellStrategy1 = 1.0; // Default must sell share for the producer tactics (if used)
 	public static double tacticDefaultMustSellPriceMult_PASellStrategy1 = 0.5;  // Default must sell price multiplier for the producer tactics (if used)
-	public static double tacticMinMustSellPriceMult_PASellStrategy1 = 0.9;
-	public static double tacticMaxMustSellPriceMult_PASellStrategy1 = 1.1;
-	public static int tacticNumMustSellSteps_PASellStrategy1 = 5;
-	public static double tacticMinRestPriceMult_PASellStrategy1 = 0.8; // Specify the multiplier range
-	public static double tacticMaxRestPriceMult_PASellStrategy1 = 1.4;
+	public static double tacticDefaultMaxPhysPosMult_PASellStrategy1 = 0.75; // Sell up to this fraction of the physical position
+	public static double tacticMinMustSellPriceMult_PASellStrategy1 = 0.7;
+	public static double tacticMaxMustSellPriceMult_PASellStrategy1 = 1.0;
+	public static int tacticNumMustSellSteps_PASellStrategy1 = 4;
+	public static double tacticMinRestPriceMult_PASellStrategy1 = 0.9; // Specify the multiplier range
+	public static double tacticMaxRestPriceMult_PASellStrategy1 = 1.5;
 	public static int tacticNumRestSteps_PASellStrategy1 = 7;
 //	public static int numTactics_PASellStrategy1 = 11; // The number of tactics to make
 	public static double tacticMinRestPriceStep_PASellStrategy1 = 0.025; // Step size range for the multiplier if learning is used
 	public static double tacticMaxRestPriceStep_PASellStrategy1 = 0.025;
 
 	// Supplier (Obligated Purchaser) strategies and tactics
-	public static double multOfferVol_OPBuyStrategy1 = 10; // default max fraction of that month's production than can be sold in the month
+	public static double multOfferVol_OPBuyStrategy1 = 2; // default max fraction of that month's production than can be sold in the month
 	public static int tacticDefaultLearn_OPBuyStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
 	public static double tacticDefaultMustBuyShare_OPBuyStrategy1 = 0.75; // Default must Buy share for the producer tactics (if used)
 	public static double tacticDefaultMustBuyPriceMult_OPBuyStrategy1 = 1.5;  // Default must Buy price multiplier for the producer tactics (if used)
@@ -126,6 +127,9 @@ public class AllVariables {
 	public static double annualprobforreceivingconcession = 0.3;	//Only with one decimal as the random generater uses int.
 	public static int expectedyersinconcession = 5;					//When deciding for concession, how long to the developers expected the project to be in line. Needed due to learningcurve/CAPEX estimation.
 	
+	// ---- GJB Added
+	public static boolean useTestData = false;
+	// ---- end GJB Added
 }
 
 
