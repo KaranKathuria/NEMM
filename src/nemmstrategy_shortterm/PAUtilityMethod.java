@@ -96,6 +96,9 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 		double curOfferSold = 0;
 		double curOfferShareCleared = 0;
 		double[] certValue;
+		double valueEnd;
+		double valueStart;
+		int numTicksToEmpty; 
 		
 		ArrayList<double[]> retList = new ArrayList<double[]>();
 		double[] tmpArray;
@@ -117,6 +120,12 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 		certValue[0]=0; // assumes that certs are worth nothing if you cannot sell them (extreme, but ok for now)
 		for ( i=1;i<s.size();i++) {
 			certValue[i]=priceSpot; // for now take the market price as the best guess of the cert value
+			// The certificate value is set to be the average price over the hold period, as the 
+			// expectation is that the certificate will be sold at some point over the period
+/*			numTicksToEmpty = myAgent.getNumTicksToEmptyPosition();
+			valueEnd=myAgent.getagentcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getPricePrognosis(numTicksToEmpty);
+			valueStart = myAgent.getagentcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getPricePrognosis(0);
+			certValue[i] = 0.5*(valueEnd+valueStart);*/
 		}
 		
 		for ( i=0;i<s.size();i++) {

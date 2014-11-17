@@ -319,6 +319,30 @@ public class ShortTermMarket {
 			}	
 		}
 		
+		int numBids = Allbuyoffers.size();
+		double[][] curveDemand = new double[numBids][4];
+		int numOffers = Allselloffers.size();
+		double[][] curveSupply = new double[numOffers][4];
+		// For debugging
+		int iD;
+		double cumBuyVol=0;
+		for ( i=0; i<Allbuyoffers.size(); i++) {
+			iD = Allbuyoffers.size()-1-i;
+			curveDemand[i][0]=Allbuyoffers.get(iD).getPrice();
+			curveDemand[i][1]=Allbuyoffers.get(iD).getCertVolume();
+			cumBuyVol = cumBuyVol+curveDemand[i][1];
+			curveDemand[i][2]=cumBuyVol;
+			curveDemand[i][3]=Allbuyoffers.get(iD).getShareCleared();
+		}
+		double cumSellVol = 0;
+		for ( i=0; i<Allselloffers.size(); i++) {
+			curveSupply[i][0]=Allselloffers.get(i).getPrice();
+			curveSupply[i][1]=Allselloffers.get(i).getCertVolume();
+			cumSellVol = cumSellVol+curveSupply[i][1];
+			curveSupply[i][2]=cumSellVol;
+			curveSupply[i][3]=Allselloffers.get(i).getShareCleared();
+		}		
+		
 		// Set the share of the marginal offer sold and the share of the marginal offer purchased
 		// GJB - remove this once checked that it is no longer used
 		if (curBid.tradedVol == 0 || curBid.maxVol == 0) {

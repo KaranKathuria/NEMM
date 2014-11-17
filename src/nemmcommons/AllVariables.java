@@ -45,11 +45,11 @@ public class AllVariables {
 	// ---- GJB Added
 	
 	// distribution cutoffs used for assigning a strategy to a given agent
-	public static double[] cutoffPAExit = new double[]{0.6,0.8,1.0};
-	public static double[] cutoffOPExit = new double[]{0.5,1.0};
+	public static double[] cutoffPAExit = new double[]{0.5,0.8,1.0};
+	public static double[] cutoffOPExit = new double[]{0.8,1.0};
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
 	// over the next 12 ticks - i.e. it will sell 1/12th in the next tick
-	public static int[] numTicksPAExit = new int[]{1,6,12};
+	public static int[] numTicksPAExit = new int[]{1,12,24};
 	public static int[] numTicksOPExit = new int[]{1,2};
 	// Tactics - number of ticks to exit positions
 	// Number of exit strategies for each agent type
@@ -62,8 +62,9 @@ public class AllVariables {
 	// Note - not all of these need be used in any given tactic & strategy
 	public static double multOfferVol_PASellStrategy1 = 2; // default max fraction of that month's physical position than can be sold in the month
 	public static int tacticDefaultLearn_PASellStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
-	public static double tacticDefaultMustSellShare_PASellStrategy1 = 0.75; // Default must sell share for the producer tactics (if used)
+	public static double tacticDefaultMustSellShare_PASellStrategy1 = 1.0; // Default must sell share for the producer tactics (if used)
 	public static double tacticDefaultMustSellPriceMult_PASellStrategy1 = 0.5;  // Default must sell price multiplier for the producer tactics (if used)
+	public static double tacticDefaultMaxPhysPosMult_PASellStrategy1 = 0.75; // Sell up to this fraction of the physical position
 	public static double tacticMinMustSellPriceMult_PASellStrategy1 = 0.7;
 	public static double tacticMaxMustSellPriceMult_PASellStrategy1 = 1.0;
 	public static int tacticNumMustSellSteps_PASellStrategy1 = 4;
@@ -117,6 +118,9 @@ public class AllVariables {
 	public static double annualprobforreceivingconcession = 0.3;	//Only with one decimal as the random generater uses int.
 	public static int expectedyersinconcession = 5;					//When deciding for concession, how long to the developers expected the project to be in line. Needed due to learningcurve/CAPEX estimation.
 	
+	// ---- GJB Added
+	public static boolean useTestData = false;
+	// ---- end GJB Added
 }
 
 
