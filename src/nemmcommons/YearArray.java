@@ -11,7 +11,7 @@ public class YearArray {
 	
 	theData = new double[TheEnvironment.theCalendar.getNumYears()];
 	}
-	
+	//f
 	public double[] getArray() {
 		return theData;
 	}

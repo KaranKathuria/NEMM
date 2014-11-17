@@ -114,7 +114,7 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 		// all others = expected price of the next tick
 		// They should be obtained from the analysis agent
 		certValue = new double[s.size()];
-		certValue[0]=0; // assumes that certs are worth nothing if you cannot sell them (extreme, but ok for now)
+		certValue[0]=priceSpot*0.75; // assumes that certs are worth nothing if you cannot sell them (extreme, but ok for now)
 		for ( i=1;i<s.size();i++) {
 			certValue[i]=priceSpot; // for now take the market price as the best guess of the cert value
 		}

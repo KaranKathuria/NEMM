@@ -64,11 +64,12 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	DistributeProjectsandPowerPlants.distributeallpowerplants(AllVariables.powerplantdistributioncode);	 //Distribute all PowerPlants among the Copmanies with PAgents.
 	DistributeProjectsandPowerPlants.distributeprojects(AllVariables.projectsdistributioncode);			 //Distribute all Projects among the Companies with DAgents.
 	DistributeDemandShares.distributedemand(AllVariables.demandsharedistrubutioncode);					 //Distribute all demand among the Companies with OPAgents.
+	ProjectDevelopment.updateDAgentsnumber();
 	
 	Forcast.initiatevolumeprognosis(); 																	 //Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based om expected prodution for the future year
-//	FundamentalMarketAnalysis.runfundamentalmarketanalysis();											 //
-//	Forcast.updateMPEandLPE();																			 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
-	ProjectDevelopment.startconstrucion();																 //Take 
+	FundamentalMarketAnalysis.runfundamentalmarketanalysis();											 //
+	Forcast.updateMPEandLPE();																			 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
+	ProjectDevelopment.startconstrucion();																 // 
 	ProjectDevelopment.startpreprojectandapplication();	 
 }
 	
@@ -79,15 +80,16 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 //All annual updates to come below. Currently not in use.
 @ScheduledMethod(start = 12, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
 public void annualmarketschedule() {
-//	FundamentalMarketAnalysis.runfundamentalmarketanalysis();							
-//	Forcast.updateMPEandLPE();									 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
+	FundamentalMarketAnalysis.runfundamentalmarketanalysis();							
+	Forcast.updateMPEandLPE();									 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
 	
 	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
 	ProjectDevelopment.receivingconcession();					//As this is given an not dependent on other stages. Starting with adding on year in this status.
 	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.
 	ProjectDevelopment.startconstrucion();						//The investment decision. This is ran after "receiveconcession", hence projects and investment decision can done the same year.
 	ProjectDevelopment.startpreprojectandapplication();	        //The process of deciding which project to apply for concession. In the same manner as start construction
-//	ProjectDevelopment.identifyprojects();						//Given how many projects the DA has in concession-stage and the limit, receice new projects.
+	ProjectDevelopment.updateDAgentsnumber();	
+	ProjectDevelopment.projectidentification();					//Given how many projects the DA has in concession-stage and the limit, receice new projects. Needs updated numbers on numberofprojects in process and id
 	ProjectDevelopment.updateDAgentsnumber();					//Not really needed at end, but okey for displaypurposes.
 	
 }

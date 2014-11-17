@@ -283,17 +283,13 @@ public class PowerPlant implements Cloneable{
 		
 		double newCapex = capex*Math.pow((1-annualcostreduction),yearsoftechnologyimprovment);			//Note that the Capex value of the powerplant is not set/updated.
 		
-		double NPVfactor_lifetime = 0;
-		for (int i = 1; i <= lifetime; i++) {
-			NPVfactor_lifetime = NPVfactor_lifetime + 1/Math.pow((1+usedRRR),i);}
+		double NPVfactor_lifetime = calculateNPVfactor(lifetime, usedRRR);
 		
 		LRMC = (newCapex/(NPVfactor_lifetime*this.getestimannualprod()))+this.opex; 					//Calculates the average nominal income needed per MWh (Certprice + Powerprice) for the project lifetime.
 		
 		//Calculating the needed average cert price is not trival as the certificates are only valid for a subperiod of the lifetime. First take into account the yearsofcertificates
-		double NPVfactor_certyears = 0;
-		for (int i = 1; i <= yearswithcertificates; i++) {
-			NPVfactor_certyears = NPVfactor_certyears + 1/Math.pow((1+usedRRR),i);}
-		
+		double NPVfactor_certyears = calculateNPVfactor(yearswithcertificates, usedRRR);
+
 		//Calculating the needed price for certificates, with the correct assumptions of when the plant is eligable and the simulation-current local power price. T
 		certpriceneeded = (LRMC*NPVfactor_lifetime - usedpowerprice*NPVfactor_lifetime) / NPVfactor_certyears; //Drawback: IS the powerprice assumption okey?
 	}
@@ -309,6 +305,12 @@ public class PowerPlant implements Cloneable{
 			earlieststartyear = minconstructionyears + minyearinprocess + TheEnvironment.theCalendar.getTimeBlock(TheEnvironment.theCalendar.getCurrentTick()).year + TheEnvironment.theCalendar.getStartYear();
 	}
 	}
+	
+	public static double calculateNPVfactor(int years, double RRR) {
+		double NPVfactor = 0;
+		for (int i = 1; i <= years; i++) {
+			NPVfactor = NPVfactor + 1/Math.pow((1+RRR),i);}
+		return NPVfactor;}
 	
 	//Get and set methods
 	public void setendyear(int e) {endyear = e;}
