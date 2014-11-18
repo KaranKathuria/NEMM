@@ -254,6 +254,8 @@ else  {
 		double thetickfuturedemand = 0;															//All future demand from thetick.
 		double currentfuturesupply = 0;
 		double thetickfuturesupply = 0;
+		double currentcertificatebalance = TheEnvironment.GlobalValues.totalmarketphysicalposition;	//Initial market physical position.
+		double thetickcertificatebalance = 0;
 		
 		//Calculating all future demand for both tickIDs (current and future)
 		for (int i = currentick; i < totalticks; i++)	{										//For all tick from now and to the end
@@ -290,6 +292,15 @@ else  {
 			}
 		}	
 		}
+		
+		//Calculating thetick certificate bank based on current bank and the supply-demand in the in-between period.
+		double tempdeltasupply = currentfuturesupply - thetickfuturesupply;
+		double dempdeltademand = currentfuturedemand - thetickfuturedemand;
+		thetickcertificatebalance = currentcertificatebalance + (tempdeltasupply-dempdeltademand);
+		
+		//Adding the current bank as well as the future bank.
+		currentfuturesupply = currentcertificatebalance + currentfuturesupply;
+		thetickfuturesupply = thetickcertificatebalance + thetickfuturesupply;
 		
 		double[] ret = new double[2];
 		
