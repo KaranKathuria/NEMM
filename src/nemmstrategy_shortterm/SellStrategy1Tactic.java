@@ -50,14 +50,13 @@ public class SellStrategy1Tactic extends GenericTactic {
 	SellStrategy1Tactic() {}
 	
 	//Used constructor
-	SellStrategy1Tactic(double multOfferVol, double sbd, double multMustSellPrice, double multRestPrice, double multRestVol, int learnID) {
+	SellStrategy1Tactic(double multOfferVol, double sbd, double multMustSellPrice, double multRestPrice, int learnID) {
 		// This should not really be here...
 		numLearningMethods = 4; //  Learning method IDs are 0 thru 3
 		// These are set in the constructor only
 		paramMustSellShare = sbd;
 		paramMustSellPriceMult = multMustSellPrice;
 		paramRestVolPriceMult = multRestPrice;
-		paramRestVolVolMult = multRestVol;
 		paramLearningMethod = learnID; // Default learning method ID is 1
 		if (learnID < 0 || learnID > numLearningMethods-1) {
 			paramLearningMethod = 0; // default is no learning

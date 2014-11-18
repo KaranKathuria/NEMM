@@ -68,7 +68,9 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		}
 		else {
 //			ret.setCertVolume(Math.max((shareboughtatdiscount*(-lasttickdemand)), (-physicalposition) - (-maxppvolume))); //-As the phisical position of buyer would in most cases be negative, but as the offer only has positive numbers. 
-			ret.setCertVolume(Math.max((paramMustBuyShare*(-lasttickdemand)), Math.max(0.0, -physicalposition/myStrategy.getmyAgent().getNumTicksToEmptyPosition())));
+//			ret.setCertVolume(Math.max((paramMustBuyShare*(-lasttickdemand)), Math.max(0.0, -physicalposition/myStrategy.getmyAgent().getNumTicksToEmptyPosition())));
+			ret.setCertVolume(-1*Math.max(0.0, Math.max(physicalposition*paramMustBuyShare, 
+					physicalposition/myStrategy.getmyAgent().getNumTicksToEmptyPosition())));
 		}
 		ret.setPrice(paramMustBuyPriceMult*expectedprice); //Given must buy volume price. 
 
@@ -78,11 +80,14 @@ public class BuyStrategy1Tactic extends GenericTactic {
 
 	private BidOffer creatBidTwo(double expectedprice, double physicalposition,  double lasttickdemand, double mustbuy) {////physicalpos and lasttickdem are negatie number. 
 		BidOffer ret = new BidOffer();
+		double absMustBuy = Math.abs(mustbuy); // must buy should be -ve - we want the absolute value of that
 		if (physicalposition == 0) {
 			ret.setCertVolume(0.0);
 		}
 		else {
-			ret.setCertVolume(Math.max(0.0,Math.min(-maxBidOfferVolume-mustbuy,-physicalposition-mustbuy))); //rest of the monthly production bought at expected price.
+//			ret.setCertVolume(Math.max(0.0,Math.min(-maxBidOfferVolume-mustbuy,-physicalposition-mustbuy))); //rest of the monthly production bought at expected price.
+			ret.setCertVolume(-1*Math.max(0.0,Math.min(1.0, maxBidOfferVolumeMultiplier)*physicalposition-absMustBuy)); //rest of the monthly production sold at expected price.			
+
 		}
 		ret.setPrice(Math.min(expectedprice*paramRestVolPriceMult, floorroofprice)); //Most likely that the second offer is at at pricemultiplier. Hence they buy what they dont must, at a pricemultiplier.
 		return ret;

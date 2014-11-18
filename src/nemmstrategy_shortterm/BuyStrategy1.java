@@ -55,7 +55,7 @@ public class BuyStrategy1 extends GenericStrategy {
 		for (int i = 0; i < numMSSteps; ++i) {
 			// Loop through the so-called Must Buy steps
 			// Calculate the volume and price for the current must Buy step
-			percMustBuyVol = AllVariables.tacticDefaultMustBuyShare_OPBuyStrategy1;
+			percMustBuyVol = AllVariables.tacticMinPhysPosBuyShare_OPBuyStrategy1;
 			if (numMSSteps == 1){
 				// set the price multiplier to be half way between the min and the max
 				multMustBuyPrice = (AllVariables.tacticMinMustBuyPriceMult_OPBuyStrategy1 + 
@@ -90,7 +90,7 @@ public class BuyStrategy1 extends GenericStrategy {
 				
 				// Create the tactics for this Buy strategy. Note we are using quite a few of the default values here - this
 				// may change at a later date.
-				BuyStrategy1Tactic tactic = new BuyStrategy1Tactic(AllVariables.multOfferVol_OPBuyStrategy1, 
+				BuyStrategy1Tactic tactic = new BuyStrategy1Tactic(AllVariables.tacticMaxPhysPosBuyShare_OPBuyStrategy1, 
 						percMustBuyVol, multMustBuyPrice, 
 						multRestPrice, AllVariables.tacticDefaultLearn_OPBuyStrategy1);
 				
