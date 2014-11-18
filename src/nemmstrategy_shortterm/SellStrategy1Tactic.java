@@ -135,7 +135,13 @@ public class SellStrategy1Tactic extends GenericTactic {
 //			ret.setCertVolume(Math.max(paramMustSellShare*lasttickproduction,physicalposition-maxppvolume)); //equals must sell	
 //			int tmpTicks = myStrategy.getmyAgent().getNumTicksToEmptyPosition();
 //			ret.setCertVolume(Math.max(paramMustSellShare*lasttickproduction,Math.max(0.0, physicalposition/myStrategy.getmyAgent().getNumTicksToEmptyPosition())));
-			ret.setCertVolume(Math.max(0.0, physicalposition/myStrategy.getmyAgent().getNumTicksToEmptyPosition()));
+//			ret.setCertVolume(Math.max(0.0, physicalposition/myStrategy.getmyAgent().getNumTicksToEmptyPosition()));
+
+			// The must sell share is the largest of the physical position divided by the number of ticks that physical
+			// position should be exited over, and the physical position * the must sell share.  
+			ret.setCertVolume(Math.max(0.0, Math.max(physicalposition*paramMustSellShare, 
+					physicalposition/myStrategy.getmyAgent().getNumTicksToEmptyPosition())));
+
 		}
 		ret.setPrice(paramMustSellPriceMult*expectedprice);
 		

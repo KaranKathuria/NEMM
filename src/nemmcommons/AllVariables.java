@@ -61,16 +61,18 @@ public class AllVariables {
 	// Note - not all of these need be used in any given tactic & strategy
 	public static double multOfferVol_PASellStrategy1 = 2; // default max fraction of that month's physical position than can be sold in the month
 	public static int tacticDefaultLearn_PASellStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
-	public static double tacticDefaultMustSellShare_PASellStrategy1 = 1.0; // Default must sell share for the producer tactics (if used)
-	public static double tacticDefaultMustSellPriceMult_PASellStrategy1 = 0.5;  // Default must sell price multiplier for the producer tactics (if used)
-	public static double tacticDefaultMaxPhysPosMult_PASellStrategy1 = 0.75; // Sell up to this fraction of the physical position
+	// Sell share max and min levels (min used for must sell, max used for rest volume)
+	public static double tacticMinPhysPosSellShare_PASellStrategy1 = 0.10; // Minimum must sell % of physical position
+	public static double tacticMaxPhysPosSellShare_PASellStrategy1 = 0.75; // Sell up to this fraction of the physical position
+//	public static double tacticDefaultMustSellPriceMult_PASellStrategy1 = 0.5;  // Default must sell price multiplier for the producer tactics (if used)
+	// Define the range of price multipliers for the target sales (must sell) and rest volumes 
 	public static double tacticMinMustSellPriceMult_PASellStrategy1 = 0.7;
 	public static double tacticMaxMustSellPriceMult_PASellStrategy1 = 1.0;
 	public static int tacticNumMustSellSteps_PASellStrategy1 = 4;
 	public static double tacticMinRestPriceMult_PASellStrategy1 = 0.9; // Specify the multiplier range
 	public static double tacticMaxRestPriceMult_PASellStrategy1 = 1.5;
 	public static int tacticNumRestSteps_PASellStrategy1 = 7;
-//	public static int numTactics_PASellStrategy1 = 11; // The number of tactics to make
+	// Define the max and min allowable change in price multiplier when direct learning permitted
 	public static double tacticMinRestPriceStep_PASellStrategy1 = 0.025; // Step size range for the multiplier if learning is used
 	public static double tacticMaxRestPriceStep_PASellStrategy1 = 0.025;
 	

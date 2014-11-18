@@ -57,7 +57,7 @@ public class SellStrategy1 extends GenericStrategy {
 		for (int i = 0; i < numMSSteps; ++i) {
 			// Loop through the so-called Must Sell steps
 			// Calculate the volume and price for the current must sell step
-			percMustSellVol = AllVariables.tacticDefaultMustSellShare_PASellStrategy1;
+			percMustSellVol = AllVariables.tacticMinPhysPosSellShare_PASellStrategy1;
 			if (numMSSteps == 1){
 				// set the price multiplier to be half way between the min and the max
 				multMustSellPrice = (AllVariables.tacticMinMustSellPriceMult_PASellStrategy1 + 
@@ -92,9 +92,9 @@ public class SellStrategy1 extends GenericStrategy {
 				
 				// Create the tactics for this sell strategy. Note we are using quite a few of the default values here - this
 				// may change at a later date.
-				SellStrategy1Tactic tactic = new SellStrategy1Tactic(AllVariables.multOfferVol_PASellStrategy1, 
+				SellStrategy1Tactic tactic = new SellStrategy1Tactic(AllVariables.tacticMaxPhysPosSellShare_PASellStrategy1, 
 						percMustSellVol, multMustSellPrice, 
-						multRestPrice, AllVariables.tacticDefaultMaxPhysPosMult_PASellStrategy1, 
+						multRestPrice, AllVariables.tacticMaxPhysPosSellShare_PASellStrategy1, 
 						AllVariables.tacticDefaultLearn_PASellStrategy1);
 				
 				// Set the step size for the rest price multiplier (used if learning turned on) 
