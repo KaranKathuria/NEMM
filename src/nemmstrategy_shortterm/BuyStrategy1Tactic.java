@@ -98,7 +98,8 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		twoyearahead = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations();
 		tempdisc = TheEnvironment.GlobalValues.currentinterestrate - this.getmyStrategy().getmyAgent().getRAR(); //For Sellers/Producers this is added + (instead of minus)
 		
-		floorroofprice = twoyearahead/Math.pow(tempdisc + 1, 2); //Hence this equals the discounted future expected cert price. Discounted with a risk free rate and a risk rate //In other words, the seller will not sell the variable part unless the sell price is better than the discounted future price expectations. In that case he would hold the certificates in two years.
+//		floorroofprice = twoyearahead/Math.pow(tempdisc + 1, 2); //Hence this equals the discounted future expected cert price. Discounted with a risk free rate and a risk rate //In other words, the seller will not sell the variable part unless the sell price is better than the discounted future price expectations. In that case he would hold the certificates in two years.
+		floorroofprice = AllVariables.certMaxPrice;
 		maxBidOfferVolume = maxBidOfferVolumeMultiplier * this.getmyStrategy().getmyAgent().getlasttickdemand(); // * //What was demanded last tick (negativ number).
 		maxppvolume = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getnexttwelvetickscertdemand(); //12 months total demand.
 	}

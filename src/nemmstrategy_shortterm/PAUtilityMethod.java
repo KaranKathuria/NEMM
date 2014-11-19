@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import nemmcommons.CommonMethods;
+import nemmenvironment.TheEnvironment;
 import nemmprocesses.UpdatePhysicalPosition;
 
 //Class definition
@@ -158,12 +159,13 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 					curProfit = curOfferVol*curOfferPrice; // Profit if all was sold
 					curActivation = curOfferSold/curOfferVol; // Activation (prob of sale)
 					// Calculate the certificate value given the latest activation
+					numTicksToEmpty = myAgent.getNumTicksToEmptyPosition();
 					if (i==0) {
 						certValue = priceSpot*0.5; // this is temporary - to expand on later
 					}
 					else {
-						numTicksToEmpty = myAgent.getNumTicksToEmptyPosition();
 						certValue=myAgent.getagentcompanyanalysisagent().getmarketanalysisagent().getCertificateValue(numTicksToEmpty,curActivation);
+						
 					}					
 					curRestVal = curOfferVol*certValue; // value of unsold certificates
 //					curReturn = curOfferVol*((1-curActivation)*certValue[i]+curActivation*curOfferPrice); // Return (utility)
@@ -183,7 +185,10 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 						tmpArray[2] = curActivation;
 						tmpArray[0] = curReturn;
 					}
-						
+					if (i>0 & TheEnvironment.theCalendar.getCurrentTick()==4){
+					int tmp = 1;
+					}
+	
 
 				}
 				// Add a copy of the result to the return ArrayList. We use a copy here because

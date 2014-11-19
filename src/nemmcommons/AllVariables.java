@@ -43,12 +43,12 @@ public class AllVariables {
 	
 	// distribution cutoffs used for assigning a strategy to a given agent
 
-	public static double[] cutoffPAExit = new double[]{0.25,0.75,1.0};
+	public static double[] cutoffPAExit = new double[]{0.35,0.75,1.0};
 	public static double[] cutoffOPExit = new double[]{0.6,1.0};
 
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
 	// over the next 12 ticks - i.e. it will sell 1/12th in the next tick
-	public static int[] numTicksPAExit = new int[]{1,12,24};
+	public static int[] numTicksPAExit = new int[]{2,24,96};
 	public static int[] numTicksOPExit = new int[]{1,2};
 	// Tactics - number of ticks to exit positions
 	// Number of exit strategies for each agent type
@@ -63,7 +63,7 @@ public class AllVariables {
 	public static int tacticDefaultLearn_PASellStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
 	// Sell share max and min levels (min used for must sell, max used for rest volume)
 	public static double tacticMinPhysPosSellShare_PASellStrategy1 = 0.10; // Minimum must sell % of physical position
-	public static double tacticMaxPhysPosSellShare_PASellStrategy1 = 0.75; // Sell up to this fraction of the physical position
+	public static double tacticMaxPhysPosSellShare_PASellStrategy1 = 1.0; // Sell up to this fraction of the physical position
 //	public static double tacticDefaultMustSellPriceMult_PASellStrategy1 = 0.5;  // Default must sell price multiplier for the producer tactics (if used)
 	// Define the range of price multipliers for the target sales (must sell) and rest volumes 
 	public static double tacticMinMustSellPriceMult_PASellStrategy1 = 0.7;
@@ -77,13 +77,13 @@ public class AllVariables {
 	public static double tacticMaxRestPriceStep_PASellStrategy1 = 0.025;
 	
 	// Certificate value calculation parameters
-	public static double certMaxPrice = 100;
+	public static double certMaxPrice = 500;
 	public static double certMinPrice = 0;
 
 	// Supplier (Obligated Purchaser) strategies and tactics
 	public static int tacticDefaultLearn_OPBuyStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
 	// Define the max and min volumes to be purchased in any given period
-	public static double tacticMinPhysPosBuyShare_OPBuyStrategy1 = 0.5; // Default must Buy share for the producer tactics (if used)
+	public static double tacticMinPhysPosBuyShare_OPBuyStrategy1 = 0.75; // Default must Buy share for the producer tactics (if used)
 	public static double tacticMaxPhysPosBuyShare_OPBuyStrategy1 = 1; // default max fraction of physical position that can be purchased in the month
 	public static double tacticDefaultMustBuyPriceMult_OPBuyStrategy1 = 1.5;  // Default must Buy price multiplier for the producer tactics (if used)
 	public static double tacticMinMustBuyPriceMult_OPBuyStrategy1 = 0.9;
@@ -109,7 +109,7 @@ public class AllVariables {
 	public static int LPECount = 24;								//Number of futuer years seen by the LPE-analysis
 	public static double stdmediumrunpriceexpect = 0.05;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.15;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	public static double[] developerinvestmenttypedistribution = new double[]{0.4,0.8,1.0};	//Share of type 1, 2 and 3. 1 is the fundamental, 2 is the current price for all years, 3 is current price for x years.
+	public static double[] developerinvestmenttypedistribution = new double[]{0.05,0.8,1.0};	//Share of type 1, 2 and 3. 1 is the fundamental, 2 is the current price for all years, 3 is current price for x years.
 	public static int numberoftickstocalculatehistcertprice = 6;	
 	public static int numberofyearcertscanbehedged = 2;
 	public static int constructionconstraints = 2; 				//2->12	//Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 2), 2 = 2*(sizecode*regioncode + 2), etc  
