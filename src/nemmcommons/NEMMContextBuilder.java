@@ -13,6 +13,7 @@ import repast.simphony.context.DefaultContext;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import nemmagents.CompanyAgent;
+import nemmenvironment.CVRatioCalculations;
 import nemmenvironment.FundamentalMarketAnalysis;
 import nemmenvironment.TheEnvironment;
 import nemmprocesses.DistributeProjectsandPowerPlants;
@@ -68,8 +69,8 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	
 	Forcast.initiatevolumeprognosis(); 	//Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based om expected prodution for the future year
 	if (!AllVariables.useTestData){
-		FundamentalMarketAnalysis.runfundamentalmarketanalysis();											 //
-		Forcast.updateMPEandLPE();																			 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
+		FundamentalMarketAnalysis.runfundamentalmarketanalysis();										 //
+		Forcast.updateMPEandLPE();																		 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
 	}
 	ProjectDevelopment.startconstrucion();																 //Take 
 	ProjectDevelopment.startpreprojectandapplication();	 
@@ -100,8 +101,9 @@ public void annualmarketschedule() {
 //The monthly update
 @ScheduledMethod(start = 0, interval = 1, priority = 1)
 public void monthlymarketschedule() {
-	
-	//First the schedual updates all offers for all agents strategies and clears the market based on the best strategies, best tactics offers. Calcualtes market price.
+	//First the CVRatios are calculated. These are needed in the ShortTermMarket bidding. 
+	CVRatioCalculations.calculateallcvobjects();
+	//Then the schedual updates all offers for all agents strategies and clears the market based on the best strategies, best tactics offers. Calcualtes market price.
 	ShortTermMarket.runshorttermmarket(); 
 	//All agents strategies utilities are scored. Tactics learn and the best strategies update their best tactics. This is done before the physical update as the intial physical position is part of the utility calcualtion.
 	UtilitiesStrategiesTactics.calculatetilitiesandupdatebesttactics(); 
