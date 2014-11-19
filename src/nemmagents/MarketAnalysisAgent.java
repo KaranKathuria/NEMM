@@ -13,6 +13,8 @@ package nemmagents;
 
 import nemmcommons.AllVariables;
 import nemmcommons.MarketPrognosis;
+import nemmenvironment.CVObject;
+import nemmenvironment.CVRatioCalculations;
 import nemmenvironment.TheEnvironment;
 import nemmprocesses.ShortTermMarket;
 import nemmagents.ParentAgent;
@@ -31,42 +33,64 @@ public class MarketAnalysisAgent extends ParentAgent {
 		return marketprognosis;
 	}
 	
-	public double getCertificateValue(int numTicksAhead, double probSale) {
+	public double getCertificateValue(int numTicksAhead) {
 		// returns the analysis agent's estimate of the certificate value
 		// over the coming numTicksAhead ticks (thereafter the value is assumed 0)
 		double certVal=0;
-		double[] certRatio = new double[2];
 		double discRate = 0.05/12; // Get the correct version of this
 		double[] priceArray = new double[numTicksAhead+1];
-		double priceStart;
-		double priceStep;
-		double priceNow;
+		double ratioCurrent;
+		double ratioFuture;
+		double[] estSaleProb = new double[numTicksAhead+1];
+		double netDemand;
+		double netSupply;
+		CVObject certValueData;
 		
 		
 		
 		priceArray[0] = ShortTermMarket.getcurrentmarketprice();
+		estSaleProb[0]=1;
 		for(int i=1;i<=numTicksAhead;i++)
 		{
-			certRatio = marketprognosis.getCertificateRatio(i);
-			if (certRatio[0]<=0) {
+//			certRatio = marketprognosis.getCertificateRatio(i);
+			certValueData = marketprognosis.getCertValuePrognosis(i); 
+			ratioCurrent = certValueData.getCurrentsupplyratio();
+			ratioFuture = certValueData.getFuturesupplyratio();
+			// Sale probability is estimated based on the number of certificates for sale in the future tick
+			// compared to the demand in that tick
+			if(certValueData.getFuturebank()<=0){
+				netDemand = certValueData.getFuturetickdemand() - certValueData.getFuturebank();
+				netSupply = certValueData.getFutureticksupply();
+			} 
+			else {
+				netDemand = certValueData.getFuturetickdemand();
+				netSupply = certValueData.getFutureticksupply()+ certValueData.getFuturebank();
+			}
+			estSaleProb[i] = netDemand/netSupply;
+			if (estSaleProb[i]<0) {estSaleProb[i]=0;}
+			if (estSaleProb[i]>1) {estSaleProb[i]=1;}
+			
+			// Calculate future estimated price
+			if (ratioCurrent<=0) {
 				priceArray[i] = AllVariables.certMaxPrice;
 			}
-			else if (certRatio[0]>=1) {
+			else if (ratioCurrent>=1) {
 				priceArray[i] = AllVariables.certMinPrice;
 			}
-			else if (certRatio[1]<= certRatio[0]) {
+			else if (ratioFuture<= ratioCurrent) {
 				// market expected to get tighter
-				priceArray[i] = priceArray[0] + (AllVariables.certMaxPrice - priceArray[0])*(certRatio[0]-certRatio[1])/certRatio[0];
+				priceArray[i] = priceArray[0] + (AllVariables.certMaxPrice - priceArray[0])*
+						(ratioCurrent-ratioFuture)/ratioCurrent;
 			}
 			else {
 				// market expected to get looser
-				priceArray[i] = priceArray[0]*(1- (certRatio[1]-certRatio[0])/(1-certRatio[0]) );
+				priceArray[i] = priceArray[0]*(1- (ratioFuture-ratioCurrent)/(1-ratioCurrent) );
 			}
 		}
 		certVal = priceArray[numTicksAhead]; // set end value of certificates in bank = to the forecast price at that point			
 		// Run through the periods backwards and calculate the discounted value
 		for (int i = numTicksAhead; i > 0; i--) {
-			certVal = probSale*priceArray[i] + (1-probSale)*certVal*(1-discRate);
+			certVal = estSaleProb[i]*priceArray[i] + (1-estSaleProb[i])*certVal*(1-discRate);
 		}
 		
 		if(TheEnvironment.theCalendar.getCurrentTick()==5 & numTicksAhead>48) {

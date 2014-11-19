@@ -12,6 +12,7 @@ import java.util.Random;
 
 import cern.jet.random.Normal;
 import repast.simphony.random.RandomHelper;
+import nemmenvironment.CVObject;
 import nemmenvironment.CVRatioCalculations;
 import nemmenvironment.FundamentalMarketAnalysis;
 import nemmenvironment.TheEnvironment;
@@ -198,7 +199,7 @@ public class MarketPrognosis {
 		return myPrognosis;
 	}
 	
-	public double[] getCertificateRatio(int numTicksAhead) {
+	public double[] getCertificateRatioOLD(int numTicksAhead) {
 		// returns the prognosis of the certificate ratio for a given number
 		// of ticks ahead
 		// Later: need to add in randomness element here
@@ -206,6 +207,14 @@ public class MarketPrognosis {
 		elRatio[0] = CVRatioCalculations.getCVObject(numTicksAhead).getCurrentsupplyratio();
 		elRatio[1] = CVRatioCalculations.getCVObject(numTicksAhead).getFuturesupplyratio();
 		return elRatio;
+	}
+	public CVObject getCertValuePrognosis(int numTicksAhead) {
+		// returns the prognosis of the certificate ratio for a given number
+		// of ticks ahead
+		// Later: need to add in randomness element here
+		CVObject retObj;
+		retObj = CVRatioCalculations. getCVObject(numTicksAhead); 
+		return retObj;
 	}
 	
 }
