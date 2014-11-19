@@ -12,6 +12,7 @@ import java.util.Random;
 
 import cern.jet.random.Normal;
 import repast.simphony.random.RandomHelper;
+import nemmenvironment.CVRatioCalculations;
 import nemmenvironment.FundamentalMarketAnalysis;
 import nemmenvironment.TheEnvironment;
 // Import
@@ -202,7 +203,8 @@ public class MarketPrognosis {
 		// of ticks ahead
 		// Later: need to add in randomness element here
 		double[] elRatio = new double[2];
-		elRatio = FundamentalMarketAnalysis.getcertbalanceratio(numTicksAhead);
+		elRatio[0] = CVRatioCalculations.getCVObject(numTicksAhead).getCurrentsupplyratio();
+		elRatio[1] = CVRatioCalculations.getCVObject(numTicksAhead).getFuturesupplyratio();
 		return elRatio;
 	}
 	
