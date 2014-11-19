@@ -16,19 +16,10 @@ public class CVRatioCalculations {
 	private static int maxsthetick;
 	
 	
-	public CVRatioCalculations() {
-		
-		//As the maksthetick, the highest future tick needed CVObject for, is not altered in the simulation, this can be calculated here.
-		java.util.List<Integer> tempa = Arrays.asList(ArrayUtils.toObject(AllVariables.numTicksPAExit));
-		java.util.List<Integer> tempb = Arrays.asList(ArrayUtils.toObject(AllVariables.numTicksOPExit));
-		
-		tempa.addAll(tempb);
-		maxsthetick = Collections.max(tempa);
-			
-	};
+	public CVRatioCalculations() {};
 	
 	
-	public CVObject getCVObject(int thetick) {
+	public static CVObject getCVObject(int thetick) {
 		return allcvobjects.get(thetick-1);	
 	}
 	
@@ -36,6 +27,14 @@ public class CVRatioCalculations {
 	//Static method precalculation all the needed CVObjects for the simulation. Needs to be called on everytick in the context.
 	public static void calculateallcvobjects() {
 		allcvobjects.clear();
+		
+		//As the maksthetick, the highest future tick needed CVObject for, is not altered each tick now, but this could be in the future.
+		java.util.List<Integer> tempa = Arrays.asList(ArrayUtils.toObject(AllVariables.numTicksPAExit));
+		java.util.List<Integer> tempb = Arrays.asList(ArrayUtils.toObject(AllVariables.numTicksOPExit));
+				
+		maxsthetick = Math.max(Collections.max(tempa), Collections.max(tempb));
+		
+		
 		
 		for (int thetick = 1; thetick <= maxsthetick; thetick++) {
 			CVObject temp = calculatecvobject(thetick);
@@ -69,6 +68,8 @@ public class CVRatioCalculations {
 		double thetickfuturedemand = 0;															//All future demand from thetick.
 		double currentfuturesupply = 0;
 		double thetickfuturesupply = 0;
+		double theticksupply = 0;
+		double thetickdemand = 0;
 		double currentcertificatebalance = TheEnvironment.GlobalValues.totalmarketphysicalposition;	//Initial market physical position.
 		double thetickcertificatebalance = 0;
 		
@@ -78,7 +79,10 @@ public class CVRatioCalculations {
 				currentfuturedemand = currentfuturedemand + R.getMyDemand().getExpectedCertDemand(i);
 				if (i >= thetick_tickID) {														//Counting future demand from "thetick" in the same loop.
 					thetickfuturedemand = thetickfuturedemand + R.getMyDemand().getExpectedCertDemand(i);
-					} 	
+					}
+				if (i == thetick_tickID) {
+					thetickdemand = thetickdemand + R.getMyDemand().getExpectedCertDemand(i);
+				}
 				}
 		}
 		
@@ -104,6 +108,9 @@ public class CVRatioCalculations {
 				if (i >= thetick_tickID) {
 					thetickfuturesupply = thetickfuturesupply + PP.getExpectedProduction(i);
 				}
+				if (i == thetick_tickID) {
+					theticksupply = theticksupply + PP.getExpectedProduction(i);
+				}
 			}
 		}	
 		}
@@ -127,6 +134,8 @@ public class CVRatioCalculations {
 		ret.setFuturesupplyratio(futuresupplyratio);
 		ret.setCurrentbank(currentcertificatebalance);
 		ret.setFuturebank(thetickcertificatebalance);
+		ret.setFuturetickdemand(thetickdemand);
+		ret.setFutureticksupply(theticksupply);
 		
 		return ret;
 	}
