@@ -112,6 +112,9 @@ public class MarketAnalysisAgent extends ParentAgent {
 		double[] priceArray = new double[numTicksAhead+1];
 		double ratioCurrent;
 		double ratioFuture;
+		double ratioFutureAdj;
+		double ratioCurrentAdj;
+		double bankFuture;
 		double priceAdjusted;
 		double priceAdjStep;
 		double priceAdjEnd;
@@ -120,12 +123,40 @@ public class MarketAnalysisAgent extends ParentAgent {
 		double netSupply;
 		CVObject certValueData;		
 		int numTicksRemaining;
+		int i;
+		int z;
+		double ratioShortFall;
+		double sumNegBank = 0;
+		double sumNegDem = 0;
+		double bankEnd;
+		double priceNegBank;
+		int numRatioAdjustments;
+		double ratioAdj;
+		double priceEstimate;
 		
 		priceArray[0] = ShortTermMarket.getcurrentmarketprice();
 		estSaleProb[0]=1;
 		numTicksRemaining = TheEnvironment.theCalendar.getNumTicks()-TheEnvironment.theCalendar.getCurrentTick()
 				-numTicksAhead+1;
-		for(int i=1;i<=numTicksAhead;i++)
+		numRatioAdjustments = AllVariables.ratioAdjFactor.length;
+		// Calculate the shortfall ratio
+		// SR = sum(bank in pds with -ve bank)/sum(demand in pds with -ve bank)
+		for(i=1;i<=numTicksAhead;i++)
+		{
+			certValueData = marketprognosis.getCertValueData(i); 
+			bankEnd = certValueData.getFuturebank() + certValueData.getFutureticksupply() -
+					certValueData.getFuturetickdemand(); // we need the bank at the end of the period
+			if(bankEnd<0) {
+				sumNegBank += bankEnd; // bank is negative, so total is negative
+				sumNegDem -= certValueData.getFuturetickdemand(); // demand is positive, so total is negative
+			}
+		}
+		ratioShortFall = 0.0;
+		if (sumNegDem<0) {
+			ratioShortFall = sumNegBank/sumNegDem;
+		}
+		
+		for(i=1;i<=numTicksAhead;i++)
 		{
 //			certRatio = marketprognosis.getCertificateRatio(i);
 			certValueData = marketprognosis.getCertValueData(i); 
@@ -137,51 +168,72 @@ public class MarketAnalysisAgent extends ParentAgent {
 			// have a high price. We adjust the price at the current tick to an equivalent price numTicksAhead
 			// for the current ratio. We have implemented a linear interpolation for now - perhaps this should be
 			// non linear (to be looked at later)
+
 			if (ratioCurrent>1)
 				{priceAdjEnd = AllVariables.certMinPrice;}
 			else
 				{priceAdjEnd = AllVariables.certMaxPrice;}
 			priceAdjStep = (priceAdjEnd-priceArray[0])/numTicksRemaining;
-			priceAdjusted = priceArray[0]+priceAdjStep*numTicksRemaining;
-			
-			// Sale probability is estimated based on the number of certificates for sale in the future tick
-			// compared to the demand in that tick
-			if(certValueData.getFuturebank()<=0){
-				netDemand = certValueData.getFuturetickdemand() - certValueData.getFuturebank();
-				netSupply = certValueData.getFutureticksupply();
-			} 
-			else {
-				netDemand = certValueData.getFuturetickdemand();
-				netSupply = certValueData.getFutureticksupply()+ certValueData.getFuturebank();
-			}
-			estSaleProb[i] = netDemand/netSupply;
-			if (estSaleProb[i]<0) {estSaleProb[i]=0;}
-			if (estSaleProb[i]>1) {estSaleProb[i]=1;}
-			
-			// Calculate future estimated price
-			if (ratioCurrent<=0) {
-				priceArray[i] = AllVariables.certMaxPrice;
-			}
-			else if (ratioCurrent>=1) {
-				priceArray[i] = AllVariables.certMinPrice;
-			}
-			else if (ratioFuture<= ratioCurrent) {
-				// market expected to get tighter
-				priceArray[i] = priceAdjusted + (AllVariables.certMaxPrice - priceAdjusted)*
-						(ratioCurrent-ratioFuture)/ratioCurrent;
-			}
-			else {
-				// market expected to get looser
-				priceArray[i] = priceAdjusted*(1- (ratioFuture-ratioCurrent)/(1-ratioCurrent) );
-			}
+			priceAdjusted = priceArray[0]+priceAdjStep*numTicksAhead;
+				
+			// We take account of uncertainty by calculating a range of prices, each for a fraction of the 
+			// actual calculated ratio
+			priceArray[i] = 0.0;
+			for(z=0;z<numRatioAdjustments;z++){
+				ratioAdj = AllVariables.ratioAdjFactor[z];
+				ratioFutureAdj = ratioAdj*ratioFuture;
+				ratioCurrentAdj = ratioCurrent;
+				
+				// Sale probability is estimated based on the number of certificates for sale in the future tick
+				// compared to the demand in that tick
+				if(certValueData.getFuturebank()<=0){
+					netDemand = certValueData.getFuturetickdemand() - certValueData.getFuturebank();
+					netSupply = certValueData.getFutureticksupply();
+				} 
+				else {
+					netDemand = certValueData.getFuturetickdemand();
+					netSupply = certValueData.getFutureticksupply()+ certValueData.getFuturebank();
+				}
+				estSaleProb[i] = netDemand/netSupply;
+				if (estSaleProb[i]<0) {estSaleProb[i]=0;}
+				if (estSaleProb[i]>1) {estSaleProb[i]=1;}
+				
+				priceEstimate = 0;
+				// Calculate future estimated price
+				if (ratioCurrentAdj<=0) {
+					priceEstimate = AllVariables.certMaxPrice;
+				}
+				else if (ratioCurrentAdj>=1) {
+					priceEstimate = AllVariables.certMinPrice;
+				}
+				else if (ratioFutureAdj<= ratioCurrentAdj) {
+					// market expected to get tighter
+					priceEstimate = priceAdjusted + (AllVariables.certMaxPrice - priceAdjusted)*
+							(ratioCurrentAdj-ratioFutureAdj)/ratioCurrentAdj;
+				}
+				else {
+					// market expected to get looser
+					priceEstimate = priceAdjusted*(1- (ratioFutureAdj-ratioCurrentAdj)/(1-ratioCurrentAdj) );
+				}
+				// Finally, adjust the calculated price if there are periods with negative bank
+				// Use the shortfall ratio - this gives a representation of how "bad" the negative bank period is
+				// We then add on to the calcuated price an additional "cost of negative bank"
+				priceNegBank = priceAdjusted*ratioShortFall*1.50;
+				priceEstimate+=priceNegBank;
+				// The price forecast is a probability weighted sum of the price estimates
+				priceArray[i]+=priceEstimate*AllVariables.ratioAdjProb[z];
+			}				
 		}
+			
+
+
 		certVal = priceArray[numTicksAhead]; // set end value of certificates in bank = to the forecast price at that point			
 		// Run through the periods backwards and calculate the discounted value
-		for (int i = numTicksAhead; i > 0; i--) {
+		for (i = numTicksAhead; i > 0; i--) {
 			certVal = estSaleProb[i]*priceArray[i] + (1-estSaleProb[i])*certVal*(1-discRate);
 		}
 		
-		if(TheEnvironment.theCalendar.getCurrentTick()==40 & numTicksAhead>48) {
+		if(TheEnvironment.theCalendar.getCurrentTick()==5 & numTicksAhead>48) {
 			int tmp = 1;
 			tmp = 2;
 		}		
