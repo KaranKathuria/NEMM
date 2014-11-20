@@ -1,9 +1,9 @@
 <repast.simphony.chart2.engine.TimeSeriesChartDescriptor>
-  <name>Traded volume</name>
-  <dataSet>Traded volume</dataSet>
-  <xAxisLabel>Tick Count</xAxisLabel>
-  <yAxisLabel>Number of certificates traded</yAxisLabel>
-  <chartTitle>Traded volume</chartTitle>
+  <name>Banked certificates</name>
+  <dataSet>Physical Position</dataSet>
+  <xAxisLabel>Months</xAxisLabel>
+  <yAxisLabel>Number of banked certificates</yAxisLabel>
+  <chartTitle>Banked certificates (total)</chartTitle>
   <type>TIME_SERIES</type>
   <background>
     <red>255</red>
@@ -21,13 +21,49 @@
   <showLegend>true</showLegend>
   <seriesIds>
     <entry>
-      <string>Traded Volume</string>
+      <string>Trader</string>
       <SeriesData>
-        <label>Traded Volume</label>
+        <label>Trader</label>
         <color>
-          <red>0</red>
-          <green>0</green>
+          <red>51</red>
+          <green>102</green>
           <blue>255</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>ObligatedPurchaser</string>
+      <SeriesData>
+        <label>ObligatedPurchaser</label>
+        <color>
+          <red>255</red>
+          <green>102</green>
+          <blue>102</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Producers</string>
+      <SeriesData>
+        <label>Producers</label>
+        <color>
+          <red>153</red>
+          <green>255</green>
+          <blue>153</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Total</string>
+      <SeriesData>
+        <label>Total</label>
+        <color>
+          <red>51</red>
+          <green>51</green>
+          <blue>51</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>

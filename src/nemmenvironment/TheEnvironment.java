@@ -9,6 +9,7 @@ import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.random.RandomHelper;
 import nemmagents.CompanyAgent;
 import nemmagents.CompanyAgent.ActiveAgent;
+import nemmagents.MarketAnalysisAgent;
 import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
 import nemmcommons.ParameterWrapper;

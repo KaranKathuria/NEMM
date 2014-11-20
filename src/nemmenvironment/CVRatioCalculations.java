@@ -126,9 +126,8 @@ public class CVRatioCalculations {
 		
 		CVObject ret = new CVObject();
 		
-		//Just for now
 		double currentsupplyratio = (currentfuturesupply/currentfuturedemand);
-		double futuresupplyratio = (thetickfuturesupply/thetickfuturedemand);
+		double futuresupplyratio = (thetickfuturesupply/thetickfuturedemand);		
 		
 		ret.setCurrentsupplyratio(currentsupplyratio);
 		ret.setFuturesupplyratio(futuresupplyratio);
@@ -136,6 +135,8 @@ public class CVRatioCalculations {
 		ret.setFuturebank(thetickcertificatebalance);
 		ret.setFuturetickdemand(thetickdemand);
 		ret.setFutureticksupply(theticksupply);
+		ret.setBetweentickscumulativedemand(dempdeltademand);			//The total demand for the period inbetween the current and the provided tick
+		ret.setBetweentickscumulativesupply(tempdeltasupply);
 		
 		return ret;
 	}

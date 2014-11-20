@@ -1,9 +1,9 @@
 <repast.simphony.chart2.engine.TimeSeriesChartDescriptor>
-  <name>All variable bids</name>
-  <dataSet>All offers</dataSet>
+  <name>Bidding behavior</name>
+  <dataSet>Best offers</dataSet>
   <xAxisLabel>Tick Count</xAxisLabel>
-  <yAxisLabel>Certificate price</yAxisLabel>
-  <chartTitle>All variable bids</chartTitle>
+  <yAxisLabel>Bid price</yAxisLabel>
+  <chartTitle>Bidding behavior</chartTitle>
   <type>TIME_SERIES</type>
   <background>
     <red>255</red>
@@ -21,35 +21,11 @@
   <showLegend>true</showLegend>
   <seriesIds>
     <entry>
-      <string>sell1</string>
+      <string>roof</string>
       <SeriesData>
-        <label>Variable selloffer</label>
+        <label>roof</label>
         <color>
           <red>204</red>
-          <green>255</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>sell 6</string>
-      <SeriesData>
-        <label>Variable selloffer</label>
-        <color>
-          <red>204</red>
-          <green>255</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 2</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
-        <color>
-          <red>255</red>
           <green>204</green>
           <blue>204</blue>
           <alpha>255</alpha>
@@ -57,9 +33,9 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>sell 7</string>
+      <string>Selloffer2</string>
       <SeriesData>
-        <label>Variable selloffer</label>
+        <label>Variable sell</label>
         <color>
           <red>153</red>
           <green>255</green>
@@ -69,69 +45,16 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>buy 3</string>
+      <string>floor</string>
       <SeriesData>
-        <label>Variable buyoffer</label>
-        <color>
-          <red>255</red>
-          <green>204</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
+        <label>floor</label>
+        <color reference="../../../entry/SeriesData/color"/>
       </SeriesData>
     </entry>
     <entry>
-      <string>buy 4</string>
+      <string>Buyoffer2</string>
       <SeriesData>
-        <label>Variable buyoffer</label>
-        <color>
-          <red>255</red>
-          <green>204</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>sell 9</string>
-      <SeriesData>
-        <label>Variable selloffer</label>
-        <color>
-          <red>204</red>
-          <green>255</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 5</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
-        <color>
-          <red>255</red>
-          <green>204</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>sell 10</string>
-      <SeriesData>
-        <label>Variable selloffer</label>
-        <color>
-          <red>153</red>
-          <green>255</green>
-          <blue>153</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 6</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
+        <label>Variable buy</label>
         <color>
           <red>255</red>
           <green>153</green>
@@ -141,9 +64,21 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Market Price</string>
+      <string>Selloffer1</string>
       <SeriesData>
-        <label>Market Price</label>
+        <label>Must sell</label>
+        <color>
+          <red>204</red>
+          <green>255</green>
+          <blue>204</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Market price</string>
+      <SeriesData>
+        <label>Market price</label>
         <color>
           <red>0</red>
           <green>0</green>
@@ -153,96 +88,18 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>sel 8</string>
+      <string>Buyoffer1</string>
       <SeriesData>
-        <label>Variable selloffer</label>
+        <label>Must buy</label>
         <color>
-          <red>204</red>
-          <green>255</green>
+          <red>255</red>
+          <green>204</green>
           <blue>204</blue>
           <alpha>255</alpha>
         </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 7</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
-        <color reference="../../../entry[3]/SeriesData/color"/>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 8</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
-        <color reference="../../../entry[6]/SeriesData/color"/>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 9</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
-        <color reference="../../../entry[8]/SeriesData/color"/>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>sell 2</string>
-      <SeriesData>
-        <label>Variable selloffer</label>
-        <color>
-          <red>204</red>
-          <green>255</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>sell 3</string>
-      <SeriesData>
-        <label>Variable selloffer</label>
-        <color>
-          <red>0</red>
-          <green>255</green>
-          <blue>0</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 10</string>
-      <SeriesData>
-        <label>Variable buyoffer </label>
-        <color reference="../../../entry[3]/SeriesData/color"/>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>sell 4</string>
-      <SeriesData>
-        <label>Variable selloffer</label>
-        <color>
-          <red>102</red>
-          <green>255</green>
-          <blue>102</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 1</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
-        <color reference="../../../entry[3]/SeriesData/color"/>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>sell 5</string>
-      <SeriesData>
-        <label>Variable selloffer</label>
-        <color reference="../../../entry[2]/SeriesData/color"/>
       </SeriesData>
     </entry>
   </seriesIds>
   <dataValueIds/>
-  <plotRangeLength>-1</plotRangeLength>
+  <plotRangeLength>0</plotRangeLength>
 </repast.simphony.chart2.engine.TimeSeriesChartDescriptor>

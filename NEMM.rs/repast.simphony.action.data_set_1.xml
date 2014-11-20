@@ -60,6 +60,24 @@
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
+    <entry>
+      <string>CertificateValue_Prod</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>CertificateValue_Prod</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getCVvalue_producer</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>CertificateValue_Purch</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>CertificateValue_Purch</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getCVvalue_purchaser</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
   </methodDataSources>
   <countSources class="linked-hash-map"/>
   <customNADataSources class="linked-hash-map"/>

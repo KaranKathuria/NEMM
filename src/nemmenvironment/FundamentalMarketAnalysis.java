@@ -129,7 +129,7 @@ public class FundamentalMarketAnalysis {
 			if (certificatebalance >= 0){
 				temp = 0.0;}																					//Or should this be currentprice. 
 			else {
-				temp = TheEnvironment.GlobalValues.currentmarketprice * 1.5;}									//The 1.5 should be set from AllVariables. 
+				temp = TheEnvironment.GlobalValues.currentmarketprice * AllVariables.penaltyratio;}									//The 1.5 should be set from AllVariables. 
 			
 			equilibriumpricesyearsahead.add(temp);
 }		

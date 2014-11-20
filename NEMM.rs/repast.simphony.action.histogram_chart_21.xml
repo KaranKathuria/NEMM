@@ -1,9 +1,9 @@
 <repast.simphony.chart2.engine.HistogramChartDescriptor>
-  <name>Projects per Agent</name>
-  <dataSet>Agent`s plants and project</dataSet>
-  <xAxisLabel>Number of projects</xAxisLabel>
-  <yAxisLabel>Number of agents</yAxisLabel>
-  <chartTitle>Projects per Agents</chartTitle>
+  <name>Physical position per Agents</name>
+  <dataSet>Agents physical position</dataSet>
+  <xAxisLabel>Months</xAxisLabel>
+  <yAxisLabel>Certificates</yAxisLabel>
+  <chartTitle>Agents physical position</chartTitle>
   <type>HISTOGRAM</type>
   <background>
     <red>255</red>
@@ -20,11 +20,11 @@
   <showGrid>true</showGrid>
   <showLegend>true</showLegend>
   <histType>STATIC</histType>
-  <binCount>30</binCount>
-  <sourceId>numberofprojects</sourceId>
-  <outOfRange>ADD</outOfRange>
-  <min>0.0</min>
-  <max>30.0</max>
+  <binCount>20</binCount>
+  <sourceId>physicalnetposition</sourceId>
+  <outOfRange>IGNORE</outOfRange>
+  <min>-1000000.0</min>
+  <max>1000000.0</max>
   <barColor>
     <red>204</red>
     <green>204</green>

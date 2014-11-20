@@ -100,6 +100,7 @@ public class AllVariables {
 	//public static double randomfactorininmediummrundpriceexpectations = X; //Se market prognoisis constructor //This two could have the same random numer!
 
 	//FundamentalMarketAnalysis and Project Developement
+	public static double penaltyratio = 1.5;						//What is the penalty compared to current market price?
 	public static int yearstoendogprojects = 2;						//Just to save time in the FMA.
 	public static double maxpricecerts = 1000;						//To not get an errror in the FMA.
 	public static double initialRRRcorrector = 1;					//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis

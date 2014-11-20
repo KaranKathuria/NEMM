@@ -13,6 +13,7 @@ import repast.simphony.context.DefaultContext;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import nemmagents.CompanyAgent;
+import nemmagents.MarketAnalysisAgent;
 import nemmenvironment.CVRatioCalculations;
 import nemmenvironment.FundamentalMarketAnalysis;
 import nemmenvironment.TheEnvironment;
@@ -358,6 +359,12 @@ public void obligationsperiodshedule() {
 	}
 	public double getcurrentpowerprice_N() {
 		return TheEnvironment.allRegions.get(0).getMyPowerPrice().getValue();
+	}
+	public double getCVvalue_producer() {
+		return CommonMethods.getPAgentList().get(0).getagentcompanyanalysisagent().getmarketanalysisagent().getCertValueProducer();
+	}
+	public double getCVvalue_purchaser() {
+		return CommonMethods.getOPAgentList().get(0).getagentcompanyanalysisagent().getmarketanalysisagent().getCertValuePurchaser();
 	}
 	
 	public int getbidsovermp() {

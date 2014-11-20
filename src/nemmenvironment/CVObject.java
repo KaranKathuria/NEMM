@@ -8,7 +8,28 @@ public class CVObject {
 	private double futurebank;
 	private double futureticksupply;	//The producion in, and only in, the future tick
 	private double futuretickdemand;	//The demand in, and only in, the future tick
-	
+	private double betweentickscumulativedemand;
+	private double betweentickscumulativesupply;
+
+	public double getBetweentickscumulativedemand() {
+		return betweentickscumulativedemand;
+	}
+
+
+	public void setBetweentickscumulativedemand(double betweentickscumulativedemand) {
+		this.betweentickscumulativedemand = betweentickscumulativedemand;
+	}
+
+
+	public double getBetweentickscumulativesupply() {
+		return betweentickscumulativesupply;
+	}
+
+
+	public void setBetweentickscumulativesupply(double betweentickscumulativesupply) {
+		this.betweentickscumulativesupply = betweentickscumulativesupply;
+	}
+
 
 	public CVObject() {}
 

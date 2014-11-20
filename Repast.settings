@@ -3,15 +3,19 @@
   <hashtable>
     <default>
       <loadFactor>0.75</loadFactor>
-      <threshold>3</threshold>
+      <threshold>8</threshold>
     </default>
+    <int>11</int>
     <int>5</int>
-    <int>3</int>
-    <string>SettingsFileName</string>
-    <string>Repast.settings</string>
     <string>SettingsRegistryId</string>
     <string>Repast.registry</string>
+    <string>Spreadsheet.licenseAccepted</string>
+    <boolean>true</boolean>
     <string>LastLoadedScenario</string>
-    <string>/Users/Gavin/git/NEMM/NEMM.rs</string>
+    <string>C:\Users\Eier\git\NEMM\NEMM.rs</string>
+    <string>Spreadsheet.home</string>
+    <string>C:\Program Files\Microsoft Office 15\root\office15\EXCEL.EXE</string>
+    <string>SettingsFileName</string>
+    <string>Repast.settings</string>
   </hashtable>
 </simphony.settings.SettingsRegistry>
