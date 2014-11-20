@@ -348,15 +348,17 @@ public class CompanyAgent extends ParentAgent {
 			public CompanyAgent getmyCompany() {
 				return CompanyAgent.this;
 			}
-			}
+		}
 			
-	private MarketAnalysisAgent marketanalysisagent;
-	private VolumeAnalysisAgent volumeanalysisagent;
-
-	//Default constructor calling the respective objects default constructors
-	CompanyAnalysisAgent() {
-		marketanalysisagent = new MarketAnalysisAgent();
-		volumeanalysisagent = new VolumeAnalysisAgent();
+		private MarketAnalysisAgent marketanalysisagent;
+		private VolumeAnalysisAgent volumeanalysisagent;
+		private CompanyAgent myCompany;
+	
+		//Default constructor calling the respective objects default constructors
+		CompanyAnalysisAgent() {
+			marketanalysisagent = new MarketAnalysisAgent();
+			marketanalysisagent.setMyCAAgent(this);
+			volumeanalysisagent = new VolumeAnalysisAgent();
 		}
 		
 	//Sets and gets
@@ -365,6 +367,12 @@ public class CompanyAgent extends ParentAgent {
 		}
 		public VolumeAnalysisAgent getvolumeanalysisagent() {
 			return volumeanalysisagent;
+		}
+		public void setMyCompany(CompanyAgent bigDaddy) {
+			myCompany = bigDaddy;
+		}
+		public CompanyAgent getMyCompany() {
+			return myCompany;
 		}
 	}
 		
@@ -403,6 +411,7 @@ public class CompanyAgent extends ParentAgent {
 		
 		companyname = "Company " + this.getID();
 		companyanalysisagent = new CompanyAnalysisAgent();	
+		companyanalysisagent.setMyCompany(this);
 		investmentRRR = RandomHelper.nextDoubleFromTo(0.99, 1.01);									//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
 		earlystageRRR = investmentRRR + 0.02;														//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
 		regionpartcode = 2;																			//By default, all companies are active in both countries. 

@@ -136,7 +136,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		floorroofprice = 0; // test no floor price
 		maxBidOfferVolume = maxBidOfferVolumeMultiplier * this.getmyStrategy().getmyAgent().getlasttickproduction(); // * //What i produced the last tick
 		
-		maxppvolume = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getnexttwelvetickscertproduction(); //The max pp volume is equal to the expected production of the twelve next ticks. This value itself is produced in the volumeanalysis agent.
+//		maxppvolume = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getCurObPdCertProduction(); //The max pp volume is equal to the expected production of the twelve next ticks. This value itself is produced in the volumeanalysis agent.
 		
 	}
 	

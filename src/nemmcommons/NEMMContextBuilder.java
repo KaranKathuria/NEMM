@@ -67,7 +67,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	DistributeDemandShares.distributedemand(AllVariables.demandsharedistrubutioncode);					 //Distribute all demand among the Companies with OPAgents.
 	ProjectDevelopment.updateDAgentsnumber();
 	
-	Forcast.initiatevolumeprognosis(); 	//Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based om expected prodution for the future year
+	Forcast.initiateAllVolumePrognosis(); 	//Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based om expected prodution for the future year
 	if (!AllVariables.useTestData){
 		FundamentalMarketAnalysis.runfundamentalmarketanalysis();										 //
 		Forcast.updateMPEandLPE();																		 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
@@ -101,9 +101,11 @@ public void annualmarketschedule() {
 //The monthly update
 @ScheduledMethod(start = 0, interval = 1, priority = 1)
 public void monthlymarketschedule() {
-	//First the CVRatios are calculated. These are needed in the ShortTermMarket bidding. 
+	// Forecast the market 
 	CVRatioCalculations.calculateallcvobjects();
-	//Then the schedual updates all offers for all agents strategies and clears the market based on the best strategies, best tactics offers. Calcualtes market price.
+	Forcast.updateAllShortTermMarketPrognosis();
+	Forcast.updateAllVolumePrognosis();
+	// Updates all offers for all agents strategies and clears the market based on the best strategies, best tactics offers. Calcualtes market price.
 	ShortTermMarket.runshorttermmarket(); 
 	//All agents strategies utilities are scored. Tactics learn and the best strategies update their best tactics. This is done before the physical update as the intial physical position is part of the utility calcualtion.
 	UtilitiesStrategiesTactics.calculatetilitiesandupdatebesttactics(); 
@@ -113,8 +115,9 @@ public void monthlymarketschedule() {
 	TheEnvironment.GlobalValues.monthlyglobalvalueupdate();
 	
 	//Update the analysis agents forecasts. Must run after global values are updated as it uses the array of certprices
-	Forcast.updatevolumeprognosis();
-	Forcast.updatemarketprognosis();
+//	Forcast.updateAllShortTermMarketPrognosis();
+	//	Forcast.updatevolumeprognosis();
+//	Forcast.updatemarketprognosis();
 }
 
 //All obligation periods updates to come below. Priority 2 says this is done before the monthlymaret schedual.

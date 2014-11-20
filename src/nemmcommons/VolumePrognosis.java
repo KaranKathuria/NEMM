@@ -18,98 +18,77 @@ import nemmenvironment.TheEnvironment;
 //Class definitions. Note that this is a static class as all its member variables are static.
 public class VolumePrognosis {
 	
-	private double nexttickcertproduction;
-	private double thisobligationsperiodproduction;
-	private int ticks = TheEnvironment.theCalendar.getNumTradePdsInObligatedPd(); 								//How many tick there intially are inlucluded in an obligation period.
-	private double nexttickcertdemand;
-	private double thisobligationsperioddemand;
+	private double[] tickCertProduction;
+	private double[] obpdCertProduction;
+	private double[] tickCertDemand;
+	private double[] obpdCertDemand;
 	//Do we need the same for power?
 	private VolumeAnalysisAgent myVolumeAnalysisAgent;
 
 	public VolumePrognosis() {
-		ticks = TheEnvironment.theCalendar.getNumTradePdsInObligatedPd();
 	}
 	
 	//Methods
 	public void setmyVAA(VolumeAnalysisAgent myVAA) {
 		myVolumeAnalysisAgent = myVAA;
 	}
-	public double getnexttickcertproduction() {
-		return nexttickcertproduction;
+	public double getCurTickCertProduction(int tickID) {
+		return tickCertProduction[tickID];
 	}
 	
-	public double getnexttwelvetickscertproduction() {
-		return thisobligationsperiodproduction;
+	public double getCurObPdCertProduction(int tickID) {
+		return obpdCertProduction[tickID];
 	}
-	public double getnexttwelvetickscertdemand() {
-		return thisobligationsperioddemand;
+	public double getCurObPdCertDemand(int tickID) {
+		return obpdCertDemand[tickID];
 	}
 	
-	public void initiatevolumeprognosis() { //To be run before first tick
-		double temp1 = 0;
-		double tempticks = 0;
-		double dtemp1 = 0;
-		double dtempticks = 0;
-		
+	public void initialiseVolumePrognosis() {
+		int numTotalTicks = TheEnvironment.theCalendar.getNumTicks();
+		tickCertProduction = new double[numTotalTicks];
+		tickCertDemand = new double[numTotalTicks];
+		obpdCertProduction = new double[numTotalTicks];
+		obpdCertDemand = new double[numTotalTicks];
+		updateVolumePrognosis(0);
+	}
+	
+	public void updateVolumePrognosis(int tickID) { 
+		double curTickProd = 0;
+		double curObPdProd = 0;
+		double curTickDemand = 0;
+		double curObPdDemand = 0;
+		int fromTick = tickID;
+		int maxTicks = TheEnvironment.theCalendar.getNumTicks();
+		int numTicksRemainingInObPd = TheEnvironment.theCalendar.getNumTradePdsRemainingInCurrentObligationPd(fromTick) ; //Calculates the number of ticks to inlude (1-12).
+		if (fromTick >= TheEnvironment.theCalendar.getNumTicks()) {return;}							//Handels last tick cases.
 		for (PowerPlant pp : myVolumeAnalysisAgent.getmyCompany().getmypowerplants()) {
-			temp1 = temp1 + pp.getExpectedProduction(0); 															//Next tick
-			for (int i = 0; i < ticks; ++i) {
-			tempticks = tempticks + pp.getExpectedProduction(i); 													//The ticks next tick. No plant starts or closes without production in current year.
+			
+			if ((pp.getStartTick() <= fromTick) && (pp.getendtick() >= fromTick)) {						//Only count production if the plant has actually started and not close.
+				curTickProd = curTickProd + pp.getExpectedProduction(fromTick);
 			}
-		}
-		for (CompanyDemandShare CDS : this.myVolumeAnalysisAgent.getmyCompany().getMyDemandShares()) {
-			dtemp1 = dtemp1 + (CDS.getDemandShare(0) * CDS.getMyRegion().getMyDemand().getCertDemand(0));
-			for (int i = 0; i < ticks; ++i) {
-			dtempticks = dtempticks + (CDS.getDemandShare(i) * CDS.getMyRegion().getMyDemand().getCertDemand(i)); 	//The ticks next ticks
+			
+			for (int i = fromTick; i < Math.min(fromTick+numTicksRemainingInObPd,maxTicks); ++i) {
+				if (pp.getStartTick() <= i && i <= pp.getendtick()) {			//Only count production if the plant has actually started and not closed.
+					curObPdProd = curObPdProd + pp.getExpectedProduction(i); 
 				}	
-			
-		}
-		
-		nexttickcertproduction = temp1;
-		thisobligationsperiodproduction = tempticks;
-		nexttickcertdemand = -dtemp1;
-		thisobligationsperioddemand = -dtempticks;
-
-	}
-	
-	public void updatevolumeprognosis() { //To be run after market, next to Forecasts. This method uses calculates the expected production of next tick and the total expected production/demand of twele nest ticks
-		double temp1 = 0;
-		double tempticks = 0;
-		double dtemp1 = 0;
-		double dtempticks = 0;
-		int from = TheEnvironment.theCalendar.getCurrentTick() + 1;
-		int maksticks = TheEnvironment.theCalendar.getNumTicks();
-		int tickleftinoblipd = TheEnvironment.theCalendar.getNumTradePdsInObligatedPd() - TheEnvironment.theCalendar.getTimeBlock(from).tradepdID ; //Calculates the number of ticks to inlude (1-12).
-		if (from >= TheEnvironment.theCalendar.getNumTicks()) {return;}							//Handels last tick cases.
-		for (PowerPlant pp : myVolumeAnalysisAgent.getmyCompany().getmypowerplants()) {
-			
-			if ((pp.getStartTick() <= from) && (pp.getendtick() >= from)) {						//Only count production if the plant has actually started and not close.
-			temp1 = temp1 + pp.getExpectedProduction(from);
-			}
-			
-			for (int i = from; i < from+tickleftinoblipd; ++i) {
-				if (pp.getStartTick() <= (from+i) && (pp.getendtick() >= from+1) ) {			//Only count production if the plant has actually started and not closed.
-				tempticks = tempticks + pp.getExpectedProduction(i); //The ticks next ticks
-				}	}	
+			}	
 		}
 		
 		for (CompanyDemandShare CDS : this.myVolumeAnalysisAgent.getmyCompany().getMyDemandShares()) {
-			dtemp1 = dtemp1 + (CDS.getDemandShare(from) * CDS.getMyRegion().getMyDemand().getCertDemand(from));
+			curTickDemand = curTickDemand + (CDS.getDemandShare(fromTick) * CDS.getMyRegion().getMyDemand().getCertDemand(fromTick));
 			
-			for (int i = from; i < Math.min(ticks+from,maksticks); ++i) {
-				dtempticks = dtempticks + (CDS.getDemandShare(i) * CDS.getMyRegion().getMyDemand().getCertDemand(i)); //The tick`s next ticks
+			for (int i = fromTick; i < Math.min(fromTick+numTicksRemainingInObPd,maxTicks); ++i) {
+				curObPdDemand = curObPdDemand + (CDS.getDemandShare(i) * CDS.getMyRegion().getMyDemand().getCertDemand(i)); //The tick`s next ticks
 				}	
 			
 		}
-		nexttickcertproduction = temp1;
-		thisobligationsperiodproduction = tempticks;
-		nexttickcertdemand = -dtemp1;
-		thisobligationsperioddemand = -dtempticks;
+		tickCertProduction[tickID] = curTickProd;
+		obpdCertProduction[tickID] = curObPdProd;
+		tickCertDemand[tickID] = -curTickDemand;
+		obpdCertDemand[tickID] = -curObPdDemand;
 		
-}
-	
+	}
 	
 
-	
 	
 }

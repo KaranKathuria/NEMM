@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import nemmcommons.CommonMethods;
+import nemmenvironment.TheEnvironment;
 import repast.simphony.engine.environment.RunEnvironment;
 
 public class NemmCalendar {
@@ -94,6 +95,12 @@ public class NemmCalendar {
 		return numTicks;
 	}
 	
-	
+	public int getNumTradePdsRemainingInCurrentObligationPd(int tickID) {
+		// This is incorrect, and has to be fixed when we implement
+		// obligation periods in the model
+		// Does  include the current tick in the returned number
+		int retVal = numTradePdsInObligatedPd - timeBlocks.get(tickID).tradepdID+1;
+		return retVal;
+	}
 	
 }

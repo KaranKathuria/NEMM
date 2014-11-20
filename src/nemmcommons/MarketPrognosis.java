@@ -34,7 +34,10 @@ public class MarketPrognosis {
 	private TickArray expectedcertificatedemand; //Total certificate demand for each tick in the simulation. 
 	private YearArray expectedpowerpricenorway; // Expected power price in Norway. Only point of having this Tick Array is if this differs from the one given in the Environment. 
 	private YearArray expectedpowerpricesweden; // Expected power price in Sweden. Only point of having this Tick Array is if this differs from the one given in the Environment.
+	private CVObject[] certValueDataArray;
+	private int numTicksAheadCV;
 
+	
 	//Methods
 	public MarketPrognosis() {
 		if (TheEnvironment.allRegions.size()>2) {
@@ -73,7 +76,7 @@ public class MarketPrognosis {
 }	
 	
 	// The following method updates the STM price expectation for the next tick based on the forecast weights. Called each tick (through Forcast) and updates the market prognosis.
-	public void updatemarketprognosis() {
+	public void updateMarketPrognosisOLD() {
 		double nexttickcertprice;
 		int numberhistoricprices = TheEnvironment.theCalendar.getCurrentTick() + 1;
 		int curtick = TheEnvironment.theCalendar.getCurrentTick();
@@ -85,7 +88,20 @@ public class MarketPrognosis {
 		this.setstpriceexpectation(nexttickcertprice);
 		this.setExpectedcertificateprice(nexttickcertprice, curtick+1);
 	}
-	
+	public void updateSTMarketPricePrognosis() {
+		double curTickCertPrice;
+		int numHistoricPrices = TheEnvironment.theCalendar.getCurrentTick();
+		int curTick = TheEnvironment.theCalendar.getCurrentTick();
+		if (numHistoricPrices == 0) {
+			curTickCertPrice = ParameterWrapper.getpriceexpectation() * RandomHelper.nextDoubleFromTo(1, 1); //Random
+		} else if (numHistoricPrices < 4) {
+			curTickCertPrice = TheEnvironment.GlobalValues.certificateprice.getElement(curTick-1);
+		} else {
+			curTickCertPrice = forcastweights[0] * TheEnvironment.GlobalValues.certificateprice.getElement(curTick-3) + forcastweights[1] * TheEnvironment.GlobalValues.certificateprice.getElement(curTick-2) + forcastweights[2] * TheEnvironment.GlobalValues.certificateprice.getElement(curTick-1);
+		}
+		this.setstpriceexpectation(curTickCertPrice);
+		this.setExpectedcertificateprice(curTickCertPrice, curTick);
+	}	
 	public void updatefunamentalmarketprognosis() {
 		// Updates the medium and long run priceexpectations.
 		
@@ -208,13 +224,18 @@ public class MarketPrognosis {
 		elRatio[1] = CVRatioCalculations.getCVObject(numTicksAhead).getFuturesupplyratio();
 		return elRatio;
 	}
-	public CVObject getCertValuePrognosis(int numTicksAhead) {
-		// returns the prognosis of the certificate ratio for a given number
-		// of ticks ahead
-		// Later: need to add in randomness element here
+	public CVObject getCertValueData(int numTicksAhead) { 
 		CVObject retObj;
-		retObj = CVRatioCalculations. getCVObject(numTicksAhead); 
+//		retObj = CVRatioCalculations.getCVObject(numTicksAhead);
+		retObj = certValueDataArray[numTicksAhead];
 		return retObj;
+	}
+	
+	public void updateCertValueData(int NumTicksAhead) {
+		certValueDataArray = new CVObject[NumTicksAhead+1];
+		for (int i = 1;i<=NumTicksAhead;i++) {
+			certValueDataArray[i]=CVRatioCalculations.getCVObject(i); 
+		}
 	}
 	
 }
