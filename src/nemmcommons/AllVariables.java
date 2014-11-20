@@ -79,7 +79,9 @@ public class AllVariables {
 	// Certificate value calculation parameters
 	public static double certMaxPrice = 500;
 	public static double certMinPrice = 0;
-
+	public static double[] ratioAdjFactor = new double[]{0.8,1,1.2}; // used to capture uncertainty in the ratio estimates
+	public static double[] ratioAdjProb = new double[]{0.25,0.5,0.25}; // same
+	
 	// Supplier (Obligated Purchaser) strategies and tactics
 	public static int tacticDefaultLearn_OPBuyStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
 	// Define the max and min volumes to be purchased in any given period
