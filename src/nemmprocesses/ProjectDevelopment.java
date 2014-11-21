@@ -64,6 +64,7 @@ public class ProjectDevelopment {
 		int currenttick = TheEnvironment.theCalendar.getCurrentTick();
 		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year + TheEnvironment.theCalendar.getStartYear();	//Gets the current year.
 		
+		//For all Developers. This should be sorted by developertype, hence the FMA developer should build first. 
 		for (DeveloperAgent DA : CommonMethods.getDAgentList()) {
 			
 			ArrayList<PowerPlant> templist = new ArrayList<PowerPlant>();
@@ -91,15 +92,18 @@ public class ProjectDevelopment {
 			
 			//All the cirteria variables for the investment decision. Assumin default DA.getinvestmentdecisiontype() == 1
 			double cutoffcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations(); 
-			double postpondedcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getlongrunpriceexpectatations(); 
+			double postpondedcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getlongrunpriceexpectatations();
+			double equivivalentfactor = 1.0;
 			
+			//Problem occurs. That is all projects with curtoff higher than what they need builds, wiothout regards to what is really needed.
 			if (DA.getinvestmentdecisiontype() == 2) {
-				cutoffcertprice = TheEnvironment.GlobalValues.avrhistcertprice;
-				postpondedcertprice = -1; 											//There is not an option to postponed if investmentdecisiontype = 0, hence this is set to -1;
+				cutoffcertprice = Math.min(TheEnvironment.GlobalValues.avrhistcertprice, cutoffcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations());
+				postpondedcertprice = -1;	//There is not an option to postponed if investmentdecisiontype = 0, hence this is set to -1;
+				equivivalentfactor = 1.0;
 				}
 			if (DA.getinvestmentdecisiontype() == 3) {								//Only assuming the current average certprice for 2 years. 0 thereafter. //Need to create NPV equvalent
-				double equivivalentfactor = PowerPlant.calculateNPVfactor(15, estimateRRR)/PowerPlant.calculateNPVfactor(numberofyearcertscanbehedged, estimateRRR);
-				cutoffcertprice = equivivalentfactor * TheEnvironment.GlobalValues.avrhistcertprice;
+				equivivalentfactor = PowerPlant.calculateNPVfactor(15, estimateRRR)/PowerPlant.calculateNPVfactor(numberofyearcertscanbehedged, estimateRRR);
+				cutoffcertprice = Math.min(TheEnvironment.GlobalValues.avrhistcertprice, cutoffcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations());
 				postpondedcertprice = -1; 											//There is not an option to postponed if investmentdecisiontype = 0, hence this is set to -1;
 				}
 		
@@ -114,7 +118,7 @@ public class ProjectDevelopment {
 			//The critical investment decision.
 			while ((constructionproject_counter < maxnumberofconstrucprojects) && (capacitydeveloped_counter < maxcapacitydeveloped) &&  (projects_pointer < potentialprojects )) {
 					double certpriceneedednow = templist.get(projects_pointer).getcertpriceneeded();
-				if (certpriceneedednow <= cutoffcertprice) {													//Starting with the best, if its worth investing...
+				if ((equivivalentfactor*certpriceneedednow) <= cutoffcertprice) {													//Starting with the best, if its worth investing...
 					
 					//Okey. If its worth investing now, is it more lucrative to postpond the investment?
 					double postponedRRR = RRRpostponedtemplist.get(projects_pointer);

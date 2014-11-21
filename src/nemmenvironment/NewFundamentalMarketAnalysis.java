@@ -14,7 +14,7 @@ import java.util.Collections;
 import repast.simphony.random.RandomHelper;
 import nemmcommons.AllVariables;
 
-public class FundamentalMarketAnalysis {
+public class NewFundamentalMarketAnalysis {
 	
 	//List containing all the fundamental price for the years ahead.
 	private static double MPE;
@@ -80,24 +80,34 @@ public class FundamentalMarketAnalysis {
 		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year + TheEnvironment.theCalendar.getStartYear();
 		int numberofyears = 2035 - currentyear + 1;
 		int numberofticksinyear = TheEnvironment.theCalendar.getNumTradePdsInYear();		
-		certificatebalance = TheEnvironment.GlobalValues.totalmarketphysicalposition; 						
+		certificatebalance = TheEnvironment.GlobalValues.totalmarketphysicalposition;
 		
 		//Calculation for all future LRMC curves begins. Loops through all future years.
 		for (int i = 0; i < numberofyears; ++i ) {
 			tempendogenousprojects.clear();												//Important to clear so that the same endog project is not buildt twice.
-			double totalannudemand = 0;
-			double totalannucertproduction = 0;
+			double totalannufuturedemand = 0;											//All futuredemand from i and to the end
+			double totalannufuturecertproduction = 0;									//All futuresupply form i and to the end
+			double allfuturecertificatebalance = 0;										//All future balance, that is bank at i + allfuturesupply - allfuture demand
+			double totalannudemand = 0;													//Demand at the year i. Needed to calculate the bank at i.
+			double totalannucertproduction = 0;											//Supply at the year i. Needed to calculate the bank at i.
 		
 		//For the years before the endogenous projects can be build. In order to  have correct certificatebalane at year = current year + 3.
 		if (i < AllVariables.yearstoendogprojects) {
 			
-		//First get annual demand this year. 
+		//First get annual demand this year and all the following years. (hence i = aar) 
+		for (int aar = i; aar < numberofyears; ++aar) {
 		for (Region R : TheEnvironment.allRegions) {																	
 			for (int j = 0; j < numberofticksinyear; j++) { 																	
-			totalannudemand = totalannudemand + R.getMyDemand().getCertDemand(currenttick+j+(numberofticksinyear*i)); } 	//j runs from 0-11. Currentick is the starttick. i is the iterated year.
-		}
+				totalannufuturedemand = totalannufuturedemand + R.getMyDemand().getCertDemand(currenttick+j+(numberofticksinyear*aar));  	//j runs from 0-11. Currentick is the starttick. i is the iterated year.
+				if (aar == i) {
+				totalannudemand = totalannudemand + R.getMyDemand().getCertDemand(currenttick+j+(numberofticksinyear*aar));
+				}
+			}
+		}}
+		
 		//Note that this does not take account for projects beeing realised and NOT reciving certs. KK 17.11.2014
 		//Adding to allPowerPlants from the plants in process that will be finished. Notice that this is done BEFORE the sum annual production to include the ones finished this year.
+		//Note dependent on aar, as projects are only finished once.
 		for (PowerPlant PP : projectsunderconstruction_copy) {
 			if (PP.getstartyear() == currentyear+i) {									 //Currentyear + i is the iterated year. Hence if they start this year --> Move.
 			PP.setendyear(Math.min(PP.getlifetime()+currentyear+i-1, currentyear+i+14)); //Setting endyear in order to not count the certificates after 15 years. And take care of projects in overgangsperioden with lifetime = 1. Does not take care of Norway after 2020. this is a weakness, but arguably no projects will be realized in Norway after 2020 anyways, and this stage is not setting the Investment Deceison but only conting certs correctl. Hence no it sort of supports both situations (certs and nocerts post2020 in Norway).
@@ -106,26 +116,27 @@ public class FundamentalMarketAnalysis {
 			}
 		}
 		
-		//Get total production from plants i operation, for iterated year. Notie the use of getestimannualprod() and not the exact or expected production. 
-																			
+		//Get total production from plants i operation, for iterated year, and years to come. Notice the use of getestimannualprod() and not the exact or expected production. 
+		for (int aar = i; aar < numberofyears; ++aar) {															
 		for (PowerPlant PP : allPowerPlants_copy) { 																		//All operational PP.
-			if (PP.getstartyear() == (currentyear+i) && PP.getstartyear() != TheEnvironment.theCalendar.getStartYear()) {	//Special rule if the plant startet "this" iteration-year. But not for start year as projects in operation at start should be counted at start and not by *0.5
-				totalannucertproduction = totalannucertproduction + (PP.getestimannualprod() * 0.5);}						//This is sexy! On average the projects finished this year is estimated to start in june.
+			if (PP.getstartyear() == (currentyear+aar) && PP.getstartyear() != TheEnvironment.theCalendar.getStartYear()) {	//Special rule if the plant startet "this" iteration-year. But not for start year as projects in operation at start should be counted at start and not by *0.5
+				totalannufuturecertproduction = totalannufuturecertproduction + (PP.getestimannualprod() * 0.5);}						//This is sexy! On average the projects finished this year is estimated to start in june.
 			else {
-				if (PP.getendyear() >= (currentyear+i) ) {																	//If started earlier, only count certs for eligable years (recall that Norway post2020 might be mistakenly counted if here, but, they would noe be invested inn) 
-			totalannucertproduction = totalannucertproduction + PP.getestimannualprod();} }									//Starting at year i. Later method returns the calculated normal year production.
+				if (PP.getendyear() >= (currentyear+aar) ) {																	//If started earlier, only count certs for eligable years (recall that Norway post2020 might be mistakenly counted if here, but, they would noe be invested inn) 
+					totalannufuturecertproduction = totalannufuturecertproduction + PP.getestimannualprod();} }									//Starting at year i. Later method returns the calculated normal year production.
 			
-			if (PP.getendyear()+1 == (currentyear+i) && PP.getstartyear() != TheEnvironment.theCalendar.getStartYear()) {	//Extreamly sexy. For counting the years at end, we need to add the 50 % that where cut in the start year. 
-			totalannucertproduction = totalannucertproduction + (PP.getestimannualprod() * 0.5);} 
-			}	
+			if (PP.getendyear()+1 == (currentyear+aar) && PP.getstartyear() != TheEnvironment.theCalendar.getStartYear()) {	//Extreamly sexy. For counting the years at end, we need to add the 50 % that where cut in the start year. 
+				totalannufuturecertproduction = totalannufuturecertproduction + (PP.getestimannualprod() * 0.5);} 
+			}}	
 		
 		
 		//Calculate the certificatebalance before new investments are made. 
 		certificatebalance = certificatebalance + totalannucertproduction - totalannudemand;
+		allfuturecertificatebalance = certificatebalance + totalannufuturecertproduction - totalannufuturedemand;
 		//Adds the equilibrium price based on this.
 		double temp = 0.0;
-			if (certificatebalance >= 0){
-				temp = 0.0;}																					//Or should this be currentprice. 
+			if (allfuturecertificatebalance >= 0){		//Will the be shortfall in the future of the market?
+				temp = 0.0;}																					
 			else {
 				temp = TheEnvironment.GlobalValues.currentmarketprice * AllVariables.penaltyratio;}									//The 1.5 should be set from AllVariables. 
 			
@@ -159,7 +170,7 @@ else  {
 				totalannucertproduction = totalannucertproduction + (PP.getestimannualprod() * 0.5);} 		
 		}
 		certificatebalance = certificatebalance - totalannudemand + totalannucertproduction;					//Give the current balance and hence how many new project needs to be realized.
-		
+		//allfuturecertificatebalance = allfuturecertificatebalance - total
 		//Then: if, and only if, there is a shortcoming. 
 		if (certificatebalance < 0) {											
 			
