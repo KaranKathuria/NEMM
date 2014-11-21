@@ -134,7 +134,7 @@ public class CVRatioCalculations {
 		ret.setCurrentbank(currentcertificatebalance);
 		ret.setFuturebank(thetickcertificatebalance);
 		ret.setFuturetickdemand(thetickdemand);
-		ret.setFutureticksupply(theticksupply);
+		ret.setCurrenttickdemand(currentfuturedemand);
 		ret.setBetweentickscumulativedemand(dempdeltademand);			//The total demand for the period inbetween the current and the provided tick
 		ret.setBetweentickscumulativesupply(tempdeltasupply);
 		

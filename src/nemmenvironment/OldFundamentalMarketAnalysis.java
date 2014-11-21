@@ -14,7 +14,7 @@ import java.util.Collections;
 import repast.simphony.random.RandomHelper;
 import nemmcommons.AllVariables;
 
-public class FundamentalMarketAnalysis {
+public class OldFundamentalMarketAnalysis {
 	
 	//List containing all the fundamental price for the years ahead.
 	private static double MPE;
