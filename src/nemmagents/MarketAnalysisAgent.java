@@ -129,6 +129,8 @@ public class MarketAnalysisAgent extends ParentAgent {
 		double sumNegBank = 0;
 		double sumNegDem = 0;
 		double bankEnd;
+		double bankAdj;
+		double bankAdjPrev;
 		double priceNegBank;
 		int numRatioAdjustments;
 		double ratioAdj;
@@ -141,7 +143,7 @@ public class MarketAnalysisAgent extends ParentAgent {
 		numRatioAdjustments = AllVariables.ratioAdjFactor.length;
 		// Calculate the shortfall ratio
 		// SR = sum(bank in pds with -ve bank)/sum(demand in pds with -ve bank)
-		for(i=1;i<=numTicksAhead;i++)
+/*		for(i=1;i<=numTicksAhead;i++)
 		{
 			certValueData = marketprognosis.getCertValueData(i); 
 			bankEnd = certValueData.getFuturebank() + certValueData.getFutureticksupply() -
@@ -154,7 +156,7 @@ public class MarketAnalysisAgent extends ParentAgent {
 		ratioShortFall = 0.0;
 		if (sumNegDem<0) {
 			ratioShortFall = sumNegBank/sumNegDem;
-		}
+		}*/
 		
 		for(i=1;i<=numTicksAhead;i++)
 		{
@@ -184,9 +186,26 @@ public class MarketAnalysisAgent extends ParentAgent {
 				ratioFutureAdj = ratioAdj*ratioFuture;
 				ratioCurrentAdj = ratioCurrent;
 				
+				// Calculate the shortfall (this will vary because production varies)
+				bankEnd = certValueData.getFuturebank() + certValueData.getFutureticksupply() -
+						certValueData.getFuturetickdemand();
+				bankAdj = bankEnd+certValueData.getBetweentickscumulativesupply()*(1-ratioAdj);
+				bankAdjPrev = bankAdj - certValueData.getFutureticksupply()*ratioAdj+certValueData.getFuturetickdemand();
+				ratioShortFall = 0;
+				if(bankAdj<0) {
+					ratioShortFall = -1*(bankAdj/certValueData.getFuturetickdemand());
+				}
 				// Sale probability is estimated based on the number of certificates for sale in the future tick
-				// compared to the demand in that tick
-				if(certValueData.getFuturebank()<=0){
+				// divided by total demand in that tick. The calculation includes the banked certificates as a
+				// supply or demand
+				if (bankAdjPrev<=0) {
+					estSaleProb[i]=(certValueData.getFutureticksupply()*ratioAdj-bankAdj)/
+							(certValueData.getFutureticksupply()*ratioAdj);
+				} else {
+					estSaleProb[i]=(certValueData.getFuturetickdemand())/
+							(certValueData.getFuturetickdemand()+bankAdj);
+				}
+/*				if(certValueData.getFuturebank()<=0){
 					netDemand = certValueData.getFuturetickdemand() - certValueData.getFuturebank();
 					netSupply = certValueData.getFutureticksupply();
 				} 
@@ -194,7 +213,7 @@ public class MarketAnalysisAgent extends ParentAgent {
 					netDemand = certValueData.getFuturetickdemand();
 					netSupply = certValueData.getFutureticksupply()+ certValueData.getFuturebank();
 				}
-				estSaleProb[i] = netDemand/netSupply;
+				estSaleProb[i] = netDemand/netSupply;*/
 				if (estSaleProb[i]<0) {estSaleProb[i]=0;}
 				if (estSaleProb[i]>1) {estSaleProb[i]=1;}
 				
