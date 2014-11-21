@@ -33,6 +33,18 @@
       </SeriesData>
     </entry>
     <entry>
+      <string>CertificateValue_Lon_Prod</string>
+      <SeriesData>
+        <label>CertificateValue_Lon_Prod</label>
+        <color>
+          <red>255</red>
+          <green>204</green>
+          <blue>204</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
       <string>Cert price</string>
       <SeriesData>
         <label>Certificate price</label>
@@ -47,7 +59,7 @@
     <entry>
       <string>CertificateValue_Prod</string>
       <SeriesData>
-        <label>CertificateValue_Prod</label>
+        <label>CertificateValue_Short_Prod</label>
         <color>
           <red>255</red>
           <green>153</green>
@@ -71,7 +83,7 @@
     <entry>
       <string>CertificateValue_Purch</string>
       <SeriesData>
-        <label>CertificateValue_Purch</label>
+        <label>CertificateValue_Med_Prod</label>
         <color>
           <red>255</red>
           <green>51</green>
@@ -84,7 +96,7 @@
       <string>Floor</string>
       <SeriesData>
         <label>Sell floor</label>
-        <color reference="../../../entry[4]/SeriesData/color"/>
+        <color reference="../../../entry[5]/SeriesData/color"/>
       </SeriesData>
     </entry>
     <entry>

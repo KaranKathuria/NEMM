@@ -210,6 +210,13 @@
       </SeriesData>
     </entry>
     <entry>
+      <string>buy 10</string>
+      <SeriesData>
+        <label>Variable buyoffer </label>
+        <color reference="../../../entry[3]/SeriesData/color"/>
+      </SeriesData>
+    </entry>
+    <entry>
       <string>sell 4</string>
       <SeriesData>
         <label>Variable selloffer</label>
@@ -222,9 +229,9 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>buy 10</string>
+      <string>buy 1</string>
       <SeriesData>
-        <label>Variable buyoffer </label>
+        <label>Variable buyoffer</label>
         <color reference="../../../entry[3]/SeriesData/color"/>
       </SeriesData>
     </entry>
@@ -233,13 +240,6 @@
       <SeriesData>
         <label>Variable selloffer</label>
         <color reference="../../../entry[2]/SeriesData/color"/>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>buy 1</string>
-      <SeriesData>
-        <label>Variable buyoffer</label>
-        <color reference="../../../entry[3]/SeriesData/color"/>
       </SeriesData>
     </entry>
   </seriesIds>
