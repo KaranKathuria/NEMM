@@ -64,6 +64,7 @@ public class ProjectDevelopment {
 		int currenttick = TheEnvironment.theCalendar.getCurrentTick();
 		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year + TheEnvironment.theCalendar.getStartYear();	//Gets the current year.
 		
+		//For all Developers. This should be sorted by developertype, hence the FMA developer should build first. 
 		for (DeveloperAgent DA : CommonMethods.getDAgentList()) {
 			
 			ArrayList<PowerPlant> templist = new ArrayList<PowerPlant>();
@@ -93,6 +94,7 @@ public class ProjectDevelopment {
 			double cutoffcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations(); 
 			double postpondedcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getlongrunpriceexpectatations(); 
 			
+			//Problem occurs. That is all projects with curtoff higher than what they need builds, wiothout regards to what is really needed.
 			if (DA.getinvestmentdecisiontype() == 2) {
 				cutoffcertprice = TheEnvironment.GlobalValues.avrhistcertprice;
 				postpondedcertprice = -1; 											//There is not an option to postponed if investmentdecisiontype = 0, hence this is set to -1;

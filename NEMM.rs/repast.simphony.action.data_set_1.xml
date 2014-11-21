@@ -61,11 +61,20 @@
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
+      <string>CertificateValue_Lon_Prod</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>CertificateValue_Lon_Prod</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getCVvalue_long_producer</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
       <string>CertificateValue_Prod</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>CertificateValue_Prod</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getCVvalue_producer</methodName>
+        <methodName>getCVvalue_short_producer</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
@@ -74,7 +83,7 @@
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>CertificateValue_Purch</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getCVvalue_purchaser</methodName>
+        <methodName>getCVvalue_medium_producer</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

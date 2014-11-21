@@ -360,9 +360,46 @@ public void obligationsperiodshedule() {
 	public double getcurrentpowerprice_N() {
 		return TheEnvironment.allRegions.get(0).getMyPowerPrice().getValue();
 	}
-	public double getCVvalue_producer() {
-		return CommonMethods.getPAgentList().get(0).getagentcompanyanalysisagent().getmarketanalysisagent().getCertValueProducer();
-	}
+	public double getCVvalue_short_producer() {
+		if (TheEnvironment.theCalendar.getCurrentTick() < 1) {
+			return 0;
+		}
+		
+		int temp = AllVariables.numTicksPAExit[0];
+
+		for (int i=0;i<CommonMethods.getPAgentList().size();i++) {
+			if (CommonMethods.getPAgentList().get(i).getNumTicksToEmptyPosition() == temp) {
+				return CommonMethods.getPAgentList().get(i).getagentcompanyanalysisagent().getmarketanalysisagent().getCertValueProducer();
+		}}
+		return 0.0;}
+			
+	public double getCVvalue_medium_producer() {
+		if (TheEnvironment.theCalendar.getCurrentTick() < 1) {
+			return 0;
+		}
+		
+		int temp = AllVariables.numTicksPAExit[1];
+
+		for (int i=0;i<CommonMethods.getPAgentList().size();i++) {
+			if (CommonMethods.getPAgentList().get(i).getNumTicksToEmptyPosition() == temp) {
+				return CommonMethods.getPAgentList().get(i).getagentcompanyanalysisagent().getmarketanalysisagent().getCertValueProducer();
+		}}
+		return 0.0;}
+	
+	public double getCVvalue_long_producer() {
+		if (TheEnvironment.theCalendar.getCurrentTick() < 1) {
+			return 0;
+		}
+		
+		int temp = AllVariables.numTicksPAExit[2];
+
+		for (int i=0;i<CommonMethods.getPAgentList().size();i++) {
+			if (CommonMethods.getPAgentList().get(i).getNumTicksToEmptyPosition() == temp) {
+				return CommonMethods.getPAgentList().get(i).getagentcompanyanalysisagent().getmarketanalysisagent().getCertValueProducer();
+		}}
+		return 0.0;}
+	
+	
 	public double getCVvalue_purchaser() {
 		return CommonMethods.getOPAgentList().get(0).getagentcompanyanalysisagent().getmarketanalysisagent().getCertValuePurchaser();
 	}
