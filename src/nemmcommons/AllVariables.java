@@ -36,7 +36,7 @@ public class AllVariables {
 	
 	// Utilities
 	public static int utilityDefault_PA = 2; // default utility for a purchaser agent
-	public static int utilityDefault_OP = 1; // default utility for a obligated agent
+	public static int utilityDefault_OP = 2; // default utility for a obligated agent
 	public static int utilityDefault_TR = 1; // default utility for a trader agent
 	
 	// ---- GJB Added
@@ -48,7 +48,7 @@ public class AllVariables {
 
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
 	// over the next 12 ticks - i.e. it will sell 1/12th in the next tick
-	public static int[] numTicksPAExit = new int[]{2,24,96};
+	public static int[] numTicksPAExit = new int[]{12,24,48};
 	public static int[] numTicksOPExit = new int[]{1,2};
 	// Tactics - number of ticks to exit positions
 	// Number of exit strategies for each agent type
