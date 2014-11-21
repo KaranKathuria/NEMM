@@ -47,17 +47,19 @@ public class MarketAnalysisAgent extends ParentAgent {
 	
 	public void updateSTMarketPrognosis() {
 		
+		// Updates the agent's prognosis for short term market prices
+		// There may be more stuff to come here in the future
+		marketprognosis.updateSTMarketPricePrognosis();
+	}
+	
+	public void updateCertValuePrognosis() {
+		// Update the certificate value prognoses for the company's producer, trader, and purchaser
+		// agents (as and where they exist)
+		
 		int numTicksToEmptyProd = 0;
 		int numTicksToEmptyPurch = 0;
 		int numTicksToEmptyTrad = 0;
 		int numTicksToEmpty;
-		
-		// Updates the agent's prognosis for short term market prices
-		// There may be more stuff to come here in the future
-		marketprognosis.updateSTMarketPricePrognosis();
-		
-		// Update the certificate value prognoses for the company's producer, trader, and purchaser
-		// agents (as and where they exist)
 		
 		// Note - we get the "numTicksToEmpty" from each of the above agents each tick. This is because
 		// in the future we may allow these to adapt to a changing market. As for now though, they

@@ -20,7 +20,11 @@ public class Forcast {
 			CA.getcompanyanalysisagent().getmarketanalysisagent().updateSTMarketPrognosis();
 			}
 	}
-	
+	public static void updateAllCertValuePrognosis() {
+		for (CompanyAgent CA : CommonMethods.getCompanyAgenList()) { 
+			CA.getcompanyanalysisagent().getmarketanalysisagent().updateCertValuePrognosis();
+			}
+	}	
 	//Updates the volume prognosis for all company agents. Could contain demand prognosis as well
 	public static void updateAllVolumePrognosis() { 
 		int curTick = TheEnvironment.theCalendar.getCurrentTick();

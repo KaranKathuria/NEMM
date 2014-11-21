@@ -109,6 +109,7 @@ public void monthlymarketschedule() {
 	// Updates all offers for all agents strategies and clears the market based on the best strategies, best tactics offers. Calcualtes market price.
 	ShortTermMarket.runshorttermmarket(); 
 	//All agents strategies utilities are scored. Tactics learn and the best strategies update their best tactics. This is done before the physical update as the intial physical position is part of the utility calcualtion.
+	Forcast.updateAllCertValuePrognosis();
 	UtilitiesStrategiesTactics.calculatetilitiesandupdatebesttactics(); 
 	UpdatePhysicalPosition.updateAllAgentPositions();
 	
