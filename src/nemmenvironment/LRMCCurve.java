@@ -53,13 +53,12 @@ public class LRMCCurve {
 	public LRMCCurve(int runye, int yearsah) {
 		runyear = runye;										//This is the year of running the FMA in the simulation
 		yearsahead = yearsah;									//This is for which future year the LRMC curve is beeing calculated. 
-		int tmp = 1;
 	}
-	//Methodsds
 	
 	//Method calculating the certificateprice needed for the marginal project in the list and setting the equilibrium price. 
 	// Comment
-	public void calculatelrmccurve(ArrayList<PowerPlant> tempendogenousprojects, double certbalance) {
+	public void calculatelrmccurve(ArrayList<PowerPlant> tempendogenousprojects, double certbalance, int xyears) {
+		int yearsprod = Math.min(xyears,15);					//When calculating LRMC based on a certbalance that is for more than a year, this is needed.
 		certificatebalance = certbalance;
 		
 		if (certificatebalance > 0) { 							// No need for new projects.
@@ -80,15 +79,13 @@ public class LRMCCurve {
 		int index = 0;
 		double newproductionbuilt = 0;
 		while (newproductionbuilt < (-certificatebalance) && index < projectsupplycurve.size()) {		// While the newbuiltproduction is not enough to fulfill the shortcommings of certs, take the next project.
-			newproductionbuilt = newproductionbuilt + projectsupplycurve.get(index).getannualcertproduction();
+			newproductionbuilt = newproductionbuilt + (projectsupplycurve.get(index).getannualcertproduction()*yearsprod);
 			equilibriumprice = projectsupplycurve.get(index).getcertpriceneeded();
 			index++;
 		}
 		//IF all are build and there is still not enough.
-		if (newproductionbuilt < (-certificatebalance)){ equilibriumprice = AllVariables.maxpricecerts; } //throw new Error("There is no projects that can be finished in order to meet demand");}
-		
-		//Need to figure out how to draw the curve. 
-		
+		//if (newproductionbuilt < (-certificatebalance)){ equilibriumprice = AllVariables.maxpricecerts; } //throw new Error("There is no projects that can be finished in order to meet demand");}
+				
 		} 
 		
 	}
