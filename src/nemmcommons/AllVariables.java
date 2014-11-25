@@ -123,7 +123,7 @@ public class AllVariables {
 	public static int numberofyearcertscanbehedged = 2;
 	public static int constructionconstraints = 2; 					//2->12	//Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 2), 2 = 2*(sizecode*regioncode + 2), etc  
 	public static int preprojectandidentifyconstraint = 2;			//2->16 //Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 4), etc
-	public static int yearsbuildout = 8;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA.
+	public static int yearsbuildout = 17;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA.
 	
 	//Initial distribution of powerplants, projects and demandshares per region.
 	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
