@@ -82,6 +82,7 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 		double curBidPurchased = 0;
 		double curBidShareCleared = 0;
 		double[] certValue;
+		double curRestVal;
 		
 		ArrayList<double[]> retList = new ArrayList<double[]>();
 		double[] tmpArray;
@@ -102,7 +103,8 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 		certValue = new double[s.size()];
 		certValue[0]=Math.max(AllVariables.valueCertShortfall, priceSpot*1.5); // I have made this bigger than the "penalty" to reflect risk aversion to being short 
 		for ( i=1;i<s.size();i++) {
-			certValue[i]=priceSpot; // for now, take the market price as the best guess of the certificate value
+		//	certValue[i]=priceSpot; // for now, take the market price as the best guess of the certificate value
+			certValue[i]=myAgent.getagentcompanyanalysisagent().getmarketanalysisagent().getCertValuePurchaser();
 		}
 		
 		for ( i=0;i<s.size();i++) {
@@ -135,12 +137,14 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 					}			
 					curProfit = -curBidVol*curBidPrice; // Profit (cost as -ve) if all was purchased
 					curActivation = curBidPurchased/curBidVol; // Activation (prob. of purchase)
-					curReturn = -curBidVol*(certValue[i]*(1-curActivation)+curBidPrice*curActivation); // Return (Utility)
+					curRestVal = -curBidVol*certValue[i];
+//					curReturn = -curBidVol*(certValue[i]*(1-curActivation)+curBidPrice*curActivation); // Return (Utility)
 					// Exponential smoothing
 					if (tmpArray != null) {
 						tmpArray[1] = tmpArray[1] + alpha*(curProfit-tmpArray[1]); // Profit (cost)
 						tmpArray[2] = tmpArray[2] + alpha*(curActivation-tmpArray[2]); // Activation
-						tmpArray[0] = tmpArray[0] + alpha*(curReturn-tmpArray[0]); // Return						
+//						tmpArray[0] = tmpArray[0] + alpha*(curReturn-tmpArray[0]); // Return	
+						tmpArray[0] = tmpArray[1]*tmpArray[2]+(1-tmpArray[2])*curRestVal;
 					}
 					else {
 						// This will occur if there has been no utility set for this bid as yet
@@ -149,7 +153,7 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 						tmpArray = new double[3];
 						tmpArray[1] = curProfit;
 						tmpArray[2] = curActivation;
-						tmpArray[0] = curReturn;
+						tmpArray[0] = tmpArray[1]*tmpArray[2]+(1-tmpArray[2])*curRestVal;
 					}
 						
 
