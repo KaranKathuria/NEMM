@@ -83,7 +83,7 @@ public class AllVariables {
 	// Certificate value calculation parameters
 	public static double certMaxPrice = 500;
 	public static double certMinPrice = 0;
-	public static double[] ratioAdjFactor = new double[]{0.9,1,1.1}; // used to capture uncertainty in the ratio estimates
+	public static double[] ratioAdjFactor = new double[]{0.8,1,1.2}; // used to capture uncertainty in the ratio estimates
 	public static double[] ratioAdjProb = new double[]{0.3,0.4,0.3}; // same
 	public static double sdevCVSupply = 0.0; // Std dev of supply prognosis used in CV calcs in %
 	public static double valueCertShortfall = 250; // value (cost) of not having enough certificates
