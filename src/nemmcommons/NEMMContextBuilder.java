@@ -16,6 +16,7 @@ import nemmagents.CompanyAgent;
 import nemmagents.MarketAnalysisAgent;
 import nemmenvironment.CVRatioCalculations;
 import nemmenvironment.FundamentalMarketAnalysis;
+import nemmenvironment.NewFundamentalMarketAnalysis;
 import nemmenvironment.TheEnvironment;
 import nemmprocesses.DistributeProjectsandPowerPlants;
 import nemmprocesses.Forcast;
@@ -85,7 +86,8 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 @ScheduledMethod(start = 12, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
 public void annualmarketschedule() {
 	if (!AllVariables.useTestData){
-		FundamentalMarketAnalysis.runfundamentalmarketanalysis();							
+		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	
+
 		Forcast.updateMPEandLPE();									 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
 	}
 	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.

@@ -110,20 +110,20 @@ public class AllVariables {
 	//FundamentalMarketAnalysis and Project Developement
 	public static double penaltyratio = 1.5;						//What is the penalty compared to current market price?
 	public static int yearstoendogprojects = 2;						//Just to save time in the FMA.
-	public static double maxpricecerts = 1000;						//To not get an errror in the FMA.
+	public static double maxpricecerts = 250;						//To not get an errror in the FMA.
 	public static double initialRRRcorrector = 1;					//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis
-	public static double RRRpostpondpremium = 0.02;					//Risk premium (basispoints 0.01 = 1%) need to be covered if the investment decision is to be postpond. 
+	public static double RRRpostpondpremium = 0.005;				//Risk premium (basispoints 0.01 = 1%) need to be covered if the investment decision is to be postpond. 
 	public static int minpostpondyears = 1;							//How long the investment decision is postpond if postponed.Cannot see why this should be larger than 1. (only argument is if this is the real deal).
-	public static int MPECount = 17;								//Number of futuer years seen by the MPE-analysis. THats 15 + verage construction yers.
-	public static int LPECount = 24;								//Number of futuer years seen by the LPE-analysis
-	public static double stdmediumrunpriceexpect = 0.05;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	public static double stdlongrunpriceexpect = 0.15;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	public static double[] developerinvestmenttypedistribution = new double[]{0.05,0.8,1.0};	//Share of type 1, 2 and 3. 1 is the fundamental, 2 is the current price for all years, 3 is current price for x years.
+	public static int MPECount = 18;								//Number of futuer years seen by the MPE-analysis. THats number-1 years ahead (including this year).
+	public static int LPECount = MPECount+minpostpondyears;			//Number of futuer years seen by the LPE-analysis
+	public static double stdmediumrunpriceexpect = 0.06;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
+	public static double stdlongrunpriceexpect = 0.08;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
+	public static double[] developerinvestmenttypedistribution = new double[]{1,1,1};	//Share of type 1, 2 and 3. 1 is the fundamental, 2 is the current price for all years, 3 is current price for x years.
 	public static int numberoftickstocalculatehistcertprice = 6;	
 	public static int numberofyearcertscanbehedged = 2;
-	public static int constructionconstraints = 2; 				//2->12	//Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 2), 2 = 2*(sizecode*regioncode + 2), etc  
-	public static int preprojectandidentifyconstraint = 2;		//2->16 //Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 4), etc
-
+	public static int constructionconstraints = 2; 					//2->12	//Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 2), 2 = 2*(sizecode*regioncode + 2), etc  
+	public static int preprojectandidentifyconstraint = 2;			//2->16 //Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 4), etc
+	public static int yearsbuildout = 8;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA.
 	
 	//Initial distribution of powerplants, projects and demandshares per region.
 	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2

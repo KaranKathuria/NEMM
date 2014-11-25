@@ -21,8 +21,7 @@ public class OldFundamentalMarketAnalysis {
 	private static double LPE;
 	private static ArrayList<Double> equilibriumpricesyearsahead = new ArrayList<Double>();
 	private static double certificatebalance;				//Certbalance at end of given year.
-	//Random.createNormal(.5, .3);
-	//In order to preform a fundamental market analysis (with perfect foresight) for all years ahead. A copy of all projects are needed.
+
 	
 	public static ArrayList<PowerPlant> allPowerPlants_copy = new ArrayList<PowerPlant>();
 	public static ArrayList<PowerPlant> projectsunderconstruction_copy = new ArrayList<PowerPlant>();				//PowerPlants currently under construction. Not needed as they are already decided.
@@ -171,7 +170,7 @@ else  {
 			if (tempendogenousprojects.size() < 1) {throw new Error("There is no projects that can be finished in order to meet demand");}
 			
 			LRMCCurve yearcurve = new LRMCCurve(currentyear, currentyear+i);		//Calculates the certpriceneeded for all objects in the list and calculates the equilibrium price. 
-			yearcurve.calculatelrmccurve(tempendogenousprojects, certificatebalance); 
+			yearcurve.calculatelrmccurve(tempendogenousprojects, certificatebalance, 1); 
 			int test2 = tempendogenousprojects.size();
 			for (PowerPlant PP : tempendogenousprojects) {
 				if (PP.getcertpriceneeded() <= yearcurve.getequilibriumprice()) {
