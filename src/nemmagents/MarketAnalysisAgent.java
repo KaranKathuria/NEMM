@@ -360,6 +360,7 @@ public class MarketAnalysisAgent extends ParentAgent {
 			}
 			priceNegBank = (certShortfall/(ratioAdj*certValueData.getBetweentickscumulativesupply()))*
 								Math.max(1.5*priceAdjusted, AllVariables.valueCertShortfall);
+			
 /*			bankEndPd = certValueData.getBetweentickscumulativesupply()*ratioAdj+certValueData.getCurrentbank()-
 					certValueData.getBetweentickscumulativedemand();
 			priceNegBank = 0;
