@@ -47,7 +47,7 @@ public class AllVariables {
 	
 	// distribution cutoffs used for assigning a strategy to a given agent
 
-	public static double[] cutoffPAExit = new double[]{0.35,0.75,1.0};
+	public static double[] cutoffPAExit = new double[]{0.5,0.75,1.0};
 	public static double[] cutoffOPExit = new double[]{0.6,1.0};
 
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position

@@ -127,7 +127,7 @@ public class CompanyAgent extends ParentAgent {
 				allstrategies.add(tradestrategy);
 				portfoliocapital = 500000; 
 			} 
-			RAR = 0.07; //quite risk avers
+			RAR = 0.25; //quite risk avers
 			companyagent = CompanyAgent.this;
 			this.utilitymethod.setmyAgent(ActiveAgent.this);
 			beststrategy = allstrategies.get(0); // Choose the first one initially 
@@ -417,7 +417,7 @@ public class CompanyAgent extends ParentAgent {
 		companyname = "Company " + this.getID();
 		companyanalysisagent = new CompanyAnalysisAgent();	
 		companyanalysisagent.setMyCompany(this);
-		investmentRRR = RandomHelper.nextDoubleFromTo(0.95, 1.05);									//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
+		investmentRRR = RandomHelper.nextDoubleFromTo(0.97, 1.03);									//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
 		earlystageRRR = investmentRRR + 0.02;														//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
 		regionpartcode = 2;																			//By default, all companies are active in both countries. 
 		
