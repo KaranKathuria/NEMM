@@ -211,6 +211,11 @@ public class CompanyAgent extends ParentAgent {
 			double volBought = 0.0;
 			 if (beststrategy.getAgentsBuyOffers() != null) {
 				 for (BidOffer m : beststrategy.getAgentsBuyOffers()) {
+					 if (m==null) {
+						 int tmp = 1;
+						 tmp = 2;
+								 
+					 }
 					 volBought = volBought + m.getCertVolume()*m.getShareCleared();
 				 }
 			 } 

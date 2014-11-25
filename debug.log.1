@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 FATAL [Thread-4] 2014-10-31 09:20:15,110 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
 Current tick (42.0)
 java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
@@ -1447,8 +1449,32 @@ Caused by: java.lang.ArrayIndexOutOfBoundsException: 24
 	at nemmprocesses.Forcast.updateAllShortTermMarketPrognosis(Forcast.java:20)
 	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:106)
 	... 9 more
-FATAL [Thread-4] 2014-11-20 14:15:35,972 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (288.0)
+FATAL [Thread-5] 2014-11-20 16:38:06,932 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (1.0)
+repast.simphony.data2.DataException: Error invoking method on object
+	at repast.simphony.data2.MethodDataSource.get(MethodDataSource.java:99)
+	at repast.simphony.data2.AggregateDSCreator$NumberCalculator.calcStats(AggregateDSCreator.java:32)
+	at repast.simphony.data2.AggregateDSCreator$ADS.get(AggregateDSCreator.java:111)
+	at repast.simphony.data2.AggregateDataSet.record(AggregateDataSet.java:80)
+	at repast.simphony.data2.AbstractDataSetManager$ScheduledDataSet.execute(AbstractDataSetManager.java:119)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:238)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.data2.MethodDataSource.get(MethodDataSource.java:97)
+	... 10 more
+Caused by: java.lang.NullPointerException
+	at nemmcommons.CommonMethods.getPAgentList(CommonMethods.java:72)
+	at nemmcommons.NEMMContextBuilder.getCVvalue_medium_producer(NEMMContextBuilder.java:383)
+	... 13 more
+>>>>>>> refs/heads/UpdateCVprint
+FATAL [Thread-4] 2014-11-24 10:22:48,716 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (99.0)
 java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
 	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
 	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
@@ -1462,10 +1488,12 @@ Caused by: java.lang.reflect.InvocationTargetException
 	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
 	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
 	... 6 more
-Caused by: java.lang.IndexOutOfBoundsException: Index: 288, Size: 288
-	at java.util.ArrayList.rangeCheck(ArrayList.java:635)
-	at java.util.ArrayList.get(ArrayList.java:411)
-	at nemmtime.NemmCalendar.getTimeBlock(NemmCalendar.java:67)
-	at nemmenvironment.FundamentalMarketAnalysis.runfundamentalmarketanalysis(FundamentalMarketAnalysis.java:82)
-	at nemmcommons.NEMMContextBuilder.annualmarketschedule(NEMMContextBuilder.java:87)
+Caused by: java.lang.NullPointerException
+	at nemmagents.CompanyAgent$ActiveAgent.getBoughtVolume(CompanyAgent.java:214)
+	at nemmstrategy_shortterm.TAUtilityMethod.calculateutility(TAUtilityMethod.java:38)
+	at nemmstrategy_shortterm.TradeStrategy1Tactic.calcUtilityForCurrentTick(TradeStrategy1Tactic.java:133)
+	at nemmstrategy_shortterm.GenericTactic.updateTactic(GenericTactic.java:137)
+	at nemmstrategy_shortterm.GenericStrategy.updateStrategy(GenericStrategy.java:111)
+	at nemmprocesses.UtilitiesStrategiesTactics.calculatetilitiesandupdatebesttactics(UtilitiesStrategiesTactics.java:39)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:113)
 	... 9 more

@@ -41,6 +41,10 @@ public class AllVariables {
 	
 	// ---- GJB Added
 	
+	// ST price prognosis - exponential smoothing parameters
+	public static double maxAlphaSTPrice = 0.8;
+	public static double minAlphaSTPrice = 0.5;
+	
 	// distribution cutoffs used for assigning a strategy to a given agent
 
 	public static double[] cutoffPAExit = new double[]{0.35,0.75,1.0};
@@ -48,7 +52,7 @@ public class AllVariables {
 
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
 	// over the next 12 ticks - i.e. it will sell 1/12th in the next tick
-	public static int[] numTicksPAExit = new int[]{12,24,48};
+	public static int[] numTicksPAExit = new int[]{2,12,64};
 	public static int[] numTicksOPExit = new int[]{1,2};
 	// Tactics - number of ticks to exit positions
 	// Number of exit strategies for each agent type
@@ -80,7 +84,9 @@ public class AllVariables {
 	public static double certMaxPrice = 500;
 	public static double certMinPrice = 0;
 	public static double[] ratioAdjFactor = new double[]{0.8,1,1.2}; // used to capture uncertainty in the ratio estimates
-	public static double[] ratioAdjProb = new double[]{0.25,0.5,0.25}; // same
+	public static double[] ratioAdjProb = new double[]{0.3,0.4,0.3}; // same
+	public static double sdevCVSupply = 0.0; // Std dev of supply prognosis used in CV calcs in %
+	public static double valueCertShortfall = 250; // value (cost) of not having enough certificates
 	
 	// Supplier (Obligated Purchaser) strategies and tactics
 	public static int tacticDefaultLearn_OPBuyStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)

@@ -36,6 +36,9 @@ public class MarketPrognosis {
 	private YearArray expectedpowerpricesweden; // Expected power price in Sweden. Only point of having this Tick Array is if this differs from the one given in the Environment.
 	private CVObject[] certValueDataArray;
 	private int numTicksAheadCV;
+	private double alphaSTPrice; // exponential smoothing parameter used in ST price prognosis
+	private Normal stream1Normal;
+	private Normal stream2Normal;
 
 	
 	//Methods
@@ -72,23 +75,38 @@ public class MarketPrognosis {
 		
 		for (int i = 0; i < TheEnvironment.theCalendar.getNumYears(); ++i) {
 		expectedpowerpricenorway.setElement(TheEnvironment.allRegions.get(0).getMyPowerPrice().getValue(i), i);
-		expectedpowerpricesweden.setElement(TheEnvironment.allRegions.get(1).getMyPowerPrice().getValue(i), i);}		
+		expectedpowerpricesweden.setElement(TheEnvironment.allRegions.get(1).getMyPowerPrice().getValue(i), i);}
+		
+		// determine the alpha used in the ST price exponential smoothing algorithm		
+		double tmpRandVal = RandomHelper.nextDoubleFromTo(0, 1); 
+		alphaSTPrice = AllVariables.maxAlphaSTPrice*tmpRandVal + (1-tmpRandVal)*AllVariables.minAlphaSTPrice;
+		stream1Normal = RandomHelper.createNormal(0, 1);
+		// for CV value randomness
+		stream2Normal = RandomHelper.createNormal(0, 1);
 }	
 	
 	// The following method updates the STM price expectation for the next tick based on the forecast weights. Called each tick (through Forcast) and updates the market prognosis.
-	public void updateMarketPrognosisOLD() {
-		double nexttickcertprice;
-		int numberhistoricprices = TheEnvironment.theCalendar.getCurrentTick() + 1;
-		int curtick = TheEnvironment.theCalendar.getCurrentTick();
-		if (numberhistoricprices < 3) {
-			nexttickcertprice = TheEnvironment.GlobalValues.certificateprice.getElement(curtick);
-		} else {
-			nexttickcertprice = forcastweights[0] * TheEnvironment.GlobalValues.certificateprice.getElement(curtick-2) + forcastweights[1] * TheEnvironment.GlobalValues.certificateprice.getElement(curtick-1) + forcastweights[2] * TheEnvironment.GlobalValues.certificateprice.getElement(curtick);
-		}
-		this.setstpriceexpectation(nexttickcertprice);
-		this.setExpectedcertificateprice(nexttickcertprice, curtick+1);
-	}
+
 	public void updateSTMarketPricePrognosis() {
+		// Exponential smoothing prognosis
+		double curTickCertPrice;
+		int numHistoricPrices = TheEnvironment.theCalendar.getCurrentTick();
+		int curTick = TheEnvironment.theCalendar.getCurrentTick();
+		if (numHistoricPrices == 0) {
+			curTickCertPrice = ParameterWrapper.getpriceexpectation() * RandomHelper.nextDoubleFromTo(0.9, 1.1); //Random
+		} else {
+			double priceSpot = ShortTermMarket.getcurrentmarketprice(); // previous ticks market price
+			curTickCertPrice = stpriceexpectation*(1-alphaSTPrice) + alphaSTPrice*priceSpot;
+			// some randomness
+			double mean = curTickCertPrice;
+			double stddev = curTickCertPrice/20; // fix this later
+			curTickCertPrice = mean + stddev*stream1Normal.nextDouble();
+		}
+
+		this.setstpriceexpectation(curTickCertPrice);
+		this.setExpectedcertificateprice(curTickCertPrice, curTick);
+	}	
+	public void updateSTMarketPricePrognosisMA() {
 		double curTickCertPrice;
 		int numHistoricPrices = TheEnvironment.theCalendar.getCurrentTick();
 		int curTick = TheEnvironment.theCalendar.getCurrentTick();
@@ -233,8 +251,32 @@ public class MarketPrognosis {
 	
 	public void updateCertValueData(int NumTicksAhead) {
 		certValueDataArray = new CVObject[NumTicksAhead+1];
+//		double multSupply = stream2Normal.nextDouble(); // N(0,1) distribution
+//		double multSupply = 0;
 		for (int i = 1;i<=NumTicksAhead;i++) {
 			certValueDataArray[i]=CVRatioCalculations.getCVObject(i); 
+			// Randomly adjust the supply estimates. This means that each market prognosis agent will prognose
+			// a different total supply and hence have a different view on shortfall etc
+			// Note: the ratio adjustments are not right - need to be fixed to account for the fact that the
+			// start bank should not be multiplied (it has already happened)
+/*			certValueDataArray[i].setCurrentsupplyratio(certValueDataArray[i].getCurrentsupplyratio()*
+					(1+multSupply*AllVariables.sdevCVSupply));
+			certValueDataArray[i].setCurrentticksupply(certValueDataArray[i].getCurrentticksupply()*
+					(1+multSupply*AllVariables.sdevCVSupply));
+			certValueDataArray[i].setBetweentickscumulativesupply(certValueDataArray[i].getBetweentickscumulativesupply()*
+					(1+multSupply*AllVariables.sdevCVSupply));
+			certValueDataArray[i].setFutureticksupply(certValueDataArray[i].getFutureticksupply()*
+					(1+multSupply*AllVariables.sdevCVSupply));
+			certValueDataArray[i].setFuturesupplyratio(certValueDataArray[i].getFuturesupplyratio()*
+					(1+multSupply*AllVariables.sdevCVSupply));
+			
+			if(i>1) {
+				certValueDataArray[i].setFuturebank(certValueDataArray[i-1].getBetweentickscumulativesupply() - 
+						certValueDataArray[i-1].getBetweentickscumulativedemand()+
+						certValueDataArray[i].getCurrentbank());
+			}*/
+				
+			
 		}
 	}
 	
