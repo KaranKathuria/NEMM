@@ -121,19 +121,19 @@ public class SellStrategy1Tactic extends GenericTactic {
 			// set the probability of sale equal to the activation for the "rest" offer
 			probSale = tacticselloffers.get(1).getUtility()[1];
 			progPrice = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getCertificateValue(numTicksAhead, probSale);
-//			tempdisc = TheEnvironment.GlobalValues.currentinterestrate + this.getmyStrategy().getmyAgent().getRAR(); //For Sellers/Producers this is added + (instead of minus)			
-//			floorroofprice = progPrice/Math.pow(tempdisc + 1, 2); //Hence this equals the discounted future expected cert price. Discounted with a risk free rate and a risk rate //In other words, the seller will not sell the variable part unless the sell price is better than the discounted future price expectations. In that case he would hold the certificates in two years.
+			tempdisc = TheEnvironment.GlobalValues.currentinterestrate + this.getmyStrategy().getmyAgent().getRAR(); //For Sellers/Producers this is added + (instead of minus)			
+			floorroofprice = progPrice/Math.pow(tempdisc + 1, 2); //Hence this equals the discounted future expected cert price. Discounted with a risk free rate and a risk rate //In other words, the seller will not sell the variable part unless the sell price is better than the discounted future price expectations. In that case he would hold the certificates in two years.
 			floorroofprice = 0.0; 
 		}
 		else {
 			floorroofprice = 0.0; // i.e. not binding floor
 		}
-		
+*/		
 		twoyearahead = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations();
 		tempdisc = TheEnvironment.GlobalValues.currentinterestrate + this.getmyStrategy().getmyAgent().getRAR(); //For Sellers/Producers this is added + (instead of minus)		
 		floorroofprice = twoyearahead/Math.pow(tempdisc + 1, 2); //Hence this equals the discounted future expected cert price. Discounted with a risk free rate and a risk rate //In other words, the seller will not sell the variable part unless the sell price is better than the discounted future price expectations. In that case he would hold the certificates in two years.
-*/
-		floorroofprice = 0; // test no floor price
+
+//		floorroofprice = 0; // test no floor price
 		maxBidOfferVolume = maxBidOfferVolumeMultiplier * this.getmyStrategy().getmyAgent().getlasttickproduction(); // * //What i produced the last tick
 		
 //		maxppvolume = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getCurObPdCertProduction(); //The max pp volume is equal to the expected production of the twelve next ticks. This value itself is produced in the volumeanalysis agent.
