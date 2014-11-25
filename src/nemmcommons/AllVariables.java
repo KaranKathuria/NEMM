@@ -83,7 +83,7 @@ public class AllVariables {
 	// Certificate value calculation parameters
 	public static double certMaxPrice = 500;
 	public static double certMinPrice = 0;
-	public static double[] ratioAdjFactor = new double[]{0.8,1,1.2}; // used to capture uncertainty in the ratio estimates
+	public static double[] ratioAdjFactor = new double[]{0.9,1,1.1}; // used to capture uncertainty in the ratio estimates
 	public static double[] ratioAdjProb = new double[]{0.3,0.4,0.3}; // same
 	public static double sdevCVSupply = 0.0; // Std dev of supply prognosis used in CV calcs in %
 	public static double valueCertShortfall = 250; // value (cost) of not having enough certificates
@@ -118,7 +118,7 @@ public class AllVariables {
 	public static int LPECount = MPECount+minpostpondyears;			//Number of futuer years seen by the LPE-analysis
 	public static double stdmediumrunpriceexpect = 0.06;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.08;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	public static double[] developerinvestmenttypedistribution = new double[]{1,1,1};	//Share of type 1, 2 and 3. 1 is the fundamental, 2 is the current price for all years, 3 is current price for x years.
+	public static double[] developerinvestmenttypedistribution = new double[]{0.4,0.8,1};	//Share of type 1, 2 and 3. 1 is the fundamental, 2 is the current price for all years, 3 is current price for x years.
 	public static int numberoftickstocalculatehistcertprice = 6;	
 	public static int numberofyearcertscanbehedged = 2;
 	public static int constructionconstraints = 2; 					//2->12	//Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 2), 2 = 2*(sizecode*regioncode + 2), etc  
