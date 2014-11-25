@@ -132,7 +132,7 @@ public final class TheEnvironment {
 		public static void monthlyglobalvalueupdate() {
 			currentmarketprice = ShortTermMarket.getcurrentmarketprice();
 			certificateprice.setElement(ShortTermMarket.getcurrentmarketprice(), theCalendar.getCurrentTick()); //Adds certPrice to history.
-			RRRcorrector = RRRcorrector * RandomHelper.nextDoubleFromTo(0.99, 1.01);							//To include a randomness in the RRRused in FMA.
+			//RRRcorrector = RRRcorrector * RandomHelper.nextDoubleFromTo(0.99, 1.01);							//To include a randomness in the RRRused in FMA.
 			updateavrhistoriccertprice();																		//Updates the averagecertprice
 			
 			numberofbuyoffersstm = ShortTermMarket.getnumberofbuyoffers();
