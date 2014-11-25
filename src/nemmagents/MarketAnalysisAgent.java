@@ -360,6 +360,10 @@ public class MarketAnalysisAgent extends ParentAgent {
 			}
 			priceNegBank = (certShortfall/(ratioAdj*certValueData.getBetweentickscumulativesupply()))*
 								Math.max(1.5*priceAdjusted, AllVariables.valueCertShortfall);
+			if(priceNegBank<0){
+				int tmp=1;
+				tmp=2;
+			}
 /*			bankEndPd = certValueData.getBetweentickscumulativesupply()*ratioAdj+certValueData.getCurrentbank()-
 					certValueData.getBetweentickscumulativedemand();
 			priceNegBank = 0;
@@ -368,6 +372,11 @@ public class MarketAnalysisAgent extends ParentAgent {
 				priceNegBank = certShortfall*1.5*priceAdjusted;
 			}*/
 			certVal += priceNegBank*AllVariables.ratioAdjProb[z];
+		}
+		
+		if(certVal<0){
+			int tmp=1;
+			tmp=2;
 		}
 		
 		if(TheEnvironment.theCalendar.getCurrentTick()==40 & numTicksAhead>=48) {
