@@ -127,7 +127,7 @@ public class CompanyAgent extends ParentAgent {
 				allstrategies.add(tradestrategy);
 				portfoliocapital = 500000; 
 			} 
-			RAR = 0.07; //quite risk avers
+			RAR = 0.27; //quite risk avers
 			companyagent = CompanyAgent.this;
 			this.utilitymethod.setmyAgent(ActiveAgent.this);
 			beststrategy = allstrategies.get(0); // Choose the first one initially 
