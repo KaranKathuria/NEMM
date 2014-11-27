@@ -39,6 +39,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 	private double paramRestVolPriceMult;
 	private double paramMustSellPriceMult;
 	private double paramRestVolVolMult;
+	private double floorExtraDiscountRate;
 	private BidOffer offerMustSellVol;
 	private BidOffer offerRestVol;
 	private ArrayList<BidOffer> tacticselloffers = new ArrayList<BidOffer>(); //This tactics selloffers. 	
@@ -61,6 +62,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		if (learnID < 0 || learnID > numLearningMethods-1) {
 			paramLearningMethod = 0; // default is no learning
 		}
+		floorExtraDiscountRate = AllVariables.tacticExtraFloorDiscountRate;
 		tacticutilityscore = 0.5; //To ensure no change the first tick
 		maxBidOfferVolumeMultiplier = multOfferVol; //Indicates how much the maximum offer volume compared is to last ticks production.
 		// Create the curUtility array list to store utilities
@@ -130,7 +132,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		}
 */		
 		twoyearahead = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations();
-		tempdisc = TheEnvironment.GlobalValues.currentinterestrate + this.getmyStrategy().getmyAgent().getRAR(); //For Sellers/Producers this is added + (instead of minus)		
+		tempdisc = TheEnvironment.GlobalValues.currentinterestrate + this.getmyStrategy().getmyAgent().getRAR() + floorExtraDiscountRate; //For Sellers/Producers this is added + (instead of minus)		
 		floorroofprice = twoyearahead/Math.pow(tempdisc + 1, 2); //Hence this equals the discounted future expected cert price. Discounted with a risk free rate and a risk rate //In other words, the seller will not sell the variable part unless the sell price is better than the discounted future price expectations. In that case he would hold the certificates in two years.
 
 //		floorroofprice = 0; // test no floor price

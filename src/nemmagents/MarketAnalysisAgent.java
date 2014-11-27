@@ -277,20 +277,23 @@ public class MarketAnalysisAgent extends ParentAgent {
 	}
 	
 
-	public double calcCertificateValueNew(int numTicksAhead) {
+	public double calcCertificateValueNew(int numTicksAheadMax) {
 		// returns the analysis agent's estimate of the certificate value
 		// over the coming numTicksAhead ticks (thereafter the value is assumed 0)
 		double certVal=0;
-		double discRate = 0.05/12; // Get the correct version of this
+		double discRate = 0.025/12; // Get the correct version of this
 		double priceSpot;
 		double certShortfall;
 		double ratioCurrent;
 		double ratioCurrentAdj;
+		double ratioFuture;
+		double ratioFutureAdj;
 		double priceAdjusted;
 		double priceAdjStep;
 		double bankEndPd;
 		double priceAdjEnd;
-		double[] estSaleProb = new double[numTicksAhead+1];
+		double[] estSaleProb = new double[numTicksAheadMax+1];
+		int numTicksAhead;
 		CVObject certValueData;	
 		CVObject certValueData2;
 		int numTicksRemaining;
@@ -305,11 +308,21 @@ public class MarketAnalysisAgent extends ParentAgent {
 		double totalDemand;
 		
 		// Parameters used in the analysis
-		numTicksRemaining = TheEnvironment.theCalendar.getNumTicks()-TheEnvironment.theCalendar.getCurrentTick()
-				-numTicksAhead+1;
+		numTicksRemaining = Math.max(0,TheEnvironment.theCalendar.getNumTicks()-TheEnvironment.theCalendar.getCurrentTick()
+				-numTicksAheadMax+1);
+		numTicksAhead = Math.min(numTicksRemaining, numTicksAheadMax);
 		numRatioAdjustments = AllVariables.ratioAdjFactor.length;
-		certValueData = marketprognosis.getCertValueData(numTicksAhead);
+		if(numTicksAhead>0) {
+			certValueData = marketprognosis.getCertValueData(numTicksAhead);
+		} else {
+			// At the end of the cert market, so set future ratios to 1 as 
+			// certs have no demand. Everything else is set to 0
+			certValueData = new CVObject();
+			certValueData.setCurrentsupplyratio(1);
+			certValueData.setFuturesupplyratio(1);
+		}
 		ratioCurrent = certValueData.getCurrentsupplyratio();
+		ratioFuture = certValueData.getFuturesupplyratio();
 		bankStart = certValueData.getCurrentbank();
 		priceEstimate = 0;
 		certVal = 0;
@@ -321,15 +334,23 @@ public class MarketAnalysisAgent extends ParentAgent {
 			{priceAdjEnd = AllVariables.certMinPrice;}
 		else
 			{priceAdjEnd = AllVariables.certMaxPrice;}
-		priceAdjStep = (priceAdjEnd-priceSpot)/numTicksRemaining;
+		priceAdjStep = 0;
+		if(numTicksRemaining>0){
+			priceAdjStep = (priceAdjEnd-priceSpot)/numTicksRemaining;
+		}
+		
 		priceAdjusted = priceSpot+priceAdjStep*numTicksAhead;
 		estSaleProb[0]=1;
-
+		if(TheEnvironment.theCalendar.getCurrentTick()==20 & numTicksAhead==2) {
+			int tmp = 1;
+			tmp = 1;
+		}
 		// Calculate estimated price for each ratio adjustment multiplier, and weight the result by the
 		// given ratio adjustment probability in the certVal calculation
 		for(z=0;z<numRatioAdjustments;z++){
 			ratioAdj = AllVariables.ratioAdjFactor[z];
 			ratioCurrentAdj = ratioAdj*ratioCurrent; // - (ratioAdj-1)*bankStart/totalDemand;
+			ratioFutureAdj = ratioAdj*ratioFuture; // - (ratioAdj-1)*bankStart/totalDemand;
 			
 			if (ratioCurrentAdj<=0) {
 				priceEstimate = AllVariables.certMaxPrice;
@@ -338,11 +359,28 @@ public class MarketAnalysisAgent extends ParentAgent {
 				priceEstimate = AllVariables.certMinPrice;
 			}
 			else {
-				// market expected to get tighter
+				// This is a temp fix until the adjusted ratio calcs are made correct
+				if (ratioFutureAdj>ratioCurrentAdj) {ratioFutureAdj = ratioCurrentAdj;}
+				// future ratio will approach 0 (i.e. be less than current ratio)
 				priceEstimate = priceAdjusted + (AllVariables.certMaxPrice - priceAdjusted)*
-						(1-(ratioCurrentAdj)/ratioCurrentAdj);
+						(1-ratioFutureAdj/ratioCurrentAdj);
+				if (ratioFutureAdj>ratioCurrentAdj) {
+					int tmp = 10;
+					tmp = 10;
+				}
+				if (ratioFutureAdj<0) {
+					int tmp = 20;
+					tmp = 20;
+				}
 			}
-			
+			if (priceEstimate<0){
+				int tmp=20;
+				tmp=20;
+			}			
+			if(TheEnvironment.theCalendar.getCurrentTick()==20 & numTicksAhead==2) {
+				int tmp = 2;
+				tmp = 2;
+			}			
 			// Calculate the base certificate value as the price estimate in the next period
 //			certVal+=(priceSpot+(priceEstimate-priceSpot)/numTicksAhead)*AllVariables.ratioAdjProb[z];
 			certVal += priceEstimate*AllVariables.ratioAdjProb[z];
@@ -362,29 +400,21 @@ public class MarketAnalysisAgent extends ParentAgent {
 								Math.max(1.5*priceAdjusted, AllVariables.valueCertShortfall);
 
 			if (priceNegBank<0){
-				int tmp=1;
-				tmp=2;
+				int tmp=5;
+				tmp=5;
+			}
+			if(TheEnvironment.theCalendar.getCurrentTick()==20 & numTicksAhead==2) {
+				int tmp = 3;
+				tmp = 3;
 			}
 
-/*			bankEndPd = certValueData.getBetweentickscumulativesupply()*ratioAdj+certValueData.getCurrentbank()-
-					certValueData.getBetweentickscumulativedemand();
-			priceNegBank = 0;
-			if(bankEndPd < 0) {
-				certShortfall = -bankEndPd/(certValueData.getBetweentickscumulativesupply()*ratioAdj);
-				priceNegBank = certShortfall*1.5*priceAdjusted;
-			}*/
 			certVal += priceNegBank*AllVariables.ratioAdjProb[z];
 		}
 		
-		if(certVal<0){
-			int tmp=1;
-			tmp=2;
+		if(AllVariables.flagDiscountCV == true){
+			certVal = certVal*Math.pow(1-discRate,numTicksAhead);
 		}
-		
-		if(TheEnvironment.theCalendar.getCurrentTick()==40 & numTicksAhead>=48) {
-			int tmp = 1;
-			tmp = 2;
-		}		
+				
 		return certVal;
 	}
 

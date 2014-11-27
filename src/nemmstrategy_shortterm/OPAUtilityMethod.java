@@ -10,7 +10,9 @@ package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import cern.jet.random.Uniform;
 
+import repast.simphony.random.RandomHelper;
 import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
 import nemmprocesses.UpdatePhysicalPosition;
@@ -24,7 +26,7 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 	// Specific variables used for utility 2 (expected return)
 	private double alpha;
 	private int flagFirstPd; // the first period has special rules for setting expectedProfit and expectedActivation
-	
+	private Uniform stream1Uniform;
 	
 	// Constructor
 	public OPAUtilityMethod(int functionFlag) {
@@ -32,13 +34,17 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 			throw new IllegalArgumentException("DEBUG: Illegal flagUtilityFunction in OPAUtilityMethod. Val = " + functionFlag);
 		}
 		flagUtilityFunction = functionFlag;
+		// Initialise the uniform random number stream
+		stream1Uniform = RandomHelper.createUniform();
 		// Using the second utility function approach requires special treatment in the first tick
 		switch (flagUtilityFunction){
 		case 1:
 			// No specific initialisation required
 			break;
 		case 2:
-			alpha = 0.5;
+			double rndUniform = stream1Uniform.nextDoubleFromTo(0, 1);
+			alpha = AllVariables.tacticMaxUtilityAlphaOP*rndUniform + 
+				(1-rndUniform)*AllVariables.tacticMinUtilityAlphaOP;
 			flagFirstPd = 1;
 			break;
 		}
@@ -101,7 +107,7 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 		// all others = expected price of the next tick
 		// They should be obtained from the analysis agent
 		certValue = new double[s.size()];
-		certValue[0]=Math.max(AllVariables.valueCertShortfall, priceSpot*1.5); // I have made this bigger than the "penalty" to reflect risk aversion to being short 
+		certValue[0]=Math.max(AllVariables.valueCertShortfall, priceSpot*AllVariables.penaltyratio); // I have made this bigger than the "penalty" to reflect risk aversion to being short 
 		for ( i=1;i<s.size();i++) {
 		//	certValue[i]=priceSpot; // for now, take the market price as the best guess of the certificate value
 			certValue[i]=myAgent.getagentcompanyanalysisagent().getmarketanalysisagent().getCertValuePurchaser();

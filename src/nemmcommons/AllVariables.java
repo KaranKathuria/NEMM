@@ -47,8 +47,8 @@ public class AllVariables {
 	
 	// distribution cutoffs used for assigning a strategy to a given agent
 
-	public static double[] cutoffPAExit = new double[]{0.5,0.75,1.0};
-	public static double[] cutoffOPExit = new double[]{0.6,1.0};
+	public static double[] cutoffPAExit = new double[]{0.6,0.85,1.0};
+	public static double[] cutoffOPExit = new double[]{0.5,1.0};
 
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
 	// over the next 12 ticks - i.e. it will sell 1/12th in the next tick
@@ -61,7 +61,7 @@ public class AllVariables {
 	// ---- end GJB Added
 	
 	
-	// Producer Strategies & Tactics
+	// ---- PRODUCER STRATEGIES AND TACTIC PARAMETERS
 	// Note - not all of these need be used in any given tactic & strategy
 //	public static double multOfferVol_PASellStrategy1 = 2; // default max fraction of that month's physical position than can be sold in the month
 	public static int tacticDefaultLearn_PASellStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
@@ -70,25 +70,33 @@ public class AllVariables {
 	public static double tacticMaxPhysPosSellShare_PASellStrategy1 = 1.0; // Sell up to this fraction of the physical position
 //	public static double tacticDefaultMustSellPriceMult_PASellStrategy1 = 0.5;  // Default must sell price multiplier for the producer tactics (if used)
 	// Define the range of price multipliers for the target sales (must sell) and rest volumes 
-	public static double tacticMinMustSellPriceMult_PASellStrategy1 = 0.7;
-	public static double tacticMaxMustSellPriceMult_PASellStrategy1 = 1.0;
-	public static int tacticNumMustSellSteps_PASellStrategy1 = 4;
+	public static double tacticMinMustSellPriceMult_PASellStrategy1 = 0.9;
+	public static double tacticMaxMustSellPriceMult_PASellStrategy1 = 1.1;
+	public static int tacticNumMustSellSteps_PASellStrategy1 = 5;
 	public static double tacticMinRestPriceMult_PASellStrategy1 = 0.9; // Specify the multiplier range
 	public static double tacticMaxRestPriceMult_PASellStrategy1 = 1.5;
 	public static int tacticNumRestSteps_PASellStrategy1 = 7;
 	// Define the max and min allowable change in price multiplier when direct learning permitted
 	public static double tacticMinRestPriceStep_PASellStrategy1 = 0.025; // Step size range for the multiplier if learning is used
 	public static double tacticMaxRestPriceStep_PASellStrategy1 = 0.025;
+	// Additional discount rates for the floor price calculation
+	public static double tacticExtraFloorDiscountRate = 0.05;
+	// Exponential smoothing parameter for utility learning
+	public static double tacticMaxUtilityAlphaPA = 0.4;
+	public static double tacticMinUtilityAlphaPA = 0.2;
+	// Penalty ratio for not selling "turnover" (Must sell) certificates
+	public static double tacticTurnoverPenaltyPA = 0.5;
 	
-	// Certificate value calculation parameters
+	// ---- CERTIFICATE VALUE CALCULATION PARAMETERS
 	public static double certMaxPrice = 250;
 	public static double certMinPrice = 0;
 	public static double[] ratioAdjFactor = new double[]{0.8,1,1.2}; // used to capture uncertainty in the ratio estimates
 	public static double[] ratioAdjProb = new double[]{0.3,0.4,0.3}; // same
 	public static double sdevCVSupply = 0.0; // Std dev of supply prognosis used in CV calcs in %
 	public static double valueCertShortfall = 150; // value (cost) of not having enough certificates
+	public static boolean flagDiscountCV = true;
 	
-	// Supplier (Obligated Purchaser) strategies and tactics
+	// ---- OBLIGATED PURCHASER STRATEGIES AND TACTIC PARAMETERS
 	public static int tacticDefaultLearn_OPBuyStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
 	// Define the max and min volumes to be purchased in any given period
 	public static double tacticMinPhysPosBuyShare_OPBuyStrategy1 = 0.75; // Default must Buy share for the producer tactics (if used)
@@ -97,12 +105,18 @@ public class AllVariables {
 	public static double tacticMinMustBuyPriceMult_OPBuyStrategy1 = 0.9;
 	public static double tacticMaxMustBuyPriceMult_OPBuyStrategy1 = 1.1;
 	public static int tacticNumMustBuySteps_OPBuyStrategy1 = 5;
-	public static double tacticMinRestPriceMult_OPBuyStrategy1 = 0.6; // Specify the multiplier range
-	public static double tacticMaxRestPriceMult_OPBuyStrategy1 = 1.2;
+	public static double tacticMinRestPriceMult_OPBuyStrategy1 = 0.5; // Specify the multiplier range
+	public static double tacticMaxRestPriceMult_OPBuyStrategy1 = 1.1;
 	public static int tacticNumRestSteps_OPBuyStrategy1 = 7;
 //	public static int numTactics_OPBuyStrategy1 = 11; // The number of tactics to make
 	public static double tacticMinRestPriceStep_OPBuyStrategy1 = 0.025; // Step size range for the multiplier if learning is used
 	public static double tacticMaxRestPriceStep_OPBuyStrategy1 = 0.025;	
+	// Additional discount rates for the ceiling price calculation
+	public static double tacticExtraCeilingDiscountRate = 0.05;
+	// Exponential smoothing parameter for utility learning
+	public static double tacticMaxUtilityAlphaOP = 0.4;
+	public static double tacticMinUtilityAlphaOP = 0.2;
+	
 	
 	//public static double randomfactorinintialstpriceexpectations = X; //Se market prognoisis constructor
 	//public static double randomfactorininmediummrundpriceexpectations = X; //Se market prognoisis constructor //This two could have the same random numer!

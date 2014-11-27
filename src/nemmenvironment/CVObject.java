@@ -33,7 +33,19 @@ public class CVObject {
 	}
 
 
-	public CVObject() {}
+	public CVObject() {
+		// Constructor initialises everything to 0
+		currentsupplyratio = 0;
+		futuresupplyratio = 0;
+		currentbank = 0;
+		futurebank = 0;
+		currentticksupply = 0;
+		currenttickdemand = 0;
+		futureticksupply = 0;
+		futuretickdemand = 0;
+		betweentickscumulativedemand = 0;
+		betweentickscumulativesupply = 0;
+	}
 
 
 	public double getCurrentsupplyratio() {

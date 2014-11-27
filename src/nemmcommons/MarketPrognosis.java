@@ -253,6 +253,10 @@ public class MarketPrognosis {
 		certValueDataArray = new CVObject[NumTicksAhead+1];
 //		double multSupply = stream2Normal.nextDouble(); // N(0,1) distribution
 //		double multSupply = 0;
+		if (NumTicksAhead == 0) {
+			certValueDataArray[0].setCurrentsupplyratio(1);
+			certValueDataArray[0].setFuturesupplyratio(1);
+		}
 		for (int i = 1;i<=NumTicksAhead;i++) {
 			certValueDataArray[i]=CVRatioCalculations.getCVObject(i); 
 			// Randomly adjust the supply estimates. This means that each market prognosis agent will prognose
@@ -278,6 +282,8 @@ public class MarketPrognosis {
 				
 			
 		}
+		int tmp = 1;
+		tmp = 1;
 	}
 	
 }

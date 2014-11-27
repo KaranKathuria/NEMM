@@ -6,7 +6,7 @@
 </parameter>
 	<parameter defaultValue="40" name="obligatedpurchaseragentsnumber" displayName="Number of ObligatedPurchaserAgents" type="int"></parameter>
 	<parameter defaultValue="1" name="analysisagentsnumber" displayName="Number of AnalysisAgents" type="int"></parameter>
-	<parameter defaultValue="5" type="int" displayName="Number of TraderAgents" name="traderagentsnumber"/>
+	<parameter defaultValue="0" type="int" displayName="Number of TraderAgents" name="traderagentsnumber"/>
 	<parameter defaultValue="16.7" name="priceexpectation" displayName="Price Expectation" type="double"></parameter>
 	<parameter defaultValue="0.020" displayName="Intial market interest rate" name="initialinterestrate" type="double"></parameter>
 
