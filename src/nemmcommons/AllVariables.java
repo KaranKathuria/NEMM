@@ -83,8 +83,8 @@ public class AllVariables {
 	// Additional discount rates for the floor price calculation
 	public static double tacticExtraFloorDiscountRate = 0.05;
 	// Exponential smoothing parameter for utility learning
-	public static double tacticMaxUtilityAlphaPA = 0.4;
-	public static double tacticMinUtilityAlphaPA = 0.2;
+	public static double tacticMaxUtilityAlphaPA = 0.5;
+	public static double tacticMinUtilityAlphaPA = 0.5;
 	// Penalty ratio for not selling "turnover" (Must sell) certificates
 	public static double tacticTurnoverPenaltyPA = 0.5;
 	
@@ -115,8 +115,8 @@ public class AllVariables {
 	// Additional discount rates for the ceiling price calculation
 	public static double tacticExtraCeilingDiscountRate = 0.05;
 	// Exponential smoothing parameter for utility learning
-	public static double tacticMaxUtilityAlphaOP = 0.4;
-	public static double tacticMinUtilityAlphaOP = 0.2;
+	public static double tacticMaxUtilityAlphaOP = 0.5;
+	public static double tacticMinUtilityAlphaOP = 0.5;
 	
 	
 	//public static double randomfactorinintialstpriceexpectations = X; //Se market prognoisis constructor

@@ -304,8 +304,10 @@ public class MarketAnalysisAgent extends ParentAgent {
 		double priceEstimate;
 		double prodExcess;
 		
-		double bankStart;
-		double totalDemand;
+		double bankCurrentStart;
+		double bankFutureStart;
+		double totalDemandFromCurrent;
+		double totalDemandFromFuture;
 		
 		// Parameters used in the analysis
 		numTicksRemaining = Math.max(0,TheEnvironment.theCalendar.getNumTicks()-TheEnvironment.theCalendar.getCurrentTick()
@@ -323,7 +325,10 @@ public class MarketAnalysisAgent extends ParentAgent {
 		}
 		ratioCurrent = certValueData.getCurrentsupplyratio();
 		ratioFuture = certValueData.getFuturesupplyratio();
-		bankStart = certValueData.getCurrentbank();
+		bankCurrentStart = certValueData.getCurrentbank();
+		bankFutureStart = certValueData.getFuturebank();
+		totalDemandFromCurrent = certValueData.getDemandcurrenttoend();
+		totalDemandFromFuture = certValueData.getDemandfuturetoend();
 		priceEstimate = 0;
 		certVal = 0;
 //		totalDemand = TO COME
@@ -349,8 +354,9 @@ public class MarketAnalysisAgent extends ParentAgent {
 		// given ratio adjustment probability in the certVal calculation
 		for(z=0;z<numRatioAdjustments;z++){
 			ratioAdj = AllVariables.ratioAdjFactor[z];
-			ratioCurrentAdj = ratioAdj*ratioCurrent; // - (ratioAdj-1)*bankStart/totalDemand;
-			ratioFutureAdj = ratioAdj*ratioFuture; // - (ratioAdj-1)*bankStart/totalDemand;
+			
+			ratioCurrentAdj = ratioAdj*ratioCurrent - (ratioAdj-1)*bankCurrentStart/totalDemandFromCurrent;
+			ratioFutureAdj = ratioAdj*ratioFuture - (ratioAdj-1)*bankFutureStart/totalDemandFromFuture;
 			
 			if (ratioCurrentAdj<=0) {
 				priceEstimate = AllVariables.certMaxPrice;

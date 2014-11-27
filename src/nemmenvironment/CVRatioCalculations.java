@@ -64,14 +64,15 @@ public class CVRatioCalculations {
 		int yearsleft = TheEnvironment.theCalendar.getNumYears() - (currentyear - TheEnvironment.theCalendar.getStartYear());
 		int ticksinayear = TheEnvironment.theCalendar.getNumTradePdsInYear();
 		
-		double currentfuturedemand = 0;															//All future demand from now
+		double currentfuturedemand = 0;															//wrong nameAll future demand from now
 		double thetickfuturedemand = 0;															//All future demand from thetick.
-		double currentfuturesupply = 0;
+		double currentfuturesupply = 0;															//Wrong/misleading name. THis is all future..
 		double thetickfuturesupply = 0;
 		double theticksupply = 0;
 		double thetickdemand = 0;
 		double currentcertificatebalance = TheEnvironment.GlobalValues.totalmarketphysicalposition;	//Initial market physical position.
 		double thetickcertificatebalance = 0;
+		double exacltycurrenttickdemand = 0;
 		
 		//Calculating all future demand for both tickIDs (current and future)
 		for (int i = currentick; i < totalticks; i++)	{										//For all tick from now and to the end
@@ -82,6 +83,9 @@ public class CVRatioCalculations {
 					}
 				if (i == thetick_tickID) {
 					thetickdemand = thetickdemand + R.getMyDemand().getExpectedCertDemand(i);
+				}
+				if (i == currentick) {
+					exacltycurrenttickdemand = exacltycurrenttickdemand + R.getMyDemand().getExpectedCertDemand(i);
 				}
 				}
 		}
@@ -134,10 +138,11 @@ public class CVRatioCalculations {
 		ret.setCurrentbank(currentcertificatebalance);
 		ret.setFuturebank(thetickcertificatebalance);
 		ret.setFuturetickdemand(thetickdemand);
-		ret.setCurrenttickdemand(currentfuturedemand);
+		ret.setCurrenttickdemand(exacltycurrenttickdemand);				//just the current tick demand.
 		ret.setBetweentickscumulativedemand(dempdeltademand);			//The total demand for the period inbetween the current and the provided tick
 		ret.setBetweentickscumulativesupply(tempdeltasupply);
-		
+		ret.setDemandcurrenttoend(currentfuturedemand);
+		ret.setDemandfuturetoend(thetickfuturedemand);
 		return ret;
 	}
 	

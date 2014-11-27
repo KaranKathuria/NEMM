@@ -6,15 +6,37 @@ public class CVObject {
 	private double futuresupplyratio;
 	private double currentbank;
 	private double futurebank;
-	private double currentticksupply;
-	private double currenttickdemand;
+	private double currentticksupply;	//The production  in, and only in, the current tick
+	private double currenttickdemand;	//The demand in, and only in, the current tick
 	private double futureticksupply;	//The producion in, and only in, the future tick
 	private double futuretickdemand;	//The demand in, and only in, the future tick
 	private double betweentickscumulativedemand;
 	private double betweentickscumulativesupply;
+	private double demandfuturetoend; //Demand from the tick to end
+	private double demandcurrenttoend; //Demand from current to end
 
 	public double getBetweentickscumulativedemand() {
 		return betweentickscumulativedemand;
+	}
+
+
+	public double getDemandfuturetoend() {
+		return demandfuturetoend;
+	}
+
+
+	public void setDemandfuturetoend(double demandfuturetoend) {
+		this.demandfuturetoend = demandfuturetoend;
+	}
+
+
+	public double getDemandcurrenttoend() {
+		return demandcurrenttoend;
+	}
+
+
+	public void setDemandcurrenttoend(double demandcurrenttoend) {
+		this.demandcurrenttoend = demandcurrenttoend;
 	}
 
 
