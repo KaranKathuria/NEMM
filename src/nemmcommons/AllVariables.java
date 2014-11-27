@@ -47,8 +47,9 @@ public class AllVariables {
 	
 	// distribution cutoffs used for assigning a strategy to a given agent
 
-	public static double[] cutoffPAExit = new double[]{0.6,0.85,1.0};
-	public static double[] cutoffOPExit = new double[]{0.5,1.0};
+	public static double[] cutoffPAExit = new double[]{0.5,0.75,1.0};
+	public static double[] cutoffOPExit = new double[]{0.6,1.0};
+
 
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
 	// over the next 12 ticks - i.e. it will sell 1/12th in the next tick
@@ -125,14 +126,14 @@ public class AllVariables {
 	public static double penaltyratio = 1.5;						//What is the penalty compared to current market price?
 	public static int yearstoendogprojects = 2;						//Just to save time in the FMA.
 	public static double maxpricecerts = 250;						//To not get an errror in the FMA.
-	public static double initialRRRcorrector = 1.098;					//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis. Copnsate (0.098) for the learningfactor in inputt.
+	public static double initialRRRcorrector = 1.12;					//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis. Copnsate (0.098) for the learningfactor in inputt.
 	public static double RRRpostpondpremium = 0.005;				//Risk premium (basispoints 0.01 = 1%) need to be covered if the investment decision is to be postpond. 
 	public static int minpostpondyears = 1;							//How long the investment decision is postpond if postponed.Cannot see why this should be larger than 1. (only argument is if this is the real deal).
 	public static int MPECount = 18;								//Number of futuer years seen by the MPE-analysis. THats number-1 years ahead (including this year).
 	public static int LPECount = MPECount+minpostpondyears;			//Number of futuer years seen by the LPE-analysis
 	public static double stdmediumrunpriceexpect = 0.06;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.08;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	public static double[] developerinvestmenttypedistribution = new double[]{0.5,0.95,1};	//Share of type 1, 2 and 3. 1 is the fundamental, 2 is the current price for all years, 3 is current price for x years.
+	public static double[] developerinvestmenttypedistribution = new double[]{0.8,1,1};	//Share of type 1, 2 and 3. 1 is the fundamental, 2 is the current price for all years, 3 is current price for x years.
 	public static int numberoftickstocalculatehistcertprice = 6;	
 	public static int numberofyearcertscanbehedged = 2;
 	public static int constructionconstraints = 2; 					//2->12	//Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 2), 2 = 2*(sizecode*regioncode + 2), etc  
@@ -154,7 +155,7 @@ public class AllVariables {
 	public static boolean certificatespost2020_Sweden = true;
 	
 	//The concession and preconstruction process
-	public static int maxyearsinconcessionqueue = 4;				//Number of years in addition to minimum number of years in concession queue given as input from excel. After this, if not having received concession, the project is trashed.
+	public static int maxyearsinconcessionqueue = 3;				//Number of years in addition to minimum number of years in concession queue given as input from excel. After this, if not having received concession, the project is trashed.
 	public static double annualprobforreceivingconcession = 0.3;	//Only with one decimal as the random generater uses int.
 	public static int expectedyersinconcession = 5;					//When deciding for concession, how long to the developers expected the project to be in line. Needed due to learningcurve/CAPEX estimation.
 	
