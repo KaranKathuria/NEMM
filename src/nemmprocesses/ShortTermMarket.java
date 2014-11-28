@@ -201,6 +201,12 @@ public class ShortTermMarket {
 		double offerAvailVol = 0;
 		double certPrice = 0;
 		
+		//KK 28.11.2014 
+		//@Gavin: Here there logic with getting the historic cert price needs implemented. I have not looked at it, byt I implemented all other changes. THe only thing left is to implement the logic needed her 
+		//THe historic cert prices is given in AllVariables.historiccertpricesand and the AllVariables.firstrealtick sets the real startick for the simulation
+		//Hence, if firstrealtick = 1, the AllVariables.historiccertpricesand[0] should be the certprice in tick 0, and the model will calculated thereafter. 
+		//KK end
+		
 		while( flagMarketCleared == 0) {
 			// This is the market clearing code
 			

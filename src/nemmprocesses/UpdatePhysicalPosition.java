@@ -14,6 +14,7 @@ import java.util.Collections;
 import nemmagents.CompanyAgent;
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmagents.CompanyDemandShare;
+import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
 import nemmenvironment.PowerPlant;
 import nemmenvironment.TheEnvironment;
@@ -30,6 +31,20 @@ public static void updateAllAgentPositions() {
 	for (final ActiveAgent agent : CommonMethods.getAAgentList()) {
 		agent.updateAgentPositions();
 	}
+}
+
+public static void scaleinitialproducerphysicalposition() { //Scales the market physicalposition by altering the producers physicalposition.
+	double totalpos = TheEnvironment.GlobalValues.totalmarketphysicalposition;
+	double neededtalpos = AllVariables.bankatstarttick;
+	double producertotalpos = TheEnvironment.GlobalValues.producersphysicalposition;
+	double delta = totalpos-neededtalpos; //positive number means we need to scale down.
+	if (producertotalpos <= 0) throw new IllegalArgumentException("impssoble value for producers. THis cannot be scaled");
+	double sharedownscale = delta/producertotalpos;
+	double scaling = (1-sharedownscale);
+	for (final ActiveAgent agent : CommonMethods.getPAgentList()) {
+		agent.scalephysicalposition(scaling);
+	}
+	
 }
 
 //This method could be generalized to just iterate over all AAlist, and used a generic but overriden "postmupdate" method).

@@ -67,8 +67,8 @@ public class CompanyAgent extends ParentAgent {
 			
 			if (type == 1) {
 				activeagenttypename = "ProducerAgent";
-				physicalnetposition = 1000;
-				lasttickproduction = 1000;
+				physicalnetposition = 220000;				//Times number of agents this equals initial bank.
+				lasttickproduction = 0;
 				// here we need a way to have different utilities
 				// currently hard coded to the default
 				utilitymethod = new PAUtilityMethod(nemmcommons.AllVariables.utilityDefault_PA);
@@ -92,8 +92,8 @@ public class CompanyAgent extends ParentAgent {
 												
 			} else if (type == 2) {
 				activeagenttypename = "ObligatedPurchaserAgent";
-				physicalnetposition = -1000;
-				lasttickdemand = -1000;
+				physicalnetposition = 0;
+				lasttickdemand = 0;
 				// here we need a way to have different utilities
 				// currently hard coded to the default
 				utilitymethod = new OPAUtilityMethod(nemmcommons.AllVariables.utilityDefault_OP);
@@ -168,6 +168,9 @@ public class CompanyAgent extends ParentAgent {
 				lasttickdemand = prodordemand;}
 		}
 		
+		public void scalephysicalposition(double scaleratio) {
+			physicalnetposition = physicalnetposition*scaleratio;
+		}
 		public void setphysicalnetposition(double a) {physicalnetposition = a;}
 		public CompanyAnalysisAgent getagentcompanyanalysisagent() {return companyanalysisagent;}
 		public GenericUtilityMethod getutilitymethod() {return utilitymethod;}
