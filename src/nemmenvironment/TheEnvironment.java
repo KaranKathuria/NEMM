@@ -132,7 +132,6 @@ public final class TheEnvironment {
 		public static void monthlyglobalvalueupdate() {
 			currentmarketprice = ShortTermMarket.getcurrentmarketprice();
 			certificateprice.setElement(ShortTermMarket.getcurrentmarketprice(), theCalendar.getCurrentTick()); //Adds certPrice to history.
-			//RRRcorrector = RRRcorrector * RandomHelper.nextDoubleFromTo(0.99, 1.01);							//To include a randomness in the RRRused in FMA.
 			updateavrhistoriccertprice();																		//Updates the averagecertprice
 			
 			numberofbuyoffersstm = ShortTermMarket.getnumberofbuyoffers();
@@ -161,7 +160,11 @@ public final class TheEnvironment {
 			ticksupplyanddemandbalance = totaltickproduction + totaltickdemand;
 		}
 		
-	
+		public static void annualglobalvalueupdate() {
+			RRRcorrector = Math.max(1,(RRRcorrector - 1*0.03));				//Corrector redution to take account the learning and FMA.
+			double a = RRRcorrector;
+			int f = 1;
+		}
 		
 		public static void updateavrhistoriccertprice() {
 			if (TheEnvironment.theCalendar.getCurrentTick() <= AllVariables.numberoftickstocalculatehistcertprice) {

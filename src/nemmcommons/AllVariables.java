@@ -83,8 +83,8 @@ public class AllVariables {
 	// Additional discount rates for the floor price calculation
 	public static double tacticExtraFloorDiscountRate = 0.05;
 	// Exponential smoothing parameter for utility learning
-	public static double tacticMaxUtilityAlphaPA = 0.5;
-	public static double tacticMinUtilityAlphaPA = 0.5;
+	public static double tacticMaxUtilityAlphaPA = 0.4;
+	public static double tacticMinUtilityAlphaPA = 0.2;
 	// Penalty ratio for not selling "turnover" (Must sell) certificates
 	public static double tacticTurnoverPenaltyPA = 0.5;
 	
@@ -115,8 +115,8 @@ public class AllVariables {
 	// Additional discount rates for the ceiling price calculation
 	public static double tacticExtraCeilingDiscountRate = 0.05;
 	// Exponential smoothing parameter for utility learning
-	public static double tacticMaxUtilityAlphaOP = 0.5;
-	public static double tacticMinUtilityAlphaOP = 0.5;
+	public static double tacticMaxUtilityAlphaOP = 0.4;
+	public static double tacticMinUtilityAlphaOP = 0.2;
 	
 	
 	//public static double randomfactorinintialstpriceexpectations = X; //Se market prognoisis constructor
@@ -126,18 +126,18 @@ public class AllVariables {
 	public static double penaltyratio = 1.5;						//What is the penalty compared to current market price?
 	public static int yearstoendogprojects = 2;						//Just to save time in the FMA.
 	public static double maxpricecerts = 250;						//To not get an errror in the FMA.
-	public static double initialRRRcorrector = 1.12;					//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis. Copnsate (0.098) for the learningfactor in inputt.
+	public static double initialRRRcorrector = 1.17;				//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis. Copnsate (0.098) for the learningfactor in inputt.
 	public static double RRRpostpondpremium = 0.005;				//Risk premium (basispoints 0.01 = 1%) need to be covered if the investment decision is to be postpond. 
 	public static int minpostpondyears = 1;							//How long the investment decision is postpond if postponed.Cannot see why this should be larger than 1. (only argument is if this is the real deal).
 	public static int MPECount = 18;								//Number of futuer years seen by the MPE-analysis. THats number-1 years ahead (including this year).
 	public static int LPECount = MPECount+minpostpondyears;			//Number of futuer years seen by the LPE-analysis
-	public static double stdmediumrunpriceexpect = 0.06;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	public static double stdlongrunpriceexpect = 0.08;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	public static double[] developerinvestmenttypedistribution = new double[]{0.8,1,1};	//Share of type 1, 2 and 3. 1 is the fundamental, 2 is the current price for all years, 3 is current price for x years.
-	public static int numberoftickstocalculatehistcertprice = 6;	
+	public static double stdmediumrunpriceexpect = 0.04;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
+	public static double stdlongrunpriceexpect = 0.06;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
+	public static double[] developerinvestmenttypedistribution = new double[]{0.5,0.98,1};	//Share of type 1, 2 and 3. 1 is the fundamental, 2 is the current price for all years, 3 is current price for x years.
+	public static int numberoftickstocalculatehistcertprice = 3;	
 	public static int numberofyearcertscanbehedged = 2;
-	public static int constructionconstraints = 2; 					//2->12	//Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 2), 2 = 2*(sizecode*regioncode + 2), etc  
-	public static int preprojectandidentifyconstraint = 2;			//2->16 //Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 4), etc
+	public static int constructionconstraints = 8; 					//Times sizecode gives projects under constrction 
+	public static int preprojectandidentifyconstraint = 6;			//Times sizecode gives projects for prep and ident
 	public static int yearsbuildout = 16;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA.
 	public static double easeDAtype2 = 1.1;
 	

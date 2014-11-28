@@ -297,8 +297,8 @@ public class CompanyAgent extends ParentAgent {
 		public DeveloperAgent() {
 			companyagent = CompanyAgent.this;
 			sizecode = 2;								//By default all developmentagents have normal amount of activety. (1= few, 2=normal, 3=alot) used in intial distribution of projects.
-			projectprocessandidylimit = (4+sizecode*Math.max(2, this.companyagent.regionpartcode))*AllVariables.preprojectandidentifyconstraint;	//func of sizecode: = 3*sizecode. Problem as sizecode only defines size in one region. whereas //Max number of project getting identifyed or in proecss.
-			constructionlimit = (2+sizecode*Math.max(2, this.companyagent.regionpartcode))*AllVariables.constructionconstraints;					//Max number of projects getting in from moving to construction. 
+			projectprocessandidylimit = sizecode*AllVariables.preprojectandidentifyconstraint;	//func of sizecode: = 3*sizecode. Problem as sizecode only defines size in one region. whereas //Max number of project getting identifyed or in proecss.
+			constructionlimit = sizecode*AllVariables.constructionconstraints;					//Max number of projects getting in from moving to construction. 
 			totalcapacitylimit = 100000000;
 			//1=invest based on long term price of certs (Fundamental based), 2=Invest based on curren cert price, 3=Invest based on current cert price for two years
 			double investdecrand = RandomHelper.nextDoubleFromTo(0.0, AllVariables.developerinvestmenttypedistribution[2]);
@@ -418,8 +418,8 @@ public class CompanyAgent extends ParentAgent {
 		companyname = "Company " + this.getID();
 		companyanalysisagent = new CompanyAnalysisAgent();	
 		companyanalysisagent.setMyCompany(this);
-		investmentRRR = RandomHelper.nextDoubleFromTo(0.97, 1.03);									//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
-		earlystageRRR = investmentRRR + 0.02;														//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
+		investmentRRR = RandomHelper.nextDoubleFromTo(0.96, 1.04);									//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
+		earlystageRRR = investmentRRR + 0.01;														//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
 		regionpartcode = 2;																			//By default, all companies are active in both countries. 
 		
 		}	

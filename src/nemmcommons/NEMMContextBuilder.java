@@ -18,6 +18,7 @@ import nemmenvironment.CVRatioCalculations;
 import nemmenvironment.FundamentalMarketAnalysis;
 import nemmenvironment.NewFundamentalMarketAnalysis;
 import nemmenvironment.TheEnvironment;
+import nemmenvironment.TheEnvironment.GlobalValues;
 import nemmprocesses.DistributeProjectsandPowerPlants;
 import nemmprocesses.Forcast;
 import nemmprocesses.ProjectDevelopment;
@@ -85,6 +86,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 //All annual updates to come below. Currently not in use.
 @ScheduledMethod(start = 12, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
 public void annualmarketschedule() {
+	GlobalValues.annualglobalvalueupdate();
 	if (!AllVariables.useTestData){
 		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	
 
