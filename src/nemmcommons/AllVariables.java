@@ -47,7 +47,7 @@ public class AllVariables {
 	
 	// distribution cutoffs used for assigning a strategy to a given agent
 
-	public static double[] cutoffPAExit = new double[]{0.5,0.75,1.0};
+	public static double[] cutoffPAExit = new double[]{0.50,0.85,1.0};
 	public static double[] cutoffOPExit = new double[]{0.6,1.0};
 
 
@@ -83,8 +83,8 @@ public class AllVariables {
 	// Additional discount rates for the floor price calculation
 	public static double tacticExtraFloorDiscountRate = 0.05;
 	// Exponential smoothing parameter for utility learning
-	public static double tacticMaxUtilityAlphaPA = 0.5;
-	public static double tacticMinUtilityAlphaPA = 0.5;
+	public static double tacticMaxUtilityAlphaPA = 0.4;
+	public static double tacticMinUtilityAlphaPA = 0.2;
 	// Penalty ratio for not selling "turnover" (Must sell) certificates
 	public static double tacticTurnoverPenaltyPA = 0.5;
 	
@@ -115,8 +115,8 @@ public class AllVariables {
 	// Additional discount rates for the ceiling price calculation
 	public static double tacticExtraCeilingDiscountRate = 0.05;
 	// Exponential smoothing parameter for utility learning
-	public static double tacticMaxUtilityAlphaOP = 0.5;
-	public static double tacticMinUtilityAlphaOP = 0.5;
+	public static double tacticMaxUtilityAlphaOP = 0.4;
+	public static double tacticMinUtilityAlphaOP = 0.2;
 	
 	
 	//public static double randomfactorinintialstpriceexpectations = X; //Se market prognoisis constructor
@@ -133,13 +133,13 @@ public class AllVariables {
 	public static int LPECount = MPECount+minpostpondyears;			//Number of futuer years seen by the LPE-analysis
 	public static double stdmediumrunpriceexpect = 0.06;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.08;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	public static double[] developerinvestmenttypedistribution = new double[]{0.8,1,1};	//Share of type 1, 2 and 3. 1 is the fundamental, 2 is the current price for all years, 3 is current price for x years.
-	public static int numberoftickstocalculatehistcertprice = 6;	
+	public static double[] developerinvestmenttypedistribution = new double[]{0.25,1,1};	//Share of type 1, 2 and 3. 1 is the fundamental, 2 is the current price for all years, 3 is current price for x years.
+	public static int numberoftickstocalculatehistcertprice = 3;	
 	public static int numberofyearcertscanbehedged = 2;
-	public static int constructionconstraints = 2; 					//2->12	//Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 2), 2 = 2*(sizecode*regioncode + 2), etc  
+	public static int constructionconstraints = 3; 					//2->12	//Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 2), 2 = 2*(sizecode*regioncode + 2), etc  
 	public static int preprojectandidentifyconstraint = 2;			//2->16 //Factor from 1-3 that determines the degree of construction constraints (how many projects can be constructed simultainasly per agent. 1 = 1*(sizecode*regioncode + 4), etc
 	public static int yearsbuildout = 16;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA.
-	public static double easeDAtype2 = 1.1;
+	public static double easeDAtype2 = 1.025;
 	
 	//Initial distribution of powerplants, projects and demandshares per region.
 	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
