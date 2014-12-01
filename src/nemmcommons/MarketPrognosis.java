@@ -59,8 +59,8 @@ public class MarketPrognosis {
 		forcastweights[0] = w1;
 		
 		stpriceexpectation = ParameterWrapper.getpriceexpectation() * RandomHelper.nextDoubleFromTo(1, 1); //Random
-		mediumrunpriceexpectations =  16; //These are updated
-		longrunpriceexpectatations = 16;  //AllVariables.longrundpriceexpectations;  
+		mediumrunpriceexpectations =  16.7; //These are updated
+		longrunpriceexpectatations = 16.7;  //AllVariables.longrundpriceexpectations;  
 		maxpriceexpectation = 12;
 		expectedcertificateprice = new TickArray(); 
 		expectedcertificatedemand = new TickArray();
