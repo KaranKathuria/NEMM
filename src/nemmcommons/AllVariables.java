@@ -171,6 +171,11 @@ public class AllVariables {
 	
 	// ---- GJB Added
 	public static boolean useTestData = false;
+	
+	// The first tick banks
+	public static double bankProducerFirstTick = 14000000;
+	public static double bankPurchaserFirstTick = -2000000;
+	public static double bankTraderFirstTick = 0;
 	// ---- end GJB Added
 }
 

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import nemmagents.CompanyAgent.ActiveAgent;
+import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
 import nemmcommons.ParameterWrapper;
 import nemmenvironment.TheEnvironment;
@@ -87,6 +88,7 @@ public class ShortTermMarket {
 		marketsupply = 0;
 		tradedvolume = 0;
 		pricestep = 0.25;
+		int i;
 		
 		// For display purposes
 		int counts = 0;
@@ -157,7 +159,7 @@ public class ShortTermMarket {
 			Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers());
 		}
 		
-		//For errorcheking purposes
+		//For error checking purposes
 		ArrayList<BidOffer> tempbuy = new ArrayList<BidOffer>();
 		ArrayList<BidOffer> tempsell = new ArrayList<BidOffer>();
 		
@@ -201,131 +203,142 @@ public class ShortTermMarket {
 		double offerAvailVol = 0;
 		double certPrice = 0;
 		
-		//KK 28.11.2014 
-		//@Gavin: Here there logic with getting the historic cert price needs implemented. I have not looked at it, byt I implemented all other changes. THe only thing left is to implement the logic needed her 
-		//THe historic cert prices is given in AllVariables.historiccertpricesand and the AllVariables.firstrealtick sets the real startick for the simulation
-		//Hence, if firstrealtick = 1, the AllVariables.historiccertpricesand[0] should be the certprice in tick 0, and the model will calculated thereafter. 
-		//KK end
-		
-		while( flagMarketCleared == 0) {
-			// This is the market clearing code
-			
-			// Clear the bid and offer pair as long as the bid price is not smaller than the offer price
-			// (if the opposite is true, the remaining bids and offers will not clear)
-			
-			// Note: bids or offers with zero volume will go through this process and be "cleared"
-			// They may even be the marginal bid/offer (that's OK - it still all works)
-			
-			if (curBid.price>=curOffer.price) {
-				
-				// Calculate the traded volume from the current bid and offer pair
-				bidAvailVol = curBid.maxVol-curBid.tradedVol;
-				if (bidAvailVol<0.0) {
-					throw new IllegalArgumentException("DEBUG: ShortTermMarket: Negative bidAvailVol");
-				}
-				offerAvailVol = curOffer.maxVol - curOffer.tradedVol;
-				if (offerAvailVol<0.0) {
-					throw new IllegalArgumentException("DEBUG: ShortTermMarket: Negative bidAvailVol");
-				}
-				
-				tradedVolume = Math.min(bidAvailVol, offerAvailVol);
-				// Add the traded volume to the cumulative volume
-				curBid.tradedVol += tradedVolume;
-				curOffer.tradedVol += tradedVolume;
-				clearedVolume += tradedVolume;
-				
-				// One or both of the bid and offer will have been "used up"
-				// Replace them if so
-				if (curBid.tradedVol>=curBid.maxVol){
-					indexBid--;
-					// Stop if we have run out of bids, otherwise take the next
-					// cheapest bid
-					if (indexBid <0) {
-						flagMarketCleared = 1;
-					}
-					else{
-						curBid = ExtractBidOfferData(Allbuyoffers.get(indexBid));
-					}	
-				}
-				if (curOffer.tradedVol>=curOffer.maxVol){
-					indexOffer++;
-					// Stop if we have run out of bids, otherwise take the next
-					// cheapest bid
-					if (indexOffer >=Allselloffers.size()) {
-						flagMarketCleared = 1;
-					}
-					else
-					{
-						curOffer = ExtractBidOfferData(Allselloffers.get(indexOffer));
-					}	
+		int tickNow = TheEnvironment.theCalendar.getCurrentTick();
+		if (tickNow<AllVariables.firstrealtick) {
+			// This is for the pre-run period. Note that the cleared volumes will not match
+			// (that is, the bid cleared volume will be different to the offer cleared
+			// volume). This will need to be corrected at the first real tick
+			certPrice = AllVariables.historiccertprices[tickNow];
+			for(BidOffer curBidOffer: Allbuyoffers) {
+				if (curBidOffer.getPrice()>=certPrice) {
+					curBidOffer.setShareCleared(1);
 				}
 			}
-			else {
-				// the market is now cleared (the remaining bids and offers will not clear)
-				flagMarketCleared = 1;
+			for(BidOffer curBidOffer: Allselloffers) {
+				if (curBidOffer.getPrice()>=certPrice) {
+					curBidOffer.setShareCleared(1);
+				}
 			}			
-		}
-		
-		// Now we need to set the price
-		// if no more sell offers, price is set equal to the last cleared buy offer
-		// if no more buy offers, price is set equal to the last cleared sell offer
-		// if the buy offer traded volume is 0, then price is set at the last cleared sell offer price
-		// if the sell offer traded volume is 0, then the price is set to the last cleared buy offer price
-		// if both the sell and buy offer traded volume is 0, the price is set to be half-way between the
-		// new buy offer price and the new sell offer price
-		// With this structure, we should never get the situation where we have an uncleared sell volume
-		// with an offer price less than the cleared market price, and an uncleared buy volume with a bid
-		// price greater than the cleared market price
-		
-		if (indexOffer >=Allselloffers.size()) {
-			certPrice = curBid.price;
-		}
-		else if (indexBid < 0) {
-			certPrice = curOffer.price;
-		}
-		else if (curBid.tradedVol == 0 & curOffer.tradedVol == 0) {
-			certPrice = 0.5*(curOffer.price+curBid.price);
-		}
-		else if (curBid.tradedVol == 0) {
-			certPrice = curOffer.price;
-		}
-		else if (curOffer.tradedVol == 0) {
-			certPrice = curBid.price;
-		}
-		else {
-			certPrice = -1;
-		}
-		tradedvolume = clearedVolume;
-		marketsupply = clearedVolume;
-		marketdemand = clearedVolume;
+		} else {
+			while( flagMarketCleared == 0) {
+				// This is the market clearing code
+				
+				// Clear the bid and offer pair as long as the bid price is not smaller than the offer price
+				// (if the opposite is true, the remaining bids and offers will not clear)
+				
+				// Note: bids or offers with zero volume will go through this process and be "cleared"
+				// They may even be the marginal bid/offer (that's OK - it still all works)
+				
+				if (curBid.price>=curOffer.price) {
+					
+					// Calculate the traded volume from the current bid and offer pair
+					bidAvailVol = curBid.maxVol-curBid.tradedVol;
+					if (bidAvailVol<0.0) {
+						throw new IllegalArgumentException("DEBUG: ShortTermMarket: Negative bidAvailVol");
+					}
+					offerAvailVol = curOffer.maxVol - curOffer.tradedVol;
+					if (offerAvailVol<0.0) {
+						throw new IllegalArgumentException("DEBUG: ShortTermMarket: Negative bidAvailVol");
+					}
+					
+					tradedVolume = Math.min(bidAvailVol, offerAvailVol);
+					// Add the traded volume to the cumulative volume
+					curBid.tradedVol += tradedVolume;
+					curOffer.tradedVol += tradedVolume;
+					clearedVolume += tradedVolume;
+					
+					// One or both of the bid and offer will have been "used up"
+					// Replace them if so
+					if (curBid.tradedVol>=curBid.maxVol){
+						indexBid--;
+						// Stop if we have run out of bids, otherwise take the next
+						// cheapest bid
+						if (indexBid <0) {
+							flagMarketCleared = 1;
+						}
+						else{
+							curBid = ExtractBidOfferData(Allbuyoffers.get(indexBid));
+						}	
+					}
+					if (curOffer.tradedVol>=curOffer.maxVol){
+						indexOffer++;
+						// Stop if we have run out of bids, otherwise take the next
+						// cheapest bid
+						if (indexOffer >=Allselloffers.size()) {
+							flagMarketCleared = 1;
+						}
+						else
+						{
+							curOffer = ExtractBidOfferData(Allselloffers.get(indexOffer));
+						}	
+					}
+				}
+				else {
+					// the market is now cleared (the remaining bids and offers will not clear)
+					flagMarketCleared = 1;
+				}			
 			
-		int i;
-		// set all offers cheaper than the marginal offer to be fully cleared
-		for(i=0;i<indexOffer;i++) {
-			Allselloffers.get(i).setShareCleared(1.0);
-		}
-		// set all bids more expensive than the marginal bid to be fully cleared
-		for(i=Allbuyoffers.size()-1;i>indexBid;i--) {
-			Allbuyoffers.get(i).setShareCleared(1.0);
-		}		
-		// calculate the amount of the marginal offers cleared
-		if (indexOffer<Allselloffers.size()) {
-			if(curOffer.maxVol > 0) {
-				Allselloffers.get(indexOffer).setShareCleared(curOffer.tradedVol/curOffer.maxVol);	
-			}
-			else {
-				Allselloffers.get(indexOffer).setShareCleared(1.0);
-			}
-		}
-		if (indexBid>=0) {
-			if(curBid.maxVol > 0) {
-				Allbuyoffers.get(indexBid).setShareCleared(curBid.tradedVol/curBid.maxVol);	
-			}
-			else {
-				Allbuyoffers.get(indexBid).setShareCleared(1.0);
+			
+				// Now we need to set the price
+				// if no more sell offers, price is set equal to the last cleared buy offer
+				// if no more buy offers, price is set equal to the last cleared sell offer
+				// if the buy offer traded volume is 0, then price is set at the last cleared sell offer price
+				// if the sell offer traded volume is 0, then the price is set to the last cleared buy offer price
+				// if both the sell and buy offer traded volume is 0, the price is set to be half-way between the
+				// new buy offer price and the new sell offer price
+				// With this structure, we should never get the situation where we have an uncleared sell volume
+				// with an offer price less than the cleared market price, and an uncleared buy volume with a bid
+				// price greater than the cleared market price
+				
+				if (indexOffer >=Allselloffers.size()) {
+					certPrice = curBid.price;
+				}
+				else if (indexBid < 0) {
+					certPrice = curOffer.price;
+				}
+				else if (curBid.tradedVol == 0 & curOffer.tradedVol == 0) {
+					certPrice = 0.5*(curOffer.price+curBid.price);
+				}
+				else if (curBid.tradedVol == 0) {
+					certPrice = curOffer.price;
+				}
+				else if (curOffer.tradedVol == 0) {
+					certPrice = curBid.price;
+				}
+				else {
+					certPrice = -1;
+				}
+				tradedvolume = clearedVolume;
+				marketsupply = clearedVolume;
+				marketdemand = clearedVolume;
 			}	
+			
+			// set all offers cheaper than the marginal offer to be fully cleared
+			for(i=0;i<indexOffer;i++) {
+				Allselloffers.get(i).setShareCleared(1.0);
+			}
+			// set all bids more expensive than the marginal bid to be fully cleared
+			for(i=Allbuyoffers.size()-1;i>indexBid;i--) {
+				Allbuyoffers.get(i).setShareCleared(1.0);
+			}		
+			// calculate the amount of the marginal offers cleared
+			if (indexOffer<Allselloffers.size()) {
+				if(curOffer.maxVol > 0) {
+					Allselloffers.get(indexOffer).setShareCleared(curOffer.tradedVol/curOffer.maxVol);	
+				}
+				else {
+					Allselloffers.get(indexOffer).setShareCleared(1.0);
+				}
+			}
+			if (indexBid>=0) {
+				if(curBid.maxVol > 0) {
+					Allbuyoffers.get(indexBid).setShareCleared(curBid.tradedVol/curBid.maxVol);	
+				}
+				else {
+					Allbuyoffers.get(indexBid).setShareCleared(1.0);
+				}	
+			}
 		}
-		
 		int numBids = Allbuyoffers.size();
 		double[][] curveDemand = new double[numBids][4];
 		int numOffers = Allselloffers.size();
