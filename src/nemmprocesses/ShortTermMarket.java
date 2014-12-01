@@ -215,7 +215,7 @@ public class ShortTermMarket {
 				}
 			}
 			for(BidOffer curBidOffer: Allselloffers) {
-				if (curBidOffer.getPrice()>=certPrice) {
+				if (curBidOffer.getPrice()<=certPrice) {
 					curBidOffer.setShareCleared(1);
 				}
 			}			
@@ -339,6 +339,8 @@ public class ShortTermMarket {
 				}	
 			}
 		}
+		
+		// Supply and demand curve are for debugging purposes only
 		int numBids = Allbuyoffers.size();
 		double[][] curveDemand = new double[numBids][4];
 		int numOffers = Allselloffers.size();
