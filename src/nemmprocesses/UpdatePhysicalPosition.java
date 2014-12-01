@@ -33,18 +33,51 @@ public static void updateAllAgentPositions() {
 	}
 }
 
-public static void scaleinitialproducerphysicalposition() { //Scales the market physicalposition by altering the producers physicalposition.
-	double totalpos = TheEnvironment.GlobalValues.totalmarketphysicalposition;
-	double neededtalpos = AllVariables.bankatstarttick;
-	double producertotalpos = TheEnvironment.GlobalValues.producersphysicalposition;
-	double delta = totalpos-neededtalpos; //positive number means we need to scale down.
-	if (producertotalpos <= 0) throw new IllegalArgumentException("impssoble value for producers. THis cannot be scaled");
-	double sharedownscale = delta/producertotalpos;
+public static void scalePAphysicalpos() { //Scales the market physicalposition by altering the producers physicalposition.
+	double totalpos_should = AllVariables.bankPAfirstrealtick;
+	double producertotalpos_is = TheEnvironment.GlobalValues.producersphysicalposition;
+	double delta = totalpos_should-producertotalpos_is; //positive number means we need to scale down.
+	if (producertotalpos_is <= 0) throw new Error("impssoble value for prduceres. THis cannot be scaled");
+	double sharedownscale = delta/producertotalpos_is;
 	double scaling = (1-sharedownscale);
 	for (final ActiveAgent agent : CommonMethods.getPAgentList()) {
 		agent.scalephysicalposition(scaling);
 	}
+}
 	
+public static void scaleOPAphysicalpos() { //Scales the market physicalposition by altering the producers physicalposition.
+		double totalpos_should = AllVariables.bankOPAfirstrealtick;
+		double totalpos_is = TheEnvironment.GlobalValues.obligatedpurchasersphysiclaposition;
+		double delta = totalpos_should-totalpos_is; //positive number means we need to scale down.
+		if (totalpos_is >= 0) throw new Error("impssoble value for purchasers. THis cannot be scaled");
+		double sharedownscale = delta/totalpos_is;
+		double scaling = (1-sharedownscale);
+		for (final ActiveAgent agent : CommonMethods.getOPAgentList()) {
+			agent.scalephysicalposition(scaling);
+		}
+	
+}
+
+public static void scaleTAphysicalpos() { //Scales the market physicalposition by altering the producers physicalposition.
+	if (CommonMethods.getTAgentList().size() == 0) {
+		return;
+	}
+	else {
+	double totalpos_should = AllVariables.bankTAfirstrealtick;
+	double totalpos_is = TheEnvironment.GlobalValues.tradersphysicalposition;
+	double delta = totalpos_should-totalpos_is; //positive number means we need to scale down.
+	if (totalpos_is == 0) {
+		for (final ActiveAgent agent : CommonMethods.getTAgentList()) {
+			agent.setphysicalnetposition(totalpos_should/CommonMethods.getTAgentList().size());
+		}
+	}
+	double sharedownscale = delta/totalpos_is;
+	double scaling = (1-sharedownscale);
+	for (final ActiveAgent agent : CommonMethods.getTAgentList()) {
+		agent.scalephysicalposition(scaling);
+	}
+	}
+
 }
 
 //This method could be generalized to just iterate over all AAlist, and used a generic but overriden "postmupdate" method).

@@ -18,9 +18,11 @@ public class AllVariables {
 	public static final int obintr = 12; // TheEnvironment.theCalendar.getNumTradePdsInObligatedPd();
 	public static final int firstrealtick = 36; //Currently this cannot be between 1 and 11 (inclusive). This fucks up the contextbuilder.
 	public static double[] historiccertprices = new double[]{19.09,	17.36,	23.55,	17.74,	17.26,	17.36,	18.72,	19.11,	19.84,	21.1,	21.66,	22.77,	22.3823529411765,	23.7450980392157,	21.8921568627451,	23.3039215686275,	20.4019607843137,	18.9705882352941,	19.9901960784314,	19.8725490196078,	21.1862745098039,	21.3333333333333,	20.4019607843137,	19.9607843137255,	18.5601691657055,	19.963475586313,	21.5494040753556,	18.5890042291426,	18.6082276047674,	18.8485198000769,	18.4159938485198,	18.9638600538255,	19.2714340638216,	18.8677431757017,	18.4928873510188,	18.4928873510188};
-	public static double bankatstarttick = 10000000; 	//Total banked certificates in the market at firstrealtick.
-	public static boolean betw12_24 = true;
-	public static boolean betw24_36 = true;
+	
+	public static double bankPAfirstrealtick = 1050000;			//Bank at thefirstrealtick. If tick 0 this should be 8800 000
+	public static double bankOPAfirstrealtick = 0;			//Bank at thefirstrealtick.	If tick 0 this should be 0
+	public static double bankTAfirstrealtick = 0;					//Bank at thefirstrealtick.	If tick 0 this should be 0
+
 	
 	
 	//Number of tactics in each of the respective strategies. More tactics gives the agent more alternatives.
@@ -132,7 +134,7 @@ public class AllVariables {
 	public static double penaltyratio = 1.5;						//What is the penalty compared to current market price?
 	public static int yearstoendogprojects = 2;						//Just to save time in the FMA.
 	public static double maxpricecerts = 250;						//To not get an errror in the FMA.
-	public static double initialRRRcorrector = 1.2;					//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis. Copnsate (0.098) for the learningfactor in inputt.
+	public static double initialRRRcorrector = 1.019;				//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis. Copnsate (0.098) for the learningfactor in inputt.
 	public static double RRRpostpondpremium = 0.005;				//Risk premium (basispoints 0.01 = 1%) need to be covered if the investment decision is to be postpond. 
 	public static int minpostpondyears = 1;							//How long the investment decision is postpond if postponed.Cannot see why this should be larger than 1. (only argument is if this is the real deal).
 	public static int MPECount = 18;								//Number of futuer years seen by the MPE-analysis. THats number-1 years ahead (including this year).
@@ -173,10 +175,10 @@ public class AllVariables {
 	public static boolean useTestData = false;
 	
 	// The first tick banks
-	public static double bankProducerFirstTick = 14000000;
-	public static double bankPurchaserFirstTick = -2000000;
-	public static double bankTraderFirstTick = 0;
-	// ---- end GJB Added
+	public static double bankPAFirstTick = 14000000;
+	public static double bankOPAFirstTick = -2000000;
+	public static double bankTAFirstTick = 0;
+	
 }
 
 

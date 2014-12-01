@@ -72,23 +72,31 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	TheEnvironment.GlobalValues.updatebankbalance();													 //Calculates to certificate balance. Needed for FMA.
 	
 	Forcast.initiateAllVolumePrognosis(); 	//Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based om expected prodution for the future year
-	if (!AllVariables.useTestData){
+	/*if (!AllVariables.useTestData){
 		FundamentalMarketAnalysis.runfundamentalmarketanalysis();										 //
 		Forcast.updateMPEandLPE();																		 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
 	}
 	if (!AllVariables.betw12_24) {
 	ProjectDevelopment.startconstrucion();																 //Take 
 	ProjectDevelopment.startpreprojectandapplication();	 
-	}
+	}*/
 }
 	
 // ============================================================================================================================================================================================
 // === Simulation schedule ====================================================================================================================================================================
 	
 //Needs to be put somewhere!! UpdatePhysicalPosition.scaleinitialproducerphysicalposition()	
+@ScheduledMethod(start = AllVariables.firstrealtick, priority = 3)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
+	public void scalephysicalpositions() {
+	UpdatePhysicalPosition.scalePAphysicalpos();
+	UpdatePhysicalPosition.scaleOPAphysicalpos();
+	UpdatePhysicalPosition.scaleTAphysicalpos();
+
+}
+
 	
 //All annual updates to come below. 
-@ScheduledMethod(start = (AllVariables.firstrealtick/12)*12, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
+@ScheduledMethod(start = 36, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
 public void annualmarketschedule() {
 	
 	GlobalValues.annualglobalvalueupdate();
@@ -128,38 +136,52 @@ public void monthlymarketschedule() {
 		
 }
 
-@ScheduledMethod(start = 12, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0.
-public void preannualmarketschedule() {
-	if (AllVariables.betw12_24) {
+@ScheduledMethod(start = 0, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0.
+public void preannualmarketschedule1() {
+	//if (AllVariables.betw12_24) {
 	
 	GlobalValues.annualglobalvalueupdate();
+	/*
 	if (!AllVariables.useTestData){
 		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	
 		Forcast.updateMPEandLPE();									 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
 	}
+	*/
 	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
-	ProjectDevelopment.receivingconcession();					//As this is given an not dependent on other stages. Starting with adding on year in this status.
 	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.
-	ProjectDevelopment.startpreprojectandapplication();	        //The process of deciding which project to apply for concession. In the same manner as start construction
-	ProjectDevelopment.updateDAgentsnumber();	
-	}
-}
 	
+}
+
 @ScheduledMethod(start = 12, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0.
 public void preannualmarketschedule2() {
-	if (AllVariables.betw24_36) {
+	//if (AllVariables.betw12_24) {
 	
 	GlobalValues.annualglobalvalueupdate();
+	/*
 	if (!AllVariables.useTestData){
 		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	
 		Forcast.updateMPEandLPE();									 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
 	}
+	*/
 	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
-	ProjectDevelopment.receivingconcession();					//As this is given an not dependent on other stages. Starting with adding on year in this status.
 	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.
-	ProjectDevelopment.startpreprojectandapplication();	        //The process of deciding which project to apply for concession. In the same manner as start construction
-	ProjectDevelopment.updateDAgentsnumber();	
+	
+}
+	
+@ScheduledMethod(start = 24, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0.
+public void preannualmarketschedule3() {
+	//if (AllVariables.betw24_36) {
+	
+	GlobalValues.annualglobalvalueupdate();
+	/*
+	if (!AllVariables.useTestData){
+		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	
+		Forcast.updateMPEandLPE();									 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
 	}
+	*/
+	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
+	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.
+	
 }
 
 
