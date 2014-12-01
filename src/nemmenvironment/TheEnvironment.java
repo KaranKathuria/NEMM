@@ -77,6 +77,8 @@ public final class TheEnvironment {
 		public static int numberofbuyoffersstm;
 		public static int numberofselloffersstm;
 		public static double avrhistcertprice; 			//Average historic cert price based on x number of ticks, where X is given by AllVariables.numberoftickstocalculatehistcertprice
+		public static int numberofpowerplantsinNorway;
+		public static int numberofpowerplantsinSweden;
 		
 		// Future cert prices
 		public static double endofyearpluss1;
@@ -121,18 +123,29 @@ public final class TheEnvironment {
 			obligatedpurchasersphysiclaposition = -20000;		//Must be set to the sum of all agents startingposition. Just used for graph values.
 			totaltickdemand = 0;
 			totalmarketphysicalposition = 0;					//Must be set to the sum of all agents startingposition. Just used for graph values.
-			}
+			
+		}
 		
-		public static void marketshock() {
+		public static void updatebankbalance() {
 			//Modelling the effect of resetting the market price
-			currentmarketprice = ParameterWrapper.getpriceexpectation();
+			for (ActiveAgent pa: CommonMethods.getPAgentList()){
+				producersphysicalposition = producersphysicalposition + pa.getphysicalnetposition();
+			}
+			for (ActiveAgent opa: CommonMethods.getOPAgentList()){
+				obligatedpurchasersphysiclaposition = obligatedpurchasersphysiclaposition + opa.getphysicalnetposition();	
+			}
+			for (ActiveAgent ta: CommonMethods.getTAgentList()){
+				tradersphysicalposition = tradersphysicalposition + ta.getphysicalnetposition();	
+			}
+			totalmarketphysicalposition = tradersphysicalposition + obligatedpurchasersphysiclaposition + producersphysicalposition;
+			
+			
 			}
 		
 		// Monthly update of current global values
 		public static void monthlyglobalvalueupdate() {
 			currentmarketprice = ShortTermMarket.getcurrentmarketprice();
 			certificateprice.setElement(ShortTermMarket.getcurrentmarketprice(), theCalendar.getCurrentTick()); //Adds certPrice to history.
-			//RRRcorrector = RRRcorrector * RandomHelper.nextDoubleFromTo(0.99, 1.01);							//To include a randomness in the RRRused in FMA.
 			updateavrhistoriccertprice();																		//Updates the averagecertprice
 			
 			numberofbuyoffersstm = ShortTermMarket.getnumberofbuyoffers();
@@ -159,9 +172,25 @@ public final class TheEnvironment {
 			}
 			totalmarketphysicalposition = tradersphysicalposition + obligatedpurchasersphysiclaposition + producersphysicalposition;
 			ticksupplyanddemandbalance = totaltickproduction + totaltickdemand;
+			
+			numberofpowerplantsinNorway = 0;
+			numberofpowerplantsinSweden = 0;
+			
+			for (PowerPlant PP : TheEnvironment.allPowerPlants) {
+				if (PP.getMyRegion() == TheEnvironment.allRegions.get(0)) {
+					numberofpowerplantsinNorway = numberofpowerplantsinNorway +1;
+				}
+				else {
+					numberofpowerplantsinSweden = numberofpowerplantsinSweden +1;
+				}
+			}
 		}
 		
-	
+		public static void annualglobalvalueupdate() {
+			RRRcorrector = Math.max(1,(RRRcorrector - 1*0.03));				//Corrector redution to take account the learning and FMA.
+			double a = RRRcorrector;
+			int f = 1;
+		}
 		
 		public static void updateavrhistoriccertprice() {
 			if (TheEnvironment.theCalendar.getCurrentTick() <= AllVariables.numberoftickstocalculatehistcertprice) {
@@ -175,6 +204,8 @@ public final class TheEnvironment {
 				avrhistcertprice = tempcutoff/AllVariables.numberoftickstocalculatehistcertprice;
 		}
 		}
+		
+		
 		
 	}
 	

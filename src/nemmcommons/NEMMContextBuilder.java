@@ -18,6 +18,7 @@ import nemmenvironment.CVRatioCalculations;
 import nemmenvironment.FundamentalMarketAnalysis;
 import nemmenvironment.NewFundamentalMarketAnalysis;
 import nemmenvironment.TheEnvironment;
+import nemmenvironment.TheEnvironment.GlobalValues;
 import nemmprocesses.DistributeProjectsandPowerPlants;
 import nemmprocesses.Forcast;
 import nemmprocesses.ProjectDevelopment;
@@ -68,26 +69,32 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	DistributeProjectsandPowerPlants.distributeprojects(AllVariables.projectsdistributioncode);			 //Distribute all Projects among the Companies with DAgents.
 	DistributeDemandShares.distributedemand(AllVariables.demandsharedistrubutioncode);					 //Distribute all demand among the Companies with OPAgents.
 	ProjectDevelopment.updateDAgentsnumber();
+	TheEnvironment.GlobalValues.updatebankbalance();													 //Calculates to certificate balance. Needed for FMA.
 	
 	Forcast.initiateAllVolumePrognosis(); 	//Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based om expected prodution for the future year
 	if (!AllVariables.useTestData){
 		FundamentalMarketAnalysis.runfundamentalmarketanalysis();										 //
 		Forcast.updateMPEandLPE();																		 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
 	}
+	if (!AllVariables.betw12_24) {
 	ProjectDevelopment.startconstrucion();																 //Take 
 	ProjectDevelopment.startpreprojectandapplication();	 
+	}
 }
 	
 // ============================================================================================================================================================================================
 // === Simulation schedule ====================================================================================================================================================================
-
-
-//All annual updates to come below. Currently not in use.
-@ScheduledMethod(start = 12, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
+	
+//Needs to be put somewhere!! UpdatePhysicalPosition.scaleinitialproducerphysicalposition()	
+	
+//All annual updates to come below. 
+@ScheduledMethod(start = (AllVariables.firstrealtick/12)*12, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
 public void annualmarketschedule() {
+	
+	GlobalValues.annualglobalvalueupdate();
+	
 	if (!AllVariables.useTestData){
 		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	
-
 		Forcast.updateMPEandLPE();									 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
 	}
 	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
@@ -104,6 +111,7 @@ public void annualmarketschedule() {
 //The monthly update
 @ScheduledMethod(start = 0, interval = 1, priority = 1)
 public void monthlymarketschedule() {
+		
 	// Forecast the market 
 	CVRatioCalculations.calculateallcvobjects();
 	Forcast.updateAllShortTermMarketPrognosis();
@@ -117,12 +125,43 @@ public void monthlymarketschedule() {
 	
 	//Reads the values to the global values arrays. Also calcualtes display values.
 	TheEnvironment.GlobalValues.monthlyglobalvalueupdate();
-	
-	//Update the analysis agents forecasts. Must run after global values are updated as it uses the array of certprices
-//	Forcast.updateAllShortTermMarketPrognosis();
-	//	Forcast.updatevolumeprognosis();
-//	Forcast.updatemarketprognosis();
+		
 }
+
+@ScheduledMethod(start = 12, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0.
+public void preannualmarketschedule() {
+	if (AllVariables.betw12_24) {
+	
+	GlobalValues.annualglobalvalueupdate();
+	if (!AllVariables.useTestData){
+		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	
+		Forcast.updateMPEandLPE();									 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
+	}
+	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
+	ProjectDevelopment.receivingconcession();					//As this is given an not dependent on other stages. Starting with adding on year in this status.
+	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.
+	ProjectDevelopment.startpreprojectandapplication();	        //The process of deciding which project to apply for concession. In the same manner as start construction
+	ProjectDevelopment.updateDAgentsnumber();	
+	}
+}
+	
+@ScheduledMethod(start = 12, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0.
+public void preannualmarketschedule2() {
+	if (AllVariables.betw24_36) {
+	
+	GlobalValues.annualglobalvalueupdate();
+	if (!AllVariables.useTestData){
+		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	
+		Forcast.updateMPEandLPE();									 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
+	}
+	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
+	ProjectDevelopment.receivingconcession();					//As this is given an not dependent on other stages. Starting with adding on year in this status.
+	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.
+	ProjectDevelopment.startpreprojectandapplication();	        //The process of deciding which project to apply for concession. In the same manner as start construction
+	ProjectDevelopment.updateDAgentsnumber();	
+	}
+}
+
 
 //All obligation periods updates to come below. Priority 2 says this is done before the monthlymaret schedual.
 @ScheduledMethod(start = 1, interval = AllVariables.obintr, priority = 2)
@@ -138,12 +177,7 @@ public void obligationsperiodshedule() {
 	// - Peneltyprice  .. the opa agents could have a field "expected" penelty price that they use to calculate their penelty. 
 	
 }
-
-//@ScheduledMethod(start = 0, interval = 24, priority = 0)
-//public void projectprocesschedule() {
-//	ParameterWrapper.reinit();
-//	TheEnvironment.GlobalValues.marketshock();
-//	}
+	
 
 
 
@@ -240,6 +274,7 @@ public void obligationsperiodshedule() {
 		return ret;
 	}
 	public double getalltacticbuyoffer2() {
+		
 		double ret = ShortTermMarket.getbuyoffer2()[9];
 		return ret;
 	}
@@ -362,6 +397,12 @@ public void obligationsperiodshedule() {
 	}
 	public double getcurrentpowerprice_N() {
 		return TheEnvironment.allRegions.get(0).getMyPowerPrice().getValue();
+	}
+	public int getplantsinNorway() {
+		return TheEnvironment.GlobalValues.numberofpowerplantsinNorway;
+	}
+	public int getplantsinSweden() {
+		return TheEnvironment.GlobalValues.numberofpowerplantsinSweden;
 	}
 	public double getCVvalue_short_producer() {
 		if (TheEnvironment.theCalendar.getCurrentTick() < 1) {

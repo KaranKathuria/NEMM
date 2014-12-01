@@ -75,7 +75,7 @@ public class LRMCCurve {
 			projectsupplycurve.add(cp);
 		}
 		Collections.sort(projectsupplycurve, new CommonMethods.customcurvepaircomparator());		//Sorting the ArrayList from lowest certprie needed to highest cert price needed
-		
+		int a =1;
 		int index = 0;
 		double newproductionbuilt = 0;
 		while (newproductionbuilt < (-certificatebalance) && index < projectsupplycurve.size()) {		// While the newbuiltproduction is not enough to fulfill the shortcommings of certs, take the next project.
