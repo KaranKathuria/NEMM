@@ -10,6 +10,9 @@
     <string>Roof</string>
     <string>Powerprice_N</string>
     <string>tick</string>
+    <string>CertificateValue_Lon_Prod</string>
+    <string>CertificateValue_Prod</string>
+    <string>CertificateValue_Purch</string>
   </sourceIds>
   <fileName>C:\Users\Eier\git\NEMM\Output data\Certificateprice.csv</fileName>
   <addTimeStamp>true</addTimeStamp>

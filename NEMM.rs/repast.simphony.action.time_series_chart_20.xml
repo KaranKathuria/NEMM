@@ -141,18 +141,6 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>sel 8</string>
-      <SeriesData>
-        <label>Variable selloffer</label>
-        <color>
-          <red>204</red>
-          <green>255</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
       <string>buy 7</string>
       <SeriesData>
         <label>Variable buyoffer</label>
@@ -167,6 +155,18 @@
           <red>0</red>
           <green>0</green>
           <blue>0</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>sel 8</string>
+      <SeriesData>
+        <label>Variable selloffer</label>
+        <color>
+          <red>204</red>
+          <green>255</green>
+          <blue>204</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>
