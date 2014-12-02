@@ -36,7 +36,7 @@ public static void updateAllAgentPositions() {
 public static void scalePAphysicalpos() { //Scales the market physicalposition by altering the producers physicalposition.
 	double totalpos_should = AllVariables.bankPAfirstrealtick;
 	double producertotalpos_is = TheEnvironment.GlobalValues.producersphysicalposition;
-	double delta = totalpos_should-producertotalpos_is; //positive number means we need to scale down.
+	double delta = producertotalpos_is-totalpos_should; //positive number means we need to scale down.
 	if (producertotalpos_is <= 0) throw new Error("impssoble value for prduceres. THis cannot be scaled");
 	double sharedownscale = delta/producertotalpos_is;
 	double scaling = (1-sharedownscale);
@@ -48,7 +48,7 @@ public static void scalePAphysicalpos() { //Scales the market physicalposition b
 public static void scaleOPAphysicalpos() { //Scales the market physicalposition by altering the producers physicalposition.
 		double totalpos_should = AllVariables.bankOPAfirstrealtick;
 		double totalpos_is = TheEnvironment.GlobalValues.obligatedpurchasersphysiclaposition;
-		double delta = totalpos_should-totalpos_is; //positive number means we need to scale down.
+		double delta = totalpos_is-totalpos_should; //positive number means we need to scale down.
 		if (totalpos_is >= 0) throw new Error("impssoble value for purchasers. THis cannot be scaled");
 		double sharedownscale = delta/totalpos_is;
 		double scaling = (1-sharedownscale);
@@ -65,7 +65,7 @@ public static void scaleTAphysicalpos() { //Scales the market physicalposition b
 	else {
 	double totalpos_should = AllVariables.bankTAfirstrealtick;
 	double totalpos_is = TheEnvironment.GlobalValues.tradersphysicalposition;
-	double delta = totalpos_should-totalpos_is; //positive number means we need to scale down.
+	double delta = totalpos_is-totalpos_should; //positive number means we need to scale down.
 	if (totalpos_is == 0) {
 		for (final ActiveAgent agent : CommonMethods.getTAgentList()) {
 			agent.setphysicalnetposition(totalpos_should/CommonMethods.getTAgentList().size());

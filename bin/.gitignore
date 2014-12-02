@@ -1,11 +1,8 @@
 
-/nemmcommons
-/nemmagents
-/nemmprocesses
-/nemmenvironment
 /inputreader
+/nemmagents
+/nemmcommons
+/nemmenvironment
+/nemmprocesses
 /nemmstrategy_shortterm
-<<<<<<< HEAD
-=======
 /nemmtime
->>>>>>> refs/heads/FixSTBidding_2

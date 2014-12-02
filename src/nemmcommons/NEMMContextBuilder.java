@@ -140,7 +140,6 @@ public void monthlymarketschedule() {
 public void preannualmarketschedule1() {
 	//if (AllVariables.betw12_24) {
 	
-	GlobalValues.annualglobalvalueupdate();
 	/*
 	if (!AllVariables.useTestData){
 		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	
@@ -156,7 +155,6 @@ public void preannualmarketschedule1() {
 public void preannualmarketschedule2() {
 	//if (AllVariables.betw12_24) {
 	
-	GlobalValues.annualglobalvalueupdate();
 	/*
 	if (!AllVariables.useTestData){
 		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	
@@ -172,7 +170,6 @@ public void preannualmarketschedule2() {
 public void preannualmarketschedule3() {
 	//if (AllVariables.betw24_36) {
 	
-	GlobalValues.annualglobalvalueupdate();
 	/*
 	if (!AllVariables.useTestData){
 		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	
