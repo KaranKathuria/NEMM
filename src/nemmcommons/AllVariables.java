@@ -17,12 +17,11 @@ public class AllVariables {
 	//Unfortuanaty there is now other way then setting the obligation period intervall (ticks) manually.
 	public static final int obintr = 12; // TheEnvironment.theCalendar.getNumTradePdsInObligatedPd();
 	public static final int firstrealtick = 36; //Currently this cannot be between 1 and 11 (inclusive). This fucks up the contextbuilder.
-	public static double[] historiccertprices = new double[]{19.09,	17.36,	23.55,	17.74,	17.26,	17.36,	18.72,	19.11,	19.84,	21.1,	21.66,	22.77,	22.3823529411765,	23.7450980392157,	21.8921568627451,	23.3039215686275,	20.4019607843137,	18.9705882352941,	19.9901960784314,	19.8725490196078,	21.1862745098039,	21.3333333333333,	20.4019607843137,	19.9607843137255,	18.5601691657055,	19.963475586313,	21.5494040753556,	18.5890042291426,	18.6082276047674,	18.8485198000769,	18.4159938485198,	18.9638600538255,	19.2714340638216,	18.8677431757017,	18.4928873510188,	18.4928873510188};
+	public static double[] historiccertprices = new double[]{19.09,	17.36,	23.55,	17.74,	17.26,	17.36,	18.72,	19.11,	19.84,	21.1,	21.66,	22.77,	22.38,	23.75,	21.89,	23.3,	20.4,	18.97,	19.99,	19.87,	21.19,	21.33,	20.4,	19.96,	18.93,	20.69,	19.31,	18.37,	18.63,	18.46,	18.43,	19.05,	19.57,	19,	18.36,	17.17};
 	
-	public static double bankPAfirstrealtick = 10500000;			//Bank at thefirstrealtick. If tick 0 this should be 8800 000
-//	public static double bankPAfirstrealtick = 8800000;	
-	public static double bankOPAfirstrealtick = 0;			//Bank at thefirstrealtick.	If tick 0 this should be 0
-	public static double bankTAfirstrealtick = 0;					//Bank at thefirstrealtick.	If tick 0 this should be 0
+	public static double bankPAfirstrealtick = 9240000;			//Bank at thefirstrealtick. If tick 0 this should be 8800 000. For memo Dec 2014, 10500000 was used.
+	public static double bankOPAfirstrealtick = 3080000;		//Bank at thefirstrealtick.	If tick 0 this should be 0. For memo Dec 2014, 0 was used.
+	public static double bankTAfirstrealtick = 0;				//Bank at thefirstrealtick.	If tick 0 this should be 0
 
 	
 	
@@ -55,7 +54,6 @@ public class AllVariables {
 	public static double minAlphaSTPrice = 0.5;
 	
 	// distribution cutoffs used for assigning a strategy to a given agent
-
 	public static double[] cutoffPAExit = new double[]{0.5,0.85,1.0};
 	public static double[] cutoffOPExit = new double[]{0.6,1.0};
 
@@ -144,14 +142,16 @@ public class AllVariables {
 	public static double stdlongrunpriceexpect = 0.06;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double[] developerinvestmenttypedistribution = new double[]{0.98,0.99,1};	//Share of type 1, 2 and 3. 1 is the fundamental, 2 is the current price for all years, 3 is current price for x years.
 
-	public static int numberoftickstocalculatehistcertprice = 3;	
+	public static int numberoftickstocalculatehistcertprice = 3;	//This could be exptended to about 6. THis is basically the parameter setting how long memory developers have when taking investment decison based on current price. 
 	public static int numberofyearcertscanbehedged = 2;
 
 	public static int constructionconstraints = 8; 					//Times sizecode gives projects under constrction 
 	public static int preprojectandidentifyconstraint = 6;			//Times sizecode gives projects for prep and ident
 
 	public static int yearsbuildout = 16;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA.
-	public static double easeDAtype2 = 1.08;
+	public static double easeDAtype2 = 1.08;						//The factor of slack given to type2 DeveloperAgents when taking investment decision. That is the project must have a needed cert price lower than current price and lower than X*Long run price (FMA).
+	public static double easeDAtype1 = 1;							//The factor of slack given to type1 DeveloperAgents when taking investment decision. Project invested in funamentally need also to have a needed cert price above X*avrgcert price (current cert).
+
 	
 	//Initial distribution of powerplants, projects and demandshares per region.
 	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
@@ -163,7 +163,7 @@ public class AllVariables {
 	public static int MinTacticPreferenceScore = 2;
 
 	//Regulations for certificates deadline
-	public static boolean certificatespost2020_Norway = false;
+	public static boolean certificatespost2020_Norway = true;
 	public static boolean certificatespost2020_Sweden = true;
 	
 	//The concession and preconstruction process

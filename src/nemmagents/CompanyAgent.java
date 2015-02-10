@@ -421,7 +421,7 @@ public class CompanyAgent extends ParentAgent {
 		companyname = "Company " + this.getID();
 		companyanalysisagent = new CompanyAnalysisAgent();	
 		companyanalysisagent.setMyCompany(this);
-		investmentRRR = RandomHelper.nextDoubleFromTo(0.99, 1.01);									//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
+		investmentRRR = RandomHelper.nextDoubleFromTo(1, 1);									//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
 		earlystageRRR = investmentRRR + 0.01;														//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
 		regionpartcode = 2;																			//By default, all companies are active in both countries. 
 		
