@@ -91,7 +91,7 @@ public class ProjectDevelopment {
 			Collections.sort(templist, new CommonMethods.customprojectcomparator());			//Sorting the of a DAs project awaiting from lowest certprie needed to highest cert price needed
 			
 			//All the cirteria variables for the investment decision. Assumin default DA.getinvestmentdecisiontype() == 1
-			double cutoffcertprice = Math.min(TheEnvironment.GlobalValues.avrhistcertprice*AllVariables.easeDAtype1, DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations()); 
+			double cutoffcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations(); 
 			double postpondedcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getlongrunpriceexpectatations();
 			double equivivalentfactor = 1.0;
 			

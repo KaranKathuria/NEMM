@@ -1436,6 +1436,7 @@ Caused by: java.lang.IndexOutOfBoundsException: Index: 288, Size: 288
 	at nemmenvironment.FundamentalMarketAnalysis.runfundamentalmarketanalysis(FundamentalMarketAnalysis.java:79)
 	at nemmcommons.NEMMContextBuilder.annualmarketschedule(NEMMContextBuilder.java:105)
 	... 9 more
+<<<<<<< HEAD
 FATAL [Thread-5] 2015-02-10 14:02:37,712 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
 Current tick (252.0)
 java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
@@ -1488,3 +1489,48 @@ Caused by: java.lang.IllegalArgumentException: Comparison method violates its ge
 	at nemmprocesses.ShortTermMarket.runshorttermmarket(ShortTermMarket.java:180)
 	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:128)
 	... 9 more
+=======
+FATAL [Thread-4] 2014-12-05 10:53:53,307 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (288.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IndexOutOfBoundsException: Index: 288, Size: 288
+	at java.util.ArrayList.rangeCheck(ArrayList.java:635)
+	at java.util.ArrayList.get(ArrayList.java:411)
+	at nemmtime.NemmCalendar.getTimeBlock(NemmCalendar.java:67)
+	at nemmenvironment.FundamentalMarketAnalysis.runfundamentalmarketanalysis(FundamentalMarketAnalysis.java:79)
+	at nemmcommons.NEMMContextBuilder.annualmarketschedule(NEMMContextBuilder.java:105)
+	... 9 more
+FATAL [Thread-4] 2015-02-02 11:04:59,404 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (0.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.NullPointerException
+	at nemmcommons.MarketPrognosis.updateCertValueData(MarketPrognosis.java:257)
+	at nemmagents.MarketAnalysisAgent.updateCertValuePrognosis(MarketAnalysisAgent.java:80)
+	at nemmprocesses.Forcast.updateAllCertValuePrognosis(Forcast.java:25)
+	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:130)
+	... 9 more
+>>>>>>> branch 'Develop' of https://github.com/KaranKathuria/NEMM.git
