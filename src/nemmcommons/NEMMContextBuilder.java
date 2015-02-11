@@ -63,6 +63,9 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	//Distribution and initiation 
 	@ScheduledMethod(start = 0, priority = 3)
 	public void DistributionandInitiation() {
+	
+	//Sales the annual production of all wind power plants according to specifyed mean, standarddeviation and max(capped).
+	
 		
 	//Distributing Plants, projects and demand among Agents
 	DistributeProjectsandPowerPlants.distributeallpowerplants(AllVariables.powerplantdistributioncode);	 //Distribute all PowerPlants among the Copmanies with PAgents.

@@ -32,6 +32,9 @@ public final class TheEnvironment {
 	public static ArrayList<PowerPlant> potentialprojects;					//Auto-generated potential projects. Note distributed among development agents. (status = 6).
 	public static ArrayList<PowerPlant> trashedprojects;					//Arraylist of projects not receiving concession (status = 0).
 	
+	public static ArrayList<PowerPlant> allPowerPlantsandProjects;			//Absolutly all	
+
+	
 	public static ArrayList<Region> allRegions;
 	public static ArrayList<CompanyAgent> allCompanies;
 	
@@ -66,7 +69,40 @@ public final class TheEnvironment {
 		inputreader.ReadExcel.ReadPowerPlants();
 																		
 	}
+	
+	public static void simulateweather() {
+		RandomHelper.createNormal(AllVariables.meanwindproductionfactor, AllVariables.stdwindfactor);	//Create the used normal distribution skal parametersers
+		int temptickid = 0;	
 		
+		allPowerPlantsandProjects.addAll(allPowerPlants);
+		allPowerPlantsandProjects.addAll(projectsunderconstruction);
+		allPowerPlantsandProjects.addAll(projectsawaitinginvestmentdecision);
+		allPowerPlantsandProjects.addAll(projectinprocess);
+		allPowerPlantsandProjects.addAll(projectsidentifyed);
+									//2 is Wind power
+		for (int i = 2012; i<=TheEnvironment.theCalendar.getStartYear()+TheEnvironment.theCalendar.getNumYears();i++) {	//For all år
+			double temp = RandomHelper.getNormal().nextDouble();
+			
+			//Section below two cut max and min values for wind productionfactor.
+				if(temp<(AllVariables.meanwindproductionfactor*(1-(AllVariables.stdwindfactor*AllVariables.maxstdwindfactor)))); {
+					temp = (AllVariables.meanwindproductionfactor*(1-(AllVariables.stdwindfactor*AllVariables.maxstdwindfactor)));
+				}
+				if(temp>(AllVariables.meanwindproductionfactor*(1+(AllVariables.stdwindfactor*AllVariables.maxstdwindfactor)))); {
+					temp = (AllVariables.meanwindproductionfactor*(1+(AllVariables.stdwindfactor*AllVariables.maxstdwindfactor)));
+				}
+			//section end
+			
+			for (int k = 0; i<TheEnvironment.theCalendar.getNumTradePdsInYear(); k++) {
+				for (PowerPlant PP : TheEnvironment.allPowerPlantsandProjects) {
+					if (PP.gettechnologyid() == 2) { 
+					PP.setProduction((PP.getProduction(temptickid)*temp),temptickid);
+					}
+				}
+				temptickid=temptickid+1;
+				int a = k;
+			}
+		}
+	}
 	
 	public static class GlobalValues {
 		
@@ -109,6 +145,7 @@ public final class TheEnvironment {
 		public GlobalValues() {
 			currentmarketprice = ParameterWrapper.getpriceexpectation();
 		}
+		
 		public static void initglobalvalues() {
 			
 			//Initiating globale values consisting of public market information

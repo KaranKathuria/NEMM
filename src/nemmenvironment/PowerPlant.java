@@ -324,6 +324,7 @@ public class PowerPlant implements Cloneable{
 	public double getLRMC() {return LRMC;}
 	public Double getcertpriceneeded() {return certpriceneeded;}
 	public String getname() {return name;}
+	public int gettechnologyid() {return technologyid;}
 	
 }
 	

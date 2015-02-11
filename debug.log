@@ -1,0 +1,134 @@
+INFO  [AWT-EventQueue-0] 2015-02-11 13:50:15,629 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Eier\git\NEMM\output\config.props
+INFO  [AWT-EventQueue-0] 2015-02-11 13:50:16,227 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Eier\git\NEMM\batch\batch_params.xml to
+	C:\Users\Eier\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2015-02-11 13:50:38,680 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Eier\AppData\Local\Temp\Eier_localhost5698250099539518541.zip to 
+C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247 ...
+INFO  [SwingWorker-pool-2-thread-1] 2015-02-11 13:50:38,734 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2015-02-11 13:50:38,738 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1248
+INFO  [SwingWorker-pool-2-thread-1] 2015-02-11 13:50:38,738 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247\Eier_localhost5698250099539518541.zip
+INFO  [SwingWorker-pool-2-thread-1] 2015-02-11 13:50:39,580 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [Thread-6] 2015-02-11 13:50:50,688 repast.simphony.batch.ssh.LocalSession - ERROR [main] 13:50:50,687 repast.simphony.batch.InstanceRunner - Error while running model
+INFO  [Thread-6] 2015-02-11 13:50:50,689 repast.simphony.batch.ssh.LocalSession - java.lang.NoSuchMethodError: org.apache.poi.ss.usermodel.WorkbookFactory.create(Ljava/io/File;)Lorg/apache/poi/ss/usermodel/Workbook;
+INFO  [Thread-6] 2015-02-11 13:50:50,689 repast.simphony.batch.ssh.LocalSession - 	at inputreader.ReadExcel.ReadCreateTime(ReadExcel.java:75)
+INFO  [Thread-6] 2015-02-11 13:50:50,689 repast.simphony.batch.ssh.LocalSession - 	at nemmenvironment.TheEnvironment.InitEnvironment(TheEnvironment.java:48)
+INFO  [Thread-6] 2015-02-11 13:50:50,689 repast.simphony.batch.ssh.LocalSession - 	at nemmcommons.NEMMContextBuilder.build(NEMMContextBuilder.java:45)
+INFO  [Thread-6] 2015-02-11 13:50:50,689 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.dataLoader.engine.ClassNameContextBuilder.build(ClassNameContextBuilder.java:41)
+INFO  [Thread-6] 2015-02-11 13:50:50,689 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.dataLoader.engine.DataLoaderControllerAction.runInitialize(DataLoaderControllerAction.java:48)
+INFO  [Thread-6] 2015-02-11 13:50:50,689 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:214)
+INFO  [Thread-6] 2015-02-11 13:50:50,689 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:1)
+INFO  [Thread-6] 2015-02-11 13:50:50,689 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:287)
+INFO  [Thread-6] 2015-02-11 13:50:50,689 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
+INFO  [Thread-6] 2015-02-11 13:50:50,690 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
+INFO  [Thread-6] 2015-02-11 13:50:50,690 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.util.collections.NaryTree.preOrderTraversal(NaryTree.java:283)
+INFO  [Thread-6] 2015-02-11 13:50:50,690 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:212)
+INFO  [Thread-6] 2015-02-11 13:50:50,690 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:383)
+INFO  [Thread-6] 2015-02-11 13:50:50,690 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.batch.OneRunBatchRunner.run(OneRunBatchRunner.java:101)
+INFO  [Thread-6] 2015-02-11 13:50:50,690 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.batch.InstanceRunner.run(InstanceRunner.java:195)
+INFO  [Thread-6] 2015-02-11 13:50:50,690 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.batch.InstanceRunner.main(InstanceRunner.java:217)
+INFO  [Thread-6] 2015-02-11 13:50:50,698 repast.simphony.batch.ssh.LocalSession - ERROR [main] 13:50:50,695 repast.simphony.batch.InstanceRunner - Error while running model
+INFO  [Thread-6] 2015-02-11 13:50:50,699 repast.simphony.batch.ssh.LocalSession - java.lang.NoSuchMethodError: org.apache.poi.ss.usermodel.WorkbookFactory.create(Ljava/io/File;)Lorg/apache/poi/ss/usermodel/Workbook;
+INFO  [Thread-6] 2015-02-11 13:50:50,699 repast.simphony.batch.ssh.LocalSession - 	at inputreader.ReadExcel.ReadCreateTime(ReadExcel.java:75)
+INFO  [Thread-6] 2015-02-11 13:50:50,699 repast.simphony.batch.ssh.LocalSession - 	at nemmenvironment.TheEnvironment.InitEnvironment(TheEnvironment.java:48)
+INFO  [Thread-6] 2015-02-11 13:50:50,699 repast.simphony.batch.ssh.LocalSession - 	at nemmcommons.NEMMContextBuilder.build(NEMMContextBuilder.java:45)
+INFO  [Thread-6] 2015-02-11 13:50:50,699 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.dataLoader.engine.ClassNameContextBuilder.build(ClassNameContextBuilder.java:41)
+INFO  [Thread-6] 2015-02-11 13:50:50,699 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.dataLoader.engine.DataLoaderControllerAction.runInitialize(DataLoaderControllerAction.java:48)
+INFO  [Thread-6] 2015-02-11 13:50:50,699 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:214)
+INFO  [Thread-6] 2015-02-11 13:50:50,699 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:1)
+INFO  [Thread-6] 2015-02-11 13:50:50,699 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:287)
+INFO  [Thread-6] 2015-02-11 13:50:50,699 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
+INFO  [Thread-6] 2015-02-11 13:50:50,699 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
+INFO  [Thread-6] 2015-02-11 13:50:50,699 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.util.collections.NaryTree.preOrderTraversal(NaryTree.java:283)
+INFO  [Thread-6] 2015-02-11 13:50:50,699 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:212)
+INFO  [Thread-6] 2015-02-11 13:50:50,700 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:383)
+INFO  [Thread-6] 2015-02-11 13:50:50,700 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.batch.OneRunBatchRunner.run(OneRunBatchRunner.java:101)
+INFO  [Thread-6] 2015-02-11 13:50:50,700 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.batch.InstanceRunner.run(InstanceRunner.java:195)
+INFO  [Thread-6] 2015-02-11 13:50:50,700 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.batch.InstanceRunner.main(InstanceRunner.java:217)
+INFO  [pool-3-thread-1] 2015-02-11 13:52:39,595 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,596 repast.simphony.batch.ssh.SessionsDriver - Run Time: 2,0143
+INFO  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,680 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247
+WARN  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,710 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Certificate balance*.batch_param_map.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247\instance_1
+WARN  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,711 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Plants and projects*.batch_param_map.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247\instance_1
+WARN  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,711 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Certificateprice*.batch_param_map.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247\instance_1
+WARN  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,711 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Traded volume*.batch_param_map.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247\instance_1
+WARN  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,711 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Certificate balance*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247\instance_1
+WARN  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,711 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Plants and projects*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247\instance_1
+WARN  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,712 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Certificateprice*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247\instance_1
+WARN  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,712 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Traded volume*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247\instance_1
+WARN  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,714 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Certificate balance*.batch_param_map.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247\instance_2
+WARN  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,715 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Plants and projects*.batch_param_map.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247\instance_2
+WARN  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,715 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Certificateprice*.batch_param_map.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247\instance_2
+WARN  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,715 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Traded volume*.batch_param_map.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247\instance_2
+WARN  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,715 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Certificate balance*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247\instance_2
+WARN  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,715 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Plants and projects*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247\instance_2
+WARN  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,715 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Certificateprice*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247\instance_2
+WARN  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,716 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Traded volume*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659031247\instance_2
+INFO  [SwingWorker-pool-2-thread-1] 2015-02-11 13:52:39,716 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Eier/git/NEMM/output
+INFO  [AWT-EventQueue-0] 2015-02-11 13:53:17,518 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Eier\git\NEMM\output\config.props
+INFO  [AWT-EventQueue-0] 2015-02-11 13:53:17,546 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Eier\git\NEMM\batch\batch_params.xml to
+	C:\Users\Eier\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-2] 2015-02-11 13:53:33,669 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Eier\AppData\Local\Temp\Eier_localhost1615494394096692211.zip to 
+C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072 ...
+INFO  [SwingWorker-pool-2-thread-2] 2015-02-11 13:53:33,716 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-2] 2015-02-11 13:53:33,717 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1274
+INFO  [SwingWorker-pool-2-thread-2] 2015-02-11 13:53:33,718 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072\Eier_localhost1615494394096692211.zip
+INFO  [SwingWorker-pool-2-thread-2] 2015-02-11 13:53:34,742 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [Thread-7] 2015-02-11 13:53:50,181 repast.simphony.batch.ssh.LocalSession - ERROR [main] 13:53:50,178 repast.simphony.batch.InstanceRunner - Error while running model
+INFO  [Thread-7] 2015-02-11 13:53:50,182 repast.simphony.batch.ssh.LocalSession - java.lang.NoSuchMethodError: org.apache.poi.ss.usermodel.WorkbookFactory.create(Ljava/io/File;)Lorg/apache/poi/ss/usermodel/Workbook;
+INFO  [Thread-7] 2015-02-11 13:53:50,182 repast.simphony.batch.ssh.LocalSession - 	at inputreader.ReadExcel.ReadCreateTime(ReadExcel.java:75)
+INFO  [Thread-7] 2015-02-11 13:53:50,182 repast.simphony.batch.ssh.LocalSession - 	at nemmenvironment.TheEnvironment.InitEnvironment(TheEnvironment.java:48)
+INFO  [Thread-7] 2015-02-11 13:53:50,182 repast.simphony.batch.ssh.LocalSession - 	at nemmcommons.NEMMContextBuilder.build(NEMMContextBuilder.java:45)
+INFO  [Thread-7] 2015-02-11 13:53:50,182 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.dataLoader.engine.ClassNameContextBuilder.build(ClassNameContextBuilder.java:41)
+INFO  [Thread-7] 2015-02-11 13:53:50,182 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.dataLoader.engine.DataLoaderControllerAction.runInitialize(DataLoaderControllerAction.java:48)
+INFO  [Thread-7] 2015-02-11 13:53:50,182 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:214)
+INFO  [Thread-7] 2015-02-11 13:53:50,182 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:1)
+INFO  [Thread-7] 2015-02-11 13:53:50,182 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:287)
+INFO  [Thread-7] 2015-02-11 13:53:50,182 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
+INFO  [Thread-7] 2015-02-11 13:53:50,182 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
+INFO  [Thread-7] 2015-02-11 13:53:50,182 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.util.collections.NaryTree.preOrderTraversal(NaryTree.java:283)
+INFO  [Thread-7] 2015-02-11 13:53:50,183 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:212)
+INFO  [Thread-7] 2015-02-11 13:53:50,183 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:383)
+INFO  [Thread-7] 2015-02-11 13:53:50,183 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.batch.OneRunBatchRunner.run(OneRunBatchRunner.java:101)
+INFO  [Thread-7] 2015-02-11 13:53:50,183 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.batch.InstanceRunner.run(InstanceRunner.java:195)
+INFO  [Thread-7] 2015-02-11 13:53:50,183 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.batch.InstanceRunner.main(InstanceRunner.java:217)
+INFO  [Thread-7] 2015-02-11 13:53:50,419 repast.simphony.batch.ssh.LocalSession - ERROR [main] 13:53:50,417 repast.simphony.batch.InstanceRunner - Error while running model
+INFO  [Thread-7] 2015-02-11 13:53:50,419 repast.simphony.batch.ssh.LocalSession - java.lang.NoSuchMethodError: org.apache.poi.ss.usermodel.WorkbookFactory.create(Ljava/io/File;)Lorg/apache/poi/ss/usermodel/Workbook;
+INFO  [Thread-7] 2015-02-11 13:53:50,419 repast.simphony.batch.ssh.LocalSession - 	at inputreader.ReadExcel.ReadCreateTime(ReadExcel.java:75)
+INFO  [Thread-7] 2015-02-11 13:53:50,419 repast.simphony.batch.ssh.LocalSession - 	at nemmenvironment.TheEnvironment.InitEnvironment(TheEnvironment.java:48)
+INFO  [Thread-7] 2015-02-11 13:53:50,419 repast.simphony.batch.ssh.LocalSession - 	at nemmcommons.NEMMContextBuilder.build(NEMMContextBuilder.java:45)
+INFO  [Thread-7] 2015-02-11 13:53:50,419 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.dataLoader.engine.ClassNameContextBuilder.build(ClassNameContextBuilder.java:41)
+INFO  [Thread-7] 2015-02-11 13:53:50,420 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.dataLoader.engine.DataLoaderControllerAction.runInitialize(DataLoaderControllerAction.java:48)
+INFO  [Thread-7] 2015-02-11 13:53:50,420 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:214)
+INFO  [Thread-7] 2015-02-11 13:53:50,420 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:1)
+INFO  [Thread-7] 2015-02-11 13:53:50,420 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:287)
+INFO  [Thread-7] 2015-02-11 13:53:50,420 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
+INFO  [Thread-7] 2015-02-11 13:53:50,420 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
+INFO  [Thread-7] 2015-02-11 13:53:50,420 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.util.collections.NaryTree.preOrderTraversal(NaryTree.java:283)
+INFO  [Thread-7] 2015-02-11 13:53:50,420 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:212)
+INFO  [Thread-7] 2015-02-11 13:53:50,420 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:383)
+INFO  [Thread-7] 2015-02-11 13:53:50,420 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.batch.OneRunBatchRunner.run(OneRunBatchRunner.java:101)
+INFO  [Thread-7] 2015-02-11 13:53:50,420 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.batch.InstanceRunner.run(InstanceRunner.java:195)
+INFO  [Thread-7] 2015-02-11 13:53:50,420 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.batch.InstanceRunner.main(InstanceRunner.java:217)
+INFO  [pool-4-thread-1] 2015-02-11 13:55:34,744 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,746 repast.simphony.batch.ssh.SessionsDriver - Run Time: 2,0171
+INFO  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,760 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072
+WARN  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,765 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Certificate balance*.batch_param_map.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072\instance_1
+WARN  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,765 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Plants and projects*.batch_param_map.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072\instance_1
+WARN  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,765 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Certificateprice*.batch_param_map.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072\instance_1
+WARN  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,766 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Traded volume*.batch_param_map.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072\instance_1
+WARN  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,766 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Certificate balance*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072\instance_1
+WARN  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,766 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Plants and projects*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072\instance_1
+WARN  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,766 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Certificateprice*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072\instance_1
+WARN  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,766 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Traded volume*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072\instance_1
+WARN  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,769 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Certificate balance*.batch_param_map.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072\instance_2
+WARN  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,769 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Plants and projects*.batch_param_map.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072\instance_2
+WARN  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,769 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Certificateprice*.batch_param_map.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072\instance_2
+WARN  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,769 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Traded volume*.batch_param_map.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072\instance_2
+WARN  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,770 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Certificate balance*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072\instance_2
+WARN  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,770 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Plants and projects*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072\instance_2
+WARN  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,770 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Certificateprice*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072\instance_2
+WARN  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,770 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\Traded volume*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1423659206072\instance_2
+INFO  [SwingWorker-pool-2-thread-2] 2015-02-11 13:55:34,770 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Eier/git/NEMM/output

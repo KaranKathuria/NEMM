@@ -17,8 +17,7 @@ public class AllVariables {
 	//Unfortuanaty there is now other way then setting the obligation period intervall (ticks) manually.
 	public static final int obintr = 12; // TheEnvironment.theCalendar.getNumTradePdsInObligatedPd();
 	public static final int firstrealtick = 36; //Currently this cannot be between 1 and 11 (inclusive). This fucks up the contextbuilder.
-	public static double[] historiccertprices = new double[]{19.09,	17.36,	23.55,	17.74,	17.26,	17.36,	18.72,	19.11,	19.84,	21.1,	21.66,	22.77,	22.38,	23.75,	21.89,	23.3,	20.4,	18.97,	19.99,	19.87,	21.19,	21.33,	20.4,	19.96,	18.93,	20.69,	19.31,	18.37,	18.63,	18.46,	18.43,	19.05,	19.57,	19,	18.36,	17.17};
-	
+	public static double[] historiccertprices = new double[]{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
 	public static double bankPAfirstrealtick = 9240000;			//Bank at thefirstrealtick. If tick 0 this should be 8800 000. For memo Dec 2014, 10500000 was used.
 	public static double bankOPAfirstrealtick = 3080000;		//Bank at thefirstrealtick.	If tick 0 this should be 0. For memo Dec 2014, 0 was used.
 	public static double bankTAfirstrealtick = 0;				//Bank at thefirstrealtick.	If tick 0 this should be 0
@@ -140,7 +139,7 @@ public class AllVariables {
 
 	public static double stdmediumrunpriceexpect = 0.04;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.06;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	public static double[] developerinvestmenttypedistribution = new double[]{0.98,0.99,1};	//Share of type 1, 2 and 3. 1 is the fundamental, 2 is the current price for all years, 3 is current price for x years.
+	public static double[] developerinvestmenttypedistribution = new double[]{0.7,0.95,1};	//Share of type 1, 2 and 3. 1 is the fundamental, 2 is the current price for all years, 3 is current price for x years.
 
 	public static int numberoftickstocalculatehistcertprice = 3;	//This could be exptended to about 6. THis is basically the parameter setting how long memory developers have when taking investment decison based on current price. 
 	public static int numberofyearcertscanbehedged = 2;
@@ -167,7 +166,7 @@ public class AllVariables {
 	public static int MinTacticPreferenceScore = 2;
 
 	//Regulations for certificates deadline
-	public static boolean certificatespost2020_Norway = true;
+	public static boolean certificatespost2020_Norway = false;
 	public static boolean certificatespost2020_Sweden = true;
 	
 	//The concession and preconstruction process
@@ -178,10 +177,15 @@ public class AllVariables {
 	// ---- GJB Added
 	public static boolean useTestData = false;
 	
-	// The first tick banks
-	public static double bankPAFirstTick = 14000000;
-	public static double bankOPAFirstTick = -2000000;
+	// The first tick banks. 11.02.2015 KK: Not sure this is used.
+	public static double bankPAFirstTick = 	8281000;
+	public static double bankOPAFirstTick = 3549000;
 	public static double bankTAFirstTick = 0;
+	
+	//For initial weather simulations setup
+	public static double meanwindproductionfactor = 1;
+	public static double stdwindfactor = 0.05;
+	public static double maxstdwindfactor = 3;
 	
 }
 
