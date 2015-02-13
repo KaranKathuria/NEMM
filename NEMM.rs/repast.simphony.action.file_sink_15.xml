@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.FileSinkDescriptor>
-  <name>Plants and projects</name>
+  <name>Plants and Projects</name>
   <dataSet>PowerPlants and Projects</dataSet>
   <delimiter>;</delimiter>
   <format>TABULAR</format>
@@ -15,6 +15,6 @@
     <string>Powerplants Norway</string>
     <string>Powerplants Sweden</string>
   </sourceIds>
-  <fileName>C:\Users\Eier\git\NEMM\Output data\Plants and projects.csv</fileName>
+  <fileName>C:\Users\Eier\git\NEMM\Output data\ A Plants and Projects.csv</fileName>
   <addTimeStamp>true</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>

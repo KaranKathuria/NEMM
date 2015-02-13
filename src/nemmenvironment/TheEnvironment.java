@@ -50,6 +50,7 @@ public final class TheEnvironment {
 		inputreader.ReadExcel.InitReadExcel();
 		inputreader.ReadExcel.ReadCreateTime();
 		GlobalValues.initglobalvalues();
+		allPowerPlantsandProjects = new ArrayList<PowerPlant>() ;
 		allPowerPlants = new ArrayList<PowerPlant>() ;
 		potentialprojects = new ArrayList<PowerPlant>() ;
 		projectsidentifyed = new ArrayList<PowerPlant>() ;
@@ -79,22 +80,30 @@ public final class TheEnvironment {
 		allPowerPlantsandProjects.addAll(projectsawaitinginvestmentdecision);
 		allPowerPlantsandProjects.addAll(projectinprocess);
 		allPowerPlantsandProjects.addAll(projectsidentifyed);
+		allPowerPlantsandProjects.addAll(potentialprojects);
+
 									//2 is Wind power
-		for (int i = 2012; i<=TheEnvironment.theCalendar.getStartYear()+TheEnvironment.theCalendar.getNumYears();i++) {	//For all år
+		for (int i = 2012; i<TheEnvironment.theCalendar.getStartYear()+TheEnvironment.theCalendar.getNumYears();i++) {	//For all år
 			double temp = RandomHelper.getNormal().nextDouble();
+			int tf= 3;
 			
 			//Section below two cut max and min values for wind productionfactor.
-				if(temp<(AllVariables.meanwindproductionfactor*(1-(AllVariables.stdwindfactor*AllVariables.maxstdwindfactor)))); {
+				if(temp<(AllVariables.meanwindproductionfactor*(1-(AllVariables.stdwindfactor*AllVariables.maxstdwindfactor)))) {
 					temp = (AllVariables.meanwindproductionfactor*(1-(AllVariables.stdwindfactor*AllVariables.maxstdwindfactor)));
 				}
-				if(temp>(AllVariables.meanwindproductionfactor*(1+(AllVariables.stdwindfactor*AllVariables.maxstdwindfactor)))); {
-					temp = (AllVariables.meanwindproductionfactor*(1+(AllVariables.stdwindfactor*AllVariables.maxstdwindfactor)));
+				double d = (1+(AllVariables.stdwindfactor*AllVariables.maxstdwindfactor));
+				if(temp > (AllVariables.meanwindproductionfactor*d)) {
+					temp = AllVariables.meanwindproductionfactor*(1+(AllVariables.stdwindfactor*AllVariables.maxstdwindfactor));
 				}
+				double aff = temp;
 			//section end
 			
-			for (int k = 0; i<TheEnvironment.theCalendar.getNumTradePdsInYear(); k++) {
+			for (int k = 0; k<TheEnvironment.theCalendar.getNumTradePdsInYear(); k++) {
+
 				for (PowerPlant PP : TheEnvironment.allPowerPlantsandProjects) {
 					if (PP.gettechnologyid() == 2) { 
+					double org = PP.getProduction(temptickid);
+					double test = PP.getProduction(temptickid)*temp;
 					PP.setProduction((PP.getProduction(temptickid)*temp),temptickid);
 					}
 				}

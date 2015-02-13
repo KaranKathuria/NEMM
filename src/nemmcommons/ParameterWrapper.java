@@ -23,6 +23,8 @@ public final class ParameterWrapper {
 	private static int monthlydemand;
 	private static int monthlysupply;
 	private static double initialinterestrate;
+	private static double meanwindproductionfactor;
+	private static double stdwindproductionfactor;
 	//private static int startYear = 2012;
 	//private static int endYear = 2014;
 	//private static int numObPdsInYear = 1;
@@ -32,6 +34,12 @@ public final class ParameterWrapper {
 	
 	// Getter methods associated with parameters
 	
+	public static double getmeanwindproductionfactor() {
+		return meanwindproductionfactor;
+	}
+	public static double getstdwindproductionfactor() {
+		return stdwindproductionfactor;
+	}
 	public static int getproduceragentsnumber() {
 		return produceragentsnumber;
 	}
@@ -95,6 +103,10 @@ public final class ParameterWrapper {
 		priceexpectation = ((Double) parameters.getValue("priceexpectation")).doubleValue();
 		
 		initialinterestrate = ((Double) parameters.getValue("initialinterestrate")).doubleValue();
+		
+		stdwindproductionfactor = ((Double) parameters.getValue("stdwindproductionfactor")).doubleValue();
+		
+		meanwindproductionfactor = ((Double) parameters.getValue("meanwindproductionfactor")).doubleValue(); 
 		
 		/*startYear = ((Integer) parameters.getValue("startYear")).intValue();
 		

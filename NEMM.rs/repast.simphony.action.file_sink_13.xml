@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.FileSinkDescriptor>
-  <name>Traded volume</name>
+  <name>Traded Volume</name>
   <dataSet>Traded volume</dataSet>
   <delimiter>;</delimiter>
   <format>TABULAR</format>
@@ -7,6 +7,6 @@
     <string>tick</string>
     <string>Traded Volume</string>
   </sourceIds>
-  <fileName>C:\Users\Eier\git\NEMM\Output data\Traded volume.csv</fileName>
+  <fileName>C:\Users\Eier\git\NEMM\Output data\ A Traded Volume.csv</fileName>
   <addTimeStamp>true</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>

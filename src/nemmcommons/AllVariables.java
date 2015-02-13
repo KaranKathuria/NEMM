@@ -11,6 +11,7 @@ import java.util.Random;
 
 import nemmenvironment.TheEnvironment;
 import repast.simphony.random.RandomHelper;
+import static nemmcommons.ParameterWrapper.*;
 
 public class AllVariables {
 	
@@ -53,7 +54,7 @@ public class AllVariables {
 	public static double minAlphaSTPrice = 0.5;
 	
 	// distribution cutoffs used for assigning a strategy to a given agent
-	public static double[] cutoffPAExit = new double[]{0.5,0.85,1.0};
+	public static double[] cutoffPAExit = new double[]{0.2,0.6,1.0};
 	public static double[] cutoffOPExit = new double[]{0.6,1.0};
 
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
@@ -139,27 +140,26 @@ public class AllVariables {
 
 	public static double stdmediumrunpriceexpect = 0.04;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.06;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	public static double[] developerinvestmenttypedistribution = new double[]{0.7,0.95,1};	//Share of type 1, 2 and 3. 1 is the fundamental, 2 is the current price for all years, 3 is current price for x years.
+	public static double[] developerinvestmenttypedistribution = new double[]{0.4,0.6,0.95,1};	//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
 
 	public static int numberoftickstocalculatehistcertprice = 3;	//This could be exptended to about 6. THis is basically the parameter setting how long memory developers have when taking investment decison based on current price. 
 	public static int numberofyearcertscanbehedged = 2;
 
-	public static int constructionconstraints = 8; 					//Times sizecode gives projects under constrction 
+	public static int constructionconstraints = 7; 					//Times sizecode gives projects under constrction 
 	public static int preprojectandidentifyconstraint = 6;			//Times sizecode gives projects for prep and ident
 
 	public static int yearsbuildout = 16;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA.
-	public static double easeDAtype2 = 1.08;						//The factor of slack given to type2 DeveloperAgents when taking investment decision. That is the project must have a needed cert price lower than current price and lower than X*Long run price (FMA).
-	public static double easeDAtype1 = 400;							//The factor of slack given to type1 DeveloperAgents when taking investment decision. Project invested in funamentally need also to have a needed cert price above X*avrgcert price (current cert).
-
+	public static double[] developerinvestmentpriceeasefactordistribution = new double[]{1.3,2};		//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
+	public static double[] developerinvestmentfundamentaleasefactordistribution = new double[]{1.02,1.08}; //The distribution of fundamentaleasefaactor to investmentagent type 3 (price based with ease cost curve). High number indicates little restriction.
 	
 	//Initial distribution of powerplants, projects and demandshares per region.
 	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 	public static int projectsdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 	public static int demandsharedistrubutioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 
-	public static double earlystageInvestRRRAdjustFactor = 0.005;
-	public static double minInvestRRRAdjustFactor = 0.99;
-	public static double maxInvestRRRAdjustFactor = 1.01;
+	public static double earlystageInvestRRRAdjustFactor = 0.0025;
+	public static double minInvestRRRAdjustFactor = 0.995;
+	public static double maxInvestRRRAdjustFactor = 1.005;
 	
 	// Generic Strategy 
 	public static int MaxTacticPreferenceScore = 6;
@@ -171,7 +171,7 @@ public class AllVariables {
 	
 	//The concession and preconstruction process
 	public static int maxyearsinconcessionqueue = 3;				//Number of years in addition to minimum number of years in concession queue given as input from excel. After this, if not having received concession, the project is trashed.
-	public static double annualprobforreceivingconcession = 0.3;	//Only with one decimal as the random generater uses int.
+	public static double annualprobforreceivingconcession = 0.2;	//Only with one decimal as the random generater uses int.
 	public static int expectedyersinconcession = 5;					//When deciding for concession, how long to the developers expected the project to be in line. Needed due to learningcurve/CAPEX estimation.
 	
 	// ---- GJB Added
@@ -183,9 +183,9 @@ public class AllVariables {
 	public static double bankTAFirstTick = 0;
 	
 	//For initial weather simulations setup
-	public static double meanwindproductionfactor = 1;
-	public static double stdwindfactor = 0.05;
-	public static double maxstdwindfactor = 3;
+	public static double meanwindproductionfactor = getmeanwindproductionfactor();
+	public static double stdwindfactor = getstdwindproductionfactor();
+	public static double maxstdwindfactor = 3;										//Cutoff deviation in wind production factor. If 3 this means that it cannot blow less or more then 3 times the standard deviation. 
 	
 }
 

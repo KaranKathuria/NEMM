@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.FileSinkDescriptor>
-  <name>Certificate balance</name>
+  <name>Cert Balance</name>
   <dataSet>Physical Position</dataSet>
   <delimiter>;</delimiter>
   <format>TABULAR</format>
@@ -10,6 +10,6 @@
     <string>Producers</string>
     <string>Trader</string>
   </sourceIds>
-  <fileName>C:\Users\Eier\git\NEMM\Output data\Certificate balance.csv</fileName>
+  <fileName>C:\Users\Eier\git\NEMM\Output data\ A Cert Balance.csv</fileName>
   <addTimeStamp>true</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>

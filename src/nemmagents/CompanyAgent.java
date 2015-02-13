@@ -286,7 +286,9 @@ public class CompanyAgent extends ParentAgent {
 		private int constructionlimit;					//Number of projects it can have under construction simultaniasly.
 		private int projectprocessandidylimit;			//The agents maximum number of projects that can be identifyed or in concession/preconstruct each year. Thats from the potential list.
 		private int sizecode;							//Code value indicationg if the DA has few=1, normal=2 og alot=3 of activities (projects) in the regions the company of that AA participates in
-		private int investmentdecisiontype;				//Code defining what kind of certprice the agent uses to evaluate the investment decision.
+		private int investmentdecisiontype;				//Code defining what kind of certprice the agent uses to evaluate the investment decision. (1,2,3,4)
+		private double fundamentaleasefactor;			//for Fundamental agents, this is 1, FOr price agents this is either large or varies between 1-2.
+		private double priceeasefactor;					//for price agents, this is 1, For fundamental agents this is either large or varies between 1-2.
 		
 		//Endogenous variables 
 		private double capacitydevorundrconstr;
@@ -304,13 +306,27 @@ public class CompanyAgent extends ParentAgent {
 			constructionlimit = sizecode*AllVariables.constructionconstraints;					//Max number of projects getting in from moving to construction. 
 			totalcapacitylimit = 100000000;
 			//1=invest based on long term price of certs (Fundamental based), 2=Invest based on curren cert price, 3=Invest based on current cert price for two years
-			double investdecrand = RandomHelper.nextDoubleFromTo(0.0, AllVariables.developerinvestmenttypedistribution[2]);
+			double investdecrand = RandomHelper.nextDoubleFromTo(0.0, AllVariables.developerinvestmenttypedistribution[3]);
 					if (investdecrand <= AllVariables.developerinvestmenttypedistribution[0]) {
-						investmentdecisiontype = 1;}
+						investmentdecisiontype = 1;
+						fundamentaleasefactor = 1;
+						priceeasefactor = 500;
+						}
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution[0] && investdecrand <= AllVariables.developerinvestmenttypedistribution[1]) {
-						investmentdecisiontype = 2;}
-					if (investdecrand > AllVariables.developerinvestmenttypedistribution[1])
-						investmentdecisiontype = 3;}
+						investmentdecisiontype = 2;
+						fundamentaleasefactor = 1;
+						priceeasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentpriceeasefactordistribution[0], AllVariables.developerinvestmentpriceeasefactordistribution[1]);
+						}
+					if (investdecrand > AllVariables.developerinvestmenttypedistribution[1] && investdecrand <= AllVariables.developerinvestmenttypedistribution[2]) {
+						investmentdecisiontype = 3;
+						fundamentaleasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentpriceeasefactordistribution[0], AllVariables.developerinvestmentfundamentaleasefactordistribution[1]);
+						priceeasefactor = 1;
+						}
+					if (investdecrand > AllVariables.developerinvestmenttypedistribution[2])
+						investmentdecisiontype = 4;
+						priceeasefactor = 1;			//Not used.
+						fundamentaleasefactor = 1;		//Not used.
+						}
 		
 		public void updateDAnumbers(double cpdorconstr, int numpt, int numpf, int numpuc, int numpaid, int numpip, int numpid) {
 			capacitydevorundrconstr = cpdorconstr;
@@ -335,8 +351,9 @@ public class CompanyAgent extends ParentAgent {
 		public int getnumprojectsunderconstr() {return numprojectsunderconstr;}
 		public int getnumprojectsinprocess() {return numprojectsinprocess;}
 		public int getinvestmentdecisiontype() {return investmentdecisiontype;}
-//		public void addpro
-
+		public double getfundamentaleasefactor() {return fundamentaleasefactor;}
+		public double getpriceeasefactor() {return priceeasefactor;}
+		
 		
 	}
 	

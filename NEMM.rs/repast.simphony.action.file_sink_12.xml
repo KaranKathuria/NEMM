@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.FileSinkDescriptor>
-  <name>The price of certificates</name>
+  <name>Cert Price</name>
   <dataSet>Certificate Price</dataSet>
   <delimiter>;</delimiter>
   <format>TABULAR</format>
@@ -14,6 +14,6 @@
     <string>CertificateValue_Prod</string>
     <string>CertificateValue_Purch</string>
   </sourceIds>
-  <fileName>C:\Users\Eier\git\NEMM\Output data\Certificateprice.csv</fileName>
+  <fileName>C:\Users\Eier\git\NEMM\Output data\ A Cert Price.csv</fileName>
   <addTimeStamp>true</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>

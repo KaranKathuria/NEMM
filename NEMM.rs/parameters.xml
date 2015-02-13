@@ -9,5 +9,7 @@
 	<parameter defaultValue="0" type="int" displayName="Number of TraderAgents" name="traderagentsnumber"/>
 	<parameter defaultValue="16.7" name="priceexpectation" displayName="Price Expectation" type="double"></parameter>
 	<parameter defaultValue="0.020" displayName="Intial market interest rate" name="initialinterestrate" type="double"></parameter>
+	<parameter defaultValue="1" displayName="Mean annual wind production factor" name="meanwindproductionfactor" type="double"></parameter>
+	<parameter defaultValue="0.075" displayName="Standard deviation for annual wind production factor" name="stdwindproductionfactor" type="double"></parameter>
 
 </parameters>
