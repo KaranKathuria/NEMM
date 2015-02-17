@@ -100,7 +100,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 
 	
 //All annual updates to come below. 
-@ScheduledMethod(start = 36, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
+@ScheduledMethod(start = AllVariables.firstrealtick, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
 public void annualmarketschedule() {
 	
 	GlobalValues.annualglobalvalueupdate();
@@ -169,17 +169,11 @@ public void preannualmarketschedule2() {
 	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.
 	
 }
-	
-@ScheduledMethod(start = 24, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0.
+
+
+@ScheduledMethod(start = 24, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0 and higher than 24.
 public void preannualmarketschedule3() {
-	//if (AllVariables.betw24_36) {
-	
-	/*
-	if (!AllVariables.useTestData){
-		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	
-		Forcast.updateMPEandLPE();									 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
-	}
-	*/
+
 	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
 	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.
 	

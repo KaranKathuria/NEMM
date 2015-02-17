@@ -127,7 +127,7 @@ public class CompanyAgent extends ParentAgent {
 				allstrategies.add(tradestrategy);
 				portfoliocapital = 500000; 
 			} 
-			RAR = 0.25; //quite risk avers
+			RAR = 0.15; //quite risk avers
 
 			companyagent = CompanyAgent.this;
 			this.utilitymethod.setmyAgent(ActiveAgent.this);
@@ -307,10 +307,12 @@ public class CompanyAgent extends ParentAgent {
 			totalcapacitylimit = 100000000;
 			//1=invest based on long term price of certs (Fundamental based), 2=Invest based on curren cert price, 3=Invest based on current cert price for two years
 			double investdecrand = RandomHelper.nextDoubleFromTo(0.0, AllVariables.developerinvestmenttypedistribution[3]);
+			double a = investdecrand;
 					if (investdecrand <= AllVariables.developerinvestmenttypedistribution[0]) {
 						investmentdecisiontype = 1;
 						fundamentaleasefactor = 1;
 						priceeasefactor = 500;
+						double t = priceeasefactor;
 						}
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution[0] && investdecrand <= AllVariables.developerinvestmenttypedistribution[1]) {
 						investmentdecisiontype = 2;
@@ -322,11 +324,12 @@ public class CompanyAgent extends ParentAgent {
 						fundamentaleasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentpriceeasefactordistribution[0], AllVariables.developerinvestmentfundamentaleasefactordistribution[1]);
 						priceeasefactor = 1;
 						}
-					if (investdecrand > AllVariables.developerinvestmenttypedistribution[2])
+					if (investdecrand > AllVariables.developerinvestmenttypedistribution[2]){
 						investmentdecisiontype = 4;
 						priceeasefactor = 1;			//Not used.
 						fundamentaleasefactor = 1;		//Not used.
 						}
+		}
 		
 		public void updateDAnumbers(double cpdorconstr, int numpt, int numpf, int numpuc, int numpaid, int numpip, int numpid) {
 			capacitydevorundrconstr = cpdorconstr;

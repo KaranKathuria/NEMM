@@ -98,12 +98,12 @@ public class ProjectDevelopment {
 			//Problem occurs. That is all projects with curtoff higher than what they need builds, wiothout regards to what is really needed.
 			if (DA.getinvestmentdecisiontype() == 3) {
 				cutoffcertprice = Math.min(TheEnvironment.GlobalValues.avrhistcertprice, (DA.getfundamentaleasefactor() * DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations()));
-				postpondedcertprice = -1;	//There is not an option to postponed if investmentdecisiontype = 0, hence this is set to -1;
+				postpondedcertprice = -1;	//There is not an option to postponed if investmentdecisiontype = 3, hence this is set to -1;
 				equivivalentfactor = 1.0;
 				}
 			if (DA.getinvestmentdecisiontype() == 4) {								//Only assuming the current average certprice for 2 years. 0 thereafter. //Need to create NPV equvalent
 				equivivalentfactor = PowerPlant.calculateNPVfactor(15, estimateRRR)/PowerPlant.calculateNPVfactor(numberofyearcertscanbehedged, estimateRRR);
-				cutoffcertprice = Math.min(TheEnvironment.GlobalValues.avrhistcertprice,  ( DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations()));
+				cutoffcertprice = TheEnvironment.GlobalValues.avrhistcertprice;
 				postpondedcertprice = -1; 											//There is not an option to postponed if investmentdecisiontype = 0, hence this is set to -1;
 				}
 		
