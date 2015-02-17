@@ -158,8 +158,8 @@ public class AllVariables {
 	public static int demandsharedistrubutioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 
 	public static double earlystageInvestRRRAdjustFactor = 0.0025;
-	public static double minInvestRRRAdjustFactor = 0.95;
-	public static double maxInvestRRRAdjustFactor = 1.05;
+	public static double minInvestRRRAdjustFactor = 0.9;		//Corrector of 0.9 implies a lower bond on about 0.9*8=7.2% RRR. This is aboute 2-3 Euro per MW difference in cert price needed (NPV).
+	public static double maxInvestRRRAdjustFactor = 1.1;
 	
 	// Generic Strategy 
 	public static int MaxTacticPreferenceScore = 6;
