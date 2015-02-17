@@ -90,8 +90,8 @@ public class ProjectDevelopment {
 			//For each DeveloperAgent For all the relevant projects. Do the following:			
 			Collections.sort(templist, new CommonMethods.customprojectcomparator());			//Sorting the of a DAs project awaiting from lowest certprie needed to highest cert price needed
 			
-			//All the cirteria variables for the investment decision. Assumin default DA.getinvestmentdecisiontype() == 1
-			double cutoffcertprice = Math.min(TheEnvironment.GlobalValues.avrhistcertprice*DA.getpriceeasefactor(), DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations()); 
+			//All the cirteria variables for the investment decision. Assumin default DA.getinvestmentdecisiontype() == 1 or 2
+			double cutoffcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations(); 
 			double postpondedcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getlongrunpriceexpectatations();
 			double equivivalentfactor = 1.0;
 			
@@ -124,8 +124,8 @@ public class ProjectDevelopment {
 					double postponedRRR = RRRpostponedtemplist.get(projects_pointer);
 					templist.get(projects_pointer).calculateLRMCandcertpriceneeded(currentyear+AllVariables.minpostpondyears, postponedRRR, 3);
 					double certpriceneededpostpond = templist.get(projects_pointer).getcertpriceneeded();
-					int a = 22;
-					if ((cutoffcertprice-certpriceneedednow)>(postpondedcertprice-certpriceneededpostpond)) {	//Only if its better to invest now than postponed, invest:
+					if ((cutoffcertprice-certpriceneedednow)>(postpondedcertprice-certpriceneededpostpond) && (TheEnvironment.GlobalValues.avrhistcertprice*DA.getpriceeasefactor()>=certpriceneedednow)) {	//Only if its better to invest now than postponed, invest:
+					//Note above that there also is a constrain on the avrgprice beeing higher. THis will only be for the FMA-agents as its already aproved for price-agents.
 					
 					PowerPlant thisplant = templist.get(projects_pointer);
 					capacitydeveloped_counter = capacitydeveloped_counter + thisplant.getCapacity();

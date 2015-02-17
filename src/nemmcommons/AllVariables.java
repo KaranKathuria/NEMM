@@ -98,7 +98,7 @@ public class AllVariables {
 	public static double certMaxPrice = 250;
 	public static double certMinPrice = 0;
 	public static double[] ratioAdjFactor = new double[]{0.8,1,1.2}; // used to capture uncertainty in the ratio estimates
-	public static double[] ratioAdjProb = new double[]{0.25,0.5,0.25}; // same
+	public static double[] ratioAdjProb = new double[]{0.3,0.4,0.3}; // same
 	public static double sdevCVSupply = 0.0; // Std dev of supply prognosis used in CV calcs in %
 	public static double valueCertShortfall = 150; // value (cost) of not having enough certificates
 	public static boolean flagDiscountCV = true;
@@ -133,7 +133,7 @@ public class AllVariables {
 	public static int yearstoendogprojects = 2;						//Just to save time in the FMA.
 	public static double maxpricecerts = 250;						//To not get an errror in the FMA.
 	public static double initialRRRcorrector = 1.0;				//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis. Copnsate (0.098) for the learningfactor in inputt.
-	public static double RRRpostpondpremium = 0.005;				//Risk premium (basispoints 0.01 = 1%) need to be covered if the investment decision is to be postpond. 
+	public static double RRRpostpondpremium = 0.01;				//Risk premium (basispoints 0.01 = 1%) need to be covered if the investment decision is to be postpond. 
 	public static int minpostpondyears = 1;							//How long the investment decision is postpond if postponed.Cannot see why this should be larger than 1. (only argument is if this is the real deal).
 	public static int MPECount = 18;								//Number of futuer years seen by the MPE-analysis. THats number-1 years ahead (including this year).
 	public static int LPECount = MPECount+minpostpondyears;			//Number of futuer years seen by the LPE-analysis
