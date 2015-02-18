@@ -26,4 +26,5 @@
 <repast.simphony.action.time_series_chart context="NEMM" file="repast.simphony.action.time_series_chart_23.xml" />
 <repast.simphony.action.histogram_chart context="NEMM" file="repast.simphony.action.histogram_chart_24.xml" />
 <repast.simphony.action.histogram_chart context="NEMM" file="repast.simphony.action.histogram_chart_25.xml" />
+<repast.simphony.action.time_series_chart context="NEMM" file="repast.simphony.action.time_series_chart_26.xml" />
 </Scenario>

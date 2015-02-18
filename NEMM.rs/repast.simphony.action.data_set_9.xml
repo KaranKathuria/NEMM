@@ -105,6 +105,24 @@
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
+    <entry>
+      <string>Buildout Norway</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Buildout Norway</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getbuildoutNorway</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Buildout Sweden</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Buildout Sweden</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getbuildoutSweden</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
   </methodDataSources>
   <countSources class="linked-hash-map"/>
   <customNADataSources class="linked-hash-map"/>

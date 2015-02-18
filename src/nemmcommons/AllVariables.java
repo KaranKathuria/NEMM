@@ -17,10 +17,10 @@ public class AllVariables {
 	
 	//Unfortuanaty there is now other way then setting the obligation period intervall (ticks) manually.
 	public static final int obintr = 12; // TheEnvironment.theCalendar.getNumTradePdsInObligatedPd();
-	public static final int firstrealtick = 36; //Currently this cannot be between 1 and 11 (inclusive). This fucks up the contextbuilder.
+	public static final int firstrealtick = 32; //Currently this cannot be between 1 and 11 (inclusive). This fucks up the contextbuilder.
 	public static double[] historiccertprices = new double[]{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
-	public static double bankPAfirstrealtick =  9240000;//8302000;//	//Bank at thefirstrealtick. If tick 0 this should be 8800 000. For memo Dec 2014, 10500000 was used.  2014: 8302000
-	public static double bankOPAfirstrealtick = 3080000;//3558000;//		//Bank at thefirstrealtick.	If tick 0 this should be 0. For memo Dec 2014, 0 was used. 2014: 3558000 soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
+	public static double bankPAfirstrealtick =  10400000;//8302000;//	//Bank at thefirstrealtick. If tick 0 this should be 8800 000. For memo Dec 2014, 10500000 was used.  2014: 8302000
+	public static double bankOPAfirstrealtick =   400000;//3558000;//		//Bank at thefirstrealtick.	If tick 0 this should be 0. For memo Dec 2014, 0 was used. 2014: 3558000 soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
 	public static double bankTAfirstrealtick = 0;				//Bank at thefirstrealtick.	If tick 0 this should be 0
 
 	
@@ -54,12 +54,12 @@ public class AllVariables {
 	public static double minAlphaSTPrice = 0.5;
 	
 	// distribution cutoffs used for assigning a strategy to a given agent
-	public static double[] cutoffPAExit = new double[]{0.15,0.75,1.0};		//Last increasse the end. Middel increses the level, the first tend to give "correct" prices earlier.
+	public static double[] cutoffPAExit = new double[]{0.1,0.8,1.0};		//Last increasse the end. Middel increses the level, the first tend to give "correct" prices earlier.
 	public static double[] cutoffOPExit = new double[]{0.7,1.0};
 
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
 	// over the next 12 ticks - i.e. it will sell 1/12th in the next tick
-	public static int[] numTicksPAExit = new int[]{2,36,72};
+	public static int[] numTicksPAExit = new int[]{3,36,72};
 	public static int[] numTicksOPExit = new int[]{2,12};
 	// Tactics - number of ticks to exit positions
 	// Number of exit strategies for each agent type
@@ -73,7 +73,7 @@ public class AllVariables {
 //	public static double multOfferVol_PASellStrategy1 = 2; // default max fraction of that month's physical position than can be sold in the month
 	public static int tacticDefaultLearn_PASellStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
 	// Sell share max and min levels (min used for must sell, max used for rest volume)
-	public static double tacticMinPhysPosSellShare_PASellStrategy1 = 0.06; // Minimum must sell % of physical position . Alot to say.This flattens and pushes it all down, price more dependent on curren balance dispite ratio and holding horizont.
+	public static double tacticMinPhysPosSellShare_PASellStrategy1 = 0.07; // Minimum must sell % of physical position . Alot to say.This flattens and pushes it all down, price more dependent on curren balance dispite ratio and holding horizont.
 	public static double tacticMaxPhysPosSellShare_PASellStrategy1 = 1.0; // Sell up to this fraction of the physical position
 //	public static double tacticDefaultMustSellPriceMult_PASellStrategy1 = 0.5;  // Default must sell price multiplier for the producer tactics (if used)
 	// Define the range of price multipliers for the target sales (must sell) and rest volumes 
@@ -95,7 +95,7 @@ public class AllVariables {
 	public static double tacticTurnoverPenaltyPA = 0.5;
 	
 	// ---- CERTIFICATE VALUE CALCULATION PARAMETERS
-	public static double certMaxPrice = 200;
+	public static double certMaxPrice = 150;
 	public static double certMinPrice = 0;
 	public static double[] ratioAdjFactor = new double[]{0.8,1,1.2}; // used to capture uncertainty in the ratio estimates
 	public static double[] ratioAdjProb = new double[]{0.3,0.4,0.3}; // same
@@ -149,8 +149,8 @@ public class AllVariables {
 	public static int preprojectandidentifyconstraint = 6;			//Times sizecode gives projects for prep and ident
 
 	public static int yearsbuildout = 16;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA.
-	public static double[] developerinvestmentpriceeasefactordistribution = new double[]{1.1,1.8};		//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
-	public static double[] developerinvestmentfundamentaleasefactordistribution = new double[]{1.01,1.1}; //The distribution of fundamentaleasefaactor to investmentagent type 3 (price based with ease cost curve). High number indicates little restriction.
+	public static double[] developerinvestmentpriceeasefactordistribution = new double[]{1.1,8};		//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
+	public static double[] developerinvestmentfundamentaleasefactordistribution = new double[]{1.01,1.07}; //The distribution of fundamentaleasefaactor to investmentagent type 3 (price based with ease cost curve). High number indicates little restriction.
 	
 	//Initial distribution of powerplants, projects and demandshares per region.
 	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
@@ -178,8 +178,8 @@ public class AllVariables {
 	public static boolean useTestData = false;
 	
 	// The first tick banks. 11.02.2015 KK: Not sure this is used.
-	public static double bankPAFirstTick = 	6146000;
-	public static double bankOPAFirstTick = 2634000;
+	public static double bankPAFirstTick = 	0;//8000000;
+	public static double bankOPAFirstTick = 0;//20000;
 	public static double bankTAFirstTick = 0;
 	
 	//For initial weather simulations setup

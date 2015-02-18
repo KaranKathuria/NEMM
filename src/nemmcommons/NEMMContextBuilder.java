@@ -100,7 +100,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 
 	
 //All annual updates to come below. 
-@ScheduledMethod(start = AllVariables.firstrealtick, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
+@ScheduledMethod(start = 36, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
 public void annualmarketschedule() {
 	
 	GlobalValues.annualglobalvalueupdate();
@@ -133,7 +133,7 @@ public void monthlymarketschedule() {
 	//All agents strategies utilities are scored. Tactics learn and the best strategies update their best tactics. This is done before the physical update as the intial physical position is part of the utility calcualtion.
 	Forcast.updateAllCertValuePrognosis();
 	UtilitiesStrategiesTactics.calculatetilitiesandupdatebesttactics(); 
-	UpdatePhysicalPosition.updateAllAgentPositions();
+	UpdatePhysicalPosition.updateAllAgentPositions(); //Runs production
 	
 	//Reads the values to the global values arrays. Also calcualtes display values.
 	TheEnvironment.GlobalValues.monthlyglobalvalueupdate();
@@ -418,9 +418,16 @@ public void obligationsperiodshedule() {
 	public int getplantsinNorway() {
 		return TheEnvironment.GlobalValues.numberofpowerplantsinNorway;
 	}
+	public double getbuildoutNorway() {
+		return TheEnvironment.GlobalValues.buildoutNorway;
+	}
+	public double getbuildoutSweden() {
+		return TheEnvironment.GlobalValues.buildoutSweden;
+	}
 	public int getplantsinSweden() {
 		return TheEnvironment.GlobalValues.numberofpowerplantsinSweden;
 	}
+	
 	public double getCVvalue_short_producer() {
 		if (TheEnvironment.theCalendar.getCurrentTick() < 1) {
 			return 0;

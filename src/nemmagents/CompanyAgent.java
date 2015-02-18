@@ -67,7 +67,7 @@ public class CompanyAgent extends ParentAgent {
 			
 			if (type == 1) {
 				activeagenttypename = "ProducerAgent";
-				physicalnetposition = 220000;				//Times number of agents this equals initial bank.
+				physicalnetposition = 200000;				//Times number of agents this equals initial bank.
 				lasttickproduction = 0;
 				// here we need a way to have different utilities
 				// currently hard coded to the default
@@ -92,7 +92,7 @@ public class CompanyAgent extends ParentAgent {
 												
 			} else if (type == 2) {
 				activeagenttypename = "ObligatedPurchaserAgent";
-				physicalnetposition = 0;
+				physicalnetposition = 20000;
 				lasttickdemand = 0;
 				// here we need a way to have different utilities
 				// currently hard coded to the default
@@ -199,6 +199,7 @@ public class CompanyAgent extends ParentAgent {
 			physicalnetposition = physicalnetposition + volBought + volProd - volSold - volDemand;
 			lasttickproduction = volProd;
 			lasttickdemand = -volDemand; // it expects demand to be negative
+			int a = 3;
 		}
 		public double getSoldVolume() {
 			// Calculates and returns the volume sold in the last market round
@@ -303,7 +304,7 @@ public class CompanyAgent extends ParentAgent {
 			companyagent = CompanyAgent.this;
 			sizecode = 2;								//By default all developmentagents have normal amount of activety. (1= few, 2=normal, 3=alot) used in intial distribution of projects.
 			projectprocessandidylimit = sizecode*AllVariables.preprojectandidentifyconstraint;	//func of sizecode: = 3*sizecode. Problem as sizecode only defines size in one region. whereas //Max number of project getting identifyed or in proecss.
-			constructionlimit = sizecode*AllVariables.constructionconstraints;					//Max number of projects getting in from moving to construction. 
+			constructionlimit = AllVariables.constructionconstraints;					//Max number of projects getting in from moving to construction. 
 			totalcapacitylimit = 100000000;
 			//1=invest based on long term price of certs (Fundamental based), 2=Invest based on curren cert price, 3=Invest based on current cert price for two years
 			double investdecrand = RandomHelper.nextDoubleFromTo(0.0, AllVariables.developerinvestmenttypedistribution[3]);

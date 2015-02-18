@@ -32,7 +32,7 @@ public final class TheEnvironment {
 	public static ArrayList<PowerPlant> potentialprojects;					//Auto-generated potential projects. Note distributed among development agents. (status = 6).
 	public static ArrayList<PowerPlant> trashedprojects;					//Arraylist of projects not receiving concession (status = 0).
 	
-	public static ArrayList<PowerPlant> allPowerPlantsandProjects;			//Absolutly all	
+	public static ArrayList<PowerPlant> allPowerPlantsandProjects;			//Absolutly all. Including trashed, qoued etc. ALl provided in the input sheet.
 
 	
 	public static ArrayList<Region> allRegions;
@@ -124,7 +124,9 @@ public final class TheEnvironment {
 		public static double avrhistcertprice; 			//Average historic cert price based on x number of ticks, where X is given by AllVariables.numberoftickstocalculatehistcertprice
 		public static int numberofpowerplantsinNorway;
 		public static int numberofpowerplantsinSweden;
-		
+		public static double buildoutNorway;
+		public static double buildoutSweden;
+
 		// Future cert prices
 		public static double endofyearpluss1;
 		public static double endofyearpluss2;
@@ -163,10 +165,10 @@ public final class TheEnvironment {
 			avrhistcertprice = currentmarketprice;									//Initially
 			currentinterestrate = ParameterWrapper.getinitialinterestrate();
 			RRRcorrector = AllVariables.initialRRRcorrector;
-			producersphysicalposition = 20000;					//Must be set to the sum of all agents startingposition. Just used for graph values.
+			producersphysicalposition = 0;// NOT in use as these are updatet en monthly schedual. AllVariables.bankPAFirstTick;	
 			totaltickproduction = 0;
 			tradersphysicalposition = 0;						//Must be set to the sum of all agents startingposition. Just used for graph values.
-			obligatedpurchasersphysiclaposition = -20000;		//Must be set to the sum of all agents startingposition. Just used for graph values.
+			obligatedpurchasersphysiclaposition = 0; // NOT in use as these are updatet en monthly schedual. AllVariables.bankOPAFirstTick;
 			totaltickdemand = 0;
 			totalmarketphysicalposition = 0;					//Must be set to the sum of all agents startingposition. Just used for graph values.
 			
@@ -221,6 +223,19 @@ public final class TheEnvironment {
 			
 			numberofpowerplantsinNorway = 0;
 			numberofpowerplantsinSweden = 0;
+			buildoutNorway = 0;
+			buildoutSweden = 0;
+			
+			
+			
+			for (PowerPlant PP : TheEnvironment.allPowerPlants) {
+				if (PP.getMyRegion() == TheEnvironment.allRegions.get(0)) {
+					buildoutNorway = buildoutNorway + (PP.getestimannualprod());
+				}
+				else {
+					buildoutSweden = buildoutSweden + (PP.getestimannualprod());
+				}
+			}
 			
 			for (PowerPlant PP : TheEnvironment.allPowerPlants) {
 				if (PP.getMyRegion() == TheEnvironment.allRegions.get(0)) {
