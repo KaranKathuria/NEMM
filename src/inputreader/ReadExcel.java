@@ -52,6 +52,7 @@ public class ReadExcel {
 	 private static int numtrpdinyear;
 	 private static PowerPlant[] plants;
 	 private static String filePath;
+	 //se
 	 
  	public static void InitReadExcel() {
 
