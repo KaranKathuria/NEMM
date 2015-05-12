@@ -26,7 +26,7 @@ public class PowerPlant implements Cloneable{
 	private double specificRRR;				//Technology, regional and Capex- adjuster RRR before tax. For practiacl reasons this is simply made project specific.
 	
 	private TickArray myProduction; 		//Future production (good given) used in simulations. Hence this is adjusted for the specific scenario ran.
-	private TickArray mynormalproduction;	//The initally read in production not adjusted for scenario spesific wind years. Stored as an intiall duplicate in order to "rewind" the "myProduction" table after a scenario have been ran.
+	//NOT NEEDED private TickArray mynormalproduction;	//The initally read in production not adjusted for scenario spesific wind years. Stored as an intiall duplicate in order to "rewind" the "myProduction" table after a scenario have been ran.
 	private TickArray ExpectedProduction;	//Expected production. This is the amount of certs the plant is expected to generate and used by the owners to estimate. 
 	
 	//Variables calculated/used in sumulation
@@ -70,7 +70,7 @@ public class PowerPlant implements Cloneable{
 		}
 			
 		myProduction = new TickArray();
-		mynormalproduction = new TickArray();
+		//mynormalproduction = new TickArray();
 		ExpectedProduction = new TickArray();
 		specificRRR = 0.0;													//Default, but this is updated on the following line.
 		setprojectRRR();
@@ -221,12 +221,6 @@ public class PowerPlant implements Cloneable{
 		else {
 			myProduction.setArray(newProd);
 		}
-	}
-	
-	public void clonesetAllNormalProduction() {	//Only to be used in intialization.
-
-				mynormalproduction = myProduction.clone();
-	
 	}
 	
 	public void setAllExpectedProduction(double[] newProd) {

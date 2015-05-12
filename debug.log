@@ -229,3 +229,22 @@ WARN  [SwingWorker-pool-2-thread-6] 2015-02-18 13:57:50,463 repast.simphony.batc
 WARN  [SwingWorker-pool-2-thread-6] 2015-02-18 13:57:50,463 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\ A Cert Balance*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1424264208019\instance_2
 WARN  [SwingWorker-pool-2-thread-6] 2015-02-18 13:57:50,463 repast.simphony.batch.ssh.OutputFinder - No model output found matching glob:{**\\,}C:\\Users\\Eier\\git\\NEMM\\Output data\\ A Cert Price*.csv in C:\Users\Eier\AppData\Local\Temp\simphony_model_1424264208019\instance_2
 INFO  [SwingWorker-pool-2-thread-6] 2015-02-18 13:57:50,463 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Eier/git/NEMM/Output data
+FATAL [Thread-7] 2015-05-12 12:52:33,201 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (0.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.lang.IllegalArgumentException: Error: Zero CompanyAgents with production
+	at nemmprocesses.DistributeProjectsandPowerPlants.distributeallpowerplants(DistributeProjectsandPowerPlants.java:28)
+	at nemmcommons.NEMMContextBuilder.DistributionandInitiation(NEMMContextBuilder.java:72)
+	... 9 more

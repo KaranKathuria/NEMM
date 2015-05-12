@@ -1,9 +1,9 @@
 <repast.simphony.chart2.engine.TimeSeriesChartDescriptor>
-  <name>Certificate balance</name>
-  <dataSet>Physical Position</dataSet>
+  <name>The price of certificates</name>
+  <dataSet>Certificate Price</dataSet>
   <xAxisLabel>Months</xAxisLabel>
-  <yAxisLabel>Number of banked certificates</yAxisLabel>
-  <chartTitle>Total certificate balance</chartTitle>
+  <yAxisLabel>Real Euro</yAxisLabel>
+  <chartTitle>The price of certificates</chartTitle>
   <type>TIME_SERIES</type>
   <background>
     <red>255</red>
@@ -21,51 +21,94 @@
   <showLegend>true</showLegend>
   <seriesIds>
     <entry>
-      <string>Trader</string>
+      <string>Powerprice_N</string>
       <SeriesData>
-        <label>Trader</label>
+        <label>Powerprice_N</label>
         <color>
           <red>51</red>
-          <green>102</green>
-          <blue>255</blue>
+          <green>204</green>
+          <blue>0</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>
     </entry>
     <entry>
-      <string>ObligatedPurchaser</string>
+      <string>CertificateValue_Lon_Prod</string>
       <SeriesData>
-        <label>ObligatedPurchaser</label>
+        <label>CertificateValue_Lon_Prod</label>
         <color>
           <red>255</red>
-          <green>102</green>
-          <blue>102</blue>
+          <green>204</green>
+          <blue>204</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>
     </entry>
     <entry>
-      <string>Producers</string>
+      <string>Cert price</string>
       <SeriesData>
-        <label>Producers</label>
+        <label>Certificate price</label>
         <color>
-          <red>153</red>
-          <green>255</green>
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>CertificateValue_Prod</string>
+      <SeriesData>
+        <label>CertificateValue_Short_Prod</label>
+        <color>
+          <red>255</red>
+          <green>153</green>
           <blue>153</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>
     </entry>
     <entry>
-      <string>Total</string>
+      <string>CertificateValue_Purch</string>
       <SeriesData>
-        <label>Total</label>
+        <label>CertificateValue_Med_Prod</label>
         <color>
-          <red>51</red>
+          <red>255</red>
           <green>51</green>
           <blue>51</blue>
           <alpha>255</alpha>
         </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Roof</string>
+      <SeriesData>
+        <label>Buy roof</label>
+        <color>
+          <red>204</red>
+          <green>204</green>
+          <blue>204</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Expected price</string>
+      <SeriesData>
+        <label>Expected certificate price</label>
+        <color>
+          <red>51</red>
+          <green>153</green>
+          <blue>255</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Floor</string>
+      <SeriesData>
+        <label>Sell floor</label>
+        <color reference="../../../entry[6]/SeriesData/color"/>
       </SeriesData>
     </entry>
   </seriesIds>

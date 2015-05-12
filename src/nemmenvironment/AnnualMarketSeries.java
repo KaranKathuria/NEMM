@@ -61,7 +61,7 @@ public class AnnualMarketSeries {
 			pricecalc = this.seriesValues.getElement(Year[0]);
 		}
 		else {
-			int curYear = TheEnvironment.theCalendar.getTimeBlock(TheEnvironment.theCalendar.getCurrentTick()).year;
+			int curYear = TheEnvironment.theCalendar.getTimeBlock(TheEnvironment.theCalendar.getCurrentTick()).year; //Returns year as 0-24 
 			pricecalc = this.seriesValues.getElement(curYear);
 		}				
 		return pricecalc;

@@ -324,6 +324,15 @@ public void obligationsperiodshedule() {
 	
 // TO get all sell and buyoffers (with one tactic):
 	
+	
+	public double getwind4() {
+		double ret = TheEnvironment.wind4;
+		return ret;
+	}
+	public double getwind4_2() {
+		double ret = TheEnvironment.wind4_2;
+		return ret;
+	}
 	public double getallvariablebuyoffers0() {
 		double ret = ShortTermMarket.getbuyoffer2()[0];
 		return ret;

@@ -40,6 +40,9 @@ public final class TheEnvironment {
 	public static ArrayList<Scenario> allwindandppricescenarios;			//All scenarios of wind year mulitpliers and power prices
 	public static ArrayList<ProjectRRR> alladjustedRRR;						//List containing alle the adjusted RRR. Used by Projects to look up their specific RRR.
 	public static NemmCalendar theCalendar;
+	public static double wind4;
+	public static double wind4_2;
+
 	
 	
 	private TheEnvironment() {}
@@ -74,18 +77,68 @@ public final class TheEnvironment {
 	}
 	
 	public static void setwindscenario() {
-		//First this rewinds the data in the myProduction for all power plants
-		//takes inn the the parameter "scenarionumber" which refers to the posistion of the scenario that is supose to be ran in the allwindandppricescenarios.
-		//Takes the given scenario and adjust the plantproduction for the wind-plants accordingly to scenario-specific multiplier. Only the production is adjusted. Not expected production.	
 		
+		//NOT NEEDED to reset/rewind the production, as this IS re-read from the excel-file.
+		//Get the correct scenario
+		Scenario runningscenario = TheEnvironment.allwindandppricescenarios.get(ParameterWrapper.getscenarionumber());
+		int temptickid = 0;
+		
+		allPowerPlantsandProjects.addAll(allPowerPlants);
+		allPowerPlantsandProjects.addAll(projectsunderconstruction);
+		allPowerPlantsandProjects.addAll(projectsawaitinginvestmentdecision);
+		allPowerPlantsandProjects.addAll(projectinprocess);
+		allPowerPlantsandProjects.addAll(projectsidentifyed);
+		allPowerPlantsandProjects.addAll(potentialprojects);
+		
+		//For all years
+		for (int i = 0; i<TheEnvironment.theCalendar.getNumYears();i++) {	//For all år
+			double tempmulti = runningscenario.getWindyearmultiplier().getElement(i);
+			
+			//For ticks in year
+			for (int k = 0; k<TheEnvironment.theCalendar.getNumTradePdsInYear(); k++) {
+				//For all powerplants (wind)
+				for (PowerPlant PP : TheEnvironment.allPowerPlantsandProjects) {
+					if (PP.gettechnologyid() == 2) { 
+					double org = PP.getProduction(temptickid);
+					double test = PP.getProduction(temptickid)*tempmulti;
+					PP.setProduction((PP.getProduction(temptickid)*tempmulti),temptickid);		
+					}
+				}
+			temptickid=temptickid+1;
+			}
+		}
 	}
 	
 	public static void  setpowerpricescenario() {
-		//Rewind the forwardprice matrix to the myForwardPrice_mulitplicators
-		//Take the scenario-spesific spotpowerprice for each reagion and set this for each region
-		//Add upp the myFOrwardPrice by multiplication all the muliplicatiors with the correct (scenariospecific) spot price.
-	}
-	
+		//Get the correct scenario.
+		Scenario runningscenario = TheEnvironment.allwindandppricescenarios.get(ParameterWrapper.getscenarionumber());
+		Region Norway = TheEnvironment.allRegions.get(0);
+		Region Sweden = TheEnvironment.allRegions.get(1);
+		
+		//Creates temporary spot, and adds the relevant spotpriceyears from the scenario
+		double[] spotN = new double[TheEnvironment.theCalendar.getNumYears()];
+		double[] spotS = new double[TheEnvironment.theCalendar.getNumYears()];
+		System.arraycopy(runningscenario.getAnnualpowerpricerregion1(), 0, spotN, 0, TheEnvironment.theCalendar.getNumYears());
+		System.arraycopy(runningscenario.getAnnualpowerpricerregion2(), 0, spotS, 0, TheEnvironment.theCalendar.getNumYears());
+		
+		//Setting the forward-prices
+		for (int i = 0; i<TheEnvironment.theCalendar.getNumYears();i++) {	//For forward-years. [i=1] is the array of future prices standing in year 2013, with 24 doubles. That is for each annualMarketSeries
+			double[] tempams_N = new double[TheEnvironment.theCalendar.getNumYears()];
+			double[] tempams_S = new double[TheEnvironment.theCalendar.getNumYears()];
+					for (int j = 0; j<TheEnvironment.theCalendar.getNumYears();j++) {
+						tempams_N[j] = Norway.getMyForwardPrice(i).getValue(j) * runningscenario.getAnnualpowerpricerregion1()[j+i];	//Here the fwd of year 2035 will go from 2035 - 2058 (+23)
+						tempams_S[j] = Norway.getMyForwardPrice(i).getValue(j) * runningscenario.getAnnualpowerpricerregion2()[j+i];
+					}
+					//Then for each fwd-year we set the annualmarketseries representing that years fwd-curve.
+					Norway.getMyForwardPrice(i).setAllValues(tempams_N);
+					Sweden.getMyForwardPrice(i).setAllValues(tempams_S);
+					}
+		//At last setting spot prices
+		Norway.getMyPowerPrice().setAllValues(spotN);
+		Sweden.getMyPowerPrice().setAllValues(spotS);
+		
+		}
+		
 	
 	/* KK: 20150512 Old version of simulateweather used before the scenarios where red in directly.*/
 	public static void simulateweather() {
@@ -112,7 +165,6 @@ public final class TheEnvironment {
 				if(temp > (AllVariables.meanwindproductionfactor*d)) {
 					temp = AllVariables.meanwindproductionfactor*(1+(AllVariables.stdwindfactor*AllVariables.maxstdwindfactor));
 				}
-				double aff = temp;
 			//section end
 			
 			for (int k = 0; k<TheEnvironment.theCalendar.getNumTradePdsInYear(); k++) {
@@ -121,11 +173,14 @@ public final class TheEnvironment {
 					if (PP.gettechnologyid() == 2) { 
 					double org = PP.getProduction(temptickid);
 					double test = PP.getProduction(temptickid)*temp;
+					if(PP.getname().equals("Wind_Norway_4")){
+						wind4 = org;
+						wind4_2 = test;
+					}
 					PP.setProduction((PP.getProduction(temptickid)*temp),temptickid);
 					}
 				}
 				temptickid=temptickid+1;
-				int a = k;
 			}
 		}
 	}

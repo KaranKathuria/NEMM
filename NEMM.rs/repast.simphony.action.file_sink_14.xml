@@ -1,15 +1,12 @@
 <repast.simphony.data2.engine.FileSinkDescriptor>
-  <name>Cert Balance</name>
-  <dataSet>Physical Position</dataSet>
+  <name>Traded Volume</name>
+  <dataSet>Traded volume</dataSet>
   <delimiter>;</delimiter>
   <format>TABULAR</format>
   <sourceIds class="linked-hash-set">
     <string>tick</string>
-    <string>Total</string>
-    <string>ObligatedPurchaser</string>
-    <string>Producers</string>
-    <string>Trader</string>
+    <string>Traded Volume</string>
   </sourceIds>
-  <fileName>C:\Users\Eier\git\NEMM\Output data\ A Cert Balance.csv</fileName>
+  <fileName>C:\Users\Eier\git\NEMM\Output data\ A Traded Volume.csv</fileName>
   <addTimeStamp>true</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>

@@ -128,6 +128,7 @@ public class ReadExcel {
 				double[] tempexpcertdem = new double[ticks];
 				double[] temppowerprice = new double[years];
 				double[][] tempfwdprice = new double[years][years];												//For each year there is a Forward powerprice curve.
+				//double[][] tempfwdprice_mulitplicators = new double[years][years];	
 
 				
 				for(int i = 0; i < ticks; i++){
@@ -137,18 +138,19 @@ public class ReadExcel {
 				
 				for(int f = 0; f < years; f++){
 				temppowerprice[f] = powerPrice_sheet.getRow(2+f+(48*j)).getCell(3).getNumericCellValue();		 //48*j ensuring right startingpoint for second region.
+				//tempfwdprice_mulitplicators[f] = powerPrice_sheet.getRow(2+f+(48*j)).getCell(3).getNumericCellValue();
 				for(int fw = 0; fw < years; fw++){
 				tempfwdprice[f][fw] = powerPrice_sheet.getRow(2+f+(48*j)+fw).getCell(4+f).getNumericCellValue(); //For each row, looping across the columns. Notice + fw as historic fwd does not make sense.
+				//tempfwdprice_mulitplicators[f][fw] = powerPrice_sheet.getRow(2+f+(48*j)+fw).getCell(4+f).getNumericCellValue();
 				}
 				// Set alle the forward AnnualMarketSeries
 				TheEnvironment.allRegions.get(j).getMyForwardPrice(f).initAnnualMarketSeries(tempfwdprice[f]);
+	
 				}
 				// Set market demand (both power price, cert demand and expected cert demand
 				TheEnvironment.allRegions.get(j).getMyDemand().initMarketDemand(tempcertdem, tempexpcertdem);
 				// Set AnnualMarketSeries (power prices)
 				TheEnvironment.allRegions.get(j).getMyPowerPrice().initAnnualMarketSeries(temppowerprice);
-				//This is the cloned copy of the forwardpricemultiplyer.
-				TheEnvironment.allRegions.get(j).clonesetmyForwardPrice_mulitplicators();
 				
 			}
 			
@@ -211,13 +213,8 @@ public class ReadExcel {
 					}
 					//Add production in form of tick array
 					pp.setAllProduction(tempproduction);
-					//Initiate the normalproduction as a cloned (deep) copy of AllProduction
-					pp.clonesetAllNormalProduction();
 					//Add all expected production to tick array
 					pp.setAllExpectedProduction(expproduction);
-					
-					
-
 
 				}
 				
@@ -231,8 +228,7 @@ public class ReadExcel {
 			
 			try{      
 				
-				//Workbook workbook = new XSSFWorkbook();
-				//XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(new File(filePath)));
+
 				Workbook workbook = WorkbookFactory.create(new File(filePath));
 				
 				// Read number of plants and technologies
