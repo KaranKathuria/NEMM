@@ -57,6 +57,18 @@ public class YearArray {
 		this.theData[Year] = newElement;			
 	}	
 	
+	//Needed to clone() powerplants
+	@Override
+	public YearArray clone()
+	{
+		YearArray foo;
+	    try
+	    {      foo = (YearArray) super.clone();}
+	    catch (CloneNotSupportedException e)
+	    {throw new Error("YA noclone"); }
+	    // Deep clone member fields here
+	    return foo;
+	}
 		
 	}
 	

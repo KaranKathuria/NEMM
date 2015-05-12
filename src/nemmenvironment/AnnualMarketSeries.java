@@ -19,13 +19,13 @@ public class AnnualMarketSeries {
 		}
 	}
 */
-	
-	
+
 	// Constructor methods. The set up is slightly unusual - when the object is instantiated
 	// the constructor is called and does nothing. Before use the initMarketPrice
 	// method should be called - this does the actual constructing.
 	// I've implemented in this way to enable the same code to be used for updating the 
 	// market prices if and as desired
+	//KK 20150512: Not fully understanding if we need this class of if it just complicates things.
 	
 	public AnnualMarketSeries() {
 		seriesValues = new YearArray();

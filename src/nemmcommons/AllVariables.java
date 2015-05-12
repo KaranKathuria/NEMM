@@ -182,7 +182,11 @@ public class AllVariables {
 	public static double bankOPAFirstTick = 0;//20000;
 	public static double bankTAFirstTick = 0;
 	
-	//For initial weather simulations setup
+	//For scenarios (wind and power price)
+	
+	
+	
+	//For initial weather simulations setup. Old inputs. Used for Q1 2015:
 	public static double meanwindproductionfactor = getmeanwindproductionfactor();
 	public static double stdwindfactor = getstdwindproductionfactor();
 	public static double maxstdwindfactor = 3;										//Cutoff deviation in wind production factor. If 3 this means that it cannot blow less or more then 3 times the standard deviation. 

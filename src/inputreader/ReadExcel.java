@@ -147,6 +147,8 @@ public class ReadExcel {
 				TheEnvironment.allRegions.get(j).getMyDemand().initMarketDemand(tempcertdem, tempexpcertdem);
 				// Set AnnualMarketSeries (power prices)
 				TheEnvironment.allRegions.get(j).getMyPowerPrice().initAnnualMarketSeries(temppowerprice);
+				//This is the cloned copy of the forwardpricemultiplyer.
+				TheEnvironment.allRegions.get(j).clonesetmyForwardPrice_mulitplicators();
 				
 			}
 			
@@ -209,6 +211,8 @@ public class ReadExcel {
 					}
 					//Add production in form of tick array
 					pp.setAllProduction(tempproduction);
+					//Initiate the normalproduction as a cloned (deep) copy of AllProduction
+					pp.clonesetAllNormalProduction();
 					//Add all expected production to tick array
 					pp.setAllExpectedProduction(expproduction);
 					
@@ -251,6 +255,18 @@ public class ReadExcel {
 		        System.out.println("!! Bang RRR Error !! xlRead() : " + e );
 		    }
 		}
+		
+	/*	public static void ReadScenarios() {			//TBD Anders. Leser inn alle senarioene. For spesifikasjon av scenarioene, se Scenario.java.
+			
+			try{ 
+				
+				Workbook workbook = WorkbookFactory.create(new File(filePath));
+				
+				// Read number of plants and technologies
+				Sheet RRR_sheet = workbook.getSheet("XXX");
+			}
+			
+	*/
 }
  
 

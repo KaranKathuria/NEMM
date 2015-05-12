@@ -25,6 +25,7 @@ public final class ParameterWrapper {
 	private static double initialinterestrate;
 	private static double meanwindproductionfactor;
 	private static double stdwindproductionfactor;
+	private static int scenarionumber;					//Indicates which scenario to run. Number is refering to the position in the read in table (0 is the first)
 	//private static int startYear = 2012;
 	//private static int endYear = 2014;
 	//private static int numObPdsInYear = 1;
@@ -46,6 +47,9 @@ public final class ParameterWrapper {
 
 	public static int getobligatedpurchaseragentsnumber() {
 		return obligatedpurchaseragentsnumber;
+	}
+	public static int getscenarionumber() {
+		return scenarionumber;
 	}
 	
 	public static int getanalysisagentsnumber() {
@@ -91,6 +95,7 @@ public final class ParameterWrapper {
 
 	public static void reinit() {
 		final Parameters parameters = RunEnvironment.getInstance().getParameters();
+		
 
 		produceragentsnumber = ((Integer) parameters.getValue("produceragentsnumber")).intValue();
 
@@ -107,6 +112,8 @@ public final class ParameterWrapper {
 		stdwindproductionfactor = ((Double) parameters.getValue("stdwindproductionfactor")).doubleValue();
 		
 		meanwindproductionfactor = ((Double) parameters.getValue("meanwindproductionfactor")).doubleValue(); 
+		
+		scenarionumber = ((Integer) parameters.getValue("scenarionumber")).intValue();
 		
 		/*startYear = ((Integer) parameters.getValue("startYear")).intValue();
 		

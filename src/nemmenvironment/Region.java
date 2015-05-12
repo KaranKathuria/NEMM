@@ -12,8 +12,10 @@ public class Region {
 	private String regionName;
 	private MarketDemand myDemand;
 	private AnnualMarketSeries myPowerPrice;
-	private AnnualMarketSeries[] myForwardPrice;	//Array of AnnualMarketSeries. The array lenght is years. AnnualMarketseries[1] is the future prices standing in year 2013, with 24 doubles.
-	private boolean certificatespost2020;			//Flag indicationg if the PowerPlants in the region are eliable for certs if finished after 2020.
+	private AnnualMarketSeries[] myForwardPrice;				//Array of AnnualMarketSeries. The array lenght is years. AnnualMarketseries[1] is the future prices standing in year 2013, with 24 doubles.¨
+	private AnnualMarketSeries[] myForwardPrice_mulitplicators; //Initial array of spot-year multiplicators used to generate all FWD prices. This is stored as a duplicate intially to save the multiplicators themself so the table can be rewined after each run without having to read in data again.
+	private boolean certificatespost2020;						//Flag indicationg if the PowerPlants in the region are eligable for certs if finished after 2020.¨
+	private int cutofyear;										//Indicating the cut-off year for beeing certificate eligable. By default 2020 for Norway (hence the name above).
 	/**
 	 * @param regionName
 	 */
@@ -23,6 +25,8 @@ public class Region {
 		this.myDemand = new MarketDemand();
 		this.myPowerPrice = new AnnualMarketSeries();
 		this.myForwardPrice = new AnnualMarketSeries[TheEnvironment.theCalendar.getNumYears()];
+		this.myForwardPrice_mulitplicators = new AnnualMarketSeries[TheEnvironment.theCalendar.getNumYears()];
+		
 			if (regionName.equals("Norway")) {
 			certificatespost2020 = AllVariables.certificatespost2020_Norway;}
 			else { certificatespost2020 = AllVariables.certificatespost2020_Sweden;}
@@ -50,6 +54,8 @@ public class Region {
 		return myForwardPrice[i];
 	}
 
-
+	public void clonesetmyForwardPrice_mulitplicators() {		//Cloning (deep) copy of all forward price multiplayers. Only used initally (by readExcel)
+		myForwardPrice_mulitplicators = myForwardPrice.clone();
+	}
 
 }

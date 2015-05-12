@@ -1,5 +1,6 @@
 package nemmcommons;
 
+import nemmenvironment.PowerPlant;
 import nemmenvironment.TheEnvironment;
 
 public class TickArray {
@@ -71,7 +72,20 @@ public class TickArray {
 			int index = TheEnvironment.theCalendar.getCurrentTick() + i;
 			this.theData[index] = values[i];
 		}
+	}
 		
+	
+	//Needed to clone() powerplants
+	@Override
+	public TickArray clone()
+	{
+		TickArray foo;
+	    try
+	    {      foo = (TickArray) super.clone();}
+	    catch (CloneNotSupportedException e)
+	    {throw new Error("TA noclone"); }
+	    // Deep clone member fields here
+	    return foo;
 	}
 	
 	

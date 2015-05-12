@@ -37,7 +37,7 @@ public final class TheEnvironment {
 	
 	public static ArrayList<Region> allRegions;
 	public static ArrayList<CompanyAgent> allCompanies;
-	
+	public static ArrayList<Scenario> allwindandppricescenarios;			//All scenarios of wind year mulitpliers and power prices
 	public static ArrayList<ProjectRRR> alladjustedRRR;						//List containing alle the adjusted RRR. Used by Projects to look up their specific RRR.
 	public static NemmCalendar theCalendar;
 	
@@ -58,8 +58,9 @@ public final class TheEnvironment {
 		projectsawaitinginvestmentdecision = new ArrayList<PowerPlant>() ;
 		projectsunderconstruction = new ArrayList<PowerPlant>() ;
 		trashedprojects = new ArrayList<PowerPlant>();
-		allRegions = new ArrayList<Region>() ;	
+		allRegions = new ArrayList<Region>();	
 		alladjustedRRR = new ArrayList<ProjectRRR>();
+		allwindandppricescenarios = new ArrayList<Scenario>();
 	}
 	
 	// Populate the Environment ------------------------------------------------------------
@@ -68,9 +69,25 @@ public final class TheEnvironment {
 		inputreader.ReadExcel.ReadRegions();
 		inputreader.ReadExcel.ReadRRR();
 		inputreader.ReadExcel.ReadPowerPlants();
+		//inputreader.ReadExcel.ReadScenarios();	//TBD by Anders. Reads all the scenarios an adds them to the "allwindandpricescenarios" list which then is used to generate power prices and wind years.
 																		
 	}
 	
+	public static void setwindscenario() {
+		//First this rewinds the data in the myProduction for all power plants
+		//takes inn the the parameter "scenarionumber" which refers to the posistion of the scenario that is supose to be ran in the allwindandppricescenarios.
+		//Takes the given scenario and adjust the plantproduction for the wind-plants accordingly to scenario-specific multiplier. Only the production is adjusted. Not expected production.	
+		
+	}
+	
+	public static void  setpowerpricescenario() {
+		//Rewind the forwardprice matrix to the myForwardPrice_mulitplicators
+		//Take the scenario-spesific spotpowerprice for each reagion and set this for each region
+		//Add upp the myFOrwardPrice by multiplication all the muliplicatiors with the correct (scenariospecific) spot price.
+	}
+	
+	
+	/* KK: 20150512 Old version of simulateweather used before the scenarios where red in directly.*/
 	public static void simulateweather() {
 		RandomHelper.createNormal(AllVariables.meanwindproductionfactor, AllVariables.stdwindfactor);	//Create the used normal distribution skal parametersers
 		int temptickid = 0;	
@@ -112,6 +129,7 @@ public final class TheEnvironment {
 			}
 		}
 	}
+	
 	
 	public static class GlobalValues {
 		
