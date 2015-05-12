@@ -1,0 +1,20 @@
+<repast.simphony.data2.engine.FileSinkDescriptor>
+  <name>Plants and Projects</name>
+  <dataSet>PowerPlants and Projects</dataSet>
+  <delimiter>;</delimiter>
+  <format>TABULAR</format>
+  <sourceIds class="linked-hash-set">
+    <string>tick</string>
+    <string>Projects under construction</string>
+    <string>Projects awaiting investment decision</string>
+    <string>Projects in concession queue</string>
+    <string>Projects identifyed</string>
+    <string>Potential projects</string>
+    <string>Projects trashed</string>
+    <string>Total plants and projects</string>
+    <string>Buildout Norway</string>
+    <string>Buildout Sweden</string>
+  </sourceIds>
+  <fileName>C:\Users\Eier\git\NEMM\Output data\ A Plants and Projects.csv</fileName>
+  <addTimeStamp>true</addTimeStamp>
+</repast.simphony.data2.engine.FileSinkDescriptor>
