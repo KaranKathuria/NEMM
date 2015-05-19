@@ -1,0 +1,63 @@
+<repast.simphony.data2.engine.DataSetDescriptor>
+  <name>Output data: Plants and Projects</name>
+  <type>NON_AGGREGATE</type>
+  <sourceType>nemmenvironment.PowerPlant</sourceType>
+  <inclTick>true</inclTick>
+  <inclBatchRun>true</inclBatchRun>
+  <inclRandomSeed>false</inclRandomSeed>
+  <scheduleParams>
+    <start>0.0</start>
+    <interval>12.0</interval>
+    <priority>-Infinity</priority>
+    <pType>LAST</pType>
+    <duration>-1.0</duration>
+    <frequency>REPEAT</frequency>
+    <hashCode>1386000012</hashCode>
+  </scheduleParams>
+  <atEnd>true</atEnd>
+  <methodDataSources class="linked-hash-map">
+    <entry>
+      <string>Name</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Name</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getname</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Status</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Status</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getstatus</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Needed certificate price</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Needed certificate price</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getcertpriceneeded</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Capacity</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Capacity</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getCapacity</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>LRMC</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>LRMC</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getLRMC</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+  </methodDataSources>
+  <countSources class="linked-hash-map"/>
+  <customNADataSources class="linked-hash-map"/>
+  <customAggDataSources class="linked-hash-map"/>
+</repast.simphony.data2.engine.DataSetDescriptor>

@@ -233,7 +233,7 @@ public class CompanyAgent extends ParentAgent {
 				for (PowerPlant PP : myPowerPlants) { 
 					// Add in the power plant's production for the current tick	
 
-					if((PP.getStartTick() <= curTick) && (PP.getendtick() >= curTick)) {
+					if((PP.getStartTick() <= curTick) && (PP.getendtick() > curTick)) {
 						volProd = volProd + PP.getProduction();
 					}
 				}
@@ -442,7 +442,6 @@ public class CompanyAgent extends ParentAgent {
 		companyname = "Company " + this.getID();													
 		companyanalysisagent = new CompanyAnalysisAgent();	
 		companyanalysisagent.setMyCompany(this);
-		earlystageRRR = investmentRRR + 0.01;														//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
 		investmentRRR = RandomHelper.nextDoubleFromTo(AllVariables.minInvestRRRAdjustFactor, AllVariables.maxInvestRRRAdjustFactor);				//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
 		earlystageRRR = investmentRRR + AllVariables.earlystageInvestRRRAdjustFactor;																//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
 		regionpartcode = 2;																			//By default, all companies are active in both countries. 
@@ -470,6 +469,7 @@ public class CompanyAgent extends ParentAgent {
 	return temp;}
 	public int getnumberofpowerplants() {return myPowerPlants.size();}
 	public int getnumberofprojects() {return myProjects.size();}
+	public String getname() {return this.companyname;}
 	}
 			
 

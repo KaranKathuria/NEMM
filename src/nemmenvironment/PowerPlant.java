@@ -34,8 +34,9 @@ public class PowerPlant implements Cloneable{
 	private double LRMC; 					//Long run marginal cost for this powerplant build at a given year. This is update for each annual update.
 	private Double certpriceneeded;			//Reason for having this field is that the projects cannot be sorted by LRMC as the region defines when its certificatesobligated.
 	private int starttick;					//The month/tickid of a year that the production starts (the tick is in the starting year).
-	private int endtick; 					//The tickid of a year that the production ends (including this tick).
+	private int endtick; 					//The tickid of a year that the certificate elgiable production ends (including this tick).
 	private int yearsincurrentstatus;		//Annual counter counting years in current status for the purpose of deciding if its ready for concession.
+	private double IRR; 					//Project IRR
 	
 	public PowerPlant() {}
 	
@@ -259,6 +260,7 @@ public class PowerPlant implements Cloneable{
 		double usedRRR = RRR;
 		double usedpowerprice = 0;
 		int futureyearspowerprice = 5 + TheEnvironment.theCalendar.getTimeBlock(TheEnvironment.theCalendar.getCurrentTick()).year;		//5 indication 5 years horizont from when either the investment decision or the FMA i ran. That is, all Powerprices are regarded from the year ran.
+		//Notice that the above future price uses the current (simulation tick) +5, and not the currentyear +5. Arguably beacuse this (simulation) +5 is the best knowledge when doing it. Hence the FMA does not have full foresight on powerprice.
 		
 		//Switch taking care of which powerprice assumption to use in the LRMC. 1=Current power price, 2=The Developers, companys, analysisagent expected power price in 5 years. 3=The 5 year fowardprice.
 		switch (powerpricecode) {
@@ -280,7 +282,7 @@ public class PowerPlant implements Cloneable{
 		
 		//Her is the certificatelogic
 		int yearswithcertificates = Math.min(15,(2035-(currentyear+minconstructionyears)));				//Notice the "+minconstructionyears" for taking account of buidingperiod when finding the certeligable period.
-			if (!myRegion.getcertificatespost2020flag() && (currentyear+minconstructionyears) > 2020) { //If certflag is false and years is larger than 31.12.2020.
+			if (!myRegion.getcertificatespost2020flag() && (currentyear+minconstructionyears) > myRegion.getcutoffyear()) { //If certflag is false and years is larger than cuoffyear.
 					yearswithcertificates = 0;}
 		
 		double newCapex = capex*Math.pow((1-annualcostreduction),yearsoftechnologyimprovment);			//Note that the Capex value of the powerplant is not set/updated.
@@ -308,6 +310,15 @@ public class PowerPlant implements Cloneable{
 	}
 	}
 	
+	public void caclculateIRR() {
+		//Method ran on last tick, or if tick is larger then end-tick, the income and the outcost for the lifetime with certs to calculate profitability. 
+		//this can be done by using the cert price needed (which is LRMC per cert, and then minus actual power price and cert price
+		//A help method would be to calcuale an average annual cert price every year as first thing. 
+		
+		//Basically. Take the opex and capax costs, the power price income and the cert price income, with regards to the tehnology improvment and calculate this fucker. 
+		
+		//this method can then be called by a iterator-method called at last tick, or every year but just running for those whom end tick is passed. 
+	}
 	public static double calculateNPVfactor(int years, double RRR) {
 		double NPVfactor = 0;
 		for (int i = 1; i <= years; i++) {
@@ -327,6 +338,11 @@ public class PowerPlant implements Cloneable{
 	public Double getcertpriceneeded() {return certpriceneeded;}
 	public String getname() {return name;}
 	public int gettechnologyid() {return technologyid;}
+	public String getmyregion() {return myRegion.getRegionName();}
+	public String getmyCompany() {return myCompany.getname();}
+	public double getmyCompanyRRR() {return myCompany.getInvestmentRRR();}
+	public double getprojectRRR() {return this.specificRRR;}		//Project RRR (given independent of developer).
+	public int getmyinvestmentdecisiontype() {return myCompany.getdeveloperagent().getinvestmentdecisiontype();} //Returns the investment decision type for this agent.
 	
 }
 	

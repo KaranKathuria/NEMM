@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Agent`s plants and project</name>
+  <name>Project data</name>
   <type>NON_AGGREGATE</type>
   <sourceType>nemmagents.CompanyAgent</sourceType>
   <inclTick>true</inclTick>
@@ -7,29 +7,29 @@
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
     <start>0.0</start>
-    <interval>1.0</interval>
+    <interval>12.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>53762565</hashCode>
+    <hashCode>-1070043407</hashCode>
   </scheduleParams>
-  <atEnd>true</atEnd>
+  <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
-    <entry>
-      <string>numberofprojects</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>numberofprojects</id>
-        <className>nemmagents.CompanyAgent</className>
-        <methodName>getnumberofprojects</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
     <entry>
       <string>numberofpowerplants</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>numberofpowerplants</id>
         <className>nemmagents.CompanyAgent</className>
         <methodName>getnumberofpowerplants</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>InvestmentRRR</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>InvestmentRRR</id>
+        <className>nemmagents.CompanyAgent</className>
+        <methodName>getInvestmentRRR</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

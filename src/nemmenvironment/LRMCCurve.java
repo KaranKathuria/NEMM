@@ -56,7 +56,6 @@ public class LRMCCurve {
 	}
 	
 	//Method calculating the certificateprice needed for the marginal project in the list and setting the equilibrium price. 
-	// Comment
 	public void calculatelrmccurve(ArrayList<PowerPlant> tempendogenousprojects, double certbalance, int xyears) {
 		int yearsprod = Math.min(xyears,15);					//When calculating LRMC based on a certbalance that is for more than a year, this is needed.
 		certificatebalance = certbalance;

@@ -95,12 +95,12 @@ public class AllVariables {
 	public static double tacticTurnoverPenaltyPA = 0.5;
 	
 	// ---- CERTIFICATE VALUE CALCULATION PARAMETERS
-	public static double certMaxPrice = 150;
+	public static double certMaxPrice = 200;
 	public static double certMinPrice = 0;
 	public static double[] ratioAdjFactor = new double[]{0.8,1,1.2}; // used to capture uncertainty in the ratio estimates
 	public static double[] ratioAdjProb = new double[]{0.3,0.4,0.3}; // same
 	public static double sdevCVSupply = 0.0; // Std dev of supply prognosis used in CV calcs in %
-	public static double valueCertShortfall = 150; // value (cost) of not having enough certificates
+	public static double valueCertShortfall = 200; // value (cost) of not having enough certificates
 	public static boolean flagDiscountCV = true;
 	
 	// ---- OBLIGATED PURCHASER STRATEGIES AND TACTIC PARAMETERS
@@ -167,7 +167,9 @@ public class AllVariables {
 
 	//Regulations for certificates deadline
 	public static boolean certificatespost2020_Norway = false;
-	public static boolean certificatespost2020_Sweden = true;
+	public static boolean certificatespost2020_Sweden = false;
+	public static int cutoffyear_Norway = 2020;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
+	public static int cutoffyear_Sweden = 2020;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
 	//The concession and preconstruction process
 	public static int maxyearsinconcessionqueue = 3;				//Number of years in addition to minimum number of years in concession queue given as input from excel. After this, if not having received concession, the project is trashed.

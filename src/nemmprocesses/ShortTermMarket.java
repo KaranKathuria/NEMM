@@ -166,6 +166,10 @@ public class ShortTermMarket {
 		
 		Allbuyoffers.removeAll(Collections.singleton(null));
 		Allselloffers.removeAll(Collections.singleton(null));
+		
+		tempsell = Allselloffers;
+		tempbuy = Allbuyoffers;
+		int a =2;
 
 		// Exit if there are no non-null bids or offers
 		int numberofbuyoffers = Allbuyoffers.size(); 
@@ -179,7 +183,6 @@ public class ShortTermMarket {
 
 		Collections.sort(Allselloffers);
 		Collections.sort(Allbuyoffers);
-		
 		// Initialise the active bid and offer
 		
 		int indexBid = Allbuyoffers.size()-1; // start at highest price bid

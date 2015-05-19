@@ -1,35 +1,143 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Test</name>
+  <name>Output data: Market and region</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
-  <inclBatchRun>false</inclBatchRun>
+  <inclBatchRun>true</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
-    <start>1.0</start>
+    <start>0.0</start>
     <interval>1.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1296706298</hashCode>
+    <hashCode>1144585332</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>wind4</string>
+      <string>Certificate price</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>wind4</id>
+        <id>Certificate price</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getwind4</methodName>
+        <methodName>currentmarketprice</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>wind4_2</string>
+      <string>Certificate balance</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>wind4_2</id>
+        <id>Certificate balance</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getwind4_2</methodName>
+        <methodName>gettotalmarketphysicalposition</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Power price Norway</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Power price Norway</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getcurrentpowerprice_N</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Added annual production Norway (acc)</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Added annual production Norway (acc)</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getbuildoutNorway</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Added annua production Sweden (acc)</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Added annua production Sweden (acc)</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getbuildoutSweden</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Added power plants Norway (acc)</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Added power plants Norway (acc)</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getplantsinNorway</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Added power plants Sweden (acc)</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Added power plants Sweden (acc)</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getplantsinSweden</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Power price Sweden</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Power price Sweden</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getcurrentpowerprice_S</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Wind capacity added Norway (acc)</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Wind capacity added Norway (acc)</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getwindcapacityNorway</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Wind capacity added Sweden (acc)</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Wind capacity added Sweden (acc)</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getwindcapacitySweden</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Hydro capacity added Norway (acc)</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Hydro capacity added Norway (acc)</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gethydrocapacityNorway</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Hydro capacity added Sweden (acc)</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Hydro capacity added Sweden (acc)</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gethydrocapacitySweden</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>All other capacity added Norway (acc)</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>All other capacity added Norway (acc)</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getallothercapacityNorway</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>All other capacity added Sweden (acc)</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>All other capacity added Sweden (acc)</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getallothercapacitySweden</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

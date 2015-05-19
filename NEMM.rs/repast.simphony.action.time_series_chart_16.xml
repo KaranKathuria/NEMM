@@ -1,9 +1,9 @@
 <repast.simphony.chart2.engine.TimeSeriesChartDescriptor>
-  <name>Demand and supply</name>
-  <dataSet>DemandandSupply</dataSet>
+  <name>Certificate balance</name>
+  <dataSet>Physical Position</dataSet>
   <xAxisLabel>Months</xAxisLabel>
-  <yAxisLabel>Certificates</yAxisLabel>
-  <chartTitle>Monthy supply and demand</chartTitle>
+  <yAxisLabel>Number of banked certificates</yAxisLabel>
+  <chartTitle>Total certificate balance</chartTitle>
   <type>TIME_SERIES</type>
   <background>
     <red>255</red>
@@ -21,11 +21,11 @@
   <showLegend>true</showLegend>
   <seriesIds>
     <entry>
-      <string>Lasttickproduction</string>
+      <string>Trader</string>
       <SeriesData>
-        <label>Lasttickproduction</label>
+        <label>Trader</label>
         <color>
-          <red>102</red>
+          <red>51</red>
           <green>102</green>
           <blue>255</blue>
           <alpha>255</alpha>
@@ -33,9 +33,9 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Lasttickdemand</string>
+      <string>ObligatedPurchaser</string>
       <SeriesData>
-        <label>Lasttickdemand</label>
+        <label>ObligatedPurchaser</label>
         <color>
           <red>255</red>
           <green>102</green>
@@ -45,18 +45,30 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>SupplyandDemand</string>
+      <string>Producers</string>
       <SeriesData>
-        <label>SupplyandDemand</label>
+        <label>Producers</label>
         <color>
-          <red>102</red>
-          <green>102</green>
-          <blue>102</blue>
+          <red>153</red>
+          <green>255</green>
+          <blue>153</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Total</string>
+      <SeriesData>
+        <label>Total</label>
+        <color>
+          <red>51</red>
+          <green>51</green>
+          <blue>51</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>
     </entry>
   </seriesIds>
   <dataValueIds/>
-  <plotRangeLength>-1</plotRangeLength>
+  <plotRangeLength>0</plotRangeLength>
 </repast.simphony.chart2.engine.TimeSeriesChartDescriptor>

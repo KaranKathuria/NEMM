@@ -95,10 +95,20 @@ public class CVRatioCalculations {
 		int currentyearstarttickID = ((currentyear - TheEnvironment.theCalendar.getStartYear())*ticksinayear);
 		for (PowerPlant PP : projectsunderconstruction_kopi) {
 			if (PP.getstartyear() == currentyear+i) {									 //Currentyear + i is the iterated year. Hence if they start this year --> Move.
-			int temp = (currentyearstarttickID+(i*TheEnvironment.theCalendar.getNumTradePdsInYear())) + RandomHelper.nextIntFromTo(0, TheEnvironment.theCalendar.getNumTradePdsInYear()-1);
-			PP.setendyear(Math.min(PP.getlifetime()+currentyear+i-1, currentyear+i+14)); //Setting endyear in order to not count the certificates after 15 years. And take care of projects in overgangsperioden with lifetime = 1. Does not take care of Norway after 2020. this is a weakness, but arguably no projects will be realized in Norway after 2020 anyways, and this stage is not setting the Investment Deceison but only conting certs correctl. Hence no it sort of supports both situations (certs and nocerts post2020 in Norway).
-			PP.setStarttick(temp);	//Randoml set starttick between now and 12 tick ahead.
+			int tempstarttickinyear = RandomHelper.nextIntFromTo(0, TheEnvironment.theCalendar.getNumTradePdsInYear()-1);
+			int temp = (currentyearstarttickID+(i*TheEnvironment.theCalendar.getNumTradePdsInYear())) + tempstarttickinyear;
+			
+			//Also takes care of that projects added after cutoff does not produce certificates.
+			if (!PP.getMyRegion().getcertificatespost2020flag() && (PP.getstartyear()) > PP.getMyRegion().getcutoffyear()) { //If certflag is false and years is larger than cuoffyear.
+				PP.setendyear(PP.getstartyear());
+				PP.setendtick(temp);
+			}
+			//Then of not disturbed by the cut-off.
+			else {
+			PP.setendyear(Math.min(PP.getlifetime()+currentyear+i-1, currentyear+i+14));
 			PP.setendtick(temp+(TheEnvironment.theCalendar.getNumTradePdsInYear()*Math.min(PP.getlifetime(), 15)));															// Not needed to remove projects from the projectsunderconstruction_copy as only those with startyear are added. Hence no chance of doublecounting.
+			}
+			PP.setStarttick(temp);	//Randoml set starttick between now and 12 tick ahead.
 			allPowerPlants_kopi.add(PP);
 			}
 		}

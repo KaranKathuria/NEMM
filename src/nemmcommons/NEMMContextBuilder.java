@@ -17,6 +17,7 @@ import nemmagents.MarketAnalysisAgent;
 import nemmenvironment.CVRatioCalculations;
 import nemmenvironment.FundamentalMarketAnalysis;
 import nemmenvironment.NewFundamentalMarketAnalysis;
+import nemmenvironment.PowerPlant;
 import nemmenvironment.TheEnvironment;
 import nemmenvironment.TheEnvironment.GlobalValues;
 import nemmprocesses.DistributeProjectsandPowerPlants;
@@ -57,6 +58,10 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 		for (int i = 0; i < gettraderagentsnumber(); ++i) {
 			final CompanyAgent agent = new CompanyAgent(false, false, true);
 			context.add(agent);}
+		
+		for (PowerPlant PP : TheEnvironment.allPowerPlantsandProjects) {
+			context.add(PP);
+		}
 			
  return context;}
 	
@@ -424,6 +429,9 @@ public void obligationsperiodshedule() {
 	public double getcurrentpowerprice_N() {
 		return TheEnvironment.allRegions.get(0).getMyPowerPrice().getValue();
 	}
+	public double getcurrentpowerprice_S() {
+		return TheEnvironment.allRegions.get(1).getMyPowerPrice().getValue();
+	}
 	public int getplantsinNorway() {
 		return TheEnvironment.GlobalValues.numberofpowerplantsinNorway;
 	}
@@ -432,6 +440,24 @@ public void obligationsperiodshedule() {
 	}
 	public double getbuildoutSweden() {
 		return TheEnvironment.GlobalValues.buildoutSweden;
+	}
+	public double getwindcapacityNorway() {
+		return TheEnvironment.GlobalValues.windcapacityaddedNorway;
+	}
+	public double getwindcapacitySweden() {
+		return TheEnvironment.GlobalValues.windcapacityaddedSweden;
+	}
+	public double gethydrocapacityNorway() {
+		return TheEnvironment.GlobalValues.hydrocapacityaddedNorway;
+	}
+	public double gethydrocapacitySweden() {
+		return TheEnvironment.GlobalValues.hydrocapacityaddedSweden;
+	}
+	public double getallothercapacityNorway() {
+		return TheEnvironment.GlobalValues.allothercapacityaddedNorway;
+	}
+	public double getallothercapacitySweden() {
+		return TheEnvironment.GlobalValues.allothercapacityaddedSweden;
 	}
 	public int getplantsinSweden() {
 		return TheEnvironment.GlobalValues.numberofpowerplantsinSweden;
@@ -509,6 +535,7 @@ public void obligationsperiodshedule() {
 		}
 		return under;
 		}
+
 	
 }
 

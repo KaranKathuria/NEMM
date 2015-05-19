@@ -73,7 +73,14 @@ public final class TheEnvironment {
 		inputreader.ReadExcel.ReadRRR();
 		inputreader.ReadExcel.ReadPowerPlants();
 		//inputreader.ReadExcel.ReadScenarios();	//TBD by Anders. Reads all the scenarios an adds them to the "allwindandpricescenarios" list which then is used to generate power prices and wind years.
-																		
+		
+		//A bit misplaced, but adding all the project and powerplants to a collection Array
+		allPowerPlantsandProjects.addAll(allPowerPlants);
+		allPowerPlantsandProjects.addAll(projectsunderconstruction);
+		allPowerPlantsandProjects.addAll(projectsawaitinginvestmentdecision);
+		allPowerPlantsandProjects.addAll(projectinprocess);
+		allPowerPlantsandProjects.addAll(projectsidentifyed);
+		allPowerPlantsandProjects.addAll(potentialprojects);																
 	}
 	
 	public static void setwindscenario() {
@@ -82,13 +89,6 @@ public final class TheEnvironment {
 		//Get the correct scenario
 		Scenario runningscenario = TheEnvironment.allwindandppricescenarios.get(ParameterWrapper.getscenarionumber());
 		int temptickid = 0;
-		
-		allPowerPlantsandProjects.addAll(allPowerPlants);
-		allPowerPlantsandProjects.addAll(projectsunderconstruction);
-		allPowerPlantsandProjects.addAll(projectsawaitinginvestmentdecision);
-		allPowerPlantsandProjects.addAll(projectinprocess);
-		allPowerPlantsandProjects.addAll(projectsidentifyed);
-		allPowerPlantsandProjects.addAll(potentialprojects);
 		
 		//For all years
 		for (int i = 0; i<TheEnvironment.theCalendar.getNumYears();i++) {	//For all år
@@ -145,14 +145,7 @@ public final class TheEnvironment {
 		RandomHelper.createNormal(AllVariables.meanwindproductionfactor, AllVariables.stdwindfactor);	//Create the used normal distribution skal parametersers
 		int temptickid = 0;	
 		
-		allPowerPlantsandProjects.addAll(allPowerPlants);
-		allPowerPlantsandProjects.addAll(projectsunderconstruction);
-		allPowerPlantsandProjects.addAll(projectsawaitinginvestmentdecision);
-		allPowerPlantsandProjects.addAll(projectinprocess);
-		allPowerPlantsandProjects.addAll(projectsidentifyed);
-		allPowerPlantsandProjects.addAll(potentialprojects);
-
-									//2 is Wind power
+		//2 is Wind power
 		for (int i = 2012; i<TheEnvironment.theCalendar.getStartYear()+TheEnvironment.theCalendar.getNumYears();i++) {	//For all år
 			double temp = RandomHelper.getNormal().nextDouble();
 			int tf= 3;
@@ -197,9 +190,17 @@ public final class TheEnvironment {
 		public static double avrhistcertprice; 			//Average historic cert price based on x number of ticks, where X is given by AllVariables.numberoftickstocalculatehistcertprice
 		public static int numberofpowerplantsinNorway;
 		public static int numberofpowerplantsinSweden;
-		public static double buildoutNorway;
-		public static double buildoutSweden;
+		public static double buildoutNorway;			//Accumulated annual production added in Norway through the certificate market
+		public static double buildoutSweden;			//Accumulated annual production added in Sweden through the certificate market
+		
+		public static double windcapacityaddedNorway;	//Accumulated wind-capacity added in Norway
+		public static double windcapacityaddedSweden;	//Accumulated wind-capacity added in Sweden
+		public static double hydrocapacityaddedNorway;	//Accumulated hydro-capacity added in Norway
+		public static double hydrocapacityaddedSweden;	//Accumulated hydro-capacity added in Norway
+		public static double allothercapacityaddedNorway;	//Accumulated other in the terms (bio, solar, and other) added in Norway. This added with hydro and wind is total.
+		public static double allothercapacityaddedSweden;	//Accumulated other in the terms (bio, solar, and other) added in Sweden. This added with hydro and wind is total.
 
+		
 		// Future cert prices
 		public static double endofyearpluss1;
 		public static double endofyearpluss2;
@@ -298,15 +299,38 @@ public final class TheEnvironment {
 			numberofpowerplantsinSweden = 0;
 			buildoutNorway = 0;
 			buildoutSweden = 0;
-			
-			
+			windcapacityaddedNorway = 0;	
+			windcapacityaddedSweden = 0;		
+			hydrocapacityaddedNorway = 0;		
+			hydrocapacityaddedSweden = 0;		
+			allothercapacityaddedNorway = 0;	
+			allothercapacityaddedSweden = 0;						
 			
 			for (PowerPlant PP : TheEnvironment.allPowerPlants) {
 				if (PP.getMyRegion() == TheEnvironment.allRegions.get(0)) {
 					buildoutNorway = buildoutNorway + (PP.getestimannualprod());
+					if (PP.gettechnologyid() == 2) {
+						windcapacityaddedNorway = windcapacityaddedNorway + PP.getCapacity();
+					}
+					else if (PP.gettechnologyid() == 1) {
+						hydrocapacityaddedNorway = hydrocapacityaddedNorway + PP.getCapacity();	
+					}
+					else {
+						allothercapacityaddedNorway = allothercapacityaddedNorway + PP.getCapacity();
+					}
 				}
+				
 				else {
 					buildoutSweden = buildoutSweden + (PP.getestimannualprod());
+					if (PP.gettechnologyid() == 2) {
+						windcapacityaddedSweden = windcapacityaddedSweden + PP.getCapacity();
+					}
+					else if (PP.gettechnologyid() == 1) {
+						hydrocapacityaddedSweden = hydrocapacityaddedSweden + PP.getCapacity();	
+					}
+					else {
+						allothercapacityaddedSweden = allothercapacityaddedSweden + PP.getCapacity();
+					}
 				}
 			}
 			
@@ -340,137 +364,9 @@ public final class TheEnvironment {
 		}
 		
 		
-		
 	}
 	
 	
 	}
 		
-		/*
-		// Annual update of annual chaning global values
-		public static void annualglobalvalueupdate() {
-			endofyearpluss1 = currentmarketprice*(1+currentinterestrate);
-			endofyearpluss2 = currentmarketprice*Math.pow((1+currentinterestrate), 2);
-			endofyearpluss3 = currentmarketprice*Math.pow((1+currentinterestrate), 3);
-			endofyearpluss4 = currentmarketprice*Math.pow((1+currentinterestrate), 4);
-			endofyearpluss5 = currentmarketprice*Math.pow((1+currentinterestrate), 5);
-		}
-		*/
-	
-	
 
-
-//NEMMCALENDAR START ========================================================	
-	/*public static class NemmCalendar {
-		
-		private int startYear;
-		private int endYear;
-		private int numYears;
-		private int numObligatedPdsInYear;
-		private int numTradePdsInObligatedPd;
-		private int numTradePdsInYear;
-		private int numTicks;
-		private int currentTick;
-		private ArrayList<NemmTime> timeBlocks;
-		
-		
-		public NemmCalendar(int startYear, int endYear, int numObligatedPdsInYear,
-				int numTradePdsInObligatedPd) {
-			// should throw errors if start year later than end year, other vals <=0 etc
-			this.currentTick=0;
-			this.startYear = startYear;
-			this.endYear = endYear;
-			this.numObligatedPdsInYear = numObligatedPdsInYear;
-			this.numTradePdsInObligatedPd = numTradePdsInObligatedPd;
-			this.numYears = this.endYear - this.startYear + 1;
-			this.numTradePdsInYear = this.numObligatedPdsInYear*this.numTradePdsInObligatedPd;
-			this.numTicks = this.numYears * this.numTradePdsInYear;
-			timeBlocks = new ArrayList<NemmTime>();
-			
-			int curTick = 0;
-			for (int y = 0; y < numYears; ++y){
-				for (int b = 0; b < this.numObligatedPdsInYear; ++b){
-					for (int t = 0; t < this.numTradePdsInObligatedPd; ++t){
-						NemmTime newBlock = new NemmTime(y,b,t, curTick);
-						timeBlocks.add(newBlock);
-						curTick = curTick+1;
-					}
-				}
-			}
-			Collections.sort(timeBlocks, new NemmTimeCompare());
-		}
-		
-		public int getCurrentTick() {
-			// will grab this from repast
-			return (int) RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
-		}
-
-
-		public NemmTime getTimeBlock(int tickID){
-			return timeBlocks.get(tickID);
-		}
-
-		public int getStartYear() {
-			return startYear;
-		}
-
-		public int getEndYear() {
-			return endYear;
-		}
-
-		public int getNumYears() {
-			return numYears;
-		}
-
-		public int getNumObligatedPdsInYear() {
-			return numObligatedPdsInYear;
-		}
-
-		public int getNumTradePdsInObligatedPd() {
-			return numTradePdsInObligatedPd;
-		}
-
-		public int getNumTradePdsInYear() {
-			return numTradePdsInYear;
-		}
-
-		public int getNumTicks() {
-			return numTicks;
-		}
-		// NEMMTIME START ===================================================
-		public static class NemmTime {
-
-			// This is a structure to concisely hold NEMM time info
-			
-			public int year;
-			public int obligationpdID;
-			public int tradepdID;
-			public Calendar startDate;
-			public Calendar endDate;
-			public int tickIndex;
-			
-			public NemmTime(int yearPd, int oblPd, int trdPd, int tickID) {
-				year = yearPd;
-				obligationpdID = oblPd;
-				tradepdID = trdPd;
-				tickIndex = tickID;
-			}
-				
-			
-		} 
-		// NEMMTIME END ===================================================
-		// NEMMTIMECOMPARE START ===================================================
-		class NemmTimeCompare implements Comparator<NemmTime> {
-
-		    @Override
-		    public int compare(NemmTime t1, NemmTime t2) {
-		        // comparison logic based on tick index
-		    	int compareTo = t2.tickIndex > t1.tickIndex ? 1 : (t2.tickIndex < t1.tickIndex ? -1 : 0);
-		        return compareTo;
-		    }
-		}
-		// NEMMTIMECOMPARE END ===================================================
-
-	}
-	// NEMMCALENDAR END ========================================================	
-	*/

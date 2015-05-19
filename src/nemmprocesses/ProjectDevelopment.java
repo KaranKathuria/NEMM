@@ -10,11 +10,13 @@ package nemmprocesses;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 import repast.simphony.random.RandomHelper;
 import nemmagents.CompanyAgent.DeveloperAgent;
 import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
+import nemmenvironment.FundamentalMarketAnalysis;
 import nemmenvironment.PowerPlant;
 import nemmenvironment.TheEnvironment;
 
@@ -35,8 +37,8 @@ public class ProjectDevelopment {
 		for (PowerPlant PP : TheEnvironment.projectsunderconstruction) {
 			if (PP.getstartyear() == currentyear) {
 				PP.setstatus(1);
-					if (!PP.getMyRegion().getcertificatespost2020flag() && currentyear > 2020) {	//Takes care of projecs post 2020 in regions without certs post 2020.
-						PP.setendyear(2020);
+					if (!PP.getMyRegion().getcertificatespost2020flag() && currentyear > PP.getMyRegion().getcutoffyear()) {	//Takes care of projecs post 2020 in regions without certs post 2020.
+						PP.setendyear(PP.getMyRegion().getcutoffyear());							//Does not matter what year this is set to.
 						PP.setStarttick(currenttick+1);
 						PP.setendtick(currenttick);}												//Setting this back in time, hence these certs are never produced.
 					else {
@@ -64,6 +66,8 @@ public class ProjectDevelopment {
 		int currenttick = TheEnvironment.theCalendar.getCurrentTick();
 		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year + TheEnvironment.theCalendar.getStartYear();	//Gets the current year.
 		
+		ArrayList<PowerPlant> temp_allprojectthatcanbebuild = new ArrayList<PowerPlant>();
+		
 		//For all Developers. This should be sorted by developertype, hence the FMA developer should build first. 
 		for (DeveloperAgent DA : CommonMethods.getDAgentList()) {
 			
@@ -74,7 +78,7 @@ public class ProjectDevelopment {
 			
 			//Collecting the projects that are awaiting investmetn decision (status = 3) and counting projects currently under construction.
 			for (PowerPlant PP : DA.getmyprojects()) {
-			double usedRRR = DA.getmycompany().getInvestmentRRR()*PP.getspecificRRR();			//Company specific RRR multiplied with company`s investment RRR.
+			double usedRRR = PP.getspecificRRR(); //DA.getmycompany().getInvestmentRRR()* removed as all should use the same RRR (its a benchmark for the project)
 			double postponedRRR = usedRRR + AllVariables.RRRpostpondpremium;					//If postponed, there should be a risk premium
 			
 
@@ -88,7 +92,9 @@ public class ProjectDevelopment {
 			}
 			
 			//For each DeveloperAgent For all the relevant projects. Do the following:			
-			Collections.sort(templist, new CommonMethods.customprojectcomparator());			//Sorting the of a DAs project awaiting from lowest certprie needed to highest cert price needed
+			Collections.sort(templist, new CommonMethods.customprojectcomparator());			//Sorting the of a DAs project awaiting from lowest certprieneeded to highest certpriceneeded
+			temp_allprojectthatcanbebuild.addAll(templist);										//Adds all projects from this DA to all potential projects.
+			//Calculate how much investments there are maximum-needed.
 			
 			//All the cirteria variables for the investment decision. Assumin default DA.getinvestmentdecisiontype() == 1 or 2
 			double cutoffcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations(); 
@@ -127,11 +133,14 @@ public class ProjectDevelopment {
 					if ((cutoffcertprice-certpriceneedednow)>(postpondedcertprice-certpriceneededpostpond) && (TheEnvironment.GlobalValues.avrhistcertprice*DA.getpriceeasefactor()>=certpriceneedednow)) {	//Only if its better to invest now than postponed, invest:
 					//Note above that there also is a constrain on the avrgprice beeing higher. THis will only be for the FMA-agents as its already aproved for price-agents.
 					
+					
+						
 					PowerPlant thisplant = templist.get(projects_pointer);
 					capacitydeveloped_counter = capacitydeveloped_counter + thisplant.getCapacity();
 					constructionproject_counter = constructionproject_counter + 1;
 					
 					thisplant.setstatus(2);														//Changing status for the project (from 3=awaitingid to 2=underconstruction).
+			//New	//thisplant.setstatus(9);										
 					thisplant.setyearsincurrentstatus(0);  										//Setting this for consistency for project reaching new stag. This value is note used in later stages.
 					thisplant.setstartyear(currentyear + thisplant.getminconstructionyears());	//Adding a startdate. Notice that this is done here rather than in the finalizeprojects.
 					TheEnvironment.projectsunderconstruction.add(thisplant);								//Add to the Environment list of projects in process.
@@ -142,9 +151,37 @@ public class ProjectDevelopment {
 					else {break;}
 					}
 				else {break;}																	//If the current project is not wort investing, the following are not either.
-			}			
+			}
+			
+			
 					
 		}
+		/*
+		//Then something that uses the normalproduction of the plants added and the cutoff to determine the need for annual production. Then uses this to limit the total buildout.
+		double tempannualprodneeded=0;
+		for (PowerPlant PP : temp_allprojectthatcanbebuild) {
+			if (PP.getcertpriceneeded() < FundamentalMarketAnalysis.getMPE()) {					//Notice the use of MPE rather then DAs mediumterm. MPE is the unerrored one, hence more correct.
+			tempannualprodneeded = tempannualprodneeded + PP.getestimannualprod();}
+		}
+		
+		//Then for all the potential project wanted to be build, that 
+		double tempbuildout = 0;
+		Collections.shuffle(temp_allprojectthatcanbebuild);
+		for (PowerPlant PP : temp_allprojectthatcanbebuild) {
+			if (tempbuildout <= tempannualprodneeded) {
+				if (PP.getstatus() == 9) {
+					tempbuildout = tempbuildout + PP.getestimannualprod();
+					PP.setstatus(2);
+					PP.setyearsincurrentstatus(0);  										//Setting this for consistency for project reaching new stag. This value is note used in later stages.
+					PP.setstartyear(currentyear + PP.getminconstructionyears());			//Adding a startdate. Notice that this is done here rather than in the finalizeprojects.
+					TheEnvironment.projectsunderconstruction.add(PP);						//Add to the Environment list of projects in process.
+					TheEnvironment.projectsawaitinginvestmentdecision.remove(PP);			//Removing from Environment list of awaitinginvestmentsdecisions
+			}
+		}
+		}
+		//Also need to remove the other ones with status 9 back to status 3
+		//Mark out the initial.
+		*/
 }
 	
 	//Method updating projects to receive concession from status 4=in process to 3=awaiting investment decision. 
@@ -237,7 +274,7 @@ public class ProjectDevelopment {
 			
 			//Collecting the projects that the DA have identrifyed
 			for (PowerPlant PP : DA.getmyprojects()) {
-				double usedRRR = DA.getmycompany().getearlystageRRR() * PP.getspecificRRR();									 //Company specific multipled with earlistage corrctor.
+				double usedRRR = AllVariables.earlystageInvestRRRAdjustFactor * PP.getspecificRRR();							 //Project specific multipled with earlistage corrctor.
 				if (PP.getstatus() == 5) {																					     //5=Identyfied project.
 					PP.addyearsincurrentstatus(1);																				 //Increasing number of years with this status.
 					templist.add(PP);															

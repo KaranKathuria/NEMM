@@ -82,7 +82,7 @@ public class NewFundamentalMarketAnalysis {
 		certificatebalance = TheEnvironment.GlobalValues.totalmarketphysicalposition;
 		ArrayList<PowerPlant> tempremoval = new ArrayList<PowerPlant>();
 		
-		//Calculation for all future LRMC curves begins. i stands for iterated yer. for each i there is a aar from i to end, that to sum up future production from i.
+		//Calculation for all future LRMC curves begins. i stands for iterated year. for each i there is a aar from i to end, that to sum up future production from i.
 		for (int i = 0; i < numberofyears; ++i ) {
 			tempendogenousprojects.clear();												//Important to clear so that the same endog project is not buildt twice.
 			double totalannufuturedemand = 0;											//All futuredemand from i and to the end
@@ -91,17 +91,21 @@ public class NewFundamentalMarketAnalysis {
 			double totalannudemand = 0;													//Demand at the year i. Needed to calculate the bank at i.
 			double totalannucertproduction = 0;											//Supply at the year i. Needed to calculate the bank at i.
 			tempremoval.clear();  														//Clear the temporeral removal list.
-			int xyears = AllVariables.yearsbuildout;									//Variale for FMA that determines what years of future certificate balance to build
+			int xyears = AllVariables.yearsbuildout;									//Variable for FMA that determines what years of future certificate balance to build
 			int xyearsused = Math.min(xyears, numberofyears);							//Cannot take the shortcomings of years after 2035.			
 			double xyearfuturecertdemand = 0;
 			double xyearfuturecertproduction = 0;
 			double xyearfuturecertbalance = 0;
 						
-	//Note that this does not take account for projects beeing realised and NOT reciving certs. KK 17.11.2014
 		//Adding to allPowerPlants from the plants in process that will be finished.
 		for (PowerPlant PP : projectsunderconstruction_copy) {
 			if (PP.getstartyear() == currentyear+i) {									 //Currentyear + i is the iterated year. Hence if they start this year --> Move.
-			PP.setendyear(Math.min(PP.getlifetime()+currentyear+i-1, currentyear+i+14)); //Setting endyear in order to not count the certificates after 15 years. And take care of projects in overgangsperioden with lifetime = 1. Does not take care of Norway after 2020. this is a weakness, but arguably no projects will be realized in Norway after 2020 anyways, and this stage is not setting the Investment Deceison but only conting certs correctl. Hence no it sort of supports both situations (certs and nocerts post2020 in Norway).
+				if (!PP.getMyRegion().getcertificatespost2020flag() && (PP.getstartyear()) > PP.getMyRegion().getcutoffyear()) { //If certflag is false and years is larger than cuoffyear.
+					PP.setendyear(PP.getstartyear());
+				}
+				else {
+			PP.setendyear(Math.min(PP.getlifetime()+currentyear+i-1, currentyear+i+14)); //Setting endyear in order to not count the certificates after 15 years. 
+				}
 			tempremoval.add(PP);
 			allPowerPlants_copy.add(PP);
 			}}
@@ -164,7 +168,7 @@ public class NewFundamentalMarketAnalysis {
 		
 		//At last, count the production from plants under construction not finished on year i.
 		for (PowerPlant PP : projectsunderconstruction_copy) {
-			if (PP.getstartyear() > 2020 && !PP.getMyRegion().getcertificatespost2020flag()) { //If post 2020 and in regions without certs, do nothing.
+			if (PP.getstartyear() > PP.getMyRegion().getcutoffyear() && !PP.getMyRegion().getcertificatespost2020flag()) { //If post c and in regions without certs, do nothing.
 			}
 			else {
 				totalannufuturecertproduction = totalannufuturecertproduction + (PP.getestimannualprod()*Math.min(15, 2036-PP.getstartyear()));

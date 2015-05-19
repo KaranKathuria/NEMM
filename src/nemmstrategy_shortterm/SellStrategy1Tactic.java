@@ -185,12 +185,9 @@ public class SellStrategy1Tactic extends GenericTactic {
 //			ret.setCertVolume(Math.max(0.0,Math.min(maxBidOfferVolume-mustsell,physicalposition-mustsell))); //rest of the monthly production sold at expected price.			
 			ret.setCertVolume(Math.max(0.0,Math.min(1.0, maxBidOfferVolumeMultiplier)*physicalposition-mustsell)); //rest of the monthly production sold at expected price.			
 		}
+		//Added max.max 20150519
 		ret.setPrice(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice)); //Prices not symmetric around expected price with must of the volume tried sold at at premium (1+discount)*expt.
-
-		if (TheEnvironment.theCalendar.getCurrentTick() == 50) {
-			int temp=0;
-			temp = 1;
-		}
+		//ret.setPrice(Math.min(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice), AllVariables.certMaxPrice));
 		
 		return ret;
 		}

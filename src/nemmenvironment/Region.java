@@ -15,10 +15,9 @@ public class Region {
 	private AnnualMarketSeries[] myForwardPrice;				//Array of AnnualMarketSeries. The array lenght is years. AnnualMarketseries[1] is the future prices standing in year 2013, with 24 doubles.¨
 	// NOT NEEDED private AnnualMarketSeries[] myForwardPrice_mulitplicators; //Initial array of spot-year multiplicators used to generate all FWD prices. This is stored as a duplicate intially to save the multiplicators themself so the table can be rewined after each run without having to read in data again.
 	private boolean certificatespost2020;						//Flag indicationg if the PowerPlants in the region are eligable for certs if finished after 2020.¨
-	private int cutofyear;										//Indicating the cut-off year for beeing certificate eligable. By default 2020 for Norway (hence the name above).
-	/**
-	 * @param regionName
-	 */
+	private int cutoffyear;										//Indicating the cut-off year for beeing certificate eligable. By default 2020 for Norway (hence the name above).
+	
+	
 	public Region(String regionName) {
 		
 		this.regionName = regionName;
@@ -28,8 +27,12 @@ public class Region {
 		//this.myForwardPrice_mulitplicators = new AnnualMarketSeries[TheEnvironment.theCalendar.getNumYears()];
 		
 			if (regionName.equals("Norway")) {
-			certificatespost2020 = AllVariables.certificatespost2020_Norway;}
-			else { certificatespost2020 = AllVariables.certificatespost2020_Sweden;}
+			certificatespost2020 = AllVariables.certificatespost2020_Norway;
+			cutoffyear = AllVariables.cutoffyear_Norway;
+			}
+			else { certificatespost2020 = AllVariables.certificatespost2020_Sweden;
+			cutoffyear = AllVariables.cutoffyear_Sweden;
+			}
 		for (int i=0; i < myForwardPrice.length;i++) {
 			myForwardPrice[i] = new AnnualMarketSeries();
 		}
@@ -40,6 +43,7 @@ public class Region {
 	public void setRegionName(String regionName) {this.regionName = regionName;}
 	public MarketDemand getMyDemand() {return myDemand;}
 	public boolean getcertificatespost2020flag() {return certificatespost2020;}
+	public int getcutoffyear() {return cutoffyear;}
 	
 	// commented out as you should not need to set a new demand object
 /*	public void setMyDemand(MarketDemand myDemand) {
