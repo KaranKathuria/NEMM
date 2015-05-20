@@ -73,7 +73,7 @@ public final class TheEnvironment {
                                inputreader.ReadExcel.ReadRegions();
                                inputreader.ReadExcel.ReadRRR();
                                inputreader.ReadExcel.ReadPowerPlants();
-                               //inputreader.ReadExcel.ReadScenarios();        //TBD by Anders. Reads all the scenarios an adds them to the "allwindandpricescenarios" list which then is used to generate power prices and wind years.
+                               inputreader.ReadExcel.ReadScenarios();        //TBD by Anders. Reads all the scenarios an adds them to the "allwindandpricescenarios" list which then is used to generate power prices and wind years.
                                
                                //A bit misplaced, but adding all the project and powerplants to a collection Array
                                allPowerPlantsandProjects.addAll(allPowerPlants);

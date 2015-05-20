@@ -258,55 +258,56 @@ public class ReadExcel {
 	}
 	
 	// ALE 2015-05-13: Read scenario data
-	public static void ReadScenarios() {			// Leser inn alle senarioene. For spesifikasjon av scenarioene, se Scenario.java.
-			
-		try{ 
-			Workbook workbook = WorkbookFactory.create(new File(filePath));
-			
-			Sheet ctr_sheet = workbook.getSheet("Control");
-			numbscenarios = (int) ctr_sheet.getRow(1).getCell(2).getNumericCellValue();
-			
-			Sheet scenario_sheet = workbook.getSheet("Scenarios");
-			
-			for(int j = 0; j < numbscenarios; j++){
-				Scenario newscen = new Scenario();
-				
-				String newname = scenario_sheet.getRow(0).getCell(1+j).getStringCellValue();
-				// Did not find a set method for scenario name
-				// newscen.setname(newname);
-				
-				
-				double[] newprodfactor = new double[years];
-				for (int k = 0; k < years; k++){
-					newprodfactor[k] = scenario_sheet.getRow(4+k).getCell(1+j).getNumericCellValue();
-				}
-				newscen.setWindyearmultiplier(newprodfactor);
-				
-				int numb_price_entries = 47; // hardcoded for now
-				
-				double[] newpricereg1 = new double[numb_price_entries];
-				double[] newpricereg2 = new double[numb_price_entries];
-				for(int k = 0; k < numb_price_entries; k++){
-					newpricereg1[k] = scenario_sheet.getRow(7+years+k).getCell(1+j).getNumericCellValue();
-					newpricereg2[k] = scenario_sheet.getRow(7+years+k).getCell(1+j).getNumericCellValue();
-				}
-				newscen.setAnnualpowerpricerregion1(newpricereg1);
-				newscen.setAnnualpowerpricerregion2(newpricereg2);
-				
-				// how to include a new scenario?
-				TheEnvironment.allwindandppricescenarios.add(newscen);
-				//System.out.println("Scen_1 : price 1 = " + newscen.getAnnualpowerpricerregion1().toString() + ", price 2 = "+newscen.getAnnualpowerpricerregion2().toString()+", wind mult = " + newscen.getWindyearmultiplier().toString() );
-			}
+    public static void ReadScenarios() {                  // Leser inn alle senarioene. For spesifikasjon av scenarioene, se Scenario.java.
+                 
+          try{ 
+                 Workbook workbook = WorkbookFactory.create(new File(filePath));
+                 
+                 Sheet ctr_sheet = workbook.getSheet("Control");
+                 numbscenarios = (int) ctr_sheet.getRow(1).getCell(2).getNumericCellValue();
+                 
+                 Sheet scenario_sheet = workbook.getSheet("Scenarios");
+                 
+                 for(int j = 0; j < numbscenarios; j++){
+                        Scenario newscen = new Scenario();
+                        
+                        String newname = scenario_sheet.getRow(0).getCell(1+j).getStringCellValue();
+                        // Did not find a set method for scenario name
+                        // newscen.setname(newname);
+                        
+                        
+                        double[] newprodfactor = new double[years];
+                        for (int k = 0; k < years; k++){
+                               newprodfactor[k] = scenario_sheet.getRow(4+k).getCell(2+j).getNumericCellValue();
+                        }
+                        newscen.setWindyearmultiplier(newprodfactor);
+                        
+                        int numb_price_entries = 47; // hardcoded for now
+                        
+                        double[] newpricereg1 = new double[numb_price_entries];
+                        double[] newpricereg2 = new double[numb_price_entries];
+                        for(int k = 0; k < numb_price_entries; k++){
+                               newpricereg1[k] = scenario_sheet.getRow(7+years+k).getCell(2+j).getNumericCellValue();
+                               newpricereg2[k] = scenario_sheet.getRow(8+years+numb_price_entries+k).getCell(2+j).getNumericCellValue();
+                        }
+                        newscen.setAnnualpowerpricerregion1(newpricereg1);
+                        newscen.setAnnualpowerpricerregion2(newpricereg2);
+                        
+                        // how to include a new scenario?
+                        TheEnvironment.allwindandppricescenarios.add(newscen);
+                        //System.out.println("Scen_1 : price 1 = " + newscen.getAnnualpowerpricerregion1().toString() + ", price 2 = "+newscen.getAnnualpowerpricerregion2().toString()+", wind mult = " + newscen.getWindyearmultiplier().toString() );
+                 }
 
-			
-			
-		}catch(Exception e){
-	        System.out.println("!! Bang RRR Error !! xlRead() : " + e );
-	    }
-		
-		
-			
-	}
+                 
+                 
+          }catch(Exception e){
+            System.out.println("!! Bang RRR Error !! xlRead() : " + e );
+        }
+          
+                        
+    }
 }
+
+
  
 

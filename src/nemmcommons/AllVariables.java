@@ -144,7 +144,7 @@ public class AllVariables {
 	public static int preprojectandidentifyconstraint = 6;			//Times sizecode gives projects for prep and ident
 	public static double[] developerinvestmentpriceeasefactordistribution = new double[]{1.1,8};			//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
 	public static double[] developerinvestmentfundamentaleasefactordistribution = new double[]{1.01,1.07}; //The distribution of fundamentaleasefaactor to investmentagent type 3 (price based with ease cost curve). High number indicates little restriction.
-	public static double buildoutaggressivness = 1; 				//Factor determining how aggressiv the build out is. Less then one means that the construction limit for any given year is less then what is needed in terms of annual producion, whereas much higher then one limits to what all developers are willing to build (financially and resoruce wise)
+	public static double buildoutaggressivness = 4; 				//Factor determining how aggressiv the build out is. Less then one means that the construction limit for any given year is less then what is needed in terms of annual producion, whereas much higher then one limits to what all developers are willing to build (financially and resoruce wise)
 	
 	
 	//Initial distribution of powerplants, projects and demandshares per region.

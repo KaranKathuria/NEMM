@@ -70,7 +70,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	public void DistributionandInitiation() {
 	
 	//Sales the annual production of all wind power plants according to specifyed mean, standarddeviation and max(capped).
-	TheEnvironment.simulateweather();
+	TheEnvironment.setwindscenario();
 
 		
 	//Distributing Plants, projects and demand among Agents
