@@ -1,6 +1,7 @@
-/inputreader
+
+/.gitignore
 /nemmcommons
 /nemmenvironment
-/nemmagents
 /nemmprocesses
-/nemmstrategy_shortterm
+/nemmagents
+/nemmtime

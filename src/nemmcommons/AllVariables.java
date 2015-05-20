@@ -23,7 +23,8 @@ public class AllVariables {
 	public static double bankOPAfirstrealtick =   400000;//3558000;//		//Bank at thefirstrealtick.	If tick 0 this should be 0. For memo Dec 2014, 0 was used. 2014: 3558000 soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
 	public static double bankTAfirstrealtick = 0;				//Bank at thefirstrealtick.	If tick 0 this should be 0
 
-	
+	public static boolean useTestData = false;
+
 	
 	//Number of tactics in each of the respective strategies. More tactics gives the agent more alternatives.
 	public static int numberoftacticsBuyStrategy1 = 1;
@@ -46,9 +47,7 @@ public class AllVariables {
 	public static int utilityDefault_PA = 2; // default utility for a purchaser agent
 	public static int utilityDefault_OP = 2; // default utility for a obligated agent
 	public static int utilityDefault_TR = 1; // default utility for a trader agent
-	
-	// ---- GJB Added
-	
+		
 	// ST price prognosis - exponential smoothing parameters
 	public static double maxAlphaSTPrice = 0.8;
 	public static double minAlphaSTPrice = 0.5;
@@ -64,9 +63,7 @@ public class AllVariables {
 	// Tactics - number of ticks to exit positions
 	// Number of exit strategies for each agent type
 	public static int numPAExitStrategies = numTicksPAExit.length;
-	public static int numOPExitStrategies = numTicksOPExit.length;
-	// ---- end GJB Added
-	
+	public static int numOPExitStrategies = numTicksOPExit.length;	
 	
 	// ---- PRODUCER STRATEGIES AND TACTIC PARAMETERS
 	// Note - not all of these need be used in any given tactic & strategy
@@ -123,34 +120,32 @@ public class AllVariables {
 	// Exponential smoothing parameter for utility learning
 	public static double tacticMaxUtilityAlphaOP = 0.4;
 	public static double tacticMinUtilityAlphaOP = 0.2;
-	
-	
-	//public static double randomfactorinintialstpriceexpectations = X; //Se market prognoisis constructor
-	//public static double randomfactorininmediummrundpriceexpectations = X; //Se market prognoisis constructor //This two could have the same random numer!
 
-	//FundamentalMarketAnalysis and Project Developement
+	// ------- FundamentalMarketAnalysis and Project Developement
 	public static double penaltyratio = 1.5;						//What is the penalty compared to current market price?
 	public static int yearstoendogprojects = 2;						//Just to save time in the FMA.
 	public static double maxpricecerts = 200;						//To not get an errror in the FMA.
-	public static double initialRRRcorrector = 1.0;				//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis. Copnsate (0.098) for the learningfactor in inputt.
-	public static double RRRpostpondpremium = 0.01;				//Risk premium (basispoints 0.01 = 1%) need to be covered if the investment decision is to be postpond. 
+	public static double initialRRRcorrector = 1.0;					//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis. Copnsate (0.098) for the learningfactor in inputt.
+	public static double RRRpostpondpremium = 0.01;					//Risk premium (basispoints 0.01 = 1%) need to be covered if the investment decision is to be postpond. 
 	public static int minpostpondyears = 1;							//How long the investment decision is postpond if postponed.Cannot see why this should be larger than 1. (only argument is if this is the real deal).
 	public static int MPECount = 18;								//Number of futuer years seen by the MPE-analysis. THats number-1 years ahead (including this year).
 	public static int LPECount = MPECount+minpostpondyears;			//Number of futuer years seen by the LPE-analysis
+	public static int yearsbuildout = 16;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA.
 
+	//THE FMA and MPE/LPE
 	public static double stdmediumrunpriceexpect = 0.04;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.06;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
+	
+	//Project Development
 	public static double[] developerinvestmenttypedistribution = new double[]{0.1,0.7,0.9,1};	//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
-
 	public static int numberoftickstocalculatehistcertprice = 3;	//This could be exptended to about 6. THis is basically the parameter setting how long memory developers have when taking investment decison based on current price. 
 	public static int numberofyearcertscanbehedged = 2;
-
 	public static int constructionconstraints = 3; 					//Times sizecode gives projects under constrction 
 	public static int preprojectandidentifyconstraint = 6;			//Times sizecode gives projects for prep and ident
-
-	public static int yearsbuildout = 16;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA.
-	public static double[] developerinvestmentpriceeasefactordistribution = new double[]{1.1,8};		//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
+	public static double[] developerinvestmentpriceeasefactordistribution = new double[]{1.1,8};			//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
 	public static double[] developerinvestmentfundamentaleasefactordistribution = new double[]{1.01,1.07}; //The distribution of fundamentaleasefaactor to investmentagent type 3 (price based with ease cost curve). High number indicates little restriction.
+	public static double buildoutaggressivness = 1; 				//Factor determining how aggressiv the build out is. Less then one means that the construction limit for any given year is less then what is needed in terms of annual producion, whereas much higher then one limits to what all developers are willing to build (financially and resoruce wise)
+	
 	
 	//Initial distribution of powerplants, projects and demandshares per region.
 	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
@@ -159,7 +154,9 @@ public class AllVariables {
 
 	public static double earlystageInvestRRRAdjustFactor = 0.0025;
 	public static double minInvestRRRAdjustFactor = 0.99;		//Corrector of 0.9 implies a lower bond on about 0.9*8=7.2% RRR. This is aboute 2-3 Euro per MW difference in cert price needed (NPV).
-	public static double maxInvestRRRAdjustFactor = 1.01;
+	public static double maxInvestRRRAdjustFactor = 1.01;		//Not sure this is autually used ad Project development uses the market RRR
+	
+	
 	
 	// Generic Strategy 
 	public static int MaxTacticPreferenceScore = 6;
@@ -167,7 +164,7 @@ public class AllVariables {
 
 	//Regulations for certificates deadline
 	public static boolean certificatespost2020_Norway = false;
-	public static boolean certificatespost2020_Sweden = false;
+	public static boolean certificatespost2020_Sweden = true;
 	public static int cutoffyear_Norway = 2020;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
 	public static int cutoffyear_Sweden = 2020;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
@@ -175,10 +172,7 @@ public class AllVariables {
 	public static int maxyearsinconcessionqueue = 3;				//Number of years in addition to minimum number of years in concession queue given as input from excel. After this, if not having received concession, the project is trashed.
 	public static double annualprobforreceivingconcession = 0.2;	//Only with one decimal as the random generater uses int.
 	public static int expectedyersinconcession = 5;					//When deciding for concession, how long to the developers expected the project to be in line. Needed due to learningcurve/CAPEX estimation.
-	
-	// ---- GJB Added
-	public static boolean useTestData = false;
-	
+		
 	// The first tick banks. 11.02.2015 KK: Not sure this is used.
 	public static double bankPAFirstTick = 	0;//8000000;
 	public static double bankOPAFirstTick = 0;//20000;

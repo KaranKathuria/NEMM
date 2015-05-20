@@ -46,7 +46,7 @@ public class YearArray {
 
 	}
 
-	public void setElement(double newElement, int Year) {
+	public void setElement(double newElement, int Year) { //Year refering to year as in timeblock year, that is 0-24.
 
 		if (Year<0) {
 			throw new IllegalArgumentException("Negative Year passed to getElement");				

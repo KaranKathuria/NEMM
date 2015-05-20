@@ -6,7 +6,7 @@ public class NemmTime {
 
 	// This is a structure to concisely hold NEMM time info
 	
-	public int year;
+	public int year;  //0-24
 	public int obligationpdID;
 	public int tradepdID;
 	public Calendar startDate;

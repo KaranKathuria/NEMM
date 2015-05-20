@@ -162,6 +162,8 @@ public void preannualmarketschedule1() {
 
 @ScheduledMethod(start = 12, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0.
 public void preannualmarketschedule2() {
+	GlobalValues.annualglobalvalueupdate();
+
 	//if (AllVariables.betw12_24) {
 	
 	/*
@@ -178,6 +180,8 @@ public void preannualmarketschedule2() {
 
 @ScheduledMethod(start = 24, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0 and higher than 24.
 public void preannualmarketschedule3() {
+	GlobalValues.annualglobalvalueupdate();
+
 
 ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
 ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.

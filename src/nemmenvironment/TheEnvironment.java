@@ -14,6 +14,7 @@ import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
 import nemmcommons.ParameterWrapper;
 import nemmcommons.TickArray;
+import nemmcommons.YearArray;
 import nemmprocesses.ShortTermMarket;
 import inputreader.ReadExcel;
 
@@ -181,6 +182,7 @@ public final class TheEnvironment {
 	
 	public static class GlobalValues {
 		
+		public static YearArray averageannualcertprice;	 //Average annual cert price for the years passed.Updated every year.
 		public static TickArray certificateprice;
 		public static double currentmarketprice;
 		public static double RRRcorrector;  			 //Corrector for the project specific RRR. Initially set, then altered by randomness
@@ -235,6 +237,7 @@ public final class TheEnvironment {
 			
 			//Initiating globale values consisting of public market information
 			certificateprice = new TickArray();
+			averageannualcertprice = new YearArray();
 			currentmarketprice = ParameterWrapper.getpriceexpectation();			//This is the initial expected short term price at simulation start.
 			avrhistcertprice = currentmarketprice;									//Initially
 			currentinterestrate = ParameterWrapper.getinitialinterestrate();
@@ -346,8 +349,17 @@ public final class TheEnvironment {
 		
 		public static void annualglobalvalueupdate() {
 			RRRcorrector = Math.max(1,(RRRcorrector - 1*0.03));				//Corrector redution to take account the learning and FMA.
-			double a = RRRcorrector;
-			int f = 1;
+			//update averageannualcertprice
+			//Current tick is "january", hence we need to average the price from t-13 to t-1
+			double lastyearavrcertprice = 0;
+			int startindex = theCalendar.getCurrentTick() - (theCalendar.getNumTradePdsInYear());
+			for (int i = 0; i < theCalendar.getNumTradePdsInYear();i++) {
+				lastyearavrcertprice = lastyearavrcertprice + certificateprice.getElement(startindex+i);
+			}
+			lastyearavrcertprice = lastyearavrcertprice/theCalendar.getNumTradePdsInYear();
+			averageannualcertprice.setElement(lastyearavrcertprice, theCalendar.getTimeBlock(startindex).year);
+	
+			
 		}
 		
 		public static void updateavrhistoriccertprice() {

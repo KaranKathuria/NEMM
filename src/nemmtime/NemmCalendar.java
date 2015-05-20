@@ -59,7 +59,7 @@ public class NemmCalendar {
 		return (int) RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 	}
 	
-	public int getCurrentYear() {
+	public int getCurrentYear() { //returns the year (e.g 2025) not 13.
 		return startYear + getTimeBlock((int) RunEnvironment.getInstance().getCurrentSchedule().getTickCount()).year;
 	}
 

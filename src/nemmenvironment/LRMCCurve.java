@@ -68,7 +68,7 @@ public class LRMCCurve {
 		} else {
 		
 		for (PowerPlant PP : tempendogenousprojects) {														//Loop creating and adding all relevant project info to the supplycurve.
-			double usedRRR = PP.getspecificRRR() * TheEnvironment.GlobalValues.RRRcorrector;				//RRR is the specific corrected RRR with a value.
+			double usedRRR = PP.getspecificRRR() * TheEnvironment.GlobalValues.RRRcorrector;				//RRR is the specific corrected RRR with a value. Why the corrector? Think is to take accont or the "fake" improvment years.
 			PP.calculateLRMCandcertpriceneeded((yearsahead-PP.getminconstructionyears()), usedRRR, 3);		//Calculates the LRMC and needed Certificateprice based on the given year minus construction years due to the methods inputdefinitio.
 			Curvepair cp = new Curvepair(PP.getname(), PP.getLRMC(), PP.getcertpriceneeded(), PP.getestimannualprod());
 			projectsupplycurve.add(cp);

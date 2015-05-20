@@ -306,14 +306,13 @@ public class CompanyAgent extends ParentAgent {
 			projectprocessandidylimit = sizecode*AllVariables.preprojectandidentifyconstraint;	//func of sizecode: = 3*sizecode. Problem as sizecode only defines size in one region. whereas //Max number of project getting identifyed or in proecss.
 			constructionlimit = AllVariables.constructionconstraints;					//Max number of projects getting in from moving to construction. 
 			totalcapacitylimit = 100000000;
-			//1=invest based on long term price of certs (Fundamental based), 2=Invest based on curren cert price, 3=Invest based on current cert price for two years
+			//1=invest based on long term price of certs (pure Fundamental based), 2=Invest on pure fundamental and some price, 3=Invest based on curren cert price and some fundamental, 4=Invest based on current cert price for two years
 			double investdecrand = RandomHelper.nextDoubleFromTo(0.0, AllVariables.developerinvestmenttypedistribution[3]);
 			double a = investdecrand;
 					if (investdecrand <= AllVariables.developerinvestmenttypedistribution[0]) {
 						investmentdecisiontype = 1;
 						fundamentaleasefactor = 1;
 						priceeasefactor = 500;
-						double t = priceeasefactor;
 						}
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution[0] && investdecrand <= AllVariables.developerinvestmenttypedistribution[1]) {
 						investmentdecisiontype = 2;
@@ -417,7 +416,8 @@ public class CompanyAgent extends ParentAgent {
 	private ArrayList<PowerPlant> myPowerPlants = new ArrayList<PowerPlant>();						//List of PowerPlants owned by the company regardless of project stage.
 	private ArrayList<PowerPlant> myProjects = new ArrayList<PowerPlant>();							//List of all projects owned by the company regardless of project stage. Trashed projects are not included.
 	private int regionpartcode;																		//Code indication which region the Company is active in. 1=Norway (region1), 2=Norway and Sweden, 3=Sweden. This number has a connection with AA sizecode, hence a company with big size and reigonpartcode=2 is large in both regions.
-	private double investmentRRR; 																	//Company specific cost of capital. Used to evaluate investment decisions. Defined before tax.
+	private double investmentRRR; 									//Company specific cost of capital adjuster (this times the project specific is the cost of capital) Defined before tax. 
+																	//Note that this is NEVER used as the Fundamental builders use project specific RRR to determine buildout, and price based use project specific as well due to complications in "Startconstrucion" method (Project development). The difference WACC is captured in the 
 	private double earlystageRRR;																	//Required rate off return for project cut-off on earl-stage projects. Defined before tax. Higher than InvestmentRRR as the risk is higher.
 	
 	//default constructor not in use.
