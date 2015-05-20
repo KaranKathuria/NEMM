@@ -3,6 +3,8 @@
 
 import nemmagents.CompanyAgent;
 import nemmcommons.TickArray;
+import java.lang.Object;
+import org.apache.poi.ss.formula.functions.Irr;
 
 
 public class PowerPlant implements Cloneable{
@@ -24,6 +26,7 @@ public class PowerPlant implements Cloneable{
 	private int minyearinprocess;			//Projects specific. Min number of years this projects needs in process (preconstruction and concession)
 	private int minconstructionyears;		//Minimum number of years this project needs in construction. Currently this is used without variation, only adding starttick randomly. 
 	private double specificRRR;				//Technology, regional and Capex- adjuster RRR before tax. For practiacl reasons this is simply made project specific.
+	private double ownRRR;				//Projectspecific RRR adjusted for 
 	
 	private TickArray myProduction; 		//Future production (good given) used in simulations. Hence this is adjusted for the specific scenario ran.
 	//NOT NEEDED private TickArray mynormalproduction;	//The initally read in production not adjusted for scenario spesific wind years. Stored as an intiall duplicate in order to "rewind" the "myProduction" table after a scenario have been ran.
@@ -32,7 +35,9 @@ public class PowerPlant implements Cloneable{
 	//Variables calculated/used in sumulation
 	private int endyear; 					//THis is the last year eligable for certificates (if 2020, it gets certs for that year).
 	private double LRMC; 					//Long run marginal cost for this powerplant build at a given year. This is update for each annual update.
+	private double LRMC_ownRRR;
 	private Double certpriceneeded;			//Reason for having this field is that the projects cannot be sorted by LRMC as the region defines when its certificatesobligated.
+	private Double certpriceneeded_ownRRR;	//As above but with own RRR adjusted project specific RRR. use to evaluate investment in case of pricebased investmetns.
 	private int starttick;					//The month/tickid of a year that the production starts (the tick is in the starting year).
 	private int endtick; 					//The tickid of a year that the certificate elgiable production ends (including this tick).
 	private int yearsincurrentstatus;		//Annual counter counting years in current status for the purpose of deciding if its ready for concession.
@@ -296,6 +301,50 @@ public class PowerPlant implements Cloneable{
 
 		//Calculating the needed price for certificates, with the correct assumptions of when the plant is eligable and the simulation-current local power price. T
 		certpriceneeded = (LRMC*NPVfactor_lifetime - usedpowerprice*NPVfactor_lifetime) / NPVfactor_certyears; //Drawback: IS the powerprice assumption okey?
+	}
+	
+	public void calculateLRMCandcertpriceneeded_ownRRR(int currentyear, int powerpricecode) {
+		//Not sure there is a good reason for not sending the powerprice directly in the method (KK). One advantage is that its implementation is easier to change later.
+		//Current year referes to actual year number (2012..), not YearID (0,1...)
+		double usedRRR = ownRRR;
+		double usedpowerprice = 0;
+		int futureyearspowerprice = 5 + TheEnvironment.theCalendar.getTimeBlock(TheEnvironment.theCalendar.getCurrentTick()).year;		//5 indication 5 years horizont from when either the investment decision or the FMA i ran. That is, all Powerprices are regarded from the year ran.
+		//Notice that the above future price uses the current (simulation tick) +5, and not the currentyear +5. Arguably beacuse this (simulation) +5 is the best knowledge when doing it. Hence the FMA does not have full foresight on powerprice.
+		
+		//Switch taking care of which powerprice assumption to use in the LRMC. 1=Current power price, 2=The Developers, companys, analysisagent expected power price in 5 years. 3=The 5 year fowardprice.
+		switch (powerpricecode) {
+			case 1: {usedpowerprice = myRegion.getMyPowerPrice().getValue(); break;}					//Use current powerprice
+			case 2: {if (myRegion == TheEnvironment.allRegions.get(0)) {								//Use the MAA expected powerprice in 5 years from now. Now as in simulation tick
+						usedpowerprice = myCompany.getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getExpectedpowerpricenorway(futureyearspowerprice);}
+					else{usedpowerprice = myCompany.getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getExpectedpowerpricesweden(futureyearspowerprice);}
+			break;}
+			case 3: {double temp = ((myRegion.getMyForwardPrice(futureyearspowerprice-5).getValue(1) + myRegion.getMyForwardPrice(futureyearspowerprice-5).getValue(2) 
+					+ myRegion.getMyForwardPrice(futureyearspowerprice-5).getValue(3) + myRegion.getMyForwardPrice(futureyearspowerprice-5).getValue(4))
+					+ (myRegion.getMyForwardPrice(futureyearspowerprice-5).getValue(5)*16))/20;
+					usedpowerprice = temp;
+					break;
+			
+			}	//Use the market forwardprices for the 5 following years, and then the 5th year price in the next 16.}
+		}
+
+		int yearsoftechnologyimprovment = currentyear - TheEnvironment.theCalendar.getStartYear();
+		
+		//Her is the certificatelogic
+		int yearswithcertificates = Math.min(15,(2035-(currentyear+minconstructionyears)));				//Notice the "+minconstructionyears" for taking account of buidingperiod when finding the certeligable period.
+			if (!myRegion.getcertificatespost2020flag() && (currentyear+minconstructionyears) > myRegion.getcutoffyear()) { //If certflag is false and years is larger than cuoffyear.
+					yearswithcertificates = 0;}
+		
+		double newCapex = capex*Math.pow((1-annualcostreduction),yearsoftechnologyimprovment);			//Note that the Capex value of the powerplant is not set/updated.
+		
+		double NPVfactor_lifetime = calculateNPVfactor(lifetime, usedRRR);
+		
+		LRMC_ownRRR = (newCapex/(NPVfactor_lifetime*this.getestimannualprod()))+this.opex; 					//Calculates the average nominal income needed per MWh (Certprice + Powerprice) for the project lifetime.
+		
+		//Calculating the needed average cert price is not trival as the certificates are only valid for a subperiod of the lifetime. First take into account the yearsofcertificates
+		double NPVfactor_certyears = calculateNPVfactor(yearswithcertificates, usedRRR);
+
+		//Calculating the needed price for certificates, with the correct assumptions of when the plant is eligable and the simulation-current local power price. T
+		certpriceneeded_ownRRR = (LRMC_ownRRR*NPVfactor_lifetime - usedpowerprice*NPVfactor_lifetime) / NPVfactor_certyears; //Drawback: IS the powerprice assumption okey?
 	}
 	
 	public void updateearlieststartyear() {

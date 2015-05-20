@@ -124,8 +124,9 @@ public class ProjectDevelopment {
 			//The critical investment decision.
 			while ((constructionproject_counter < maxnumberofconstrucprojects) && (capacitydeveloped_counter < maxcapacitydeveloped) &&  (projects_pointer < potentialprojects )) {
 					double certpriceneedednow = templist.get(projects_pointer).getcertpriceneeded();
+					//double certpriceneededownRRR = own RRR
 				if ((equivivalentfactor*certpriceneedednow) <= cutoffcertprice) {													//Starting with the best, if its worth investing...
-					
+					//Add a if statement for the own RRR. that filsters out the price issue.
 					//Okey. If its worth investing now, is it more lucrative to postpond the investment?
 					double postponedRRR = RRRpostponedtemplist.get(projects_pointer);
 					templist.get(projects_pointer).calculateLRMCandcertpriceneeded(currentyear+AllVariables.minpostpondyears, postponedRRR, 3);
@@ -139,12 +140,12 @@ public class ProjectDevelopment {
 					capacitydeveloped_counter = capacitydeveloped_counter + thisplant.getCapacity();
 					constructionproject_counter = constructionproject_counter + 1;
 					
-					thisplant.setstatus(2);														//Changing status for the project (from 3=awaitingid to 2=underconstruction).
-			//New	//thisplant.setstatus(9);										
-					thisplant.setyearsincurrentstatus(0);  										//Setting this for consistency for project reaching new stag. This value is note used in later stages.
-					thisplant.setstartyear(currentyear + thisplant.getminconstructionyears());	//Adding a startdate. Notice that this is done here rather than in the finalizeprojects.
-					TheEnvironment.projectsunderconstruction.add(thisplant);								//Add to the Environment list of projects in process.
-					TheEnvironment.projectsawaitinginvestmentdecision.remove(thisplant);		//Removing from Environment list of awaitinginvestmentsdecisions
+					//thisplant.setstatus(2);														//Changing status for the project (from 3=awaitingid to 2=underconstruction).
+					thisplant.setstatus(9);										
+				//	thisplant.setyearsincurrentstatus(0);  										//Setting this for consistency for project reaching new stag. This value is note used in later stages.
+				//	thisplant.setstartyear(currentyear + thisplant.getminconstructionyears());	//Adding a startdate. Notice that this is done here rather than in the finalizeprojects.
+				//	TheEnvironment.projectsunderconstruction.add(thisplant);								//Add to the Environment list of projects in process.
+				//	TheEnvironment.projectsawaitinginvestmentdecision.remove(thisplant);		//Removing from Environment list of awaitinginvestmentsdecisions
 					
 					//No need for updating the developer number of projects as this is done in another method after this.
 					projects_pointer++;}
@@ -156,21 +157,26 @@ public class ProjectDevelopment {
 			
 					
 		}
-		/*
+		
 		//Then something that uses the normalproduction of the plants added and the cutoff to determine the need for annual production. Then uses this to limit the total buildout.
-		double tempannualprodneeded=0;
+		double tempannualprodneeded=0;															//New annual production needed "fundamentally"
+		double tempsdeveloperswantstobuild=0;													//New annual production the developers wants and can build out. Notice that this can be less or higher then above.
+		
 		for (PowerPlant PP : temp_allprojectthatcanbebuild) {
 			if (PP.getcertpriceneeded() < FundamentalMarketAnalysis.getMPE()) {					//Notice the use of MPE rather then DAs mediumterm. MPE is the unerrored one, hence more correct.
 			tempannualprodneeded = tempannualprodneeded + PP.getestimannualprod();}
+			if (PP.getstatus() == 9) {
+			tempsdeveloperswantstobuild = tempsdeveloperswantstobuild + PP.getestimannualprod();}
 		}
 		
-		//Then for all the potential project wanted to be build, that 
+		//Then we loop through all that can be build out, ensure that we do not "gold rush" and only build out if status = 9 (the developer actually wants to build it).
 		double tempbuildout = 0;
 		Collections.shuffle(temp_allprojectthatcanbebuild);
 		for (PowerPlant PP : temp_allprojectthatcanbebuild) {
-			if (tempbuildout <= tempannualprodneeded) {
+			if (tempbuildout <= tempannualprodneeded * AllVariables.buildoutaggressivness) {	//Continue to build out as long as there is neeed and aggressivness i allowed. 
 				if (PP.getstatus() == 9) {
 					tempbuildout = tempbuildout + PP.getestimannualprod();
+					PP.calculateLRMCandcertpriceneeded(currentyear, PP.getspecificRRR(), 3);	//This to ensure that it the correct numbers stored in LRMC and Certpriceneeded when its build. For output purposes.
 					PP.setstatus(2);
 					PP.setyearsincurrentstatus(0);  										//Setting this for consistency for project reaching new stag. This value is note used in later stages.
 					PP.setstartyear(currentyear + PP.getminconstructionyears());			//Adding a startdate. Notice that this is done here rather than in the finalizeprojects.
@@ -178,10 +184,12 @@ public class ProjectDevelopment {
 					TheEnvironment.projectsawaitinginvestmentdecision.remove(PP);			//Removing from Environment list of awaitinginvestmentsdecisions
 			}
 		}
+		else {
+		PP.setstatus(3);																	//For those whom are outside remove back to status 3 (also those that er 3 where never altered.
 		}
-		//Also need to remove the other ones with status 9 back to status 3
-		//Mark out the initial.
-		*/
+		}
+
+		
 }
 	
 	//Method updating projects to receive concession from status 4=in process to 3=awaiting investment decision. 
