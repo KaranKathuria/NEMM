@@ -14,9 +14,11 @@ import nemmenvironment.PowerPlant;
 import nemmenvironment.ProjectRRR;
 import nemmenvironment.Region;
 import nemmenvironment.TheEnvironment;
+import nemmenvironment.Scenario;
 import nemmtime.NemmCalendar;
 
 //import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 
 
 
@@ -45,9 +47,11 @@ public class ReadExcel {
 	 private static int technologiesnumber;
 	 private static int regionsnumber;
 	 private static int genprofileentries;
+	 private static int numbscenarios;
 	 private static int ticks;
 	 private static int startyear;
 	 private static int endyear;
+	 private static int years;
 	 private static int numobpdinyear;
 	 private static int numtrpdinyear;
 	 private static PowerPlant[] plants;
@@ -60,7 +64,8 @@ public class ReadExcel {
  			filePath = working_directory + File.separator + "NEMM_testdata.xls"; 
  		}
  		else {
- 			filePath = working_directory + File.separator + "Q12015_NEMM_Inputdata.xlsx";//"NEMM_realdata.xlsx"; // "Q12015_NEMM_Inputdata_backtest.xlsx"
+ 			filePath = working_directory + File.separator + "Q22015_NEMM_Inputdata.xlsx";//"NEMM_realdata.xlsx"; // "Q12015_NEMM_Inputdata_backtest.xlsx"
+ 			
  		}
 
  	}
@@ -121,7 +126,7 @@ public class ReadExcel {
 			Sheet expectedcertdemand_sheet = workbook.getSheet("Expected certdemand");	
 			//Sheet powerDemand_sheet = workbook.getSheet("powerDemand");		Not read in.
 			Sheet powerPrice_sheet = workbook.getSheet("Power price");
-			int years = endyear-startyear+1;
+			years = endyear-startyear+1;
 			
 			for(int j = 0; j < regionsnumber; j++){
 				double[] tempcertdem = new double[ticks];
@@ -224,45 +229,84 @@ public class ReadExcel {
 	    
 	    
 	}
-		public static void ReadRRR() {
-			
-			try{      
-				
-
-				Workbook workbook = WorkbookFactory.create(new File(filePath));
-				
-				// Read number of plants and technologies
-				Sheet RRR_sheet = workbook.getSheet("RRR");
-				
-				for (int j = 0; j < 16; j++) {
-					
-					int newregion_ID = (int) RRR_sheet.getRow(2+j).getCell(0).getNumericCellValue();
-					int newtech_ID = (int) RRR_sheet.getRow(2+j).getCell(1).getNumericCellValue();
-					int sizecat = (int) RRR_sheet.getRow(2+j).getCell(2).getNumericCellValue();
-					int costcat = (int) RRR_sheet.getRow(2+j).getCell(3).getNumericCellValue();
-					double RRR = RRR_sheet.getRow(2+j).getCell(4).getNumericCellValue();
-				
-				
-			ProjectRRR PR = new ProjectRRR(TheEnvironment.allRegions.get(newregion_ID-1), newtech_ID, sizecat, costcat, RRR); 
-			TheEnvironment.alladjustedRRR.add(PR);
-				}					
-						
-			}catch(Exception e) {
-		        System.out.println("!! Bang RRR Error !! xlRead() : " + e );
-		    }
-		}
+	public static void ReadRRR() {
 		
-	/*	public static void ReadScenarios() {			//TBD Anders. Leser inn alle senarioene. For spesifikasjon av scenarioene, se Scenario.java.
+		try{      
 			
-			try{ 
+
+			Workbook workbook = WorkbookFactory.create(new File(filePath));
+			
+			// Read number of plants and technologies
+			Sheet RRR_sheet = workbook.getSheet("RRR");
+			
+			for (int j = 0; j < 16; j++) {
 				
-				Workbook workbook = WorkbookFactory.create(new File(filePath));
+				int newregion_ID = (int) RRR_sheet.getRow(2+j).getCell(0).getNumericCellValue();
+				int newtech_ID = (int) RRR_sheet.getRow(2+j).getCell(1).getNumericCellValue();
+				int sizecat = (int) RRR_sheet.getRow(2+j).getCell(2).getNumericCellValue();
+				int costcat = (int) RRR_sheet.getRow(2+j).getCell(3).getNumericCellValue();
+				double RRR = RRR_sheet.getRow(2+j).getCell(4).getNumericCellValue();
+			
+			
+				ProjectRRR PR = new ProjectRRR(TheEnvironment.allRegions.get(newregion_ID-1), newtech_ID, sizecat, costcat, RRR); 
+				TheEnvironment.alladjustedRRR.add(PR);
+			}					
+					
+		}catch(Exception e) {
+	        System.out.println("!! Bang RRR Error !! xlRead() : " + e );
+	    }
+	}
+	
+	// ALE 2015-05-13: Read scenario data
+	public static void ReadScenarios() {			// Leser inn alle senarioene. For spesifikasjon av scenarioene, se Scenario.java.
+			
+		try{ 
+			Workbook workbook = WorkbookFactory.create(new File(filePath));
+			
+			Sheet ctr_sheet = workbook.getSheet("Control");
+			numbscenarios = (int) ctr_sheet.getRow(1).getCell(2).getNumericCellValue();
+			
+			Sheet scenario_sheet = workbook.getSheet("Scenarios");
+			
+			for(int j = 0; j < numbscenarios; j++){
+				Scenario newscen = new Scenario();
 				
-				// Read number of plants and technologies
-				Sheet RRR_sheet = workbook.getSheet("XXX");
+				String newname = scenario_sheet.getRow(0).getCell(1+j).getStringCellValue();
+				// Did not find a set method for scenario name
+				// newscen.setname(newname);
+				
+				
+				double[] newprodfactor = new double[years];
+				for (int k = 0; k < years; k++){
+					newprodfactor[k] = scenario_sheet.getRow(4+k).getCell(1+j).getNumericCellValue();
+				}
+				newscen.setWindyearmultiplier(newprodfactor);
+				
+				int numb_price_entries = 47; // hardcoded for now
+				
+				double[] newpricereg1 = new double[numb_price_entries];
+				double[] newpricereg2 = new double[numb_price_entries];
+				for(int k = 0; k < numb_price_entries; k++){
+					newpricereg1[k] = scenario_sheet.getRow(7+years+k).getCell(1+j).getNumericCellValue();
+					newpricereg2[k] = scenario_sheet.getRow(7+years+k).getCell(1+j).getNumericCellValue();
+				}
+				newscen.setAnnualpowerpricerregion1(newpricereg1);
+				newscen.setAnnualpowerpricerregion2(newpricereg2);
+				
+				// how to include a new scenario?
+				TheEnvironment.allwindandppricescenarios.add(newscen);
+				//System.out.println("Scen_1 : price 1 = " + newscen.getAnnualpowerpricerregion1().toString() + ", price 2 = "+newscen.getAnnualpowerpricerregion2().toString()+", wind mult = " + newscen.getWindyearmultiplier().toString() );
 			}
+
 			
-	*/
+			
+		}catch(Exception e){
+	        System.out.println("!! Bang RRR Error !! xlRead() : " + e );
+	    }
+		
+		
+			
+	}
 }
  
 
