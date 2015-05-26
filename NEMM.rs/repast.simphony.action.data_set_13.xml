@@ -6,13 +6,13 @@
   <inclBatchRun>true</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
-    <start>0.0</start>
-    <interval>12.0</interval>
+    <start>287.0</start>
+    <interval>0.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
-    <frequency>REPEAT</frequency>
-    <hashCode>1386000012</hashCode>
+    <frequency>ONE_TIME</frequency>
+    <hashCode>459077507</hashCode>
   </scheduleParams>
   <atEnd>true</atEnd>
   <methodDataSources class="linked-hash-map">
@@ -54,6 +54,94 @@
         <id>LRMC</id>
         <className>nemmenvironment.PowerPlant</className>
         <methodName>getLRMC</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>IRR</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>IRR</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getIRR</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>certpriceneeded_ownRRR</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>certpriceneeded_ownRRR</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getcertpriceneeded_ownRRR</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>earlieststartyear</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>earlieststartyear</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getearlieststartyear</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>endyear</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>endyear</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getendyear</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>estimannualprod</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>estimannualprod</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getestimannualprod</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>startyear</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>startyear</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getstartyear</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>projectRRR</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>projectRRR</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getprojectRRR</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>specificRRR</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>specificRRR</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getspecificRRR</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>StartTick</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>StartTick</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getStartTick</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>endtick</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>endtick</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getendtick</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>myinvestmentdecisiontype</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>myinvestmentdecisiontype</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getmyinvestmentdecisiontype</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

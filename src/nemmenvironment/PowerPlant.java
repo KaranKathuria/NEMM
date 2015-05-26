@@ -3,8 +3,13 @@
 
 import nemmagents.CompanyAgent;
 import nemmcommons.TickArray;
+import nemmcommons.YearArray;
+
 import java.lang.Object;
+
 import org.apache.poi.ss.formula.functions.Irr;
+import cern.jet.math.Functions;
+import org.apache.poi.ss.formula.*;
 
 
 public class PowerPlant implements Cloneable{
@@ -14,7 +19,7 @@ public class PowerPlant implements Cloneable{
 	private Region myRegion;
 	private CompanyAgent myCompany;			//Belonging CompanyAgent for both the developer and the Producer reciving the power plant when in operation (status=1).
 	private int status; 					//Integer indicating which status the project/powerplant is in (1=in operation, 2=under construction, 3=waiting investment decision, 4=in process, 5=identifyed, 6=generic)
-	private int capacity;
+	private double capacity;
 	private double loadfactor;
 	private int technologyid; 				//Technology could also be a object/class in itself later if needed
 	private int lifetime; 					//Number of years expected as lifetime for project from startdate, that is even without certs. For Powerpland part of "overgangsordningen", the year indicates when they are out of the scheme.
@@ -26,26 +31,26 @@ public class PowerPlant implements Cloneable{
 	private int minyearinprocess;			//Projects specific. Min number of years this projects needs in process (preconstruction and concession)
 	private int minconstructionyears;		//Minimum number of years this project needs in construction. Currently this is used without variation, only adding starttick randomly. 
 	private double specificRRR;				//Technology, regional and Capex- adjuster RRR before tax. For practiacl reasons this is simply made project specific.
-	private double ownRRR;				//Projectspecific RRR adjusted for 
+	private YearArray annualproduction;		//The Actual annual production of the powerplant (given, not estimated).
 	
 	private TickArray myProduction; 		//Future production (good given) used in simulations. Hence this is adjusted for the specific scenario ran.
 	//NOT NEEDED private TickArray mynormalproduction;	//The initally read in production not adjusted for scenario spesific wind years. Stored as an intiall duplicate in order to "rewind" the "myProduction" table after a scenario have been ran.
 	private TickArray ExpectedProduction;	//Expected production. This is the amount of certs the plant is expected to generate and used by the owners to estimate. 
 	
 	//Variables calculated/used in sumulation
-	private int endyear; 					//THis is the last year eligable for certificates (if 2020, it gets certs for that year).
+	private int endyear; 					//THis is the last year eligable for certificates (if 2020, it gets certs for parts of this year (dependent on tick)).
 	private double LRMC; 					//Long run marginal cost for this powerplant build at a given year. This is update for each annual update.
 	private double LRMC_ownRRR;
 	private Double certpriceneeded;			//Reason for having this field is that the projects cannot be sorted by LRMC as the region defines when its certificatesobligated.
 	private Double certpriceneeded_ownRRR;	//As above but with own RRR adjusted project specific RRR. use to evaluate investment in case of pricebased investmetns.
-	private int starttick;					//The month/tickid of a year that the production starts (the tick is in the starting year).
-	private int endtick; 					//The tickid of a year that the certificate elgiable production ends (including this tick).
+	private int starttick;					//The month/tickid of a year that the production starts (the tick is in the starting year). production from this tick (included).
+	private int endtick; 					//The tickid of a year that the certificate elgiable production ends (not including this tick).
 	private int yearsincurrentstatus;		//Annual counter counting years in current status for the purpose of deciding if its ready for concession.
 	private double IRR; 					//Project IRR
 	
 	public PowerPlant() {}
 	
-	public PowerPlant(String newname, Region newregion, int newstatus, int newcapacity, double newloadfactor, int newtechnology, 
+	public PowerPlant(String newname, Region newregion, int newstatus, double newcapacity, double newloadfactor, int newtechnology, 
 					  int newlifetime, int newstartyear, double newcapex, double newopex, double newannualcostreduction, int newminyearinprocess, int newminconstructionyears) {
 		name = newname;
 		myRegion = newregion;
@@ -78,6 +83,7 @@ public class PowerPlant implements Cloneable{
 		myProduction = new TickArray();
 		//mynormalproduction = new TickArray();
 		ExpectedProduction = new TickArray();
+		annualproduction = new YearArray();
 		specificRRR = 0.0;													//Default, but this is updated on the following line.
 		setprojectRRR();
 		
@@ -116,7 +122,7 @@ public class PowerPlant implements Cloneable{
 		this.loadfactor = loadfactor;
 	}
 	
-	public int getCapacity() {
+	public double getCapacity() {
 		return capacity;
 	}
 
@@ -228,6 +234,30 @@ public class PowerPlant implements Cloneable{
 			myProduction.setArray(newProd);
 		}
 	}
+	public void setAllannualProduction(double[] newProd) {	
+		//Method that adds up annual actual production given by input and stores this in a YearArray (annualprodution).
+		int numPoints = newProd.length;
+		int numTicks = TheEnvironment.theCalendar.getNumTicks();
+		
+		if (numPoints==numTicks) {
+			
+		int numticksayear = TheEnvironment.theCalendar.getNumTradePdsInYear();
+		int numberofyears = TheEnvironment.theCalendar.getNumYears();
+		int counter = 0;				//will go from 0 to 287
+			
+			for (int year = 0; year<numberofyears;year++) {								//For years
+				double yearsum = 0;
+
+				for (int ticksayear = 0; ticksayear <numticksayear;ticksayear++ ) {		//For ticks in year
+					yearsum = yearsum + newProd[counter];
+					counter++;
+				}
+			this.annualproduction.setElement(yearsum, year);
+			}
+			
+		}
+	}
+	
 	
 	public void setAllExpectedProduction(double[] newProd) {
 		int numPoints = newProd.length;
@@ -306,7 +336,7 @@ public class PowerPlant implements Cloneable{
 	public void calculateLRMCandcertpriceneeded_ownRRR(int currentyear, int powerpricecode) {
 		//Not sure there is a good reason for not sending the powerprice directly in the method (KK). One advantage is that its implementation is easier to change later.
 		//Current year referes to actual year number (2012..), not YearID (0,1...)
-		double usedRRR = ownRRR;
+		double usedRRR = myCompany.getInvestmentRRR()*this.specificRRR;
 		double usedpowerprice = 0;
 		int futureyearspowerprice = 5 + TheEnvironment.theCalendar.getTimeBlock(TheEnvironment.theCalendar.getCurrentTick()).year;		//5 indication 5 years horizont from when either the investment decision or the FMA i ran. That is, all Powerprices are regarded from the year ran.
 		//Notice that the above future price uses the current (simulation tick) +5, and not the currentyear +5. Arguably beacuse this (simulation) +5 is the best knowledge when doing it. Hence the FMA does not have full foresight on powerprice.
@@ -359,14 +389,49 @@ public class PowerPlant implements Cloneable{
 	}
 	}
 	
-	public void caclculateIRR() {
-		//Method ran on last tick, or if tick is larger then end-tick, the income and the outcost for the lifetime with certs to calculate profitability. 
-		//this can be done by using the cert price needed (which is LRMC per cert, and then minus actual power price and cert price
-		//A help method would be to calcuale an average annual cert price every year as first thing. 
+	public void calculateIRR() {
+		int currenttick = TheEnvironment.theCalendar.getCurrentTick();
+		int yearsoftechnologyimprovment = (this.getstartyear()) - TheEnvironment.theCalendar.getStartYear();						//Improvment untill start-year.
 		
-		//Basically. Take the opex and capax costs, the power price income and the cert price income, with regards to the tehnology improvment and calculate this fucker. 
+		if (this.endtick > currenttick) {
+			throw new IllegalArgumentException("Cannot calculate profitability or IR if the plant is not ended);");}	
 		
-		//this method can then be called by a iterator-method called at last tick, or every year but just running for those whom end tick is passed. 
+		if (opex != 0 && capex !=0 ) {			//Only for endogenous projects which as opex and capex		
+		//Cash flows
+		double newCapex = capex*Math.pow((1-annualcostreduction),yearsoftechnologyimprovment);	
+		double[] annualincomefromcerts = new double[this.lifetime];				//NB! Lifetime even though its not the lifetime length which qualifies for certs.
+		double[] annualincomefrompower = new double[this.lifetime];
+		double[] annualopex = new double[this.lifetime];
+		double[] totalcashflow = new double[this.lifetime+1];					//total. +1 to take account for the Capex
+		totalcashflow[0] = -newCapex;											//negative
+		
+		int iterations = this.endyear-(this.startyear)+1; 						//Number of years with cert income. 
+		int indexyear = startyear - TheEnvironment.theCalendar.getStartYear();	//E.g 2015 - 2012 = 3;
+		//Production
+		for (int i = 0; i < iterations; i++) { //E.g from 0 and even 14, thats 15 iterations. We calculate everything from januar startyear, hence last year can be cut as first year ticks are added. (2015 - 2030, but we also count whole 2015, hence 2015-2029. thats start + 14)
+			annualincomefromcerts[i] = this.annualproduction.getElement(indexyear+i) * TheEnvironment.GlobalValues.averageannualcertprice.getElement(indexyear+i);
+			annualincomefrompower[i] = this.annualproduction.getElement(indexyear+i) * this.myRegion.getMyPowerPrice().getValue(indexyear+i);
+			annualopex[i] = this.annualproduction.getElement(indexyear+i) * this.opex;
+		}
+		for (int i = iterations; i < annualincomefrompower.length; i++ ) {
+			//For the years after certificate year, it takes the last power price and the normal year production to calculate power-income and opex-costs. THis is an approximation!
+			annualincomefrompower[i] = this.myRegion.getMyPowerPrice().getValue(indexyear+iterations-1) * this.getestimannualprod() ; //Minor estimate. For years after the plants does not recive certs, it takes the last power price (cert elgiable year) and assumes it to be flat. It shoudl take the once given in the input. But how much does it mean in practive?
+			annualincomefromcerts[i] = 0;											//If plant is buildt in 2012 and not-cert-eligb in 2028, it not assumes the same power price in the end of lifetime as 2028, not the actual in 2029, 2030.. this simplifacation in order to avoid to many ifs. Also it assumes normalproduction.
+			annualopex[i] = this.getestimannualprod() * this.opex;					//For years after 2035, the opex calculation assumes the production to be normal.
+		}
+		
+		for (int i = 1; i < totalcashflow.length; i++ ) {
+			totalcashflow[i] = annualincomefrompower[i-1] + annualincomefromcerts[i-1] - annualopex[i-1];
+		}
+		
+		this.IRR = Irr.irr(totalcashflow, 0.05);	
+		double test = IRR;
+		YearArray test1 = TheEnvironment.GlobalValues.averageannualcertprice;
+		int a =2;
+		}
+		
+		
+		
 	}
 	public static double calculateNPVfactor(int years, double RRR) {
 		double NPVfactor = 0;
@@ -385,13 +450,19 @@ public class PowerPlant implements Cloneable{
 	public double getestimannualprod() {return this.loadfactor*this.capacity*8760;}
 	public double getLRMC() {return LRMC;}
 	public Double getcertpriceneeded() {return certpriceneeded;}
+	public Double getcertpriceneeded_ownRRR() {return certpriceneeded_ownRRR;}
+
 	public String getname() {return name;}
 	public int gettechnologyid() {return technologyid;}
 	public String getmyregion() {return myRegion.getRegionName();}
 	public String getmyCompany() {return myCompany.getname();}
-	public double getmyCompanyRRR() {return myCompany.getInvestmentRRR();}
+	public double getmyCompanyRRR() {return myCompany.getInvestmentRRR()*specificRRR;}
 	public double getprojectRRR() {return this.specificRRR;}		//Project RRR (given independent of developer).
-	public int getmyinvestmentdecisiontype() {return myCompany.getdeveloperagent().getinvestmentdecisiontype();} //Returns the investment decision type for this agent.
+	public int getmyinvestmentdecisiontype() {if (myCompany.getdeveloperagent() != null) {
+		return myCompany.getdeveloperagent().getinvestmentdecisiontype();}
+	else {return 0;} //Returns the investment decision type for this agent.
+	}
+	public double getIRR() {return this.IRR;}
 	
 }
 	

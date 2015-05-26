@@ -177,7 +177,7 @@ public class ReadExcel {
 				for(int j = 0; j < plantsnumber; j++){
 					String newname = plant_sheet.getRow(3+j).getCell(1).getStringCellValue();
 					int newregion_ID = (int) plant_sheet.getRow(3+j).getCell(15).getNumericCellValue();
-					int newcapacity = (int) plant_sheet.getRow(3+j).getCell(3).getNumericCellValue();
+					double newcapacity = plant_sheet.getRow(3+j).getCell(3).getNumericCellValue();
 					double newloadfactor = plant_sheet.getRow(3+j).getCell(4).getNumericCellValue();
 					int newtechnology = (int) plant_sheet.getRow(3+j).getCell(16).getNumericCellValue();
 					int newstatus = (int) plant_sheet.getRow(3+j).getCell(6).getNumericCellValue();
@@ -218,8 +218,9 @@ public class ReadExcel {
 					}
 					//Add production in form of tick array
 					pp.setAllProduction(tempproduction);
-					//Add all expected production to tick array
 					pp.setAllExpectedProduction(expproduction);
+					pp.setAllannualProduction(tempproduction);
+					//Add all expected production to tick array
 
 				}
 				
@@ -272,8 +273,7 @@ public class ReadExcel {
                         Scenario newscen = new Scenario();
                         
                         String newname = scenario_sheet.getRow(0).getCell(1+j).getStringCellValue();
-                        // Did not find a set method for scenario name
-                        // newscen.setname(newname);
+                        newscen.setname(newname);
                         
                         
                         double[] newprodfactor = new double[years];

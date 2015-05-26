@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Scenario>
-<repast.simphony.action.file_sink context="NEMM" file="repast.simphony.action.file_sink_0.xml" />
+<repast.simphony.dataLoader.engine.ClassNameDataLoaderAction context="NEMM" file="repast.simphony.dataLoader.engine.ClassNameDataLoaderAction_0.xml" />
 <repast.simphony.action.data_set context="NEMM" file="repast.simphony.action.data_set_1.xml" />
 <repast.simphony.action.data_set context="NEMM" file="repast.simphony.action.data_set_2.xml" />
 <repast.simphony.action.data_set context="NEMM" file="repast.simphony.action.data_set_3.xml" />
@@ -14,8 +14,8 @@
 <repast.simphony.action.data_set context="NEMM" file="repast.simphony.action.data_set_11.xml" />
 <repast.simphony.action.data_set context="NEMM" file="repast.simphony.action.data_set_12.xml" />
 <repast.simphony.action.data_set context="NEMM" file="repast.simphony.action.data_set_13.xml" />
-<repast.simphony.dataLoader.engine.ClassNameDataLoaderAction context="NEMM" file="repast.simphony.dataLoader.engine.ClassNameDataLoaderAction_14.xml" />
-<repast.simphony.action.time_series_chart context="NEMM" file="repast.simphony.action.time_series_chart_15.xml" />
+<repast.simphony.action.file_sink context="NEMM" file="repast.simphony.action.file_sink_14.xml" />
+<repast.simphony.action.file_sink context="NEMM" file="repast.simphony.action.file_sink_15.xml" />
 <repast.simphony.action.time_series_chart context="NEMM" file="repast.simphony.action.time_series_chart_16.xml" />
 <repast.simphony.action.time_series_chart context="NEMM" file="repast.simphony.action.time_series_chart_17.xml" />
 <repast.simphony.action.time_series_chart context="NEMM" file="repast.simphony.action.time_series_chart_18.xml" />
@@ -24,4 +24,5 @@
 <repast.simphony.action.time_series_chart context="NEMM" file="repast.simphony.action.time_series_chart_21.xml" />
 <repast.simphony.action.time_series_chart context="NEMM" file="repast.simphony.action.time_series_chart_22.xml" />
 <repast.simphony.action.time_series_chart context="NEMM" file="repast.simphony.action.time_series_chart_23.xml" />
+<repast.simphony.action.time_series_chart context="NEMM" file="repast.simphony.action.time_series_chart_24.xml" />
 </Scenario>

@@ -1,0 +1,15 @@
+<repast.simphony.data2.engine.FileSinkDescriptor>
+  <name>Plants and projects</name>
+  <dataSet>Output data: Plants and Projects</dataSet>
+  <delimiter>;</delimiter>
+  <format>TABULAR</format>
+  <sourceIds class="linked-hash-set">
+    <string>tick</string>
+    <string>Name</string>
+    <string>Capacity</string>
+    <string>LRMC</string>
+    <string>IRR</string>
+  </sourceIds>
+  <fileName>Plants and projects</fileName>
+  <addTimeStamp>true</addTimeStamp>
+</repast.simphony.data2.engine.FileSinkDescriptor>

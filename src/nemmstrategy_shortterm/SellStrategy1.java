@@ -13,7 +13,6 @@ import java.util.Random;
 
 import repast.simphony.random.RandomHelper;
 import nemmcommons.AllVariables;
-import nemmcommons.RandomWrapper;
 import nemmstrategy_shortterm.GenericStrategy.*;
 
 

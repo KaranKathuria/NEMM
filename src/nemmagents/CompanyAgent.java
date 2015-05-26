@@ -12,7 +12,6 @@ package nemmagents;
 // opmment
 import java.util.ArrayList;
 import java.util.Random;
-
 import repast.simphony.random.RandomHelper;
 import nemmagents.MarketAnalysisAgent;
 import nemmagents.ParentAgent;
@@ -54,7 +53,6 @@ public class CompanyAgent extends ParentAgent {
 		private double RAR;				//Agentspecific risk adjusted rate used to discount the future price of certificates to floor/roof prices in STM bidding. Not to be confused with the company specific RRR which is the companies investmentcriteria.
 		// ---- GJB Added
 		private int numTicksToEmptyPosition; // number of ticks the agent will try to empty its position over
-		// ---- end GJB Added
 		
 		// Null constructor for ActiveAgent. Should not be used as this does not specify type of agent.
 		public ActiveAgent() {
@@ -312,7 +310,7 @@ public class CompanyAgent extends ParentAgent {
 					if (investdecrand <= AllVariables.developerinvestmenttypedistribution[0]) {
 						investmentdecisiontype = 1;
 						fundamentaleasefactor = 1;
-						priceeasefactor = 500;
+						priceeasefactor = 5000;
 						}
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution[0] && investdecrand <= AllVariables.developerinvestmenttypedistribution[1]) {
 						investmentdecisiontype = 2;
@@ -326,8 +324,8 @@ public class CompanyAgent extends ParentAgent {
 						}
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution[2]){
 						investmentdecisiontype = 4;
-						priceeasefactor = 1;			//Not used.
-						fundamentaleasefactor = 1;		//Not used.
+						priceeasefactor = 1;			
+						fundamentaleasefactor = 5000;		
 						}
 		}
 		
@@ -416,8 +414,8 @@ public class CompanyAgent extends ParentAgent {
 	private ArrayList<PowerPlant> myPowerPlants = new ArrayList<PowerPlant>();						//List of PowerPlants owned by the company regardless of project stage.
 	private ArrayList<PowerPlant> myProjects = new ArrayList<PowerPlant>();							//List of all projects owned by the company regardless of project stage. Trashed projects are not included.
 	private int regionpartcode;																		//Code indication which region the Company is active in. 1=Norway (region1), 2=Norway and Sweden, 3=Sweden. This number has a connection with AA sizecode, hence a company with big size and reigonpartcode=2 is large in both regions.
-	private double investmentRRR; 									//Company specific cost of capital adjuster (this times the project specific is the cost of capital) Defined before tax. 
-																	//Note that this is NEVER used as the Fundamental builders use project specific RRR to determine buildout, and price based use project specific as well due to complications in "Startconstrucion" method (Project development). The difference WACC is captured in the 
+	private double investmentRRR; 									//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR. Company specific cost of capital adjuster (this times the project specific is the cost of capital) Defined before tax. 
+																	//Note that this is NEVER used as the Fundamental builders use project specific RRR to determine buildout, but by price based investors as their investment decision depends on their individual wacc (RRR). 
 	private double earlystageRRR;																	//Required rate off return for project cut-off on earl-stage projects. Defined before tax. Higher than InvestmentRRR as the risk is higher.
 	
 	//default constructor not in use.
