@@ -16,7 +16,6 @@ import nemmagents.CompanyAgent;
 import nemmagents.MarketAnalysisAgent;
 import nemmenvironment.CVRatioCalculations;
 import nemmenvironment.FundamentalMarketAnalysis;
-import nemmenvironment.NewFundamentalMarketAnalysis;
 import nemmenvironment.PowerPlant;
 import nemmenvironment.TheEnvironment;
 import nemmenvironment.TheEnvironment.GlobalValues;
@@ -71,6 +70,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	
 	//Sales the annual production of all wind power plants according to specifyed mean, standarddeviation and max(capped).
 	TheEnvironment.setwindscenario();
+	TheEnvironment.setpowerpricescenario();
 
 		
 	//Distributing Plants, projects and demand among Agents
@@ -123,6 +123,11 @@ public void annualmarketschedule() {
 	ProjectDevelopment.projectidentification();					//Given how many projects the DA has in concession-stage and the limit, receice new projects. Needs updated numbers on numberofprojects in process and id
 	ProjectDevelopment.updateDAgentsnumber();					//Not really needed at end, but okey for displaypurposes.
 	
+}
+//Last update to calculate prosjekt IRR
+@ScheduledMethod(start = 287, interval = 0, priority = 3)		
+public void Finalupdate() {
+	ProjectDevelopment.calculateallIRRs();	
 }
 
 //The monthly update

@@ -51,6 +51,9 @@ public class Scenario {
 		this.annualpowerpricerregion1 = annualpowerpricerre1;
 		}
 	}
+	public void setname(String name) {
+		this.scenarioname = name;
+	}
 
 	public double[] getAnnualpowerpricerregion2() {
 		return annualpowerpricerregion2;

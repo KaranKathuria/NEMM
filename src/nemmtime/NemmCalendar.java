@@ -13,7 +13,7 @@ public class NemmCalendar {
 	
 	private int startYear;
 	private int endYear;
-	private int numYears;
+	private int numYears;						//Number of years in simulation (24)
 	private int numObligatedPdsInYear;
 	private int numTradePdsInObligatedPd;
 	private int numTradePdsInYear;

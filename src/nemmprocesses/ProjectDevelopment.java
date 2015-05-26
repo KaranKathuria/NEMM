@@ -42,10 +42,10 @@ public class ProjectDevelopment {
 						PP.setStarttick(currenttick+1);
 						PP.setendtick(currenttick);}												//Setting this back in time, hence these certs are never produced.
 					else {
-						PP.setendyear(Math.min(PP.getlifetime()+currentyear-1, currentyear+14));	//Takes care of projects "in overgangsordningen" with 1 year lifetime.
+						PP.setendyear(Math.min(PP.getlifetime()+currentyear, Math.min(currentyear+15, TheEnvironment.theCalendar.getEndYear())));	//Takes care of projects "in overgangsordningen" with 1 year lifetime.
 						int temp = currenttick + RandomHelper.nextIntFromTo(0, TheEnvironment.theCalendar.getNumTradePdsInYear()-1);
 						PP.setStarttick(temp);	//Randoml set starttick between now and 12 tick ahead.
-						PP.setendtick(temp+(TheEnvironment.theCalendar.getNumTradePdsInYear()*Math.min(PP.getlifetime(), 15)));
+						PP.setendtick(temp+(TheEnvironment.theCalendar.getNumTradePdsInYear()*(PP.getendyear()-currentyear)));
 					}
 				
 				TheEnvironment.allPowerPlants.add(PP);			//Add to all operations powerplants
@@ -79,7 +79,7 @@ public class ProjectDevelopment {
 			//Collecting the projects that are awaiting investmetn decision (status = 3) and counting projects currently under construction.
 			for (PowerPlant PP : DA.getmyprojects()) {
 			double usedRRR = PP.getspecificRRR(); //DA.getmycompany().getInvestmentRRR()* removed as all should use the same RRR (its a benchmark for the project)
-			double postponedRRR = usedRRR + AllVariables.RRRpostpondpremium;					//If postponed, there should be a risk premium
+			double postponedRRR = usedRRR + AllVariables.RRRpostpondpremium;					//If postponed, there should be a risk premium. For now (se AllVariables) but 0.01 (1%).
 			
 
 				if (PP.getstatus() == 3) {														//3=Awaiting investment decision.
@@ -87,33 +87,31 @@ public class ProjectDevelopment {
 					templist.add(PP);															//Adds all the projects, regardsless of having a cert price needed to high or low.
 					RRRpostponedtemplist.add(postponedRRR);										//A not so good workaround for saving the projet specific postponedRRR
 					PP.calculateLRMCandcertpriceneeded(currentyear, usedRRR, 3);				//Using the market forward power price in that given reigon. Notice that this is calculated for when the year the project can be invested in, not the year it can be finished!!
-					estimateRRR = usedRRR;
+					PP.calculateLRMCandcertpriceneeded_ownRRR(currentyear, 3);
+					estimateRRR = usedRRR*DA.getmycompany().getInvestmentRRR();
 				}
 			}
 			
 			//For each DeveloperAgent For all the relevant projects. Do the following:			
 			Collections.sort(templist, new CommonMethods.customprojectcomparator());			//Sorting the of a DAs project awaiting from lowest certprieneeded to highest certpriceneeded
-			temp_allprojectthatcanbebuild.addAll(templist);										//Adds all projects from this DA to all potential projects.
-			//Calculate how much investments there are maximum-needed.
 			
 			//All the cirteria variables for the investment decision. Assumin default DA.getinvestmentdecisiontype() == 1 or 2
-			double cutoffcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations(); 
+			double cutoffcertprice_fma = DA.getfundamentaleasefactor() * DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations();
+			double cutoffcertprice_price = DA.getpriceeasefactor()*TheEnvironment.GlobalValues.avrhistcertprice;
 			double postpondedcertprice = DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getlongrunpriceexpectatations();
 			double equivivalentfactor = 1.0;
 			
 			//Problem occurs. That is all projects with curtoff higher than what they need builds, wiothout regards to what is really needed.
 			if (DA.getinvestmentdecisiontype() == 3) {
-				cutoffcertprice = Math.min(TheEnvironment.GlobalValues.avrhistcertprice, (DA.getfundamentaleasefactor() * DA.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getmedumrundpriceexpectations()));
 				postpondedcertprice = -1;	//There is not an option to postponed if investmentdecisiontype = 3, hence this is set to -1;
 				equivivalentfactor = 1.0;
 				}
 			if (DA.getinvestmentdecisiontype() == 4) {								//Only assuming the current average certprice for 2 years. 0 thereafter. //Need to create NPV equvalent
 				equivivalentfactor = PowerPlant.calculateNPVfactor(15, estimateRRR)/PowerPlant.calculateNPVfactor(numberofyearcertscanbehedged, estimateRRR);
-				cutoffcertprice = TheEnvironment.GlobalValues.avrhistcertprice;
 				postpondedcertprice = -1; 											//There is not an option to postponed if investmentdecisiontype = 0, hence this is set to -1;
 				}
 		
-		
+			//Updating and setting other limits to DA-buildout.
 			int maxnumberofconstrucprojects = DA.getconstructionlimit();
 			int constructionproject_counter = DA.getnumprojectsunderconstr();					//Newly updated values.
 			double maxcapacitydeveloped		= DA.gettotalcapacitylimit();
@@ -121,22 +119,25 @@ public class ProjectDevelopment {
 			int potentialprojects = templist.size();
 			int projects_pointer = 0;															//To ensure that the loop is not longer than number of objects.	
 			
-			//The critical investment decision.
+			//The critical investment decision. Fist checking the "other" criterias
 			while ((constructionproject_counter < maxnumberofconstrucprojects) && (capacitydeveloped_counter < maxcapacitydeveloped) &&  (projects_pointer < potentialprojects )) {
 					double certpriceneedednow = templist.get(projects_pointer).getcertpriceneeded();
-					//double certpriceneededownRRR = own RRR
-				if ((equivivalentfactor*certpriceneedednow) <= cutoffcertprice) {													//Starting with the best, if its worth investing...
-					//Add a if statement for the own RRR. that filsters out the price issue.
+					double certpriceneededownRRR = templist.get(projects_pointer).getcertpriceneeded_ownRRR();
+					int a = 2;	//Test that the two certprice needed are somewhat different depending on investmentRRR
+
+					//Then the profitability criteria. Notice that the curoffpricees are already multiplied with the ease factor above. 
+				if (((equivivalentfactor*certpriceneedednow) <= cutoffcertprice_fma) && ((equivivalentfactor*certpriceneededownRRR) <= cutoffcertprice_price)) {													//Starting with the best, if its worth investing...
+					
 					//Okey. If its worth investing now, is it more lucrative to postpond the investment?
 					double postponedRRR = RRRpostponedtemplist.get(projects_pointer);
 					templist.get(projects_pointer).calculateLRMCandcertpriceneeded(currentyear+AllVariables.minpostpondyears, postponedRRR, 3);
 					double certpriceneededpostpond = templist.get(projects_pointer).getcertpriceneeded();
-					if ((cutoffcertprice-certpriceneedednow)>(postpondedcertprice-certpriceneededpostpond) && (TheEnvironment.GlobalValues.avrhistcertprice*DA.getpriceeasefactor()>=certpriceneedednow)) {	//Only if its better to invest now than postponed, invest:
-					//Note above that there also is a constrain on the avrgprice beeing higher. THis will only be for the FMA-agents as its already aproved for price-agents.
+					if ((cutoffcertprice_fma-certpriceneedednow)>(postpondedcertprice-certpriceneededpostpond)) {	//Only if its better to invest now than postponed, invest:
+					//Note above will most likely not be true for DAs having a ease-factor on cutoffprice_fma. That is type 3 and 4. Hence only fundamental agents are filtered. 
 					
-					
-						
+					int b = 3;
 					PowerPlant thisplant = templist.get(projects_pointer);
+					temp_allprojectthatcanbebuild.add(thisplant);										//Add this project to the list of projects wantet (and could) be build
 					capacitydeveloped_counter = capacitydeveloped_counter + thisplant.getCapacity();
 					constructionproject_counter = constructionproject_counter + 1;
 					
@@ -149,9 +150,14 @@ public class ProjectDevelopment {
 					
 					//No need for updating the developer number of projects as this is done in another method after this.
 					projects_pointer++;}
-					else {break;}
+					else {
+						int utsatt = 3;
+						int out = 5;
+						System.out.print("Notice: A project is postponed"); 
+						projects_pointer++;}			
 					}
-				else {break;}																	//If the current project is not wort investing, the following are not either.
+				else {projects_pointer++;}			//Note sure there is any point in having the else
+
 			}
 			
 			
@@ -159,24 +165,46 @@ public class ProjectDevelopment {
 		}
 		
 		//Then something that uses the normalproduction of the plants added and the cutoff to determine the need for annual production. Then uses this to limit the total buildout.
-		double tempannualprodneeded=0;															//New annual production needed "fundamentally"
-		double tempsdeveloperswantstobuild=0;													//New annual production the developers wants and can build out. Notice that this can be less or higher then above.
+		double tempfutureproduction = FundamentalMarketAnalysis.getbalanceandfutureproduction();
+		double tempfuturedemand = FundamentalMarketAnalysis.getfuturedemand();
+		double tempfactor = RandomHelper.nextDoubleFromTo(AllVariables.minbuildoutaggressivness, AllVariables.maxbuildoutaggressivness);	//Calculating the build-out limitation factor. Used to determining the "gold rush" limit factor used below.
 		
+		double buildoutcutoff = Math.max(((tempfuturedemand*tempfactor)-tempfutureproduction),1.0);			//Rather then using the factor for balance (which is not good when there is no need for certs, the factor is multiplied with demand before adding current balance and all future production.
+		double totalcertsneededbuilt = Math.max(-FundamentalMarketAnalysis.getallfuturecertificatebalance(), 0.0);		//Gets all the future uncovered need for certificates (normal year assumption) from the FMA
+		double tempcertsdeveloperswantstobuild=0;														//Total certs added from the projects that the developers wants to build out.
+		
+		//To add up the total certs from the projects that now are marked as status = 9 (or in the temp_allprojectthatcanbebuild list)
 		for (PowerPlant PP : temp_allprojectthatcanbebuild) {
-			if (PP.getcertpriceneeded() < FundamentalMarketAnalysis.getMPE()) {					//Notice the use of MPE rather then DAs mediumterm. MPE is the unerrored one, hence more correct.
-			tempannualprodneeded = tempannualprodneeded + PP.getestimannualprod();}
-			if (PP.getstatus() == 9) {
-			tempsdeveloperswantstobuild = tempsdeveloperswantstobuild + PP.getestimannualprod();}
+			PP.calculateLRMCandcertpriceneeded(currentyear, PP.getspecificRRR(), 3);			//This to ensure that it the correct numbers stored in LRMC, and not the postponed one. and Certpriceneeded when its build. For output purposes.
+				if (!PP.getMyRegion().getcertificatespost2020flag() && (currentyear+PP.getminconstructionyears()) > PP.getMyRegion().getcutoffyear()) {
+					//Nothing tempcertsdeveloperswantstobuild = tempcertsdeveloperswantstobuild
+				}
+				else {
+					tempcertsdeveloperswantstobuild = tempcertsdeveloperswantstobuild + (PP.getestimannualprod()*Math.min(15, 2035-(currentyear+PP.getminconstructionyears())));} 
 		}
+		
+		//For checking purposes.
+		if (tempcertsdeveloperswantstobuild > totalcertsneededbuilt) {
+			System.out.print("Notice: Developers wants to built out more than is needed");}
+		else {
+			System.out.print("Notice: Developers wants to built out less than is needed");}
+			
 		
 		//Then we loop through all that can be build out, ensure that we do not "gold rush" and only build out if status = 9 (the developer actually wants to build it).
 		double tempbuildout = 0;
 		Collections.shuffle(temp_allprojectthatcanbebuild);
 		for (PowerPlant PP : temp_allprojectthatcanbebuild) {
-			if (tempbuildout <= tempannualprodneeded * AllVariables.buildoutaggressivness) {	//Continue to build out as long as there is neeed and aggressivness i allowed. 
-				if (PP.getstatus() == 9) {
-					tempbuildout = tempbuildout + PP.getestimannualprod();
-					PP.calculateLRMCandcertpriceneeded(currentyear, PP.getspecificRRR(), 3);	//This to ensure that it the correct numbers stored in LRMC and Certpriceneeded when its build. For output purposes.
+			if (tempbuildout < buildoutcutoff) {	//Continue to build out as long as there is neeed and aggressivness i allowed. 
+				if (!PP.getMyRegion().getcertificatespost2020flag() && (currentyear+PP.getminconstructionyears()) > PP.getMyRegion().getcutoffyear()) {
+					System.out.print("Notice: Projects does not qualify for certs, but is built anyway");
+					PP.setstatus(2);
+					PP.setyearsincurrentstatus(0);  										//Setting this for consistency for project reaching new stag. This value is note used in later stages.
+					PP.setstartyear(currentyear + PP.getminconstructionyears());			//Adding a startdate. Notice that this is done here rather than in the finalizeprojects.
+					TheEnvironment.projectsunderconstruction.add(PP);						//Add to the Environment list of projects in process.
+					TheEnvironment.projectsawaitinginvestmentdecision.remove(PP);			//Removing from Environment list of awaitinginvestmentsdecisions
+				}
+				else {
+					tempbuildout = tempbuildout + (PP.getestimannualprod()*Math.min(15, 2035-(currentyear+PP.getminconstructionyears())));
 					PP.setstatus(2);
 					PP.setyearsincurrentstatus(0);  										//Setting this for consistency for project reaching new stag. This value is note used in later stages.
 					PP.setstartyear(currentyear + PP.getminconstructionyears());			//Adding a startdate. Notice that this is done here rather than in the finalizeprojects.
@@ -350,6 +378,14 @@ public class ProjectDevelopment {
 					numprojectsidentyfied = numprojectsidentyfied +1;}
 			}
 			DA.updateDAnumbers(capacitydevorundrconstr, numprojectstrashed, numprojectsfinished, numprojectsunderconstr, numprojectsawaitingid, numprojectsinprocess, numprojectsidentyfied);
+		}
+	}
+	
+	public static void calculateallIRRs() {
+		for (PowerPlant PP : TheEnvironment.allPowerPlants) {
+			if ((PP.gettechnologyid() == 2) && PP.getendyear() <= TheEnvironment.theCalendar.getEndYear()) {
+				PP.calculateIRR();
+			}
 		}
 	}
 		

@@ -4,7 +4,7 @@
  *     
  *     Last altered data: 20141010
  *     Made by: Karan Kathuria
- */
+ 
 package nemmenvironment;
 
 import java.util.ArrayList;
@@ -21,6 +21,7 @@ public class NewFundamentalMarketAnalysis {
 	private static double LPE;
 	private static ArrayList<Double> equilibriumpricesyearsahead = new ArrayList<Double>();
 	private static double certificatebalance;				//Certbalance at end of given year.
+	private static double allfuturecertificatebalance;		//The total balance of all future demand and production at year ran. Stored for external pruposes. 
 
 	
 	public static ArrayList<PowerPlant> allPowerPlants_copy = new ArrayList<PowerPlant>();
@@ -41,7 +42,8 @@ public class NewFundamentalMarketAnalysis {
 		
 	public static void runfundamentalmarketanalysis() {
 	//Initialization	
-		//The ArrayLists must be clear as the Collection.copy method would risk keeping some of the original values in the List. 
+		//The ArrayLists must be clear as the Collection.copy method would risk keeping some of the original values in the List.
+		allfuturecertificatebalance = 0;										//truncated to be updated this round.
 		allPowerPlants_copy.clear();
 		projectsunderconstruction_copy.clear();
 		projectsawaitinginvestmentdecision_copy.clear();
@@ -87,7 +89,6 @@ public class NewFundamentalMarketAnalysis {
 			tempendogenousprojects.clear();												//Important to clear so that the same endog project is not buildt twice.
 			double totalannufuturedemand = 0;											//All futuredemand from i and to the end
 			double totalannufuturecertproduction = 0;									//All futuresupply form i and to the end
-			double allfuturecertificatebalance = 0;										//All future balance, that is bank at i + allfuturesupply - allfuture demand
 			double totalannudemand = 0;													//Demand at the year i. Needed to calculate the bank at i.
 			double totalannucertproduction = 0;											//Supply at the year i. Needed to calculate the bank at i.
 			tempremoval.clear();  														//Clear the temporeral removal list.
@@ -171,7 +172,7 @@ public class NewFundamentalMarketAnalysis {
 			if (PP.getstartyear() > PP.getMyRegion().getcutoffyear() && !PP.getMyRegion().getcertificatespost2020flag()) { //If post c and in regions without certs, do nothing.
 			}
 			else {
-				totalannufuturecertproduction = totalannufuturecertproduction + (PP.getestimannualprod()*Math.min(15, 2036-PP.getstartyear()));
+				totalannufuturecertproduction = totalannufuturecertproduction + (PP.getestimannualprod()*Math.min(15, 2035-PP.getstartyear()));
 				if (PP.getstartyear() < (currentyear+i+xyearsused)) {
 					xyearfuturecertproduction = xyearfuturecertproduction + (PP.getestimannualprod()*((currentyear+i+xyearsused)-PP.getstartyear())) - (0.5*PP.getestimannualprod()); //To take account for the midyear start.
 			}}
@@ -179,7 +180,8 @@ public class NewFundamentalMarketAnalysis {
 		
 		//Calculate the certificatebalance before new investments are made. 
 		xyearfuturecertbalance = certificatebalance + xyearfuturecertproduction - xyearfuturecertdemand;
-		allfuturecertificatebalance = certificatebalance + totalannufuturecertproduction - totalannufuturedemand;	//For all years from i and to end (including i).
+		if (i == 0) {	//This if does it all. It makes it possible to calculate the allfuturecertificatebalance only for the year it is ran (run year). that is when i = 0;
+		allfuturecertificatebalance = certificatebalance + totalannufuturecertproduction - totalannufuturedemand;}	//For all years from i and to end (including i).
 		certificatebalance = certificatebalance + totalannucertproduction - totalannudemand;						//For the year i.
 
 		
@@ -255,8 +257,10 @@ public class NewFundamentalMarketAnalysis {
 	public static double getLPE() {
 		return LPE;
 	}
-		
+	public static double getallfuturecertificatebalance() {
+		return allfuturecertificatebalance;
+	}
 		
 }
 		
-	
+*/

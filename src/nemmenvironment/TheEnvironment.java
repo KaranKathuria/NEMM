@@ -25,15 +25,15 @@ import nemmtime.NemmCalendar;
 public final class TheEnvironment {
 
                 // This class is used to hold all the stuff in the environment
-                public static ArrayList<PowerPlant> allPowerPlants;                                                                     //allPowerPlants referes to all power plants that have been or are in operation. Before an object PowerPlant is in operation, its reffered to as a project.
-                public static ArrayList<PowerPlant> projectsunderconstruction;                                            //PowerPlants currently under construction (status = 2)
+                public static ArrayList<PowerPlant> allPowerPlants;                             //allPowerPlants referes to all power plants that have been or are in operation. Before an object PowerPlant is in operation, its reffered to as a project.
+                public static ArrayList<PowerPlant> projectsunderconstruction;                  //PowerPlants currently under construction (status = 2)
                 public static ArrayList<PowerPlant> projectsawaitinginvestmentdecision;         //PowerPlants projects awaiting investment decision (status = 3)
-                public static ArrayList<PowerPlant> projectinprocess;                                                                 //All powerplant in process of getting concession.  (status = 4)
-                public static ArrayList<PowerPlant> projectsidentifyed;                                                                             //All projects identifyed                                                                                                        (status = 5)
-                public static ArrayList<PowerPlant> potentialprojects;                                                                //Auto-generated potential projects. Note distributed among development agents. (status = 6).
-                public static ArrayList<PowerPlant> trashedprojects;                                                                  //Arraylist of projects not receiving concession (status = 0).
+                public static ArrayList<PowerPlant> projectinprocess;                           //All powerplant in process of getting concession.  (status = 4)
+                public static ArrayList<PowerPlant> projectsidentifyed;                         //All projects identifyed                                                                                                        (status = 5)
+                public static ArrayList<PowerPlant> potentialprojects;                          //Auto-generated potential projects. Note distributed among development agents. (status = 6).
+                public static ArrayList<PowerPlant> trashedprojects;                            //Arraylist of projects not receiving concession (status = 0).
                 
-                public static ArrayList<PowerPlant> allPowerPlantsandProjects;                                            //Absolutly all. Including trashed, qoued etc. ALl provided in the input sheet.
+                public static ArrayList<PowerPlant> allPowerPlantsandProjects;                  //Absolutly all. Including trashed, qoued etc. ALl provided in the input sheet.
 
                 
                 public static ArrayList<Region> allRegions;
@@ -119,8 +119,10 @@ public final class TheEnvironment {
                                //Creates temporary spot, and adds the relevant spotpriceyears from the scenario
                                double[] spotN = new double[TheEnvironment.theCalendar.getNumYears()];
                                double[] spotS = new double[TheEnvironment.theCalendar.getNumYears()];
+                               //Adds the relevnt years from the scenario to a double array.
                                System.arraycopy(runningscenario.getAnnualpowerpricerregion1(), 0, spotN, 0, TheEnvironment.theCalendar.getNumYears());
                                System.arraycopy(runningscenario.getAnnualpowerpricerregion2(), 0, spotS, 0, TheEnvironment.theCalendar.getNumYears());
+                               int a = 5;
                                
                                //Setting the forward-prices
                                for (int i = 0; i<TheEnvironment.theCalendar.getNumYears();i++) {       //For forward-years. [i=1] is the array of future prices standing in year 2013, with 24 doubles. That is for each annualMarketSeries
@@ -128,15 +130,17 @@ public final class TheEnvironment {
                                                double[] tempams_S = new double[TheEnvironment.theCalendar.getNumYears()];
                                                                               for (int j = 0; j<TheEnvironment.theCalendar.getNumYears();j++) {
                                                                                               tempams_N[j] = Norway.getMyForwardPrice(i).getValue(j) * runningscenario.getAnnualpowerpricerregion1()[j+i]; //Here the fwd of year 2035 will go from 2035 - 2058 (+23)
-                                                                                              tempams_S[j] = Norway.getMyForwardPrice(i).getValue(j) * runningscenario.getAnnualpowerpricerregion2()[j+i];
+                                                                                              tempams_S[j] = Sweden.getMyForwardPrice(i).getValue(j) * runningscenario.getAnnualpowerpricerregion2()[j+i];
                                                                               }
                                                                               //Then for each fwd-year we set the annualmarketseries representing that years fwd-curve.
                                                                               Norway.getMyForwardPrice(i).setAllValues(tempams_N);
                                                                               Sweden.getMyForwardPrice(i).setAllValues(tempams_S);
+                                                                              int b = 4;
                                                                               }
                                //At last setting spot prices
                                Norway.getMyPowerPrice().setAllValues(spotN);
                                Sweden.getMyPowerPrice().setAllValues(spotS);
+                               int t = 3;
                                
                                }
                                
