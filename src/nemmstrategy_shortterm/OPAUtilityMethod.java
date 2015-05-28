@@ -11,7 +11,6 @@ package nemmstrategy_shortterm;
 import java.util.ArrayList;
 import java.util.Collections;
 import cern.jet.random.Uniform;
-
 import repast.simphony.random.RandomHelper;
 import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;

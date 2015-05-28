@@ -54,6 +54,10 @@ public class Scenario {
 	public void setname(String name) {
 		this.scenarioname = name;
 	}
+	
+	public String getname() {
+		return this.scenarioname;
+	}
 
 	public double[] getAnnualpowerpricerregion2() {
 		return annualpowerpricerregion2;

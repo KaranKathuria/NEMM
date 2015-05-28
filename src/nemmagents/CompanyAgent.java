@@ -11,7 +11,6 @@ package nemmagents;
 //Import section for other methods
 // opmment
 import java.util.ArrayList;
-import java.util.Random;
 import repast.simphony.random.RandomHelper;
 import nemmagents.MarketAnalysisAgent;
 import nemmagents.ParentAgent;
@@ -78,8 +77,10 @@ public class CompanyAgent extends ParentAgent {
 				// Goal is to set some agents who try to exit their physical position 
 				// quickly, others who can hold it for a while, and others who can hold for a long time
 				// Specify the type and get the number of ticks
-				Random generator = new Random(); 
-				double dPhysRnd = generator.nextDouble();
+				//Random generator = new Random(); 
+				//double dPhysRnd = generator.nextDouble();
+
+				double dPhysRnd = RandomHelper.nextDouble();
 				for (int stratID=AllVariables.numPAExitStrategies-1; stratID>=0; stratID--){
 					if (dPhysRnd <= AllVariables.cutoffPAExit[stratID]) {
 						numTicksToEmptyPosition = AllVariables.numTicksPAExit[stratID];
@@ -104,8 +105,9 @@ public class CompanyAgent extends ParentAgent {
 				// Goal is to set some agents who try to exit their physical position 
 				// quickly, others who can hold it for a while, and others who can hold for a long time
 				// Specify the type and get the number of ticks
-				Random generator = new Random(); 
-				double dPhysRnd = generator.nextDouble();
+				//Random generator = new Random(); 
+
+				double dPhysRnd = RandomHelper.nextDouble();
 				for (int stratID=AllVariables.numOPExitStrategies-1; stratID>=0; stratID--){
 					if (dPhysRnd <= AllVariables.cutoffOPExit[stratID]) {
 						numTicksToEmptyPosition = AllVariables.numTicksOPExit[stratID];

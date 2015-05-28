@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.random.RandomHelper;
 import nemmagents.CompanyAgent;
@@ -25,7 +24,7 @@ import nemmtime.NemmCalendar;
 public final class TheEnvironment {
 
                 // This class is used to hold all the stuff in the environment
-                public static ArrayList<PowerPlant> allPowerPlants;                             //allPowerPlants referes to all power plants that have been or are in operation. Before an object PowerPlant is in operation, its reffered to as a project.
+                public static ArrayList<PowerPlant> allPowerPlants;                             //allPowerPlants referes to all power plants that HAVE BEEN or ARE in operation. Before an object PowerPlant is in operation, its reffered to as a project. To distinguish between have or are use endtick.
                 public static ArrayList<PowerPlant> projectsunderconstruction;                  //PowerPlants currently under construction (status = 2)
                 public static ArrayList<PowerPlant> projectsawaitinginvestmentdecision;         //PowerPlants projects awaiting investment decision (status = 3)
                 public static ArrayList<PowerPlant> projectinprocess;                           //All powerplant in process of getting concession.  (status = 4)
@@ -34,8 +33,6 @@ public final class TheEnvironment {
                 public static ArrayList<PowerPlant> trashedprojects;                            //Arraylist of projects not receiving concession (status = 0).
                 
                 public static ArrayList<PowerPlant> allPowerPlantsandProjects;                  //Absolutly all. Including trashed, qoued etc. ALl provided in the input sheet.
-
-                
                 public static ArrayList<Region> allRegions;
                 public static ArrayList<CompanyAgent> allCompanies;
                 public static ArrayList<Scenario> allwindandppricescenarios;                                    //All scenarios of wind year mulitpliers and power prices
@@ -89,6 +86,7 @@ public final class TheEnvironment {
                                //NOT NEEDED to reset/rewind the production, as this IS re-read from the excel-file.
                                //Get the correct scenario
                                Scenario runningscenario = TheEnvironment.allwindandppricescenarios.get(ParameterWrapper.getscenarionumber());
+                               
                                int temptickid = 0;
                                
                                //For all years
@@ -145,7 +143,7 @@ public final class TheEnvironment {
                                }
                                
                 
-                /* KK: 20150512 Old version of simulateweather used before the scenarios where red in directly.*/
+                /* KK: 20150512 Old version of simulateweather used before the scenarios where red in directly.
                 public static void simulateweather() {
                                RandomHelper.createNormal(AllVariables.meanwindproductionfactor, AllVariables.stdwindfactor);                //Create the used normal distribution skal parametersers
                                int temptickid = 0;           
@@ -182,6 +180,16 @@ public final class TheEnvironment {
                                                }
                                }
                 }
+                */
+                
+                public static void  calculateLRMC_exougenousprojects() {
+                	for (PowerPlant PP : allPowerPlants) {
+                		if (PP.getstatus() == 1 || PP.getstatus() == 2) {
+                			PP.calculateLRMCandcertpriceneeded(theCalendar.getStartYear(), PP.getspecificRRR(), 3);
+                		}
+                	}
+                }
+
                 
                 
                 public static class GlobalValues {
@@ -189,22 +197,31 @@ public final class TheEnvironment {
                                public static YearArray averageannualcertprice;               //Average annual cert price for the years passed.Updated every year.
                                public static TickArray certificateprice;
                                public static double currentmarketprice;
-                               public static double RRRcorrector;                                           //Corrector for the project specific RRR. Initially set, then altered by randomness
-                               public static double currentinterestrate;                             //Not in use.
+                               public static double RRRcorrector;                              //Corrector for the project specific RRR. Initially set, then altered by randomness
+                               public static double currentinterestrate;                       //Used in short term bidding strategy to deterimine the risk free rate. This is more the risk free rate.
                                public static int numberofbuyoffersstm;
                                public static int numberofselloffersstm;
-                               public static double avrhistcertprice;                                     //Average historic cert price based on x number of ticks, where X is given by AllVariables.numberoftickstocalculatehistcertprice
+                               public static double avrhistcertprice;                          //Average historic cert price based on x number of ticks, where X is given by AllVariables.numberoftickstocalculatehistcertprice
                                public static int numberofpowerplantsinNorway;
                                public static int numberofpowerplantsinSweden;
-                               public static double buildoutNorway;                                   //Accumulated annual production added in Norway through the certificate market
-                               public static double buildoutSweden;                                   //Accumulated annual production added in Sweden through the certificate market
+                               public static double buildoutNorway;                    //Accumulated annual production added in Norway through the certificate market (MWh)
+                               public static double buildoutSweden;                    //Accumulated annual production added in Sweden through the certificate market (MWh)
+                               public static double certificateeligableannualproductionNorway;	//Current eligable certificate producion measured in normal year production (MWh)
+                               public static double certificateeligableannualproductionSweden;	//Current eligable certificate producion measured in normal year production (MWh)
                                
-                               public static double windcapacityaddedNorway;             //Accumulated wind-capacity added in Norway
-                               public static double windcapacityaddedSweden;            //Accumulated wind-capacity added in Sweden
-                               public static double hydrocapacityaddedNorway;           //Accumulated hydro-capacity added in Norway
-                               public static double hydrocapacityaddedSweden;          //Accumulated hydro-capacity added in Norway
+                               public static double windcapacityaddedNorway;           //Accumulated wind-capacity added in Norway (MW)
+                               public static double windcapacityaddedSweden;           //Accumulated wind-capacity added in Sweden (MW)
+                               public static double hydrocapacityaddedNorway;          //Accumulated hydro-capacity added in Norway (MW)
+                               public static double hydrocapacityaddedSweden;          //Accumulated hydro-capacity added in Norway (MW)
                                public static double allothercapacityaddedNorway;       //Accumulated other in the terms (bio, solar, and other) added in Norway. This added with hydro and wind is total.
                                public static double allothercapacityaddedSweden;       //Accumulated other in the terms (bio, solar, and other) added in Sweden. This added with hydro and wind is total.
+                               
+                               public static double windproductionaddedNorway;           //Accumulated wind-production added in Norway (MWh)
+                               public static double windproductionaddedSweden;           //Accumulated wind-production added in Sweden (MWh)
+                               public static double hydroproductionaddedNorway;          //Accumulated hydro-production added in Norway (MWh)
+                               public static double hydroproductionaddedSweden;          //Accumulated hydro-production added in Norway (MWh)
+                               public static double allotherproductionaddedNorway;       //Accumulated other in the terms (bio, solar, and other) added in Norway. This added with hydro and wind is total.
+                               public static double allotherproductionaddedSweden;       //Accumulated other in the terms (bio, solar, and other) added in Sweden. This added with hydro and wind is total.
 
                                
                                // Future cert prices
@@ -311,46 +328,86 @@ public final class TheEnvironment {
                                                hydrocapacityaddedNorway = 0;                            
                                                hydrocapacityaddedSweden = 0;                            
                                                allothercapacityaddedNorway = 0;         
-                                               allothercapacityaddedSweden = 0;                                                                                       
+                                               allothercapacityaddedSweden = 0;
+                                               windproductionaddedNorway = 0;               
+                                               windproductionaddedSweden = 0;                              
+                                               hydroproductionaddedNorway = 0;                            
+                                               hydroproductionaddedSweden = 0;                            
+                                               allotherproductionaddedNorway = 0;         
+                                               allotherproductionaddedSweden = 0;
+                                               certificateeligableannualproductionNorway = 0;
+                                               certificateeligableannualproductionSweden = 0;
                                                
                                                for (PowerPlant PP : TheEnvironment.allPowerPlants) {
+                                           	   	//Tickwise buildout
+                                            
+                                           	   if (theCalendar.getCurrentTick() >= PP.getStartTick()) {
+                                           		   				//Region wise
                                                                if (PP.getMyRegion() == TheEnvironment.allRegions.get(0)) {
-                                                                              buildoutNorway = buildoutNorway + (PP.getestimannualprod());
-                                                                              if (PP.gettechnologyid() == 2) {
+
+                                                            	   buildoutNorway = buildoutNorway + (PP.getestimannualprod());
+                                                            	   numberofpowerplantsinNorway = numberofpowerplantsinNorway +1;
+                     
+                                                   	   						
+                                                                             if (PP.gettechnologyid() == 2) { //Notice that this is not else because the above is not exclusive.
                                                                                               windcapacityaddedNorway = windcapacityaddedNorway + PP.getCapacity();
-                                                                              }
-                                                                              else if (PP.gettechnologyid() == 1) {
-                                                                                              hydrocapacityaddedNorway = hydrocapacityaddedNorway + PP.getCapacity();            
-                                                                              }
-                                                                              else {
+                                                                                              windproductionaddedNorway = windproductionaddedNorway + PP.getestimannualprod();
+
+                                                                             }
+                                                                             else if (PP.gettechnologyid() == 1) { //Same as if, but if satisfied, the next statement(s) are not evaluated.
+                                                                                              hydrocapacityaddedNorway = hydrocapacityaddedNorway + PP.getCapacity(); 
+                                                                                              hydroproductionaddedNorway = hydroproductionaddedNorway + PP.getestimannualprod();            
+
+                                                                             }
+                                                                             else {
                                                                                               allothercapacityaddedNorway = allothercapacityaddedNorway + PP.getCapacity();
+                                                                                              allotherproductionaddedNorway = allotherproductionaddedNorway + PP.getestimannualprod();
+
                                                                               }
-                                                               }
-                                                               
+   
+                                                            	   			 }
+
                                                                else {
-                                                                              buildoutSweden = buildoutSweden + (PP.getestimannualprod());
+                                                            	   
+                                                            	   buildoutSweden = buildoutSweden + (PP.getestimannualprod());
+                                                                   numberofpowerplantsinSweden = numberofpowerplantsinSweden +1;  
+                                                                   
                                                                               if (PP.gettechnologyid() == 2) {
                                                                                               windcapacityaddedSweden = windcapacityaddedSweden + PP.getCapacity();
+                                                                                              windproductionaddedSweden = windproductionaddedSweden + PP.getestimannualprod();
+
                                                                               }
                                                                               else if (PP.gettechnologyid() == 1) {
-                                                                                              hydrocapacityaddedSweden = hydrocapacityaddedSweden + PP.getCapacity();            
+                                                                                              hydrocapacityaddedSweden = hydrocapacityaddedSweden + PP.getCapacity(); 
+                                                                                              hydroproductionaddedSweden = hydroproductionaddedSweden + PP.getestimannualprod();            
+
                                                                               }
                                                                               else {
                                                                                               allothercapacityaddedSweden = allothercapacityaddedSweden + PP.getCapacity();
+                                                                                              allotherproductionaddedSweden = allotherproductionaddedSweden + PP.getestimannualprod();
+
                                                                               }
+                                                                             }
                                                                }
                                                }
                                                
                                                for (PowerPlant PP : TheEnvironment.allPowerPlants) {
-                                                               if (PP.getMyRegion() == TheEnvironment.allRegions.get(0)) {
-                                                                              numberofpowerplantsinNorway = numberofpowerplantsinNorway +1;
-                                                               }
-                                                               else {
-                                                                              numberofpowerplantsinSweden = numberofpowerplantsinSweden +1;
-                                                               }
+                                              	   	//Tickwise buildout. Notice the not equal to 3 which is a proxy for excluding (bio) overgagnsordnngen.
+                                              	   if (theCalendar.getCurrentTick() >= PP.getStartTick() && theCalendar.getCurrentTick() < PP.getendtick() && PP.gettechnologyid() != 3) {
+                                              		   				//Region wise
+                                                                  if (PP.getMyRegion() == TheEnvironment.allRegions.get(0)) {
+                                        	  
+                                                                	  certificateeligableannualproductionNorway = certificateeligableannualproductionNorway + PP.getestimannualprod();
+                                            	   		}
+                                                                  else {
+                                                                 	  certificateeligableannualproductionSweden = certificateeligableannualproductionSweden + PP.getestimannualprod();
+  
+                                                                  }
+                                              	   }
                                                }
                                }
-                               
+                                               
+                                                        
                                public static void annualglobalvalueupdate() {
                                                RRRcorrector = Math.max(1,(RRRcorrector - 1*0.03));                                                 //Corrector redution to take account the learning and FMA.
                                                //update averageannualcertprice

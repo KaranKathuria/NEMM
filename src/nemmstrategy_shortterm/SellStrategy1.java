@@ -8,12 +8,8 @@
  */
 package nemmstrategy_shortterm;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import repast.simphony.random.RandomHelper;
 import nemmcommons.AllVariables;
-import nemmstrategy_shortterm.GenericStrategy.*;
 
 
 public class SellStrategy1 extends GenericStrategy {

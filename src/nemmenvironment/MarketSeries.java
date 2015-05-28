@@ -1,7 +1,6 @@
 package nemmenvironment;
 
 import nemmcommons.TickArray;
-import nemmtime.NemmTime;
 
 
 public class MarketSeries {

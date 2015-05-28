@@ -19,11 +19,6 @@ import nemmtime.NemmCalendar;
 
 //import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-
-
-
-
-
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
@@ -272,7 +267,7 @@ public class ReadExcel {
                  for(int j = 0; j < numbscenarios; j++){
                         Scenario newscen = new Scenario();
                         
-                        String newname = scenario_sheet.getRow(0).getCell(1+j).getStringCellValue();
+                        String newname = scenario_sheet.getRow(0).getCell(2+j).getStringCellValue();
                         newscen.setname(newname);
                         
                         

@@ -9,14 +9,11 @@ package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
 
-import repast.simphony.engine.environment.RunEnvironment;
-import nemmagents.ParentAgent;
+
 import nemmcommons.AllVariables;
-import nemmcommons.CommonMethods;
 import nemmenvironment.TheEnvironment;
 import nemmprocesses.ShortTermMarket;
-import nemmstrategy_shortterm.SellOffer;
-import nemmtime.NemmCalendar;
+
 
 // STRATEGY 1 TACTIC 1
 //

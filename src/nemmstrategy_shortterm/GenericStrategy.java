@@ -10,8 +10,7 @@ package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
-
+import repast.simphony.random.RandomHelper;
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
@@ -63,12 +62,11 @@ public abstract class GenericStrategy {
 	//Constructor for parant class. Not sure about this. This construction will note be used as this class is abstract. 
 	public GenericStrategy() {
 		// Specify the tacticPreferenceScore
-		Random generator = new Random(); 
-		// Note: the +1 as the nextInt(x) gives a random number between [0,x) - e.g. x = 3 means a random int
-		// that is in (0,1,2).
-		myPreferenceScore = generator.nextInt(AllVariables.MaxTacticPreferenceScore - 
-														AllVariables.MinTacticPreferenceScore+1) + 
-														AllVariables.MinTacticPreferenceScore;
+		//Random generator = new Random(); 
+
+		myPreferenceScore = RandomHelper.nextIntFromTo(0, AllVariables.MaxTacticPreferenceScore - AllVariables.MinTacticPreferenceScore) + AllVariables.MinTacticPreferenceScore;
+		//myPreferenceScore = generator.nextInt(AllVariables.MaxTacticPreferenceScore - 
+		//												AllVariables.MinTacticPreferenceScore+1) 
 	}
 			
 // ---- GETS & SETS	
@@ -204,8 +202,8 @@ public abstract class GenericStrategy {
 		}
 		
 		// Randomly choose the tactic to use next time
-		Random generator = new Random(); 
-		double randX = generator.nextDouble();
+		//Random generator = new Random(); 
+		double randX = RandomHelper.nextDouble(); //generator.nextDouble();
 		int keeplooking = 1;
 		int curIndex=0;
 		besttactic = tacticList.get(0).tacticPointer; // Default chose the utility with the best tactic

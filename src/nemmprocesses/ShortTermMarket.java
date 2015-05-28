@@ -9,7 +9,6 @@ package nemmprocesses;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;

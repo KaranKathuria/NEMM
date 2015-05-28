@@ -2,14 +2,12 @@
 
 
 import nemmagents.CompanyAgent;
+import nemmcommons.AllVariables;
+import nemmcommons.ParameterWrapper;
 import nemmcommons.TickArray;
 import nemmcommons.YearArray;
 
-import java.lang.Object;
-
 import org.apache.poi.ss.formula.functions.Irr;
-import cern.jet.math.Functions;
-import org.apache.poi.ss.formula.*;
 
 
 public class PowerPlant implements Cloneable{
@@ -33,6 +31,7 @@ public class PowerPlant implements Cloneable{
 	private double specificRRR;				//Technology, regional and Capex- adjuster RRR before tax. For practiacl reasons this is simply made project specific.
 	private YearArray annualproduction;		//The Actual annual production of the powerplant (given, not estimated).
 	
+	
 	private TickArray myProduction; 		//Future production (good given) used in simulations. Hence this is adjusted for the specific scenario ran.
 	//NOT NEEDED private TickArray mynormalproduction;	//The initally read in production not adjusted for scenario spesific wind years. Stored as an intiall duplicate in order to "rewind" the "myProduction" table after a scenario have been ran.
 	private TickArray ExpectedProduction;	//Expected production. This is the amount of certs the plant is expected to generate and used by the owners to estimate. 
@@ -47,6 +46,7 @@ public class PowerPlant implements Cloneable{
 	private int endtick; 					//The tickid of a year that the certificate elgiable production ends (not including this tick).
 	private int yearsincurrentstatus;		//Annual counter counting years in current status for the purpose of deciding if its ready for concession.
 	private double IRR; 					//Project IRR
+	private int exougenousflagg = 0;		//Flag indicating if project is given in as exougenous. That is status 1 or 2. = Not exougenous.
 	
 	public PowerPlant() {}
 	
@@ -66,8 +66,19 @@ public class PowerPlant implements Cloneable{
 		minyearinprocess = newminyearinprocess;
 		minconstructionyears = newminconstructionyears;
 		
-		if (startyear != 0) {												//null equals 0 for int in java. This part takes care of exogenous plants and "overgangsordningen"
-			endyear = startyear + Math.min(lifetime, 15) - 1;}
+		myProduction = new TickArray();
+		//mynormalproduction = new TickArray();
+		ExpectedProduction = new TickArray();
+		annualproduction = new YearArray();
+		specificRRR = 0.0;													//Default, but this is updated on the following line.
+		setprojectRRR();
+
+		
+		if (startyear != 0) {												//null equals 0 for int in java. The same as status 1 or 2. This part takes care of exogenous plants and "overgangsordningen". Exogenous plants does have null here.hence;
+			endyear = startyear + Math.min(lifetime, 15) - 1;
+			exougenousflagg = 1;			
+			}
+		
 		if (status == 1)	{												//Starttick is set in the project development for all other projects.
 			starttick = 0;
 			endtick = 0 + Math.min(lifetime, 15)*TheEnvironment.theCalendar.getNumTradePdsInYear();
@@ -78,15 +89,18 @@ public class PowerPlant implements Cloneable{
 		}
 		if (status > 2)		{
 			earlieststartyear = minyearinprocess + minconstructionyears + TheEnvironment.theCalendar.getStartYear();	//This is really best case.
-		}
-			
-		myProduction = new TickArray();
-		//mynormalproduction = new TickArray();
-		ExpectedProduction = new TickArray();
-		annualproduction = new YearArray();
-		specificRRR = 0.0;													//Default, but this is updated on the following line.
-		setprojectRRR();
-		
+
+			}
+		//defaults to avoid nulls in powerplant output and to not having 2012 values in plants not build (for cert needed and LRMC), the initials as set her.
+
+		IRR = 0.0;
+		LRMC = 0.0;
+		LRMC_ownRRR = 0.0;
+		certpriceneeded = 0.0;
+		certpriceneeded_ownRRR = 0.0;
+		//calculateLRMCandcertpriceneeded(startyear, specificRRR, 3);
+
+					
 	}
 
 	// Gets & Sets ------------------------------------------------------------------------
@@ -425,9 +439,7 @@ public class PowerPlant implements Cloneable{
 		}
 		
 		this.IRR = Irr.irr(totalcashflow, 0.05);	
-		double test = IRR;
-		YearArray test1 = TheEnvironment.GlobalValues.averageannualcertprice;
-		int a =2;
+
 		}
 		
 		
@@ -450,20 +462,34 @@ public class PowerPlant implements Cloneable{
 	public double getestimannualprod() {return this.loadfactor*this.capacity*8760;}
 	public double getLRMC() {return LRMC;}
 	public Double getcertpriceneeded() {return certpriceneeded;}
-	public Double getcertpriceneeded_ownRRR() {return certpriceneeded_ownRRR;}
+	public double getcertpriceneeded_ownRRR() {return certpriceneeded_ownRRR;}
+	public double getopex() {return this.opex;}
+	public double getcapex() {return this.capex;}
+	public int getexougenousflagg() {return this.exougenousflagg;}
+	
 
 	public String getname() {return name;}
 	public int gettechnologyid() {return technologyid;}
 	public String getmyregion() {return myRegion.getRegionName();}
 	public String getmyCompany() {return myCompany.getname();}
-	public double getmyCompanyRRR() {return myCompany.getInvestmentRRR()*specificRRR;}
-	public double getprojectRRR() {return this.specificRRR;}		//Project RRR (given independent of developer).
-	public int getmyinvestmentdecisiontype() {if (myCompany.getdeveloperagent() != null) {
+	public double getmyCompanyRRR() {return (myCompany.getInvestmentRRR()*specificRRR);}
+	
+	public int getmyinvestmentdecisiontype() {
+		if (myCompany.getdeveloperagent() != null) {
 		return myCompany.getdeveloperagent().getinvestmentdecisiontype();}
 	else {return 0;} //Returns the investment decision type for this agent.
 	}
 	public double getIRR() {return this.IRR;}
+	public double getownrLRMC() {return LRMC_ownRRR;}
 	
+	
+	//For Meta purposes. These field has nothing to do with a PowerPlant. They are just here to simplefy the output sheet.
+	public String getrunningscenarioname() {
+		return TheEnvironment.allwindandppricescenarios.get(ParameterWrapper.getscenarionumber()).getname();
+	}
+	public String getcasename() {
+		return AllVariables.casename;
+	}
 }
 	
 	

@@ -12,9 +12,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
-import java.math.*;
-
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmagents.CompanyAgent;
 import nemmagents.CompanyAgent.DeveloperAgent;
@@ -188,23 +185,6 @@ public static List<CompanyAgent> getCompanyAgenList() {
 	//    return TimeUnit.MILLISECONDS.toHours(Math.abs(end - start));
 	//}
 	
-
-	// Added by GJB 20Aug2014. Source: see
-	// http://stackoverflow.com/questions/363681/generating-random-integers-in-a-range-with-java  and
-	// http://docs.oracle.com/javase/7/docs/api/java/util/Random.html#nextInt%28int%29
-	
-	public static int randInt(int min, int max) {
-
-	    // NOTE: Usually this should be a field rather than a method
-	    // variable so that it is not re-seeded every call.
-	    Random rand = new Random();
-
-	    // nextInt is normally exclusive of the top value,
-	    // so add 1 to make it inclusive
-	    int randomNum = rand.nextInt((max - min) + 1) + min;
-
-	    return randomNum;
-	}
 	
 	//Multiply two equal length arrays element by element
 	

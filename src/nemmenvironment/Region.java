@@ -1,7 +1,6 @@
 package nemmenvironment;
 
 import java.util.ArrayList;
-
 import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
 import nemmenvironment.MarketDemand;

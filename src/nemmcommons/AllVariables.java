@@ -7,14 +7,14 @@
  */
 package nemmcommons;
 
-import java.util.Random;
-
 import nemmenvironment.TheEnvironment;
 import repast.simphony.random.RandomHelper;
 import static nemmcommons.ParameterWrapper.*;
 
 public class AllVariables {
 	
+	public static String casename = "Q2 2015 Base Case"; 					//Name of the case ran. That is not the simulation, not the run, but the base case (or sensitivity case).
+
 	//Unfortuanaty there is now other way then setting the obligation period intervall (ticks) manually.
 	public static final int obintr = 12; // TheEnvironment.theCalendar.getNumTradePdsInObligatedPd();
 	public static final int firstrealtick = 32; //Currently this cannot be between 1 and 11 (inclusive). This fucks up the contextbuilder.
@@ -144,7 +144,7 @@ public class AllVariables {
 	public static int preprojectandidentifyconstraint = 6;			//Times sizecode gives projects for prep and ident
 	public static double[] developerinvestmentpriceeasefactordistribution = new double[]{1.1,8};			//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
 	public static double[] developerinvestmentfundamentaleasefactordistribution = new double[]{1.01,1.07}; //The distribution of fundamentaleasefaactor to investmentagent type 3 (price based with ease cost curve). High number indicates little restriction.
-	public static double maxbuildoutaggressivness = 1.2; 				
+	public static double maxbuildoutaggressivness = 1.15; 			//As it is the final value that really limits the build out the spread must to large
 	public static double minbuildoutaggressivness = 1.05; 	
 	//Factor determining how aggressiv the build out is. Less then one means that the construction limit for any given year is less then what is needed in terms of annual producion, whereas much higher then one limits to what all developers are willing to build (financially and resoruce wise)
 	//Initial distribution of powerplants, projects and demandshares per region.

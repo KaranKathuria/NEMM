@@ -9,7 +9,6 @@
 //This would require agents to have the same number of strategies and we give out seeds by looping through strategies and then agents. (Giving out seed to the first strategy for each agent etc..).
 package nemmcommons;
 
-import java.util.Random;
 import cern.jet.random.Normal;
 import nemmenvironment.FundamentalMarketAnalysis;
 import repast.simphony.random.DefaultRandomRegistry;

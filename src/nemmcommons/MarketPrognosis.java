@@ -8,8 +8,6 @@
 
 package nemmcommons;
 
-import java.util.Random;
-
 import cern.jet.random.Normal;
 import repast.simphony.random.RandomHelper;
 import nemmenvironment.CVObject;
@@ -59,9 +57,9 @@ public class MarketPrognosis {
 		forcastweights[0] = w1;
 		
 		stpriceexpectation = ParameterWrapper.getpriceexpectation() * RandomHelper.nextDoubleFromTo(1, 1); //Random
-		mediumrunpriceexpectations =  16.7; //These are updated
-		longrunpriceexpectatations = 16.7;  //AllVariables.longrundpriceexpectations;  
-		maxpriceexpectation = 12;
+		mediumrunpriceexpectations =  ParameterWrapper.getpriceexpectation(); //These are updated
+		longrunpriceexpectatations = ParameterWrapper.getpriceexpectation();  //AllVariables.longrundpriceexpectations;  
+		maxpriceexpectation = ParameterWrapper.getpriceexpectation();
 		expectedcertificateprice = new TickArray(); 
 		expectedcertificatedemand = new TickArray();
 		expectedpowerpricenorway = new YearArray();

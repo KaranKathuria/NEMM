@@ -10,8 +10,6 @@ package nemmprocesses;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
-
 import repast.simphony.random.RandomHelper;
 import nemmagents.CompanyAgent.DeveloperAgent;
 import nemmcommons.AllVariables;
@@ -169,7 +167,7 @@ public class ProjectDevelopment {
 		double tempfuturedemand = FundamentalMarketAnalysis.getfuturedemand();
 		double tempfactor = RandomHelper.nextDoubleFromTo(AllVariables.minbuildoutaggressivness, AllVariables.maxbuildoutaggressivness);	//Calculating the build-out limitation factor. Used to determining the "gold rush" limit factor used below.
 		
-		double buildoutcutoff = Math.max(((tempfuturedemand*tempfactor)-tempfutureproduction),1.0);			//Rather then using the factor for balance (which is not good when there is no need for certs, the factor is multiplied with demand before adding current balance and all future production.
+		double buildoutcutoff = Math.max(((tempfuturedemand*tempfactor)-tempfutureproduction),0.0);			//Rather then using the factor for balance (which is not good when there is no need for certs, the factor is multiplied with demand before adding current balance and all future production.
 		double totalcertsneededbuilt = Math.max(-FundamentalMarketAnalysis.getallfuturecertificatebalance(), 0.0);		//Gets all the future uncovered need for certificates (normal year assumption) from the FMA
 		double tempcertsdeveloperswantstobuild=0;														//Total certs added from the projects that the developers wants to build out.
 		

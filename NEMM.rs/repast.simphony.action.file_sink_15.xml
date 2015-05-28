@@ -1,15 +1,35 @@
 <repast.simphony.data2.engine.FileSinkDescriptor>
-  <name>Plants and projects</name>
-  <dataSet>Output data: Plants and Projects</dataSet>
+  <name>Meta, Plants and projects</name>
+  <dataSet>Output data: Meta, Plants and Projects</dataSet>
   <delimiter>;</delimiter>
   <format>TABULAR</format>
   <sourceIds class="linked-hash-set">
-    <string>tick</string>
     <string>Name</string>
-    <string>Capacity</string>
-    <string>LRMC</string>
+    <string>Meta: Case name</string>
+    <string>Meta: Scenario name (W&amp;P)</string>
+    <string>Capacity (MW)</string>
+    <string>random_seed</string>
+    <string>Load factor</string>
+    <string>Markets RRR</string>
+    <string>Owners RRR</string>
+    <string>Owner LRMC</string>
+    <string>Normal year production</string>
+    <string>Markets LRMC</string>
+    <string>Certificate price needed</string>
+    <string>Certificate price needed owner RRR</string>
+    <string>Start year</string>
+    <string>Start tick</string>
+    <string>End year</string>
+    <string>End tick</string>
     <string>IRR</string>
+    <string>Owner investment decision type</string>
+    <string>Status</string>
+    <string>Region name</string>
+    <string>Technology ID</string>
+    <string>CAPEX</string>
+    <string>OPEX</string>
+    <string>Exougenous flag</string>
   </sourceIds>
-  <fileName>Plants and projects</fileName>
+  <fileName>Output/Plants and projects</fileName>
   <addTimeStamp>true</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>

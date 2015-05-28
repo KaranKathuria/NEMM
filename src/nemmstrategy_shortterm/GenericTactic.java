@@ -8,9 +8,6 @@
 package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
-import java.lang.*;
-
-import nemmagents.ParentAgent;
 import nemmenvironment.TheEnvironment;
 
 

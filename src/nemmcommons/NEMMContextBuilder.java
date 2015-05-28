@@ -11,6 +11,7 @@ package nemmcommons;
 import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.dataLoader.ContextBuilder;
+import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import nemmagents.CompanyAgent;
 import nemmagents.MarketAnalysisAgent;
@@ -79,6 +80,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	DistributeDemandShares.distributedemand(AllVariables.demandsharedistrubutioncode);					 //Distribute all demand among the Companies with OPAgents.
 	ProjectDevelopment.updateDAgentsnumber();
 	TheEnvironment.GlobalValues.updatebankbalance();													 //Calculates to certificate balance. Needed for FMA.
+	TheEnvironment.calculateLRMC_exougenousprojects();													 //Calculates LRMC and certprice needed for all exogenous projects. Must be done here after the projects has got an owner.
 	
 	Forcast.initiateAllVolumePrognosis(); 	//Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based om expected prodution for the future year
 	/*if (!AllVariables.useTestData){
@@ -450,6 +452,36 @@ public void obligationsperiodshedule() {
 	public double getbuildoutSweden() {
 		return TheEnvironment.GlobalValues.buildoutSweden;
 	}
+	public double getcertificateeligableannualproductionNorway() {
+		return TheEnvironment.GlobalValues.certificateeligableannualproductionNorway;
+	}
+	public double getcertificateeligableannualproductionSwedens() {
+		return TheEnvironment.GlobalValues.certificateeligableannualproductionSweden;
+	}
+	public double getcertificateeligableannualproduction() {
+		return (TheEnvironment.GlobalValues.certificateeligableannualproductionSweden+TheEnvironment.GlobalValues.certificateeligableannualproductionNorway);
+
+	}
+
+	public double getwindproductionNorway() {
+		return TheEnvironment.GlobalValues.windproductionaddedNorway;
+	}
+	public double getwindproductionSweden() {
+		return TheEnvironment.GlobalValues.windproductionaddedSweden;
+	}
+	public double gethydroproductionNorway() {
+		return TheEnvironment.GlobalValues.hydroproductionaddedNorway;
+	}
+	public double gethydroproductionSweden() {
+		return TheEnvironment.GlobalValues.hydroproductionaddedSweden;
+	}
+	public double getallotherproductionNorway() {
+		return TheEnvironment.GlobalValues.allotherproductionaddedNorway;
+	}
+	public double getallotherproductionSweden() {
+		return TheEnvironment.GlobalValues.allotherproductionaddedSweden;	
+	}
+	
 	public double getwindcapacityNorway() {
 		return TheEnvironment.GlobalValues.windcapacityaddedNorway;
 	}
@@ -467,6 +499,12 @@ public void obligationsperiodshedule() {
 	}
 	public double getallothercapacitySweden() {
 		return TheEnvironment.GlobalValues.allothercapacityaddedSweden;
+	}
+	public double gettotalcapacityaddedNorway() {
+		return TheEnvironment.GlobalValues.allothercapacityaddedNorway + TheEnvironment.GlobalValues.windcapacityaddedNorway + TheEnvironment.GlobalValues.hydrocapacityaddedNorway;
+	}
+	public double gettotalcapacityaddedSweden() {
+		return TheEnvironment.GlobalValues.allothercapacityaddedSweden + TheEnvironment.GlobalValues.windcapacityaddedSweden + TheEnvironment.GlobalValues.hydrocapacityaddedSweden;
 	}
 	public int getplantsinSweden() {
 		return TheEnvironment.GlobalValues.numberofpowerplantsinSweden;
@@ -544,6 +582,22 @@ public void obligationsperiodshedule() {
 		}
 		return under;
 		}
+	
+	public int getrunningscenarionumber() {
+		return ParameterWrapper.getscenarionumber();
+	}
+	
+	public String getrunningscenarioname() {
+		return TheEnvironment.allwindandppricescenarios.get(ParameterWrapper.getscenarionumber()).getname();
+	}
+	
+	public String getcasename() {
+		return AllVariables.casename;
+	}
+	
+	
+		
+				
 
 	
 }

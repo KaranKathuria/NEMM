@@ -9,7 +9,6 @@
 package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
-
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmstrategy_shortterm.BoughtInSTM;
 import nemmstrategy_shortterm.SoldInSTM;
