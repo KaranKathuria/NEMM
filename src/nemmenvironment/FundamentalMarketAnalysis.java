@@ -218,7 +218,7 @@ public class FundamentalMarketAnalysis {
 				for (PowerPlant PP : tempendogenousprojects) {
 					if (PP.getcertpriceneeded() <= yearcurve.getequilibriumprice()) {
 						allendogenousprojects.remove(PP); 									
-						PP.setendyear(currentyear+i+14);									//Just setting the endyear is sufficient for calculating the future certproduction of this plant. 
+						PP.setendyear(currentyear+i+15);					//Mulig cutoff logikk!!! og evt 14 eller 15 år.				//Just setting the endyear is sufficient for calculating the future certproduction of this plant. 
 						allPowerPlants_copy.add(PP);										//Adds the same powerplant to list of powerplants in production. 
 						}
 					}
@@ -252,6 +252,8 @@ public class FundamentalMarketAnalysis {
 		temp2 = equilibriumpricesyearsahead.get(k);}
 		LPE = temp2;
 	}
+	MPE = Math.min(MPE, AllVariables.maxpricecerts);
+	LPE = Math.min(LPE, AllVariables.maxpricecerts);
 
 	}
 	

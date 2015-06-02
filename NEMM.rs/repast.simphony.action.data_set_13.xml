@@ -2,7 +2,7 @@
   <name>Output data: Meta, Plants and Projects</name>
   <type>NON_AGGREGATE</type>
   <sourceType>nemmenvironment.PowerPlant</sourceType>
-  <inclTick>false</inclTick>
+  <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>true</inclRandomSeed>
   <scheduleParams>
@@ -12,26 +12,10 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>ONE_TIME</frequency>
-    <hashCode>459077507</hashCode>
+    <hashCode>141608013</hashCode>
   </scheduleParams>
-  <atEnd>true</atEnd>
+  <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
-    <entry>
-      <string>Name</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Name</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>getname</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Status</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Status</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>getstatus</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
     <entry>
       <string>IRR</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
@@ -41,179 +25,195 @@
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Certificate price needed</string>
+      <string>Meta: Case</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Certificate price needed</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>getcertpriceneeded</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Capacity (MW)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Capacity (MW)</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>getCapacity</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Markets LRMC</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Markets LRMC</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>getLRMC</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Certificate price needed owner RRR</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Certificate price needed owner RRR</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>getcertpriceneeded_ownRRR</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Earliest start year</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Earliest start year</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>getearlieststartyear</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>End year</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>End year</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>getendyear</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Normal year production</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Normal year production</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>getestimannualprod</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Start year</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Start year</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>getstartyear</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Markets RRR</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Markets RRR</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>getspecificRRR</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Start tick</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Start tick</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>getStartTick</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>End tick</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>End tick</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>getendtick</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Owner investment decision type</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Owner investment decision type</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>getmyinvestmentdecisiontype</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Owner LRMC</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Owner LRMC</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>getownrLRMC</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Meta: Case name</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Meta: Case name</id>
+        <id>Meta: Case</id>
         <className>nemmenvironment.PowerPlant</className>
         <methodName>getcasename</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Meta: Scenario name (W&amp;P)</string>
+      <string>Meta: Scenario</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Meta: Scenario name (W&amp;P)</id>
+        <id>Meta: Scenario</id>
         <className>nemmenvironment.PowerPlant</className>
         <methodName>getrunningscenarioname</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Load factor</string>
+      <string>name</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Load factor</id>
+        <id>name</id>
         <className>nemmenvironment.PowerPlant</className>
-        <methodName>getLoadfactor</methodName>
+        <methodName>getname</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Exougenous flag</string>
+      <string>region</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Exougenous flag</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>getexougenousflagg</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>OPEX</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>OPEX</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>getopex</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Technology ID</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Technology ID</id>
-        <className>nemmenvironment.PowerPlant</className>
-        <methodName>gettechnologyid</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Region name</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Region name</id>
+        <id>region</id>
         <className>nemmenvironment.PowerPlant</className>
         <methodName>getmyregion</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>CAPEX</string>
+      <string>technologyID</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>CAPEX</id>
+        <id>technologyID</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>gettechnologyid</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Loadfactor</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Loadfactor</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getLoadfactor</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Capacity</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Capacity</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getCapacity</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>capex</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>capex</id>
         <className>nemmenvironment.PowerPlant</className>
         <methodName>getcapex</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Owners RRR</string>
+      <string>opex</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Owners RRR</id>
+        <id>opex</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getopex</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>specificRRR</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>specificRRR</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getspecificRRR</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>myCompanyRRR</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>myCompanyRRR</id>
         <className>nemmenvironment.PowerPlant</className>
         <methodName>getmyCompanyRRR</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>myCompany</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>myCompany</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getmyCompany</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>LRMC</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>LRMC</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getLRMC</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>ownrLRMC</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>ownrLRMC</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getownrLRMC</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>certpriceneeded</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>certpriceneeded</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getcertpriceneeded</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>certpriceneeded_ownRRR</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>certpriceneeded_ownRRR</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getcertpriceneeded_ownRRR</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>exougenousflagg</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>exougenousflagg</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getexougenousflagg</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>StartTick</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>StartTick</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getStartTick</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>startyear</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>startyear</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getstartyear</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>endyear</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>endyear</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getendyear</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>endtick</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>endtick</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getendtick</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>myinvestmentdecisiontype</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>myinvestmentdecisiontype</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getmyinvestmentdecisiontype</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>status</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>status</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getstatus</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>estimannualprod</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>estimannualprod</id>
+        <className>nemmenvironment.PowerPlant</className>
+        <methodName>getestimannualprod</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

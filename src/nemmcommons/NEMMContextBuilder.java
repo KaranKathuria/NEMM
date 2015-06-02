@@ -29,7 +29,6 @@ import nemmprocesses.UtilitiesStrategiesTactics;
 import nemmprocesses.DistributeDemandShares;
 import static nemmcommons.ParameterWrapper.*;
 
-
 //================================================================================================================================================================================================
 //=== Building and initilizing the model =========================================================================================================================================================
 
@@ -72,6 +71,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	//Sales the annual production of all wind power plants according to specifyed mean, standarddeviation and max(capped).
 	TheEnvironment.setwindscenario();
 	TheEnvironment.setpowerpricescenario();
+	TheEnvironment.simulateweatherdistribtion();
 
 		
 	//Distributing Plants, projects and demand among Agents

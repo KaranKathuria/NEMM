@@ -6,21 +6,6 @@
   <sourceIds class="linked-hash-set">
     <string>run</string>
     <string>tick</string>
-    <string>Certificate price</string>
-    <string>Power price Norway</string>
-    <string>Power price Sweden</string>
-    <string>Certificate balance</string>
-    <string>Added annual production Norway (acc)</string>
-    <string>Added annua production Sweden (acc)</string>
-    <string>Added power plants Norway (acc)</string>
-    <string>Added power plants Sweden (acc)</string>
-    <string>Wind capacity added Norway (acc)</string>
-    <string>Wind capacity added Sweden (acc)</string>
-    <string>Hydro capacity added Norway (acc)</string>
-    <string>Hydro capacity added Sweden (acc)</string>
-    <string>All other capacity added Norway (acc)</string>
-    <string>All other capacity added Sweden (acc)</string>
-    <string>Scenario number (wind&amp;price)</string>
     <string>Running scenario number</string>
     <string>random_seed</string>
     <string>Certificate price (Euro)</string>
@@ -42,7 +27,13 @@
     <string>Certificate balance (MW)</string>
     <string>Total capacity added Norway (acc) (MW)</string>
     <string>Total capacity added Sweden (acc) (MW)</string>
+    <string>Added wind production Norway (acc) (MWh)</string>
+    <string>Added hydo production Norway (acc) (MWh)</string>
+    <string>Added all other production Norway (acc) (MWh)</string>
+    <string>Added hydro production Sweden (acc) (MWh)</string>
+    <string>Added all other production Sweden (acc) (MWh)</string>
+    <string>Added wind production Sweden (acc) (MWh)</string>
   </sourceIds>
-  <fileName>Output\Market and region</fileName>
+  <fileName>Output\Market and region.csv</fileName>
   <addTimeStamp>true</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>

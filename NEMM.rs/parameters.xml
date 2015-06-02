@@ -8,6 +8,8 @@
 	<parameter defaultValue="1" name="analysisagentsnumber" displayName="Number of AnalysisAgents" type="int"></parameter>
 	<parameter defaultValue="0" type="int" displayName="Number of TraderAgents" name="traderagentsnumber"/>
 	<parameter defaultValue="0" name="scenarionumber" displayName="Wind and power price scenario ran" type="int"></parameter>
+	<parameter defaultValue="0.07" displayName="Standard deviation for annual wind production factor" name="stdwindproductionfactor" type="double"></parameter>
+	
 	
 
 </parameters>

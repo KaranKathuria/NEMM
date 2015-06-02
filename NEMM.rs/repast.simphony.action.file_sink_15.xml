@@ -29,7 +29,32 @@
     <string>CAPEX</string>
     <string>OPEX</string>
     <string>Exougenous flag</string>
+    <string>tick</string>
+    <string>Meta: Case</string>
+    <string>Meta: Scenario</string>
+    <string>name</string>
+    <string>region</string>
+    <string>technologyID</string>
+    <string>Loadfactor</string>
+    <string>Capacity</string>
+    <string>capex</string>
+    <string>opex</string>
+    <string>specificRRR</string>
+    <string>myCompanyRRR</string>
+    <string>myCompany</string>
+    <string>LRMC</string>
+    <string>ownrLRMC</string>
+    <string>certpriceneeded</string>
+    <string>certpriceneeded_ownRRR</string>
+    <string>StartTick</string>
+    <string>startyear</string>
+    <string>endyear</string>
+    <string>endtick</string>
+    <string>myinvestmentdecisiontype</string>
+    <string>status</string>
+    <string>estimannualprod</string>
+    <string>exougenousflagg</string>
   </sourceIds>
-  <fileName>Output/Plants and projects</fileName>
+  <fileName>Output/Plants and projects.csv</fileName>
   <addTimeStamp>true</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>

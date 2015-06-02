@@ -137,7 +137,7 @@ public class AllVariables {
 	public static double stdlongrunpriceexpect = 0.06;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	
 	//Project Development
-	public static double[] developerinvestmenttypedistribution = new double[]{0.1,0.45,0.9,1};	//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
+	public static double[] developerinvestmenttypedistribution = new double[]{0.1,0.5,0.9,1};	//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
 	public static int numberoftickstocalculatehistcertprice = 3;	//This could be exptended to about 6. THis is basically the parameter setting how long memory developers have when taking investment decison based on current price. 
 	public static int numberofyearcertscanbehedged = 2;
 	public static int constructionconstraints = 3; 					//Gives number of projects under construction -limit. Reduing this makes the market "less optimal" 
@@ -166,7 +166,7 @@ public class AllVariables {
 	public static boolean certificatespost2020_Norway = false;
 	public static boolean certificatespost2020_Sweden = true;
 	public static int cutoffyear_Norway = 2020;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
-	public static int cutoffyear_Sweden = 2020;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
+	public static int cutoffyear_Sweden = 2021;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
 	//The concession and preconstruction process
 	public static int maxyearsinconcessionqueue = 3;				//Number of years in addition to minimum number of years in concession queue given as input from excel. After this, if not having received concession, the project is trashed.

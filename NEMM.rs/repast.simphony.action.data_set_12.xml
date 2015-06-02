@@ -195,6 +195,60 @@
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
+    <entry>
+      <string>Added wind production Norway (acc) (MWh)</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Added wind production Norway (acc) (MWh)</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getwindproductionNorway</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Added hydo production Norway (acc) (MWh)</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Added hydo production Norway (acc) (MWh)</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gethydroproductionNorway</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Added hydro production Sweden (acc) (MWh)</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Added hydro production Sweden (acc) (MWh)</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gethydroproductionSweden</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Added all other production Norway (acc) (MWh)</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Added all other production Norway (acc) (MWh)</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getallotherproductionNorway</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Added all other production Sweden (acc) (MWh)</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Added all other production Sweden (acc) (MWh)</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getallotherproductionSweden</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Added wind production Sweden (acc) (MWh)</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Added wind production Sweden (acc) (MWh)</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getwindproductionSweden</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
   </methodDataSources>
   <countSources class="linked-hash-map"/>
   <customNADataSources class="linked-hash-map"/>

@@ -143,8 +143,8 @@ public final class TheEnvironment {
                                }
                                
                 
-                /* KK: 20150512 Old version of simulateweather used before the scenarios where red in directly.
-                public static void simulateweather() {
+                // KK: 20150512 Old version of simulateweather used before the scenarios where red in directly.
+                public static void simulateweatherdistribtion() {
                                RandomHelper.createNormal(AllVariables.meanwindproductionfactor, AllVariables.stdwindfactor);                //Create the used normal distribution skal parametersers
                                int temptickid = 0;           
                                
@@ -169,10 +169,6 @@ public final class TheEnvironment {
                                                                               if (PP.gettechnologyid() == 2) { 
                                                                               double org = PP.getProduction(temptickid);
                                                                               double test = PP.getProduction(temptickid)*temp;
-                                                                              if(PP.getname().equals("Wind_Norway_4")){
-                                                                                              wind4 = org;
-                                                                                              wind4_2 = test;
-                                                                              }
                                                                               PP.setProduction((PP.getProduction(temptickid)*temp),temptickid);
                                                                               }
                                                                }
@@ -180,10 +176,10 @@ public final class TheEnvironment {
                                                }
                                }
                 }
-                */
+                
                 
                 public static void  calculateLRMC_exougenousprojects() {
-                	for (PowerPlant PP : allPowerPlants) {
+                	for (PowerPlant PP : allPowerPlantsandProjects) {
                 		if (PP.getstatus() == 1 || PP.getstatus() == 2) {
                 			PP.calculateLRMCandcertpriceneeded(theCalendar.getStartYear(), PP.getspecificRRR(), 3);
                 		}
