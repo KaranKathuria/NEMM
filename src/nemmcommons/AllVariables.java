@@ -17,10 +17,10 @@ public class AllVariables {
 
 	//Unfortuanaty there is now other way then setting the obligation period intervall (ticks) manually.
 	public static final int obintr = 12; // TheEnvironment.theCalendar.getNumTradePdsInObligatedPd();
-	public static final int firstrealtick = 32; //Currently this cannot be between 1 and 11 (inclusive). This fucks up the contextbuilder.
+	public static final int firstrealtick = 36; //Currently this cannot be between 1 and 11 (inclusive). This fucks up the contextbuilder.
 	public static double[] historiccertprices = new double[]{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
-	public static double bankPAfirstrealtick =  10400000;//8302000;//	//Bank at thefirstrealtick. If tick 0 this should be 8800 000. For memo Dec 2014, 10500000 was used.  2014: 8302000
-	public static double bankOPAfirstrealtick =   400000;//3558000;//		//Bank at thefirstrealtick.	If tick 0 this should be 0. For memo Dec 2014, 0 was used. 2014: 3558000 soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
+	public static double bankPAfirstrealtick =  11700000;//10400000;//8302000;//	//Bank at thefirstrealtick. If tick 0 this should be 8800 000. For memo Dec 2014, 10500000 was used.  2014: 8302000
+	public static double bankOPAfirstrealtick =  1300000;//400000;//3558000;//		// soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
 	public static double bankTAfirstrealtick = 0;				//Bank at thefirstrealtick.	If tick 0 this should be 0
 
 	public static boolean useTestData = false;
@@ -143,10 +143,11 @@ public class AllVariables {
 	public static int constructionconstraints = 3; 					//Gives number of projects under construction -limit. Reduing this makes the market "less optimal" 
 	public static int preprojectandidentifyconstraint = 6;			//Times sizecode gives projects for prep and ident
 	public static double[] developerinvestmentpriceeasefactordistribution = new double[]{1.1,8};			//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
-	public static double[] developerinvestmentfundamentaleasefactordistribution = new double[]{1.01,1.07}; //The distribution of fundamentaleasefaactor to investmentagent type 3 (price based with ease cost curve). High number indicates little restriction.
-	public static double maxbuildoutaggressivness = 1.15; 			//As it is the final value that really limits the build out the spread must to large
-	public static double minbuildoutaggressivness = 1.05; 	
-	//Factor determining how aggressiv the build out is. Less then one means that the construction limit for any given year is less then what is needed in terms of annual producion, whereas much higher then one limits to what all developers are willing to build (financially and resoruce wise)
+	public static double[] developerinvestmentfundamentaleasefactordistribution = new double[]{1.05,1.1};  //Q1: 1.01 - 1.07 The distribution of fundamentaleasefaactor to investmentagent type 3 (price based with ease cost curve). High number indicates little restriction.
+	public static double maxbuildoutaggressivness = 1.13; 			//As it is the final value that really limits the build out the spread must to large
+	public static double minbuildoutaggressivness = 1.08; 	
+	//Factor determining how aggressiv the build out is Random between max and min for each year. Less then one means that the construction limit for any given year is less then what is needed in terms of annual producion, whereas much higher then one limits to what all developers are willing to build (financially and resoruce wise)
+	
 	//Initial distribution of powerplants, projects and demandshares per region.
 	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 	public static int projectsdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
@@ -185,7 +186,7 @@ public class AllVariables {
 	//For initial weather simulations setup. Old inputs. Used for Q1 2015:
 	public static double meanwindproductionfactor = getmeanwindproductionfactor();
 	public static double stdwindfactor = getstdwindproductionfactor();
-	public static double maxstdwindfactor = 3;										//Cutoff deviation in wind production factor. If 3 this means that it cannot blow less or more then 3 times the standard deviation. 
+	public static double maxstdwindfactor = 2.2;					//Cutoff deviation in wind production factor. If 3 this means that it cannot blow less or more then 3 times the standard deviation. 
 	
 }
 
