@@ -321,7 +321,7 @@ public class CompanyAgent extends ParentAgent {
 						}
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution[1] && investdecrand <= AllVariables.developerinvestmenttypedistribution[2]) {
 						investmentdecisiontype = 3;
-						fundamentaleasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentpriceeasefactordistribution[0], AllVariables.developerinvestmentfundamentaleasefactordistribution[1]);
+						fundamentaleasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentfundamentaleasefactordistribution[0], AllVariables.developerinvestmentfundamentaleasefactordistribution[1]);
 						priceeasefactor = 1;
 						}
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution[2]){

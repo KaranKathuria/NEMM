@@ -165,12 +165,15 @@ public class ProjectDevelopment {
 		//Then something that uses the normalproduction of the plants added and the cutoff to determine the need for annual production. Then uses this to limit the total buildout.
 		double tempfutureproduction = FundamentalMarketAnalysis.getbalanceandfutureproduction();
 		double tempfuturedemand = FundamentalMarketAnalysis.getfuturedemand();
+		double a = tempfuturedemand;  //Positiv number
+		int c =2;
+		
 		double tempfactor = RandomHelper.nextDoubleFromTo(AllVariables.minbuildoutaggressivness, AllVariables.maxbuildoutaggressivness);	//Calculating the build-out limitation factor. Used to determining the "gold rush" limit factor used below.
 		
 		double buildoutcutoff = Math.max(((tempfuturedemand*tempfactor)-tempfutureproduction),0.0);			//Rather then using the factor for balance (which is not good when there is no need for certs, the factor is multiplied with demand before adding current balance and all future production.
 		double totalcertsneededbuilt = Math.max(-FundamentalMarketAnalysis.getallfuturecertificatebalance(), 0.0);		//Gets all the future uncovered need for certificates (normal year assumption) from the FMA
 		double tempcertsdeveloperswantstobuild=0;														//Total certs added from the projects that the developers wants to build out.
-		
+		int t = 2;
 		//To add up the total certs from the projects that now are marked as status = 9 (or in the temp_allprojectthatcanbebuild list)
 		for (PowerPlant PP : temp_allprojectthatcanbebuild) {
 			PP.calculateLRMCandcertpriceneeded(currentyear, PP.getspecificRRR(), 3);			//This to ensure that it the correct numbers stored in LRMC, and not the postponed one. and Certpriceneeded when its build. For output purposes.
@@ -189,7 +192,7 @@ public class ProjectDevelopment {
 			
 		
 		//Then we loop through all that can be build out, ensure that we do not "gold rush" and only build out if status = 9 (the developer actually wants to build it).
-		double tempbuildout = 0;
+		double tempbuildout = 0.0;
 		Collections.shuffle(temp_allprojectthatcanbebuild);
 		for (PowerPlant PP : temp_allprojectthatcanbebuild) {
 			if (tempbuildout < buildoutcutoff) {	//Continue to build out as long as there is neeed and aggressivness i allowed. 
