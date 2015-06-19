@@ -336,8 +336,8 @@ public final class TheEnvironment {
                                                
                                                for (PowerPlant PP : TheEnvironment.allPowerPlants) {
                                            	   	//Tickwise buildout
-                                            
-                                           	   if (theCalendar.getCurrentTick() >= PP.getStartTick()) {
+                                            	//Only projects excluded from overgangsordningen!
+                                           	   if (theCalendar.getCurrentTick() >= PP.getStartTick() && PP.getovergangsordningflag() == 0) {
                                            		   				//Region wise
                                                                if (PP.getMyRegion() == TheEnvironment.allRegions.get(0)) {
 
@@ -388,8 +388,8 @@ public final class TheEnvironment {
                                                }
                                                
                                                for (PowerPlant PP : TheEnvironment.allPowerPlants) {
-                                              	   	//Tickwise buildout. Notice the not equal to 3 which is a proxy for excluding (bio) overgagnsordnngen.
-                                              	   if (theCalendar.getCurrentTick() >= PP.getStartTick() && theCalendar.getCurrentTick() < PP.getendtick() && PP.gettechnologyid() != 3) {
+                                              	   	//Tickwise buildout. Notice the equal to 0 thus excluding overgagnsordningen.
+                                              	   if (theCalendar.getCurrentTick() >= PP.getStartTick() && theCalendar.getCurrentTick() < PP.getendtick() && PP.getovergangsordningflag() == 0) {
                                               		   				//Region wise
                                                                   if (PP.getMyRegion() == TheEnvironment.allRegions.get(0)) {
                                         	  

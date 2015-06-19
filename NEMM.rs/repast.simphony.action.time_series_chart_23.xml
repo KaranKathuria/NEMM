@@ -33,18 +33,6 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Projects identifyed</string>
-      <SeriesData>
-        <label>Projects identifyed</label>
-        <color>
-          <red>204</red>
-          <green>255</green>
-          <blue>255</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
       <string>Projects trashed</string>
       <SeriesData>
         <label>Projects trashed</label>
@@ -57,13 +45,13 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Projects awaiting investment decision</string>
+      <string>Projects identifyed</string>
       <SeriesData>
-        <label>Projects awaiting investment decision</label>
+        <label>Projects identifyed</label>
         <color>
-          <red>0</red>
-          <green>0</green>
-          <blue>204</blue>
+          <red>204</red>
+          <green>255</green>
+          <blue>255</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>
@@ -81,9 +69,21 @@
       </SeriesData>
     </entry>
     <entry>
+      <string>Projects awaiting investment decision</string>
+      <SeriesData>
+        <label>Projects awaiting investment decision</label>
+        <color>
+          <red>0</red>
+          <green>0</green>
+          <blue>204</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
       <string>Powerplants Sweden</string>
       <SeriesData>
-        <label>Powerplants Sweden</label>
+        <label>Powerplants Sweden ex over</label>
         <color>
           <red>255</red>
           <green>255</green>
@@ -107,7 +107,7 @@
     <entry>
       <string>In operation</string>
       <SeriesData>
-        <label>In operation</label>
+        <label>In operation all acc</label>
         <color>
           <red>0</red>
           <green>0</green>
@@ -119,7 +119,7 @@
     <entry>
       <string>Powerplants Norway</string>
       <SeriesData>
-        <label>Powerplants Norway</label>
+        <label>Powerplants Norway ex over</label>
         <color>
           <red>255</red>
           <green>102</green>

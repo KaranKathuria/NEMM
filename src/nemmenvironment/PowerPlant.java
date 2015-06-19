@@ -30,6 +30,7 @@ public class PowerPlant implements Cloneable{
 	private int minconstructionyears;		//Minimum number of years this project needs in construction. Currently this is used without variation, only adding starttick randomly. 
 	private double specificRRR;				//Technology, regional and Capex- adjuster RRR before tax. For practiacl reasons this is simply made project specific.
 	private YearArray annualproduction;		//The Actual annual production of the powerplant (given, not estimated).
+	private int overgangsordningflag;		//Flag indicating if the project is part of the "overgangsordning". 1 indicates that it is. 
 	
 	
 	private TickArray myProduction; 		//Future production (good given) used in simulations. Hence this is adjusted for the specific scenario ran.
@@ -51,7 +52,7 @@ public class PowerPlant implements Cloneable{
 	public PowerPlant() {}
 	
 	public PowerPlant(String newname, Region newregion, int newstatus, double newcapacity, double newloadfactor, int newtechnology, 
-					  int newlifetime, int newstartyear, double newcapex, double newopex, double newannualcostreduction, int newminyearinprocess, int newminconstructionyears) {
+					  int newlifetime, int newstartyear, double newcapex, double newopex, double newannualcostreduction, int newminyearinprocess, int newminconstructionyears, int newovergangsordningflag) {
 		name = newname;
 		myRegion = newregion;
 		status = newstatus;
@@ -65,6 +66,7 @@ public class PowerPlant implements Cloneable{
 		annualcostreduction = newannualcostreduction;
 		minyearinprocess = newminyearinprocess;
 		minconstructionyears = newminconstructionyears;
+		overgangsordningflag = newovergangsordningflag;
 		
 		myProduction = new TickArray();
 		//mynormalproduction = new TickArray();
@@ -79,6 +81,11 @@ public class PowerPlant implements Cloneable{
 			exougenousflagg = 1;			
 			}
 		
+		if (status == 0)	{												//Starttick is set in the project development for all other projects.
+			starttick = 0;
+			endtick = 0;
+			earlieststartyear = startyear;
+		}
 		if (status == 1)	{												//Starttick is set in the project development for all other projects.
 			starttick = 0;
 			endtick = 0 + Math.min(lifetime, 15)*TheEnvironment.theCalendar.getNumTradePdsInYear();
@@ -466,6 +473,7 @@ public class PowerPlant implements Cloneable{
 	public double getopex() {return this.opex;}
 	public double getcapex() {return this.capex;}
 	public int getexougenousflagg() {return this.exougenousflagg;}
+	public int getovergangsordningflag() { return overgangsordningflag;}
 	
 
 	public String getname() {return name;}

@@ -13,7 +13,7 @@ import static nemmcommons.ParameterWrapper.*;
 
 public class AllVariables {
 	
-	public static String casename = "Q2 2015 Base Case"; 					//Name of the case ran. That is not the simulation, not the run, but the base case (or sensitivity case).
+	public static String casename = "Q2 2015 Base Case S4"; 					//Name of the case ran. That is not the simulation, not the run, but the base case (or sensitivity case).
 
 	//Unfortuanaty there is now other way then setting the obligation period intervall (ticks) manually.
 	public static final int obintr = 12; // TheEnvironment.theCalendar.getNumTradePdsInObligatedPd();
@@ -53,8 +53,8 @@ public class AllVariables {
 	public static double minAlphaSTPrice = 0.5;
 	
 	// distribution cutoffs used for assigning a strategy to a given agent
-	public static double[] cutoffPAExit = new double[]{0.1,0.6,1.0};		//Last increasse the end. Middel increses the level, the first tend to give "correct" prices earlier.
-	public static double[] cutoffOPExit = new double[]{0.6,0.9,1.0};
+	public static double[] cutoffPAExit = new double[]{0.15,0.25,1.0};		//Last increasse the end. Middel increses the level, the first tend to give "correct" prices earlier.
+	public static double[] cutoffOPExit = new double[]{0.6,0.8,1.0};
 
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
 	// over the next 12 ticks - i.e. it will sell 1/12th in the next tick
@@ -70,13 +70,13 @@ public class AllVariables {
 //	public static double multOfferVol_PASellStrategy1 = 2; // default max fraction of that month's physical position than can be sold in the month
 	public static int tacticDefaultLearn_PASellStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
 	// Sell share max and min levels (min used for must sell, max used for rest volume)
-	public static double tacticMinPhysPosSellShare_PASellStrategy1 = 0.025; // Minimum must sell % of physical position . Alot to say.This flattens and pushes it all down, price more dependent on curren balance dispite ratio and holding horizont.
-	public static double tacticMaxPhysPosSellShare_PASellStrategy1 = 1.0; // Sell up to this fraction of the physical position
+	public static double tacticMinPhysPosSellShare_PASellStrategy1 = 0.02; // Minimum must sell % of physical position . Alot to say.This flattens and pushes it all down, price more dependent on curren balance dispite ratio and holding horizont.
+	public static double tacticMaxPhysPosSellShare_PASellStrategy1 = 0.75; // Sell up to this fraction of the physical position
 //	public static double tacticDefaultMustSellPriceMult_PASellStrategy1 = 0.5;  // Default must sell price multiplier for the producer tactics (if used)
 	// Define the range of price multipliers for the target sales (must sell) and rest volumes 
-	public static double tacticMinMustSellPriceMult_PASellStrategy1 = 0.9;
-	public static double tacticMaxMustSellPriceMult_PASellStrategy1 = 1.2;
-	public static int tacticNumMustSellSteps_PASellStrategy1 = 5;
+	public static double tacticMinMustSellPriceMult_PASellStrategy1 = 0.7;
+	public static double tacticMaxMustSellPriceMult_PASellStrategy1 = 1.3;
+	public static int tacticNumMustSellSteps_PASellStrategy1 = 7;
 	public static double tacticMinRestPriceMult_PASellStrategy1 = 0.7; // Specify the multiplier range
 	public static double tacticMaxRestPriceMult_PASellStrategy1 = 1.3;
 	public static int tacticNumRestSteps_PASellStrategy1 = 7;
@@ -106,9 +106,9 @@ public class AllVariables {
 	public static double tacticMinPhysPosBuyShare_OPBuyStrategy1 = 0.25; // Default must Buy share for the purchaser tactics (if used)
 	public static double tacticMaxPhysPosBuyShare_OPBuyStrategy1 = 1; 	 //default max fraction of physical position that can be purchased in the month
 	public static double tacticDefaultMustBuyPriceMult_OPBuyStrategy1 = 1.5;  // Default must Buy price multiplier for the producer tactics (if used)
-	public static double tacticMinMustBuyPriceMult_OPBuyStrategy1 = 0.8;
-	public static double tacticMaxMustBuyPriceMult_OPBuyStrategy1 = 1.1;
-	public static int tacticNumMustBuySteps_OPBuyStrategy1 = 5;
+	public static double tacticMinMustBuyPriceMult_OPBuyStrategy1 = 0.7;
+	public static double tacticMaxMustBuyPriceMult_OPBuyStrategy1 = 1.3;
+	public static int tacticNumMustBuySteps_OPBuyStrategy1 = 7;
 	public static double tacticMinRestPriceMult_OPBuyStrategy1 = 0.7; // Specify the multiplier range
 	public static double tacticMaxRestPriceMult_OPBuyStrategy1 = 1.3;
 	public static int tacticNumRestSteps_OPBuyStrategy1 = 7;
