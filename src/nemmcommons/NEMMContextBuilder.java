@@ -23,6 +23,7 @@ import nemmenvironment.TheEnvironment.GlobalValues;
 import nemmprocesses.DistributeProjectsandPowerPlants;
 import nemmprocesses.Forcast;
 import nemmprocesses.ProjectDevelopment;
+import nemmprocesses.ProjectMarket;
 import nemmprocesses.ShortTermMarket;
 import nemmprocesses.UpdatePhysicalPosition;
 import nemmprocesses.UtilitiesStrategiesTactics;
@@ -124,6 +125,8 @@ public void annualmarketschedule() {
 	ProjectDevelopment.updateDAgentsnumber();	
 	ProjectDevelopment.projectidentification();					//Given how many projects the DA has in concession-stage and the limit, receice new projects. Needs updated numbers on numberofprojects in process and id
 	ProjectDevelopment.updateDAgentsnumber();					//Not really needed at end, but okey for displaypurposes.
+	ProjectMarket.simplifyedprojectmarket();					//Trading of projects
+	ProjectDevelopment.updateDAgentsnumber();
 	
 }
 //Last update to calculate prosjekt IRR

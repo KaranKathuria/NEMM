@@ -153,7 +153,7 @@ public class AllVariables {
 	public static int projectsdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 	public static int demandsharedistrubutioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 
-	public static double earlystageInvestRRRAdjustFactor = 0.0025;
+	public static double earlystageInvestRRRAdjustFactor = 0.0025;		//Premium when determining if the project identyfied should apply for concession.
 	public static double minInvestRRRAdjustFactor = 0.75;		//Corrector of 0.9 implies a lower bond on about 0.9*8=7.2% RRR. This is aboute 2-3 Euro per MW difference in cert price needed (NPV).
 	public static double maxInvestRRRAdjustFactor = 1.20;		//Not sure this is autually used ad Project development uses the market RRR
 	
@@ -180,14 +180,13 @@ public class AllVariables {
 	public static double bankTAFirstTick = 0;
 	
 	//For scenarios (wind and power price)
-	
-	
-	
-	//For initial weather simulations setup. Old inputs. Used for Q1 2015:
 	public static double meanwindproductionfactor = getmeanwindproductionfactor();
 	public static double stdwindfactor = getstdwindproductionfactor();
-	public static double maxstdwindfactor = 2.3;					//Cutoff deviation in wind production factor. If 3 this means that it cannot blow less or more then 3 times the standard deviation. 
+	public static double maxstdwindfactor = 2.3;					//Cutoff deviation in wind production factor. If 3 this means that it cannot blow less or more then 3 times the standard deviation.
 	
+	//For the Project Market
+	public static double[] chanceofownershipchange = new double[]{0.25,0.5,0.75,1.0};	//Indicates the chance (%) of ownership change according to years postponed by curren owner when setting criteria flag. Thus, of a project have been postpone (not invested when it could) one year, there is a [0] chance for owernship change. For the second year, there is [1] chance, etc.
+	public static double initialowenershipchangepercentile = 0.1;
 }
 
 

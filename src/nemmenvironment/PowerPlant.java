@@ -30,8 +30,7 @@ public class PowerPlant implements Cloneable{
 	private int minconstructionyears;		//Minimum number of years this project needs in construction. Currently this is used without variation, only adding starttick randomly. 
 	private double specificRRR;				//Technology, regional and Capex- adjuster RRR before tax. For practiacl reasons this is simply made project specific.
 	private YearArray annualproduction;		//The Actual annual production of the powerplant (given, not estimated).
-	private int overgangsordningflag;		//Flag indicating if the project is part of the "overgangsordning". 1 indicates that it is. 
-	
+	private int overgangsordningflag;		//Flag indicating if the project is part of the "overgangsordning". 1 indicates that it is. 	
 	
 	private TickArray myProduction; 		//Future production (good given) used in simulations. Hence this is adjusted for the specific scenario ran.
 	//NOT NEEDED private TickArray mynormalproduction;	//The initally read in production not adjusted for scenario spesific wind years. Stored as an intiall duplicate in order to "rewind" the "myProduction" table after a scenario have been ran.
@@ -47,7 +46,9 @@ public class PowerPlant implements Cloneable{
 	private int endtick; 					//The tickid of a year that the certificate elgiable production ends (not including this tick).
 	private int yearsincurrentstatus;		//Annual counter counting years in current status for the purpose of deciding if its ready for concession.
 	private double IRR; 					//Project IRR
-	private int exougenousflagg = 0;		//Flag indicating if project is given in as exougenous. That is status 1 or 2. = Not exougenous.
+	private int exougenousflagg = 0;		//Flag indicating if project is given in as exougenous. That is status 1 or 2. = Not exougenous. (0 means endougeous)
+	private int projectmarketcandidateflag;	//Flag indicating if the project is a candidate for parttaking in the project market (0 indicates that is not a candidate).
+	private int numberofownershipchange;	//Number indicating how many times the plant has changed ownership.
 	
 	public PowerPlant() {}
 	
@@ -96,7 +97,7 @@ public class PowerPlant implements Cloneable{
 		}
 		if (status > 2)		{
 			earlieststartyear = minyearinprocess + minconstructionyears + TheEnvironment.theCalendar.getStartYear();	//This is really best case.
-
+			projectmarketcandidateflag = 1;																					//If project is in an earlier stage than under construction, then it si relevant for initial market update.
 			}
 		//defaults to avoid nulls in powerplant output and to not having 2012 values in plants not build (for cert needed and LRMC), the initials as set her.
 
@@ -105,6 +106,7 @@ public class PowerPlant implements Cloneable{
 		LRMC_ownRRR = 0.0;
 		certpriceneeded = 0.0;
 		certpriceneeded_ownRRR = 0.0;
+		numberofownershipchange = 0;
 		//calculateLRMCandcertpriceneeded(startyear, specificRRR, 3);
 
 					
@@ -474,13 +476,14 @@ public class PowerPlant implements Cloneable{
 	public double getcapex() {return this.capex;}
 	public int getexougenousflagg() {return this.exougenousflagg;}
 	public int getovergangsordningflag() { return overgangsordningflag;}
-	
-
+	public int getprojectmarketcandidateflag() { return projectmarketcandidateflag;}
+	public void addtonumberofownershipchange() {numberofownershipchange = numberofownershipchange +1;}
 	public String getname() {return name;}
 	public int gettechnologyid() {return technologyid;}
 	public String getmyregion() {return myRegion.getRegionName();}
 	public String getmyCompany() {return myCompany.getname();}
 	public double getmyCompanyRRR() {return (myCompany.getInvestmentRRR()*specificRRR);}
+	public void setprojectmarketcandidateflag(int a) {this.projectmarketcandidateflag = a;}
 	
 	public int getmyinvestmentdecisiontype() {
 		if (myCompany.getdeveloperagent() != null) {
@@ -498,6 +501,23 @@ public class PowerPlant implements Cloneable{
 	public String getcasename() {
 		return AllVariables.casename;
 	}
+	public void updatacriteriaflag_standard() {
+		//Flag indicating that the project is subject for the project market. Notice that "yearscurrenstatus" are up to date after the january-tick have been ran. That is, if the status is changed in januar, the new status has years 0 until the rutine is ran next year. Then it increases to one. The number thus corresponds to full years in line after rutine have been ran.
+		this.projectmarketcandidateflag = 0;
+		if (this.status == 3 || this.status == 5) {	//Only those beeing stoped by the developer are moved to a better developer. (for status 5, all DA are fundamental, hence moving to a better developer does not really help.
+			if (this.yearsincurrentstatus > 0) {
+				//differen for differn years.
+				this.projectmarketcandidateflag = 1;
+				
+			}
+			
+		}
+	}
+	public void updatacriteriaflag_initial() {
+		
+	}
+	
+	
 }
 	
 	

@@ -173,6 +173,13 @@ public static List<CompanyAgent> getCompanyAgenList() {
 	        return p1.getcertpriceneeded().compareTo(p2.getcertpriceneeded());
 	    }
 	}
+	//Implementing sort function for DeveloperAgents
+	public static class customdeveloperagentcomparator implements Comparator<DeveloperAgent> {
+	    @Override
+	    public int compare(DeveloperAgent d1, DeveloperAgent d2) {
+	        return d1.getmycompany().getInvestmentRRR().compareTo(d2.getmycompany().getInvestmentRRR());
+	    }
+	}
 	
 
 	// ----------------------------------------------------------------------------

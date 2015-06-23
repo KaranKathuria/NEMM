@@ -290,6 +290,9 @@ public class CompanyAgent extends ParentAgent {
 		private int investmentdecisiontype;				//Code defining what kind of certprice the agent uses to evaluate the investment decision. (1,2,3,4)
 		private double fundamentaleasefactor;			//for Fundamental agents, this is 1, FOr price agents this is either large or varies between 1-2.
 		private double priceeasefactor;					//for price agents, this is 1, For fundamental agents this is either large or varies between 1-2.
+		private int relativerank_norway;						//This is the relative rank of the developer i terms of the owner Company Agents wacc. 1 is thus implying that the developer has the lowest wacc of all.
+		private int relativerank_sweden;						//This is the relative rank of the developer i terms of the owner Company Agents wacc. 1 is thus implying that the developer has the lowest wacc of all.
+
 		
 		//Endogenous variables 
 		private double capacitydevorundrconstr;
@@ -356,6 +359,10 @@ public class CompanyAgent extends ParentAgent {
 		public int getinvestmentdecisiontype() {return investmentdecisiontype;}
 		public double getfundamentaleasefactor() {return fundamentaleasefactor;}
 		public double getpriceeasefactor() {return priceeasefactor;}
+		public int getrelativerank_norway() {return relativerank_norway;}
+		public void setrelativerank_norway(int a) {this.relativerank_norway = a;}
+		public int getrelativerank_sweden() {return relativerank_sweden;}
+		public void setrelativerank_sweden(int a) {this.relativerank_sweden = a;}
 		
 		
 	}
@@ -444,7 +451,7 @@ public class CompanyAgent extends ParentAgent {
 		companyanalysisagent.setMyCompany(this);
 		investmentRRR = RandomHelper.nextDoubleFromTo(AllVariables.minInvestRRRAdjustFactor, AllVariables.maxInvestRRRAdjustFactor);				//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
 		earlystageRRR = investmentRRR + AllVariables.earlystageInvestRRRAdjustFactor;																//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
-		regionpartcode = 2;																			//By default, all companies are active in both countries. 
+		regionpartcode = 2;																			//By default, all companies are active in both countries. (0=Norway, 1 = Sweden, 2 = both)
 		
 		}	
 	
@@ -457,7 +464,7 @@ public class CompanyAgent extends ParentAgent {
 	public ArrayList<PowerPlant> getmypowerplants() {return myPowerPlants;}
 	public ArrayList<PowerPlant> getmyprojects() {return myPowerPlants;}
 	public ArrayList<CompanyDemandShare> getMyDemandShares() {return myDemandShares;}
-	public double getInvestmentRRR() {return investmentRRR;}
+	public Double getInvestmentRRR() {return investmentRRR;}
 	public double getearlystageRRR() {return earlystageRRR;}
 	public double getphysicalnetposition() {double temp = 0;
 	if (produceragent != null) {
