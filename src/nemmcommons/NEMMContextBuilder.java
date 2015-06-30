@@ -80,6 +80,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	DistributeProjectsandPowerPlants.distributeprojects(AllVariables.projectsdistributioncode);			 //Distribute all Projects among the Companies with DAgents.
 	DistributeDemandShares.distributedemand(AllVariables.demandsharedistrubutioncode);					 //Distribute all demand among the Companies with OPAgents.
 	ProjectDevelopment.updateDAgentsnumber();
+	ProjectMarket.initialprojectmarket();																 //Distributes better porjects to better developers.
 	TheEnvironment.GlobalValues.updatebankbalance();													 //Calculates to certificate balance. Needed for FMA.
 	TheEnvironment.calculateLRMC_exougenousprojects();													 //Calculates LRMC and certprice needed for all exogenous projects. Must be done here after the projects has got an owner.
 	
@@ -125,6 +126,7 @@ public void annualmarketschedule() {
 	ProjectDevelopment.updateDAgentsnumber();	
 	ProjectDevelopment.projectidentification();					//Given how many projects the DA has in concession-stage and the limit, receice new projects. Needs updated numbers on numberofprojects in process and id
 	ProjectDevelopment.updateDAgentsnumber();					//Not really needed at end, but okey for displaypurposes.
+	
 	ProjectMarket.simplifyedprojectmarket();					//Trading of projects
 	ProjectDevelopment.updateDAgentsnumber();
 	
@@ -598,6 +600,7 @@ public void obligationsperiodshedule() {
 		return AllVariables.casename;
 	}
 	
+	public int getnumberofownershipchange() {return ProjectMarket.getnumberofownershipchange();}
 	
 		
 				

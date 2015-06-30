@@ -15,7 +15,6 @@ import nemmcommons.AllVariables;
 import nemmenvironment.TheEnvironment;
 import nemmprocesses.ShortTermMarket;
 import nemmstrategy_shortterm.GenericTactic.HistoricTacticValue;
-import nemmstrategy_shortterm.SellOffer;
 import nemmtime.NemmCalendar;
 
 

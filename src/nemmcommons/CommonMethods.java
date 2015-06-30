@@ -18,8 +18,7 @@ import nemmagents.CompanyAgent.DeveloperAgent;
 import nemmagents.MarketAnalysisAgent;
 import nemmenvironment.PowerPlant;
 import nemmenvironment.LRMCCurve.Curvepair;
-import nemmstrategy_shortterm.BuyOffer;
-import nemmstrategy_shortterm.SellOffer;
+
 import nemmtime.NemmCalendar;
 import nemmtime.NemmTime;
 import repast.simphony.engine.environment.RunState;

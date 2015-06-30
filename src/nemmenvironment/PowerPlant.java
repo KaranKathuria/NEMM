@@ -6,8 +6,11 @@ import nemmcommons.AllVariables;
 import nemmcommons.ParameterWrapper;
 import nemmcommons.TickArray;
 import nemmcommons.YearArray;
+import nemmprocesses.ProjectMarket;
 
 import org.apache.poi.ss.formula.functions.Irr;
+
+import repast.simphony.random.RandomHelper;
 
 
 public class PowerPlant implements Cloneable{
@@ -97,7 +100,6 @@ public class PowerPlant implements Cloneable{
 		}
 		if (status > 2)		{
 			earlieststartyear = minyearinprocess + minconstructionyears + TheEnvironment.theCalendar.getStartYear();	//This is really best case.
-			projectmarketcandidateflag = 1;																					//If project is in an earlier stage than under construction, then it si relevant for initial market update.
 			}
 		//defaults to avoid nulls in powerplant output and to not having 2012 values in plants not build (for cert needed and LRMC), the initials as set her.
 
@@ -107,6 +109,7 @@ public class PowerPlant implements Cloneable{
 		certpriceneeded = 0.0;
 		certpriceneeded_ownRRR = 0.0;
 		numberofownershipchange = 0;
+		projectmarketcandidateflag = 0;										//Initially set to zero.
 		//calculateLRMCandcertpriceneeded(startyear, specificRRR, 3);
 
 					
@@ -504,20 +507,71 @@ public class PowerPlant implements Cloneable{
 	public void updatacriteriaflag_standard() {
 		//Flag indicating that the project is subject for the project market. Notice that "yearscurrenstatus" are up to date after the january-tick have been ran. That is, if the status is changed in januar, the new status has years 0 until the rutine is ran next year. Then it increases to one. The number thus corresponds to full years in line after rutine have been ran.
 		this.projectmarketcandidateflag = 0;
+		int currentyear = TheEnvironment.theCalendar.getCurrentYear(); 	//Gets the current year.E.g 2015
+		if ((this.myRegion.getcertificatespost2020flag() == false) && (currentyear > (this.myRegion.getcutoffyear() - this.minconstructionyears))) {	//Simplified as we should also add years in process for those of status 5, but by simply adding them would 
+		return;}
+		
+		// That is, no point in trading projects if it cannot be build within the deadline
+		else {
+		
 		if (this.status == 3 || this.status == 5) {	//Only those beeing stoped by the developer are moved to a better developer. (for status 5, all DA are fundamental, hence moving to a better developer does not really help.
-			if (this.yearsincurrentstatus > 0) {
-				//differen for differn years.
-				this.projectmarketcandidateflag = 1;
-				
+			double rand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
+			
+			//Rules for changing projectmarketcandidateflag
+			if (this.yearsincurrentstatus == 1) {
+				if (rand < AllVariables.chanceofownershipchange[0]) {
+					this.projectmarketcandidateflag = 1;
+					this.setyearsincurrentstatus(0);                           		//Status is et to zero as this projets will be "traded" in the market and the yeas should be resetted.
+					this.addtonumberofownershipchange();
+				}
+			}
+			if (this.yearsincurrentstatus == 2) {
+				if (rand < AllVariables.chanceofownershipchange[1]) {
+					this.projectmarketcandidateflag = 1;
+					this.setyearsincurrentstatus(0);                           		//Status is et to zero as this projets will be "traded" in the market and the yeas should be resetted.
+					this.addtonumberofownershipchange();
+				}
+			}
+			if (this.yearsincurrentstatus == 3) {
+				if (rand < AllVariables.chanceofownershipchange[2]) {
+					this.projectmarketcandidateflag = 1;
+					this.setyearsincurrentstatus(0);                           		//Status is et to zero as this projets will be "traded" in the market and the yeas should be resetted.
+					this.addtonumberofownershipchange();
+}
 			}
 			
+			if (this.yearsincurrentstatus > 3) {
+				if (rand < AllVariables.chanceofownershipchange[3]) {
+					this.projectmarketcandidateflag = 1;
+					this.setyearsincurrentstatus(0);                           		//Status is et to zero as this projets will be "traded" in the market and the yeas should be resetted.
+					this.addtonumberofownershipchange();
+
+				}
+			}
 		}
+
+			}
+				
 	}
 	public void updatacriteriaflag_initial() {
+		this.projectmarketcandidateflag = 0;
 		
+		//Only projects awaiting decisions, in process or identifyed can be redistributed. 
+		if (this.status > 2 && this.status < 6) {	
+
+		//Only if "good" there is a chance for redistribution. (Better than the marginal defined by the project market.
+		if (this.getcertpriceneeded() < ProjectMarket.getmarginalcertpriceneeded()) {
+			double rand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
+			if (rand < AllVariables.chanceofownershipchange[0]) {
+				this.projectmarketcandidateflag = 1;
+			}
+
+	
+		}
 	}
-	
-	
+	}
 }
+	
+
 	
 	

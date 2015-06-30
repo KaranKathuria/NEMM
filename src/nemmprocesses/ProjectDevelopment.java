@@ -220,7 +220,7 @@ public class ProjectDevelopment {
 
 		
 }
-	
+	//Legg inn LRMC_own også på 
 	//Method updating projects to receive concession from status 4=in process to 3=awaiting investment decision. 
 	//Currently randomized such that project can receive concession after a given number of years until a max. After that they are trash if they have not got concession.
 	public static void receivingconcession() {

@@ -19,8 +19,6 @@ public class BuyStrategy1 extends GenericStrategy {
 	private BidOffer buyoffertwo;
 	
 	//Constructor for OPABidstrategy adding the four offers to arraylist of offers.
-	
-	//Constructor for OPABidstrategy adding the four offers to arraylist of offers.
 	public BuyStrategy1() {
 		
 		// Run the super constructor

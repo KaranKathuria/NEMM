@@ -55,15 +55,19 @@ public class AllVariables {
 	// distribution cutoffs used for assigning a strategy to a given agent
 	public static double[] cutoffPAExit = new double[]{0.15,0.25,1.0};		//Last increasse the end. Middel increses the level, the first tend to give "correct" prices earlier.
 	public static double[] cutoffOPExit = new double[]{0.6,0.8,1.0};
+	public static double[] cutoffTExit = new double[]{0.5,0.5};
+
 
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
 	// over the next 12 ticks - i.e. it will sell 1/12th in the next tick
 	public static int[] numTicksPAExit = new int[]{3,36,72};
 	public static int[] numTicksOPExit = new int[]{2,12,24};
+	public static int[] numTicksTExit = new int[]{72,86};
 	// Tactics - number of ticks to exit positions
 	// Number of exit strategies for each agent type
 	public static int numPAExitStrategies = numTicksPAExit.length;
-	public static int numOPExitStrategies = numTicksOPExit.length;	
+	public static int numOPExitStrategies = numTicksOPExit.length;
+	public static int numTExitStrategies = numTicksTExit.length;
 	
 	// ---- PRODUCER STRATEGIES AND TACTIC PARAMETERS
 	// Note - not all of these need be used in any given tactic & strategy
@@ -185,8 +189,8 @@ public class AllVariables {
 	public static double maxstdwindfactor = 2.3;					//Cutoff deviation in wind production factor. If 3 this means that it cannot blow less or more then 3 times the standard deviation.
 	
 	//For the Project Market
-	public static double[] chanceofownershipchange = new double[]{0.25,0.5,0.75,1.0};	//Indicates the chance (%) of ownership change according to years postponed by curren owner when setting criteria flag. Thus, of a project have been postpone (not invested when it could) one year, there is a [0] chance for owernship change. For the second year, there is [1] chance, etc.
-	public static double initialowenershipchangepercentile = 0.1;
+	public static double[] chanceofownershipchange = new double[]{0.2,0.2,0.4,0.6};		//Indicates the chance (%) of ownership change according to years postponed by curren owner when setting criteria flag. Thus, of a project have been postpone (not invested when it could) one year, there is a [0] chance for owernship change. For the second year, there is [1] chance, etc. Notice that one year is 2015 right after the decisions are made/not made..
+	public static double initialowenershipchangepercentile = 0.3;						//rated by certpriceneeded if build in 2016.
 }
 
 

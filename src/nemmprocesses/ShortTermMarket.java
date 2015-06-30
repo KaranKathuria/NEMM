@@ -15,9 +15,7 @@ import nemmcommons.CommonMethods;
 import nemmcommons.ParameterWrapper;
 import nemmenvironment.TheEnvironment;
 import nemmstrategy_shortterm.BidOffer;
-import nemmstrategy_shortterm.BuyOffer;
 import nemmstrategy_shortterm.GenericStrategy;
-import nemmstrategy_shortterm.SellOffer;
 
 
 //To be implemntetd Should in short take inn all bids, find the price which maximates traded volume. excetute trades. And set the price! (and do somethings smart with the imbalance of trade).

@@ -15,8 +15,6 @@ import nemmagents.CompanyAgent.ActiveAgent;
 import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
 import nemmenvironment.TheEnvironment;
-import nemmstrategy_shortterm.BuyOffer;
-import nemmstrategy_shortterm.SellOffer;
 
 // 
 public abstract class GenericStrategy {
@@ -26,10 +24,15 @@ public abstract class GenericStrategy {
 	protected ArrayList<BidOffer> agentsbuyoffers = new ArrayList<BidOffer>();
 	protected ArrayList<BidOffer> agentsselloffers = new ArrayList<BidOffer>();
 	protected int numberoftactics;
+	protected int numberoftactics_additional;
 	protected ArrayList<Double> strategyutilityscore = new ArrayList<Double>();
 	protected String strategyname; 
 	protected ArrayList<GenericTactic> alltactics = new ArrayList<GenericTactic>();
+	protected ArrayList<GenericTactic> alltactics_additional = new ArrayList<GenericTactic>();
+
 	protected GenericTactic besttactic = null;
+	protected GenericTactic besttactic_additional = null;
+
 	
 	protected int floorroofpricemultiplier; //Thus this strategy us a floor/roof [zero or one]
 	protected int numberofmonthsmaxpp; //This means that the maximum pp equalt this number of months expected demand or production.

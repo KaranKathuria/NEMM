@@ -15,8 +15,6 @@ import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
 import nemmenvironment.TheEnvironment;
 import nemmprocesses.ShortTermMarket;
-import nemmstrategy_shortterm.BuyOffer;
-import nemmstrategy_shortterm.SellOffer;
 import nemmtime.NemmCalendar;
 
 
@@ -294,36 +292,3 @@ public class BuyStrategy1Tactic extends GenericTactic {
 	}		
 }
 
-
-// OLD Learning 1
-
-//GJB LEARNING
-//paramOLDRestVoldiscount = 0; // GJB LEARNING - Need a better way to set this. Random could work. What is this?
-//paramOLDUtilityScore = 0; // GJB LEARNING - This can be set another way // The learning method needs to be set here also. Now defaults to 0.
-//private double paramOLDRestVoldiscount;
-//private double paramOLDUtilityScore;
-
-/*
-int diffmultUtility; //Retning p� utility
-int diffmultDelta;	//Retning p� pris fra forrige forrige gang til forrige gang. 
-double deltapricemultipier;
-// Utility comparison		
-if (tacticutilityscore-paramOLDUtilityScore >= 0) { //Unchanged utility is positive change. 
-	// Utility has improved
-	diffmultUtility = 1;
-}
-else {
-	diffmultUtility = -1;
-}
-// -ve if the mult is less than the previous, positive otherwise
-diffmultDelta = CommonMethods.signDbl(pricemultiplier-paramOLDRestVoldiscount); //Unchanged price is positive (increase) price. 
-if (diffmultDelta == 0) {diffmultDelta = 1;} // tie breaker
-// set the new multiplier delta
-deltapricemultipier = diffmultUtility * diffmultDelta * PRICEMULTDELTASTEP;
-// Update the history parameters
-paramOLDRestVoldiscount = pricemultiplier;
-paramOLDUtilityScore = tacticutilityscore;
-// Ensure not out of bounds. Note minus sign in difference to sellstrategy1tactiv1 learning 1
-pricemultiplier = Math.min(MAXRESTVOLDISCOUNT, Math.max(pricemultiplier+deltapricemultipier,MINRESTVOLDISCOUNT));
-//Says if positive change (utilttychange and pricechange) increase price.
-*/

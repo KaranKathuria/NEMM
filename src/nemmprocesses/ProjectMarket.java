@@ -23,10 +23,14 @@ import nemmenvironment.TheEnvironment;
 
 public class ProjectMarket {
 	
-	public static ArrayList<DeveloperAgent> sortedDeveloperAgents_norway = new ArrayList<DeveloperAgent>();	//List of developers having actitivis in Norway, sorted by wacc
-	public static ArrayList<DeveloperAgent> sortedDeveloperAgents_sweden = new ArrayList<DeveloperAgent>();	//List of developers having actitivis in Sweden, sorted by wacc
-	public static int numberofDAnorway;
-	public static int numberofDAsweden;
+	private static ArrayList<DeveloperAgent> sortedDeveloperAgents_norway = new ArrayList<DeveloperAgent>();	//List of developers having actitivis in Norway, sorted by wacc
+	private static ArrayList<DeveloperAgent> sortedDeveloperAgents_sweden = new ArrayList<DeveloperAgent>();	//List of developers having actitivis in Sweden, sorted by wacc
+	private static int numberofDAnorway;
+	private static int numberofDAsweden;
+	private static int numberofownershipchange = 0;
+	private static ArrayList<PowerPlant> projectsforredistribution = new ArrayList<PowerPlant>();			//Helplist needed to determine the percentile best projects.
+	private static double marginalcertpriceneeded = 0.0;
+
 	
 	
 //Variebles needed for running the projectmarket method.	
@@ -47,6 +51,8 @@ public class ProjectMarket {
 	
 	public static void initialprojectmarket() {
 		
+		//First, the benchmark for determining what good or bad projects are must be determined.
+		setmarginalcertpriceneeded();
 		//Make sure that flags are updated
 		for (PowerPlant PP : TheEnvironment.allPowerPlantsandProjects) {	//Loops thorugh all, hence the logic is in the Power Plant method.
 			PP.updatacriteriaflag_initial();}
@@ -54,20 +60,40 @@ public class ProjectMarket {
 		//Update rank and exchange projects
 		updaterelativerank();												//updates all ranks and populate developer lists for each country.
 		exchangeprojects();													//Exchange projects
-		
+		}
+	
+	
+	
+	//Calculates the percentile for redustribution
+	public static void setmarginalcertpriceneeded() {
+		projectsforredistribution.clear();
+		for (PowerPlant PP : TheEnvironment.allPowerPlantsandProjects) {
+			if (PP.getstatus() > 2 && PP.getstatus() < 6) {
+				
+				//Currently just the X-percentage of all projects (status 3,4,5) have a chance for redistribution. 
+				//Maybe those that cannot be finished in time (for the deadline) should not be included.
+				PP.calculateLRMCandcertpriceneeded(2018, PP.getspecificRRR(), 3);
+				projectsforredistribution.add(PP);
+			}
+		}
+		Collections.sort(projectsforredistribution, new CommonMethods.customprojectcomparator());			//Sorting the of a DAs project awaiting from lowest certprieneeded to highest certpriceneeded
+		int marginalindeks = (int) (AllVariables.initialowenershipchangepercentile * projectsforredistribution.size()) - 1;
+		marginalcertpriceneeded = projectsforredistribution.get(marginalindeks).getcertpriceneeded();
 	}
 	
-
 	
+	//Method for doing the actual exchange. Loops thorugh all projets and takes the ones that are marked with positive candidate flag. 
 	public static void exchangeprojects() {
+		numberofownershipchange = 0;
 		for (PowerPlant PP : TheEnvironment.allPowerPlantsandProjects) {
 		
 			if (PP.getprojectmarketcandidateflag() == 1) {
 				
 				if (PP.getstatus() < 3) {	throw new IllegalArgumentException("Project Market does not handle powerplants, only projects");}
-				
+				else {
+					numberofownershipchange = numberofownershipchange +1;
 				//Norway
-				if (PP.getMyRegion() == TheEnvironment.allRegions.get(0)) {
+			if (PP.getMyRegion() == TheEnvironment.allRegions.get(0)) {
 				
 				//Getting a uniform distributed random indeks of new owner that is "better" than current owner
 				int tempmax = PP.getMyCompany().getdeveloperagent().getrelativerank_norway() - 1;
@@ -78,8 +104,6 @@ public class ProjectMarket {
 				newowner.addproject(PP);
 				oldowner.getmyprojects().remove(PP);	
 				PP.setMyCompany(newowner.getmycompany());
-				PP.setprojectmarketcandidateflag(0);
-				PP.addtonumberofownershipchange();
 				}
 				//Sweden
 			else {
@@ -90,12 +114,9 @@ public class ProjectMarket {
 				DeveloperAgent newowner = sortedDeveloperAgents_norway.get(newownerindeks);
 				newowner.addproject(PP);
 				oldowner.getmyprojects().remove(PP);	
-				PP.setMyCompany(newowner.getmycompany());
-				PP.setprojectmarketcandidateflag(0);
-				PP.addtonumberofownershipchange();
-				
+				PP.setMyCompany(newowner.getmycompany());				
 				}
-			}
+			}}
 		}
 	}
 	
@@ -107,7 +128,6 @@ public class ProjectMarket {
 		if (sortedDeveloperAgents_sweden.isEmpty() == false) {
 			sortedDeveloperAgents_sweden.clear();}
 
-		
 		//Add to all the relevant lists
 		for (DeveloperAgent DA : CommonMethods.getDAgentList()) {
 			if (DA.getregionpartcode() == 0) {
@@ -124,15 +144,13 @@ public class ProjectMarket {
 		
 		numberofDAnorway = sortedDeveloperAgents_norway.size();
 		numberofDAsweden = sortedDeveloperAgents_sweden.size();
-		int a = 4;
-		int b = a;
-		
+
 		for (int i = 0; i < numberofDAnorway; i++) {
 			sortedDeveloperAgents_norway.get(i).setrelativerank_norway(i+1);}
 		for (int i = 0; i < numberofDAsweden; i++) {
 			sortedDeveloperAgents_sweden.get(i).setrelativerank_sweden(i+1);} 
 	}
-		
-		
+	public static int getnumberofownershipchange() {return numberofownershipchange;}
+	public static double getmarginalcertpriceneeded() {return marginalcertpriceneeded;}		
 }
 

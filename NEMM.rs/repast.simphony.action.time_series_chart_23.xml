@@ -105,6 +105,18 @@
       </SeriesData>
     </entry>
     <entry>
+      <string>Numberownershipchange</string>
+      <SeriesData>
+        <label>Numberownershipchange</label>
+        <color>
+          <red>255</red>
+          <green>0</green>
+          <blue>255</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
       <string>In operation</string>
       <SeriesData>
         <label>In operation all acc</label>

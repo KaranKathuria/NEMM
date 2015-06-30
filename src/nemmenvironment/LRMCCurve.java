@@ -10,13 +10,7 @@ package nemmenvironment;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-
-import org.piccolo2d.util.PPickPath;
-
-import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
-import nemmstrategy_shortterm.SellOffer;
 
 public class LRMCCurve {
 	

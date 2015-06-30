@@ -123,6 +123,15 @@
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
+    <entry>
+      <string>Numberownershipchange</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Numberownershipchange</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getnumberofownershipchange</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
   </methodDataSources>
   <countSources class="linked-hash-map"/>
   <customNADataSources class="linked-hash-map"/>

@@ -126,6 +126,15 @@ public class CompanyAgent extends ParentAgent {
 				tradestrategy.setmyAgent(ActiveAgent.this);
 				allstrategies.add(tradestrategy);
 				portfoliocapital = 500000; 
+				
+				//Setting the random "holding horizon" for trader agents.
+				double dPhysRnd = RandomHelper.nextDouble();
+				for (int stratID=AllVariables.numTExitStrategies-1; stratID>=0; stratID--){
+					if (dPhysRnd <= AllVariables.cutoffTExit[stratID]) {
+						numTicksToEmptyPosition = AllVariables.numTicksTExit[stratID];
+					}
+				}
+						
 			} 
 			RAR = 0.15; //quite risk avers
 
