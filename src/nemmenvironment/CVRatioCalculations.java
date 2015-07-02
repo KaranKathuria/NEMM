@@ -31,8 +31,10 @@ public class CVRatioCalculations {
 		//As the maksthetick, the highest future tick needed CVObject for, is not altered each tick now, but this could be in the future.
 		java.util.List<Integer> tempa = Arrays.asList(ArrayUtils.toObject(AllVariables.numTicksPAExit));
 		java.util.List<Integer> tempb = Arrays.asList(ArrayUtils.toObject(AllVariables.numTicksOPExit));
+		java.util.List<Integer> tempc = Arrays.asList(ArrayUtils.toObject(AllVariables.numTicksTExit));
+
 				
-		maxsthetick = Math.max(Collections.max(tempa), Collections.max(tempb));
+		maxsthetick = Math.max(Math.max(Collections.max(tempa), Collections.max(tempb)), Collections.max(tempc));
 		
 		
 		

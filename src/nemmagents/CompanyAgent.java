@@ -11,6 +11,7 @@ package nemmagents;
 //Import section for other methods
 // opmment
 import java.util.ArrayList;
+
 import repast.simphony.random.RandomHelper;
 import nemmagents.MarketAnalysisAgent;
 import nemmagents.ParentAgent;
@@ -24,6 +25,9 @@ import nemmstrategy_shortterm.BuyStrategy1;
 import nemmstrategy_shortterm.GenericStrategy;
 import nemmstrategy_shortterm.SellStrategy1;
 import nemmstrategy_shortterm.TradeStrategy1;
+import nemmstrategy_shortterm.TradeStrategy1_new;
+import nemmstrategy_shortterm.TraderBuyUtilityMethod;
+import nemmstrategy_shortterm.TraderSellUtilityMethod;
 import nemmcommons.AllVariables;
 import nemmcommons.VolumePrognosis;
 import nemmenvironment.PowerPlant;
@@ -44,6 +48,7 @@ public class CompanyAgent extends ParentAgent {
 		private int numberofstrategies;
 		private GenericStrategy beststrategy = null;
 		private GenericUtilityMethod utilitymethod;
+		private GenericUtilityMethod utilitymethod_additional = null;	//Used for the sell side of traders (2015)
 		private double physicalnetposition;
 		private double lasttickproduction;
 		private double lasttickdemand;
@@ -100,12 +105,6 @@ public class CompanyAgent extends ParentAgent {
 				buystrategy.setmyAgent(ActiveAgent.this);
 				allstrategies.add(buystrategy);
 				portfoliocapital = 0;
-				
-				// ---- GJB Added
-				// Goal is to set some agents who try to exit their physical position 
-				// quickly, others who can hold it for a while, and others who can hold for a long time
-				// Specify the type and get the number of ticks
-				//Random generator = new Random(); 
 
 				double dPhysRnd = RandomHelper.nextDouble();
 				for (int stratID=AllVariables.numOPExitStrategies-1; stratID>=0; stratID--){
@@ -121,11 +120,13 @@ public class CompanyAgent extends ParentAgent {
 				physicalnetposition = 0;
 				// here we need a way to have different utilities
 				// currently hard coded to the default
-				utilitymethod = new TAUtilityMethod(nemmcommons.AllVariables.utilityDefault_TR);
-				TradeStrategy1 tradestrategy = new TradeStrategy1();
+				utilitymethod = new TraderBuyUtilityMethod(nemmcommons.AllVariables.utilityDefault_OP);
+				utilitymethod_additional = new TraderSellUtilityMethod(nemmcommons.AllVariables.utilityDefault_PA);
+				this.utilitymethod_additional.setmyAgent(ActiveAgent.this);
+				
+				TradeStrategy1_new tradestrategy = new TradeStrategy1_new();
 				tradestrategy.setmyAgent(ActiveAgent.this);
 				allstrategies.add(tradestrategy);
-				portfoliocapital = 500000; 
 				
 				//Setting the random "holding horizon" for trader agents.
 				double dPhysRnd = RandomHelper.nextDouble();
@@ -183,6 +184,8 @@ public class CompanyAgent extends ParentAgent {
 		public void setphysicalnetposition(double a) {physicalnetposition = a;}
 		public CompanyAnalysisAgent getagentcompanyanalysisagent() {return companyanalysisagent;}
 		public GenericUtilityMethod getutilitymethod() {return utilitymethod;}
+		public GenericUtilityMethod getutilitymethod_additional() {return utilitymethod_additional;}
+
 		public ArrayList<PowerPlant> getmypowerplants() {return myPowerPlants;}
 		public void addpowerplant(PowerPlant pp) {myPowerPlants.add(pp);}
 		public void AddDemandShare(double defaultShare, Region demRegion){
@@ -216,6 +219,7 @@ public class CompanyAgent extends ParentAgent {
 			if (beststrategy.getAgentsSellOffers() != null) {
 				 for (BidOffer m : beststrategy.getAgentsSellOffers()) {
 					 volSold = volSold + m.getCertVolume()*m.getShareCleared();
+	
 				 }	 
 			 }
 			return volSold;

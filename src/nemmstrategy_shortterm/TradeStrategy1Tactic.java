@@ -41,7 +41,6 @@ public class TradeStrategy1Tactic extends GenericTactic {
 		discount = d;
 		maxshortpos = maxshort;
 		maxlongpos = maxlong;
-		porfoliocapitalexitlimit = AllVariables.portfoliocapitalexitlimit;
 	}
 	
 	//The buy and sell offer of these tactics are simply creating two buyoffers and two selloffers according to a random discount, premium and a share. 

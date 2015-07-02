@@ -93,6 +93,7 @@ public abstract class GenericStrategy {
 	public GenericTactic getbesttactic() {return besttactic;}
 	
 	public ArrayList<GenericTactic> getalltactics() {
+		
 		return alltactics;}	
 	
 	
@@ -104,6 +105,7 @@ public abstract class GenericStrategy {
 	//  - the utilities and parameters for all the strategy's tactics
 	//  - the strategy's best tactic (and utility)
 	
+	//This is later overwritten by the specific strategy objects
 	public void updateBidsAndOffers() {};
 	
 	public void updateStrategy() { 

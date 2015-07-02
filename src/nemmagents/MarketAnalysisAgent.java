@@ -75,7 +75,11 @@ public class MarketAnalysisAgent extends ParentAgent {
 			// for when they do
 			 numTicksToEmptyPurch = myCAAgent.getMyCompany().getobligatedpurchaseragent().getNumTicksToEmptyPosition();
 		}
+		if (myCAAgent.getMyCompany().gettraderagent()!=null) {
+			numTicksToEmptyTrad = myCAAgent.getMyCompany().gettraderagent().getNumTicksToEmptyPosition();
+		}
 		numTicksToEmpty = Math.max(numTicksToEmptyTrad, Math.max(numTicksToEmptyPurch, numTicksToEmptyProd));
+		
 		if(numTicksToEmpty>=0) {
 			marketprognosis.updateCertValueData(numTicksToEmpty);
 		} 
@@ -90,6 +94,9 @@ public class MarketAnalysisAgent extends ParentAgent {
 			// Note: the obligated purchaser does not use the CV stuff as yet - this is in place
 			// for when they do
 			 certValuePurchaser = calcCertificateValueNew(numTicksToEmptyPurch);
+		}
+		if (numTicksToEmptyTrad>0) {
+			 certValueTrader = calcCertificateValueNew(numTicksToEmptyTrad);
 		}
 		
 		

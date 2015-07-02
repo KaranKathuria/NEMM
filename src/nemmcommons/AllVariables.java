@@ -35,9 +35,16 @@ public class AllVariables {
 //	public static double PAgentmustsellshare = 0.5;				//RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
 //	public static double OPAgentmustsellshare = 0.75; 		 //RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
 	
-	public static double tradermaximumshortpos = -4000; //These values should have some realtion to the initial portfoliovalue by allowing traders
-	public static double tradermaximumlongpos = 4000;	//to go bust.
-	public static double portfoliocapitalexitlimit = 100000; //reaching this limit triggers and "exit" behavior. This each reach with strong price drop/increase
+	public static boolean cantradershortsellflag = false;	//If false, traders can only sell if they have a positiv physical position. 
+	//If not at limit and allowed to sell, this is what the selloffer volumes for the traders are
+	public static double tradermustsellvol = 100;
+	public static double traderrestsellvol = 10000;
+	//As above but for buy
+	public static double tradermustbuyvol = 100;
+	public static double traderrestbuyvol = 10000;
+	
+	public static double tradermaximumshortpos = -100000; 	
+	public static double tradermaximumlongpos = 10000;		
 	
 	public static int numofhistutilitiesincluded = 3; //Used by method that deterines the tactics best utility.
 	
@@ -46,7 +53,7 @@ public class AllVariables {
 	// Utilities
 	public static int utilityDefault_PA = 2; // default utility for a purchaser agent
 	public static int utilityDefault_OP = 2; // default utility for a obligated agent
-	public static int utilityDefault_TR = 1; // default utility for a trader agent
+	public static int utilityDefault_TR = 2; // default utility for a trader agent
 		
 	// ST price prognosis - exponential smoothing parameters
 	public static double maxAlphaSTPrice = 0.8;
@@ -55,14 +62,14 @@ public class AllVariables {
 	// distribution cutoffs used for assigning a strategy to a given agent
 	public static double[] cutoffPAExit = new double[]{0.15,0.25,1.0};		//Last increasse the end. Middel increses the level, the first tend to give "correct" prices earlier.
 	public static double[] cutoffOPExit = new double[]{0.6,0.8,1.0};
-	public static double[] cutoffTExit = new double[]{0.5,0.5};
+	public static double[] cutoffTExit = new double[]{0.5,1.0};
 
 
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
 	// over the next 12 ticks - i.e. it will sell 1/12th in the next tick
 	public static int[] numTicksPAExit = new int[]{3,36,72};
 	public static int[] numTicksOPExit = new int[]{2,12,24};
-	public static int[] numTicksTExit = new int[]{72,86};
+	public static int[] numTicksTExit = new int[]{86,86};
 	// Tactics - number of ticks to exit positions
 	// Number of exit strategies for each agent type
 	public static int numPAExitStrategies = numTicksPAExit.length;
