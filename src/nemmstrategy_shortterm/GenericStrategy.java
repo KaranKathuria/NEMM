@@ -115,6 +115,16 @@ public abstract class GenericStrategy {
 		}
 		// Then update the best tactic
 		updateBestTactic();
+		
+		//Added 20150703 for the _additional to support traders reusing producers and purchasers tactics.
+		if (alltactics_additional.size() > 0) {
+		for (GenericTactic tactic : alltactics_additional) { 
+			tactic.updateTactic();
+		}
+		// And the best additional tactic (for the trader selling) added 20150703 KK
+		updateBestTactic_additional();
+		}
+		
 	}
 	
 	public void updateBestTacticOLD() {
@@ -225,6 +235,79 @@ public abstract class GenericStrategy {
 		// in the strategy (this is also the strategy's utility)
 		strategyutilityscore.add(besttactic.getUtilityScore(1)[0][1]); 
 
+	}
+	
+	public void updateBestTactic_additional() {
+		// Just copied from updateBestTactic, but altered the list off alltactics to alltactics_additional
+				
+				// Create a list with the tactic and utility info
+				ArrayList<TacticUtilityListElement> tacticList = new ArrayList<TacticUtilityListElement>();
+				TacticUtilityListElement listElement;
+				double curUtilityScore;
+				int numPdsInUtilCalc;
+				int tacticID;
+				double[][] curUtilityArray;
+				double sumWeights = 0.0;
+				double tmpProb;
+				double tmpCumProb=0.0;
+				for (GenericTactic curTactic : alltactics_additional) { 
+					listElement = new TacticUtilityListElement();
+					listElement.tacticPointer = curTactic;
+					curUtilityScore = 0;
+					// Sums the utility for the previous X ticks
+					numPdsInUtilCalc = Math.min(AllVariables.numofhistutilitiesincluded, TheEnvironment.theCalendar.getCurrentTick()+1);
+					curUtilityArray = curTactic.getUtilityScore(AllVariables.numofhistutilitiesincluded);
+					for (int i = 0; i < numPdsInUtilCalc;++i) {
+						curUtilityScore = curUtilityScore + curUtilityArray[i][1];
+					}
+					listElement.tacticUtility = curUtilityScore;
+					tacticList.add(listElement);
+				}
+				if(TheEnvironment.theCalendar.getCurrentTick()>0){
+					int tmp1 = 1;
+					tmp1 = 2;
+				}
+				// Rank the tactics from high to low utility		
+				Collections.sort(tacticList); // sort using the TacticUtilityListElement comparator (see code above)
+				// Calculate the weights using the weight function
+				for (int i = 0; i< tacticList.size(); i++) { 
+					listElement = tacticList.get(i);
+					listElement.tacticWeight = (1/myPreferenceScore)^(i-1);
+					sumWeights = sumWeights + listElement.tacticWeight;			
+				}
+				// Calculate the probability cutoff. Idea is as follows:
+				// Let p = probability for current tactic, and Z be the cumulative probabilities for all
+				// tactics with a better utility than the current. 
+				// We store Z+p for the current tactic as the probability cut off
+				// Let x be a random number between 0 & 1
+				// Then i choose that tactic with the lowest cut off greater than x.
+				for(int i = 0; i< tacticList.size(); i++) {
+					listElement = tacticList.get(i);
+					tmpProb = listElement.tacticWeight/sumWeights;
+					tmpCumProb = tmpCumProb + tmpProb;
+					listElement.tacticProbabilityCutoff = tmpCumProb;
+				}
+				
+				// Randomly choose the tactic to use next time
+				//Random generator = new Random(); 
+				double randX = RandomHelper.nextDouble(); //generator.nextDouble();
+				int keeplooking = 1;
+				int curIndex=0;
+				besttactic_additional = tacticList.get(0).tacticPointer; // Default chose the utility with the best tactic
+				while(keeplooking == 1) {
+					listElement = tacticList.get(curIndex);
+					if (listElement.tacticProbabilityCutoff >= randX) {
+						// use this one
+						besttactic_additional = listElement.tacticPointer;
+						keeplooking = 0;
+					}
+					curIndex++;
+				}
+				// Store the utility from the current tick of the best tactic,
+				// in the strategy (this is also the strategy's utility)
+				strategyutilityscore.add(besttactic.getUtilityScore(1)[0][1]); 
+
+		
 	}
 
 // ---- STRATEGY UTILITY	

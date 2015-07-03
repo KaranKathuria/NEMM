@@ -138,18 +138,22 @@ public class TraderSellStrategy1Tactic extends GenericTactic {
 		ret.setCertVolume(AllVariables.tradermustsellvol);
 		}
 		ret.setPrice(paramMustSellPriceMult*expectedprice);
+		int a = 2;
+
 		return ret;
 		}
 			
 	private BidOffer createRestVolOffer(double expectedprice, double physicalposition,double lasttickproduction, double mustsell) {
 		BidOffer ret = new BidOffer();
-		if (physicalposition < AllVariables.tradermaximumshortpos || AllVariables.cantradershortsellflag==false) {
+		if (physicalposition < AllVariables.tradermaximumshortpos || (AllVariables.cantradershortsellflag==false && physicalposition<=0.0)) {
 			ret.setCertVolume(0);
 		}
 		else {
 		ret.setCertVolume(AllVariables.traderrestsellvol); //rest of the monthly production sold at expected price.			
 		}
 		ret.setPrice(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice)); //Prices not symmetric around expected price with must of the volume tried sold at at premium (1+discount)*expt.		
+		
+		int b = 2;
 		return ret;
 		}
 	

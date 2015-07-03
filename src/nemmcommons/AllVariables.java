@@ -37,14 +37,14 @@ public class AllVariables {
 	
 	public static boolean cantradershortsellflag = false;	//If false, traders can only sell if they have a positiv physical position. 
 	//If not at limit and allowed to sell, this is what the selloffer volumes for the traders are
-	public static double tradermustsellvol = 100;
-	public static double traderrestsellvol = 10000;
+	public static double tradermustsellvol = 10;
+	public static double traderrestsellvol = 100000;
 	//As above but for buy
-	public static double tradermustbuyvol = 100;
-	public static double traderrestbuyvol = 10000;
+	public static double tradermustbuyvol = 10;
+	public static double traderrestbuyvol = 100000;
 	
-	public static double tradermaximumshortpos = -100000; 	
-	public static double tradermaximumlongpos = 10000;		
+	public static double tradermaximumshortpos = -1000000; 	
+	public static double tradermaximumlongpos = 1000000;		
 	
 	public static int numofhistutilitiesincluded = 3; //Used by method that deterines the tactics best utility.
 	
