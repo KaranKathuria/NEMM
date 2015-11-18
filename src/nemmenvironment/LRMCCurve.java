@@ -48,7 +48,7 @@ public class LRMCCurve {
 		runyear = runye;										//This is the year of running the FMA in the simulation
 		yearsahead = yearsah;									//This is for which future year the LRMC curve is beeing calculated. 
 	}
-	
+	//Basicaly it calculats the must economically marginal cost to build our the required certificate defecit. 
 	//Method calculating the certificateprice needed for the marginal project in the list and setting the equilibrium price. 
 	public void calculatelrmccurve(ArrayList<PowerPlant> tempendogenousprojects, double certbalance, int xyears) {
 		int yearsprod = Math.min(xyears,15);					//When calculating LRMC based on a certbalance that is for more than a year, this is needed.

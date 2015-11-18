@@ -126,6 +126,8 @@ public final class TheEnvironment {
                                for (int i = 0; i<TheEnvironment.theCalendar.getNumYears();i++) {       //For forward-years. [i=1] is the array of future prices standing in year 2013, with 24 doubles. That is for each annualMarketSeries
                                                double[] tempams_N = new double[TheEnvironment.theCalendar.getNumYears()];
                                                double[] tempams_S = new double[TheEnvironment.theCalendar.getNumYears()];
+                                               int gg=runningscenario.getAnnualpowerpricerregion1().length;
+                                               int t=3;
                                                                               for (int j = 0; j<TheEnvironment.theCalendar.getNumYears();j++) {
                                                                                               tempams_N[j] = Norway.getMyForwardPrice(i).getValue(j) * runningscenario.getAnnualpowerpricerregion1()[j+i]; //Here the fwd of year 2035 will go from 2035 - 2058 (+23)
                                                                                               tempams_S[j] = Sweden.getMyForwardPrice(i).getValue(j) * runningscenario.getAnnualpowerpricerregion2()[j+i];

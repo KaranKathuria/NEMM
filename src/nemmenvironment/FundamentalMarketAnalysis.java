@@ -203,11 +203,12 @@ public class FundamentalMarketAnalysis {
 	else {
 
 		//Following is the key different between the original and current FMA.  
-		if (xyearfuturecertbalance < 0) {											//Should be the three year.That is which shortcoming should it build on?
+		if (xyearfuturecertbalance < 0) {											//Should be the three year.That is which shortcoming should it build on? 2015111 KK Should this be current balance?!
 				
 				for (PowerPlant PP : allendogenousprojects) {						//All endogenous projects. Pooling together all projects in another stage than under construction.
 					if ((PP.getearlieststartyear()+1) <= (currentyear+i)) {			//If they can earliest be finished in time for this year. Added +1 as its highly unlikely that all are finished in "best case" time.
 				tempendogenousprojects.add(PP);	}}									//Add all relevant endogenous projects to this list.
+				int test = 2;
 			
 			//What if there is a shortcoming and there are no certificate plants available? Needs to be handle
 				if (tempendogenousprojects.size() < 1) {throw new Error("There is no projects that can be finished in order to meet demand");}

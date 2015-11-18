@@ -8,6 +8,7 @@
 
 package nemmenvironment;
 
+import nemmcommons.AllVariables;
 import nemmcommons.TickArray;
 import nemmcommons.YearArray;
 import nemmtime.NemmTime;
@@ -24,8 +25,14 @@ public class Scenario {
 	
 	public Scenario() {
 		windyearmultiplier = new YearArray();
-		annualpowerpricerregion1 = new double[47]; //Should ideally not be hard-coded, but for now okey. The years is total number of spot-price years given.
+		if (AllVariables.isbacktest == true) {
+		annualpowerpricerregion1 = new double[49]; //Should ideally not be hard-coded, but for now okey. The years is total number of spot-price years given. //20151117 alterded from 47-49 for backtestts
+		annualpowerpricerregion2 =  new double[49]; //This is larger than YearArray (24) due to forwardprice-initilization.
+		}
+		else {
+		annualpowerpricerregion1 = new double[47]; //Should ideally not be hard-coded, but for now okey. The years is total number of spot-price years given. //20151117 alterded from 47-49 for backtestts
 		annualpowerpricerregion2 =  new double[47]; //This is larger than YearArray (24) due to forwardprice-initilization.
+		}
 	}
 
 

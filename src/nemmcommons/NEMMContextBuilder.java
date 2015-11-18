@@ -66,21 +66,20 @@ public class NEMMContextBuilder extends DefaultContext<Object>
  return context;}
 	
 	//Distribution and initiation 
-	@ScheduledMethod(start = 0, priority = 3)
+	@ScheduledMethod(start = 0, priority = 4)
 	public void DistributionandInitiation() {
 	
 	//Sales the annual production of all wind power plants according to specifyed mean, standarddeviation and max(capped).
-	TheEnvironment.setwindscenario();
-	TheEnvironment.setpowerpricescenario();
-	TheEnvironment.simulateweatherdistribtion();
-
+	TheEnvironment.setwindscenario();				//Sets scenario	
+	TheEnvironment.setpowerpricescenario();			//Sets scenario
+	TheEnvironment.simulateweatherdistribtion();	//Generates wind-years.
 		
 	//Distributing Plants, projects and demand among Agents
 	DistributeProjectsandPowerPlants.distributeallpowerplants(AllVariables.powerplantdistributioncode);	 //Distribute all PowerPlants among the Copmanies with PAgents.
 	DistributeProjectsandPowerPlants.distributeprojects(AllVariables.projectsdistributioncode);			 //Distribute all Projects among the Companies with DAgents.
 	DistributeDemandShares.distributedemand(AllVariables.demandsharedistrubutioncode);					 //Distribute all demand among the Companies with OPAgents.
 	ProjectDevelopment.updateDAgentsnumber();
-	ProjectMarket.initialprojectmarket();																 //Distributes better porjects to better developers.
+	//ProjectMarket.initialprojectmarket();																 //Added in Q4 2015. Distributes better porjects to better developers.
 	TheEnvironment.GlobalValues.updatebankbalance();													 //Calculates to certificate balance. Needed for FMA.
 	TheEnvironment.calculateLRMC_exougenousprojects();													 //Calculates LRMC and certprice needed for all exogenous projects. Must be done here after the projects has got an owner.
 	
@@ -98,46 +97,15 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 // ============================================================================================================================================================================================
 // === Simulation schedule ====================================================================================================================================================================
 	
-//Needs to be put somewhere!! UpdatePhysicalPosition.scaleinitialproducerphysicalposition()	
+// ---- Scales the bank according to the right real life position. 
 @ScheduledMethod(start = AllVariables.firstrealtick, priority = 3)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
 	public void scalephysicalpositions() {
 	UpdatePhysicalPosition.scalePAphysicalpos();
 	UpdatePhysicalPosition.scaleOPAphysicalpos();
 	UpdatePhysicalPosition.scaleTAphysicalpos();
-
 }
 
-	
-//All annual updates to come below. 
-@ScheduledMethod(start = 36, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
-public void annualmarketschedule() {
-	
-	GlobalValues.annualglobalvalueupdate();
-	
-	if (!AllVariables.useTestData){
-		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	
-		Forcast.updateMPEandLPE();									 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
-	}
-	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
-	ProjectDevelopment.receivingconcession();					//As this is given an not dependent on other stages. Starting with adding on year in this status.
-	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.
-	ProjectDevelopment.startconstrucion();						//The investment decision. This is ran after "receiveconcession", hence projects and investment decision can done the same year.
-	ProjectDevelopment.startpreprojectandapplication();	        //The process of deciding which project to apply for concession. In the same manner as start construction
-	ProjectDevelopment.updateDAgentsnumber();	
-	ProjectDevelopment.projectidentification();					//Given how many projects the DA has in concession-stage and the limit, receice new projects. Needs updated numbers on numberofprojects in process and id
-	ProjectDevelopment.updateDAgentsnumber();					//Not really needed at end, but okey for displaypurposes.
-	
-	ProjectMarket.simplifyedprojectmarket();					//Trading of projects
-	ProjectDevelopment.updateDAgentsnumber();
-	
-}
-//Last update to calculate prosjekt IRR
-@ScheduledMethod(start = 287, interval = 0, priority = 3)		
-public void Finalupdate() {
-	ProjectDevelopment.calculateallIRRs();	
-}
-
-//The monthly update
+// ---- The monthly update
 @ScheduledMethod(start = 0, interval = 1, priority = 1)
 public void monthlymarketschedule() {
 		
@@ -157,48 +125,64 @@ public void monthlymarketschedule() {
 		
 }
 
-@ScheduledMethod(start = 0, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0.
-public void preannualmarketschedule1() {
-	//if (AllVariables.betw12_24) {
-	
-	/*
+// ---- All annual updates to come below. That is project updates.
+@ScheduledMethod(start = AllVariables.firstrealtick, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
+public void annualmarketschedule() {
+	GlobalValues.annualglobalvalueupdate();
+
+	//if not testdata
 	if (!AllVariables.useTestData){
 		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	
 		Forcast.updateMPEandLPE();									 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
 	}
-	*/
+	
 	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
+	ProjectDevelopment.receivingconcession();					//As this is given an not dependent on other stages. Starting with adding on year in this status.
 	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.
+	ProjectDevelopment.startconstrucion();						//The investment decision. This is ran after "receiveconcession", hence projects and investment decision can done the same year.
+	ProjectDevelopment.startpreprojectandapplication();	        //The process of deciding which project to apply for concession. In the same manner as start construction
+	ProjectDevelopment.updateDAgentsnumber();	
+	ProjectDevelopment.projectidentification();					//Given how many projects the DA has in concession-stage and the limit, receice new projects. Needs updated numbers on numberofprojects in process and id
+	ProjectDevelopment.updateDAgentsnumber();					//Not really needed at end, but okey for displaypurposes.	
+	//ProjectMarket.simplifyedprojectmarket();					//Added Q4 2015. Trading of projects
+	ProjectDevelopment.updateDAgentsnumber();
 	
 }
 
-@ScheduledMethod(start = 12, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0.
+//  ---- Last update to calculate prosjekt IRR// KK 20151119: Changes to 299 in the backtest.
+@ScheduledMethod(start = AllVariables.IRRcalculationtick, interval = 0, priority = 3)		
+public void Finalupdate() {
+	ProjectDevelopment.calculateallIRRs();	
+}
+
+// ---- Certain parts marked out if realtick is less than 36, but dependent on how much less. (KK: 20151116) 
+
+//Simple scheduals that must be ran in order to update the world in runs where the firstrealtick is not 0.
+@ScheduledMethod(start = 0, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0.
+public void preannualmarketschedule1() {
+	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
+	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.	
+}
+
+
+@ScheduledMethod(start = 12, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0 and higher than 12.
 public void preannualmarketschedule2() {
 	GlobalValues.annualglobalvalueupdate();
-
-	//if (AllVariables.betw12_24) {
-	
-	/*
-	if (!AllVariables.useTestData){
-		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	
-		Forcast.updateMPEandLPE();									 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
-	}
-	*/
 	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
 	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.
-	
 }
 
 
 @ScheduledMethod(start = 24, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0 and higher than 24.
 public void preannualmarketschedule3() {
 	GlobalValues.annualglobalvalueupdate();
-
-
-ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
-ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.
-	
+	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
+	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.	
 }
+
+
+
+
 
 
 //All obligation periods updates to come below. Priority 2 says this is done before the monthlymaret schedual.
@@ -206,18 +190,14 @@ ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before 
 public void obligationsperiodshedule() {
  //Should for each obligations period ending sum up all demand of certificates, calculate the penelty price and "blanked out"
 	//Also calculating the total demand and supply for the period at hand can be "official" news that the volume and market analyss agents can use. 
-	//Later the fact that the OPA knows that it will be rewarded a penelty if not having enough certs, they will use this in their strategy.
-	
+	//Later the fact that the OPA knows that it will be rewarded a penelty if not having enough certs, they will use this in their strategy.	
 	//The volume analysis agents "have" the expectaito informaston, and the real prouton and demand is in the PP and Region objects. Could nevertheless be calculated her as well.
 	// - This obperiods demand
 	// - THis OB periods supply
 	// - This OB volumwheigted average price. 
-	// - Peneltyprice  .. the opa agents could have a field "expected" penelty price that they use to calculate their penelty. 
-	
+	// - Peneltyprice  .. the opa agents could have a field "expected" penelty price that they use to calculate their penelty. 	
 }
 	
-
-
 
 
 

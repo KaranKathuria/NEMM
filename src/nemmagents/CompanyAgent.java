@@ -69,7 +69,7 @@ public class CompanyAgent extends ParentAgent {
 			
 			if (type == 1) {
 				activeagenttypename = "ProducerAgent";
-				physicalnetposition = 200000;				//Times number of agents this equals initial bank.
+				physicalnetposition = 200000;				//Times number of agents this equals initial bank, but as this is scaled anyhow it matters little.
 				lasttickproduction = 0;
 				// here we need a way to have different utilities
 				// currently hard coded to the default
@@ -96,7 +96,7 @@ public class CompanyAgent extends ParentAgent {
 												
 			} else if (type == 2) {
 				activeagenttypename = "ObligatedPurchaserAgent";
-				physicalnetposition = 20000;
+				physicalnetposition = 25000;
 				lasttickdemand = 0;
 				// here we need a way to have different utilities
 				// currently hard coded to the default
@@ -465,6 +465,7 @@ public class CompanyAgent extends ParentAgent {
 		investmentRRR = RandomHelper.nextDoubleFromTo(AllVariables.minInvestRRRAdjustFactor, AllVariables.maxInvestRRRAdjustFactor);				//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
 		earlystageRRR = investmentRRR + AllVariables.earlystageInvestRRRAdjustFactor;																//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
 		regionpartcode = 2;																			//By default, all companies are active in both countries. (0=Norway, 1 = Sweden, 2 = both)
+		//20151117 Add something that makes a split if the agent has a developer agent. This should only be either in sweden or norway.
 		
 		}	
 	

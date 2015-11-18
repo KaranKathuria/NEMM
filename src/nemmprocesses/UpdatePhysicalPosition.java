@@ -48,7 +48,7 @@ public static void scaleOPAphysicalpos() { //Scales the market physicalposition 
 		double totalpos_should = AllVariables.bankOPAfirstrealtick;
 		double totalpos_is = TheEnvironment.GlobalValues.obligatedpurchasersphysiclaposition;
 		double delta = totalpos_is-totalpos_should; //positive number means we need to scale down.
-		if (totalpos_is >= 0) throw new Error("impssoble value for purchasers. THis cannot be scaled");
+		if (totalpos_is == 0) throw new Error("impssoble value for purchasers. THis cannot be scaled"); //Corrected. This can be positive. 
 		double sharedownscale = delta/totalpos_is;
 		double scaling = (1-sharedownscale);
 		for (final ActiveAgent agent : CommonMethods.getOPAgentList()) {

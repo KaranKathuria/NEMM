@@ -35,7 +35,6 @@ import java.nio.file.Paths;
 
 // Object reading in from excel
 public class ReadExcel {
-	
 	 // Get working directory
 	 private static String working_directory = Paths.get("").toAbsolutePath().toString();
 	 private static int plantsnumber;
@@ -58,8 +57,11 @@ public class ReadExcel {
  		if (AllVariables.useTestData){
  			filePath = working_directory + File.separator + "NEMM_testdata.xls"; 
  		}
+ 		if (AllVariables.isbacktest){
+ 			filePath = working_directory + File.separator + "Q4_2015_NEMM_2012_backtest_typ2.xlsx"; 
+ 		}
  		else {
- 			filePath = working_directory + File.separator + "Q22015_NEMM_Inputdata.xlsx";//"NEMM_realdata.xlsx"; // "Q12015_NEMM_Inputdata_backtest.xlsx"
+ 			filePath = working_directory + File.separator + "Q22015_NEMM_Inputdata.xlsx";//"NEMM_realdata.xlsx"; // "Q4_2015_NEMM_2012_backtest.xlsx" //Q22015_NEMM_Inputdata.xlsx
  			
  		}
 
@@ -128,20 +130,20 @@ public class ReadExcel {
 				double[] tempexpcertdem = new double[ticks];
 				double[] temppowerprice = new double[years];
 				double[][] tempfwdprice = new double[years][years];												//For each year there is a Forward powerprice curve.
-				//double[][] tempfwdprice_mulitplicators = new double[years][years];	
-
 				
 				for(int i = 0; i < ticks; i++){
 					tempcertdem[i] = certdemand_sheet.getRow(2+i).getCell(3+j).getNumericCellValue();
 					tempexpcertdem[i] = expectedcertdemand_sheet.getRow(2+i).getCell(3+j).getNumericCellValue();
 				}
 				
+				//KK20151117: 48 or (49 for backtesting) ensuring right startingpoint for second region.
+				int t = 48;
+		 		if (AllVariables.isbacktest){t = 49;}
+		 	
 				for(int f = 0; f < years; f++){
-				temppowerprice[f] = powerPrice_sheet.getRow(2+f+(48*j)).getCell(3).getNumericCellValue();		 //48*j ensuring right startingpoint for second region.
-				//tempfwdprice_mulitplicators[f] = powerPrice_sheet.getRow(2+f+(48*j)).getCell(3).getNumericCellValue();
+				temppowerprice[f] = powerPrice_sheet.getRow(2+f+(t*j)).getCell(3).getNumericCellValue();		 //48 or (49 for backtesting) ensuring right startingpoint for second region.
 				for(int fw = 0; fw < years; fw++){
-				tempfwdprice[f][fw] = powerPrice_sheet.getRow(2+f+(48*j)+fw).getCell(4+f).getNumericCellValue(); //For each row, looping across the columns. Notice + fw as historic fwd does not make sense.
-				//tempfwdprice_mulitplicators[f][fw] = powerPrice_sheet.getRow(2+f+(48*j)+fw).getCell(4+f).getNumericCellValue();
+				tempfwdprice[f][fw] = powerPrice_sheet.getRow(2+f+(t*j)+fw).getCell(4+f).getNumericCellValue(); //For each row, looping across the columns. Notice + fw as historic fwd does not make sense.
 				}
 				// Set alle the forward AnnualMarketSeries
 				TheEnvironment.allRegions.get(j).getMyForwardPrice(f).initAnnualMarketSeries(tempfwdprice[f]);
@@ -151,7 +153,6 @@ public class ReadExcel {
 				TheEnvironment.allRegions.get(j).getMyDemand().initMarketDemand(tempcertdem, tempexpcertdem);
 				// Set AnnualMarketSeries (power prices)
 				TheEnvironment.allRegions.get(j).getMyPowerPrice().initAnnualMarketSeries(temppowerprice);
-				
 			}
 			
 		}catch(Exception e) {
@@ -187,6 +188,7 @@ public class ReadExcel {
 					int newovergangsordningflag = (int) plant_sheet.getRow(3+j).getCell(15).getNumericCellValue();
 					
 					//newregion_ID starts by 1, hence to indexs it we subtract 1.
+					int f = 2;
 					PowerPlant pp = new PowerPlant(newname, TheEnvironment.allRegions.get(newregion_ID-1), newstatus, newcapacity, newloadfactor, newtechnology, newlifetime, newyearstarted, newcapex, newopex, newlearningrate, newminyearinprocess, newminconstructionyears, newovergangsordningflag);
 					
 					//Setting the powerplant/project to the relevant ArrayList. 
@@ -281,7 +283,9 @@ public class ReadExcel {
                         }
                         newscen.setWindyearmultiplier(newprodfactor);
                         
-                        int numb_price_entries = 47; // hardcoded for now
+                        int numb_price_entries = 47;	// hardcoded for now. //47 for normal, 49 for backtesting.
+                 		if (AllVariables.isbacktest){
+                 			 numb_price_entries = 49;}
                         
                         double[] newpricereg1 = new double[numb_price_entries];
                         double[] newpricereg2 = new double[numb_price_entries];

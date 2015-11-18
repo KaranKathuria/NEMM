@@ -13,18 +13,28 @@ import static nemmcommons.ParameterWrapper.*;
 
 public class AllVariables {
 	
-	public static String casename = "Q2 2015 Base Case S4"; 					//Name of the case ran. That is not the simulation, not the run, but the base case (or sensitivity case).
+	public static String casename = "Q4 2015 Backtest"; 					//Name of the case ran. That is not the simulation, not the run, but the base case (or sensitivity case).
+	
+	// ---  Alter these if backtest or test.
+	public static boolean isbacktest = false;					//Alters parts of the code (readexcel and scenario and Context) in order to run backtest (that is 2012 as start year and 300 ticks). Does not later the input data in AllVariables (bank, price etc).
+	public static final int IRRcalculationtick = 287;			//If above is true, this is 299. Used to alter the IRRcalucation in the contextbuilder which has to be om the last tick.
+	public static boolean useTestData = false;
+	// -- In addition do the following: For the years until the real tick, the projects must be finilized, hence in the context builder these schduals must be added (line 166). Also the values of this AllVariable file must be altered:
+	//firstrealtick = 36;
+	//new double[]{28.18,	26.84,	25.91,	24.59,	21.52,	19.28,	20.15,	20.88,	21.25,	20.94,	20.34,	18.67}; //
+	//bankPAfirstrealtick =   7500000;
+	//bankOPAfirstrealtick =  1000000;
 
-	//Unfortuanaty there is now other way then setting the obligation period intervall (ticks) manually.
+	
 	public static final int obintr = 12; // TheEnvironment.theCalendar.getNumTradePdsInObligatedPd();
-	public static final int firstrealtick = 36; //Currently this cannot be between 1 and 11 (inclusive). This fucks up the contextbuilder.
+	public static final int firstrealtick = 36; //Currently this cannot be between 1 and 11 (inclusive). This fucks up the contextbuilder. Should be at start of the year.
 	public static double[] historiccertprices = new double[]{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
 	public static double bankPAfirstrealtick =   10400000;//11700000;//10400000;//8302000;//	//Bank at thefirstrealtick. If tick 0 this should be 8800 000. For memo Dec 2014, 10500000 was used.  2014: 8302000
-	public static double bankOPAfirstrealtick =   1000000;//1300000;//400000;//3558000;//		// soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
+	public static double bankOPAfirstrealtick =   1300000;//400000;//3558000;//		// soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
 	public static double bankTAfirstrealtick = 0;				//Bank at thefirstrealtick.	If tick 0 this should be 0
+	
 
-	public static boolean useTestData = false;
-
+	
 	
 	//Number of tactics in each of the respective strategies. More tactics gives the agent more alternatives.
 	public static int numberoftacticsBuyStrategy1 = 1;
@@ -35,6 +45,7 @@ public class AllVariables {
 //	public static double PAgentmustsellshare = 0.5;				//RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
 //	public static double OPAgentmustsellshare = 0.75; 		 //RandomHelper.nextDoubleFromTo(0.4,0.6); //0.5;
 	
+	//Trader specific parameters
 	public static boolean cantradershortsellflag = false;	//If false, traders can only sell if they have a positiv physical position. 
 	//If not at limit and allowed to sell, this is what the selloffer volumes for the traders are
 	public static double tradermustsellvol = 10;
@@ -47,9 +58,7 @@ public class AllVariables {
 	public static double tradermaximumlongpos = 1000000;		
 	
 	public static int numofhistutilitiesincluded = 3; //Used by method that deterines the tactics best utility.
-	
-//	public static double forcastweights[] = {0.2, 0.3, 0.5};  Not in used anymore as the AA have individually randomly generated forecastweights. 
-	
+		
 	// Utilities
 	public static int utilityDefault_PA = 2; // default utility for a purchaser agent
 	public static int utilityDefault_OP = 2; // default utility for a obligated agent
@@ -64,7 +73,7 @@ public class AllVariables {
 	public static double[] cutoffOPExit = new double[]{0.6,0.8,1.0};
 	public static double[] cutoffTExit = new double[]{0.5,1.0};
 
-
+	//Parameters for the holding horizont and trading (the short term market).
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
 	// over the next 12 ticks - i.e. it will sell 1/12th in the next tick
 	public static int[] numTicksPAExit = new int[]{3,36,72};
@@ -143,12 +152,12 @@ public class AllVariables {
 	public static int LPECount = MPECount+minpostpondyears;			//Number of futuer years seen by the LPE-analysis
 	public static int yearsbuildout = 16;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA.
 
-	//THE FMA and MPE/LPE
+	// ---- THE FMA and MPE/LPE
 	public static double stdmediumrunpriceexpect = 0.05;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.06;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	
 	//Project Development
-	public static double[] developerinvestmenttypedistribution = new double[]{0.1,0.6,0.9,1};	//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
+	public static double[] developerinvestmenttypedistribution = new double[]{0.1,0.6,0.9,1};	//{0.1,0.6,0.9,1} //{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
 	public static int numberoftickstocalculatehistcertprice = 2;	//This could be exptended to about 6. THis is basically the parameter setting how long memory developers have when taking investment decison based on current price. 
 	public static int numberofyearcertscanbehedged = 3;
 	public static int constructionconstraints = 4; 					//Gives number of projects under construction -limit. Reduing this makes the market "less optimal" 
@@ -156,46 +165,46 @@ public class AllVariables {
 	public static double[] developerinvestmentpriceeasefactordistribution = new double[]{1.15,1.4};			//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
 	public static double[] developerinvestmentfundamentaleasefactordistribution = new double[]{1.15,1.25};  //Q1: 1.01 - 1.07 The distribution of fundamentaleasefaactor to investmentagent type 3 (price based with ease cost curve). High number indicates little restriction.
 	public static double maxbuildoutaggressivness = 1.10; 			//As it is the final value that really limits the build out the spread must to large
-	public static double minbuildoutaggressivness = 1.06; 				//Remember that this is multiplied with the total future demand, hence 1.01 implies 67 MW of new capacity added in 2020 (and about half that in 2026).
+	public static double minbuildoutaggressivness = 1.06; 			//Remember that this is multiplied with the total future demand, hence 1.01 implies 67 MW of new capacity added in 2020 (and about half that in 2026).
 	//Factor determining how aggressiv the build out is Random between max and min for each year. Less then one means that the construction limit for any given year is less then what is needed in terms of annual producion, whereas much higher then one limits to what all developers are willing to build (financially and resoruce wise)
-	
-	//Initial distribution of powerplants, projects and demandshares per region.
-	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
-	public static int projectsdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
-	public static int demandsharedistrubutioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 
 	public static double earlystageInvestRRRAdjustFactor = 0.0025;		//Premium when determining if the project identyfied should apply for concession.
 	public static double minInvestRRRAdjustFactor = 0.75;		//Corrector of 0.9 implies a lower bond on about 0.9*8=7.2% RRR. This is aboute 2-3 Euro per MW difference in cert price needed (NPV).
 	public static double maxInvestRRRAdjustFactor = 1.20;		//Not sure this is autually used ad Project development uses the market RRR
 	
 	
+	// ---- Initial distribution of powerplants, projects and demandshares per region.
+	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
+	public static int projectsdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
+	public static int demandsharedistrubutioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
+	
 	
 	// Generic Strategy 
 	public static int MaxTacticPreferenceScore = 6;
 	public static int MinTacticPreferenceScore = 2;
 
-	//Regulations for certificates deadline
+	// ---- Regulations for certificates deadline
 	public static boolean certificatespost2020_Norway = false;
 	public static boolean certificatespost2020_Sweden = true;
 	public static int cutoffyear_Norway = 2020;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
 	public static int cutoffyear_Sweden = 2021;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
-	//The concession and preconstruction process
+	// ---- The concession and preconstruction process
 	public static int maxyearsinconcessionqueue = 3;				//Number of years in addition to minimum number of years in concession queue given as input from excel. After this, if not having received concession, the project is trashed.
 	public static double annualprobforreceivingconcession = 0.25;	//Only with one decimal as the random generater uses int.
 	public static int expectedyersinconcession = 5;					//When deciding for concession, how long to the developers expected the project to be in line. Needed due to learningcurve/CAPEX estimation.
 		
-	// The first tick banks. 11.02.2015 KK: Not sure this is used.
+	// ---- The first tick banks (in 2012, but as these are callibrated at modell start year, they are not used from here, but rather given dirctly in the agent constructos). Scaled at firstrealtick.
 	public static double bankPAFirstTick = 	0;//8000000;
 	public static double bankOPAFirstTick = 0;//20000;
 	public static double bankTAFirstTick = 0;
 	
-	//For scenarios (wind and power price)
+	// ---- For scenarios (wind and power price)
 	public static double meanwindproductionfactor = getmeanwindproductionfactor();
 	public static double stdwindfactor = getstdwindproductionfactor();
 	public static double maxstdwindfactor = 2.3;					//Cutoff deviation in wind production factor. If 3 this means that it cannot blow less or more then 3 times the standard deviation.
 	
-	//For the Project Market
+	// ---- For the Project Market. Used for both initial distribution and the project shuffling each year. 06.06.2015 KK: Added after 2015 Q2 report.
 	public static double[] chanceofownershipchange = new double[]{0.2,0.2,0.4,0.6};		//Indicates the chance (%) of ownership change according to years postponed by curren owner when setting criteria flag. Thus, of a project have been postpone (not invested when it could) one year, there is a [0] chance for owernship change. For the second year, there is [1] chance, etc. Notice that one year is 2015 right after the decisions are made/not made..
 	public static double initialowenershipchangepercentile = 0.3;						//rated by certpriceneeded if build in 2016.
 }
