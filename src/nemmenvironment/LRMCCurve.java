@@ -72,7 +72,7 @@ public class LRMCCurve {
 		int index = 0;
 		double newproductionbuilt = 0;
 		while (newproductionbuilt < (-certificatebalance) && index < projectsupplycurve.size()) {		// While the newbuiltproduction is not enough to fulfill the shortcommings of certs, take the next project.
-			newproductionbuilt = newproductionbuilt + (projectsupplycurve.get(index).getannualcertproduction()*yearsprod) - (projectsupplycurve.get(index).getannualcertproduction()*0.5);
+			newproductionbuilt = newproductionbuilt + (projectsupplycurve.get(index).getannualcertproduction()*yearsprod);// - (projectsupplycurve.get(index).getannualcertproduction()*0.5);
 			equilibriumprice = projectsupplycurve.get(index).getcertpriceneeded();
 			index++;
 		}

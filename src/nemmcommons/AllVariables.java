@@ -16,21 +16,21 @@ public class AllVariables {
 	public static String casename = "Q4 2015 Backtest"; 					//Name of the case ran. That is not the simulation, not the run, but the base case (or sensitivity case).
 	
 	// ---  Alter these if backtest or test.
-	public static boolean isbacktest = false;					//Alters parts of the code (readexcel and scenario and Context) in order to run backtest (that is 2012 as start year and 300 ticks). Does not later the input data in AllVariables (bank, price etc).
-	public static final int IRRcalculationtick = 287;			//If above is true, this is 299. Used to alter the IRRcalucation in the contextbuilder which has to be om the last tick.
+	public static boolean isbacktest = true;					//Alters parts of the code (readexcel and scenario and Context) in order to run backtest (that is 2012 as start year and 300 ticks). Does not later the input data in AllVariables (bank, price etc).
+	public static final int IRRcalculationtick = 299;			//If above is true, this is 299. Used to alter the IRRcalucation in the contextbuilder which has to be om the last tick.
 	public static boolean useTestData = false;
 	// -- In addition do the following: For the years until the real tick, the projects must be finilized, hence in the context builder these schduals must be added (line 166). Also the values of this AllVariable file must be altered:
 	//firstrealtick = 36;
-	//new double[]{28.18,	26.84,	25.91,	24.59,	21.52,	19.28,	20.15,	20.88,	21.25,	20.94,	20.34,	18.67}; //
-	//bankPAfirstrealtick =   7500000;
-	//bankOPAfirstrealtick =  1000000;
+	//public static double[] historiccertprices = new double[]{28.18,	26.84,	25.91,	24.59,	21.52,	19.28,	20.15,	20.88,	21.25,	20.94,	20.34,	18.67}; //
+	//public static double bankPAfirstrealtick =  7500000;																										//
+	//public static double bankOPAfirstrealtick =  1000000;																										//
 
 	
 	public static final int obintr = 12; // TheEnvironment.theCalendar.getNumTradePdsInObligatedPd();
-	public static final int firstrealtick = 36; //Currently this cannot be between 1 and 11 (inclusive). This fucks up the contextbuilder. Should be at start of the year.
-	public static double[] historiccertprices = new double[]{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
-	public static double bankPAfirstrealtick =   10400000;//11700000;//10400000;//8302000;//	//Bank at thefirstrealtick. If tick 0 this should be 8800 000. For memo Dec 2014, 10500000 was used.  2014: 8302000
-	public static double bankOPAfirstrealtick =   1300000;//400000;//3558000;//		// soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
+	public static final int firstrealtick = 12; //Altering this means you got to alter the contextbuilder! Currently this cannot be between 1 and 11 (inclusive). 
+	public static double[] historiccertprices = new double[]{28.18,	26.84,	25.91,	24.59,	21.52,	19.28,	20.15,	20.88,	21.25,	20.94,	20.34,	18.67}; // public static double[] historiccertprices = new double[]{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
+	public static double bankPAfirstrealtick =  7500000;		// public static double bankPAfirstrealtick =   10400000;//11700000;//10400000;//8302000;//	//Bank at thefirstrealtick. If tick 0 this should be 8800 000. For memo Dec 2014, 10500000 was used.  2014: 8302000
+	public static double bankOPAfirstrealtick =  1000000;																										//public static double bankOPAfirstrealtick =   1300000;//400000;//3558000;//		// soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
 	public static double bankTAfirstrealtick = 0;				//Bank at thefirstrealtick.	If tick 0 this should be 0
 	
 
@@ -143,18 +143,22 @@ public class AllVariables {
 
 	// ------- FundamentalMarketAnalysis and Project Developement
 	public static double penaltyratio = 1.5;						//What is the penalty compared to current market price?
-	public static int yearstoendogprojects = 2;						//Just to save time in the FMA.
+	public static int yearstoendogprojects = 3;						//Just to save time in the FMA. KK 20151118 var 2 i Q2 (2 og 3 har lite å si i Base Case). 
 	public static double maxpricecerts = 150;						//To not get an errror in the FMA.
 	public static double initialRRRcorrector = 1.0;					//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis. Copnsate (0.098) for the learningfactor in inputt.
 	public static double RRRpostpondpremium = 0.025;				//Risk premium (basispoints 0.01 = 1%) need to be covered if the investment decision is to be postpond. 
 	public static int minpostpondyears = 1;							//How long the investment decision is postpond if postponed.Cannot see why this should be larger than 1. (only argument is if this is the real deal).
-	public static int MPECount = 18;								//Number of futuer years seen by the MPE-analysis. THats number-1 years ahead (including this year).
+	public static int MPECount = 17;								//Number of futuer years seen by the MPE-analysis. THats number-1 years ahead (including this year).
 	public static int LPECount = MPECount+minpostpondyears;			//Number of futuer years seen by the LPE-analysis
-	public static int yearsbuildout = 16;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA.
+	public static int yearsbuildout = 1;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA. KK20151118: Brukt 16 histoisk, men kan ikke forstå hvorfor det er rett!
 
 	// ---- THE FMA and MPE/LPE
 	public static double stdmediumrunpriceexpect = 0.05;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.06;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
+	
+	//CompanyAgent regions
+	public static double[] companyregiondistribution = new double[]{0.2,0.4,1.0};	//first the prob for Norway, Sweden and third is both. Determines the chance for a new added company beeing in either one (then which) or both countires. 
+
 	
 	//Project Development
 	public static double[] developerinvestmenttypedistribution = new double[]{0.1,0.6,0.9,1};	//{0.1,0.6,0.9,1} //{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
@@ -174,7 +178,7 @@ public class AllVariables {
 	
 	
 	// ---- Initial distribution of powerplants, projects and demandshares per region.
-	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
+	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2. Se distributeprjectsandpowerplants.java for details.
 	public static int projectsdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 	public static int demandsharedistrubutioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 	

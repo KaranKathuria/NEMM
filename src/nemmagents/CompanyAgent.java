@@ -137,7 +137,7 @@ public class CompanyAgent extends ParentAgent {
 				}
 						
 			} 
-			RAR = 0.15; //quite risk avers
+			RAR = 0.15; //quite risk avers. This value increases the bounds of the certificate price.
 
 			companyagent = CompanyAgent.this;
 			this.utilitymethod.setmyAgent(ActiveAgent.this);
@@ -322,8 +322,12 @@ public class CompanyAgent extends ParentAgent {
 			projectprocessandidylimit = sizecode*AllVariables.preprojectandidentifyconstraint;	//func of sizecode: = 3*sizecode. Problem as sizecode only defines size in one region. whereas //Max number of project getting identifyed or in proecss.
 			constructionlimit = AllVariables.constructionconstraints;					//Max number of projects getting in from moving to construction. 
 			totalcapacitylimit = 100000000;
+			if (AllVariables.isbacktest) {
+				constructionlimit = constructionlimit*10;
+				totalcapacitylimit = totalcapacitylimit*10;
+			}
 			//1=invest based on long term price of certs (pure Fundamental based), 2=Invest on pure fundamental and some price, 3=Invest based on curren cert price and some fundamental, 4=Invest based on current cert price for two years
-			double investdecrand = RandomHelper.nextDoubleFromTo(0.0, AllVariables.developerinvestmenttypedistribution[3]);
+			double investdecrand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
 			double a = investdecrand;
 					if (investdecrand <= AllVariables.developerinvestmenttypedistribution[0]) {
 						investmentdecisiontype = 1;
@@ -466,8 +470,17 @@ public class CompanyAgent extends ParentAgent {
 		earlystageRRR = investmentRRR + AllVariables.earlystageInvestRRRAdjustFactor;																//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
 		regionpartcode = 2;																			//By default, all companies are active in both countries. (0=Norway, 1 = Sweden, 2 = both)
 		//20151117 Add something that makes a split if the agent has a developer agent. This should only be either in sweden or norway.
-		
-		}	
+		double regionpartrand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
+				if (regionpartrand <= AllVariables.companyregiondistribution[0]) {
+					regionpartcode = 0;
+					}
+				if (regionpartrand > AllVariables.developerinvestmenttypedistribution[0] && regionpartrand <= AllVariables.companyregiondistribution[1]) {
+					regionpartcode = 1;
+					}
+				if (regionpartrand > AllVariables.developerinvestmenttypedistribution[1] && regionpartrand <= AllVariables.companyregiondistribution[2]) {
+					regionpartcode = 2;
+					}	
+	}
 	
 	//CompanyAgents get methods
 	public ActiveAgent getproduceragent() {return produceragent;}

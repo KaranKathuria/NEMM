@@ -277,7 +277,7 @@ public class ProjectDevelopment {
 			}
 		}
 		int numberofdevelopers = identifyingdevelopers.size();
-		int maxiterations = Math.min(maxprojectidentifyed, TheEnvironment.potentialprojects.size());	//Cannot identify more project than there are nor the DAs resourcess can allow
+		int maxiterations = Math.min(maxprojectidentifyed, TheEnvironment.potentialprojects.size());	//Cannot identify more project than there are nor the DAs resourcess can allow or projects open for identification.
 		int a = 0;
 		for (int i = 0; i < maxiterations; i++) {
 			DeveloperAgent DA = identifyingdevelopers.get(a);
@@ -289,10 +289,8 @@ public class ProjectDevelopment {
 			PA.setMyCompany(DA.getmycompany());
 			DA.getmycompany().getmyprojects().add(PA);
 			
-			a = a+1;
-			if (a==(numberofdevelopers-1)) {
-				a = 0;
-			}	
+			a = Math.min(a+1, numberofdevelopers-1);
+	
 		}
 		TheEnvironment.potentialprojects.removeAll(tempremovelist);
 

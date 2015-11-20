@@ -61,7 +61,7 @@ public class ReadExcel {
  			filePath = working_directory + File.separator + "Q4_2015_NEMM_2012_backtest_typ2.xlsx"; 
  		}
  		else {
- 			filePath = working_directory + File.separator + "Q22015_NEMM_Inputdata.xlsx";//"NEMM_realdata.xlsx"; // "Q4_2015_NEMM_2012_backtest.xlsx" //Q22015_NEMM_Inputdata.xlsx
+ 			filePath = working_directory + File.separator + "Q42015_NEMM_Inputdata.xlsx";//"NEMM_realdata.xlsx"; // "Q4_2015_NEMM_2012_backtest.xlsx" //Q22015_NEMM_Inputdata.xlsx
  			
  		}
 
