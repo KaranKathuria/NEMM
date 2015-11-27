@@ -69,7 +69,6 @@ public class CompanyAgent extends ParentAgent {
 			
 			if (type == 1) {
 				activeagenttypename = "ProducerAgent";
-				physicalnetposition = 200000;				//Times number of agents this equals initial bank, but as this is scaled anyhow it matters little.
 				lasttickproduction = 0;
 				// here we need a way to have different utilities
 				// currently hard coded to the default
@@ -91,12 +90,13 @@ public class CompanyAgent extends ParentAgent {
 						numTicksToEmptyPosition = AllVariables.numTicksPAExit[stratID];
 					}
 				}
+				physicalnetposition = 10*numTicksToEmptyPosition*numTicksToEmptyPosition;				//20151126 KK: Multiplied with HH to distrribute bank to thos with long HH. this is more like the real world. Times number of agents this equals initial bank, but as this is scaled anyhow it matters little.
+
 
 				// ---- end GJB Added
 												
 			} else if (type == 2) {
 				activeagenttypename = "ObligatedPurchaserAgent";
-				physicalnetposition = 25000;
 				lasttickdemand = 0;
 				// here we need a way to have different utilities
 				// currently hard coded to the default
@@ -112,6 +112,8 @@ public class CompanyAgent extends ParentAgent {
 						numTicksToEmptyPosition = AllVariables.numTicksOPExit[stratID];
 					}
 				}
+				physicalnetposition = 1000;				//20151126 KK:Times number of agents this equals initial bank, but as this is scaled anyhow it matters little. Unequal PA, this volume is not distributed to those buying less (rather the opposit).
+
 				
 				// ---- end GJB Added
 				
@@ -137,7 +139,7 @@ public class CompanyAgent extends ParentAgent {
 				}
 						
 			} 
-			RAR = 0.15; //quite risk avers. This value increases the bounds of the certificate price.
+			RAR = RandomHelper.nextDoubleFromTo(AllVariables.RAR[0], AllVariables.RAR[1]);	
 
 			companyagent = CompanyAgent.this;
 			this.utilitymethod.setmyAgent(ActiveAgent.this);

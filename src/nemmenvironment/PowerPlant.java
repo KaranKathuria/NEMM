@@ -528,7 +528,7 @@ public class PowerPlant implements Cloneable{
 			if (this.yearsincurrentstatus == 2) {
 				if (rand < AllVariables.chanceofownershipchange[1]) {
 					this.projectmarketcandidateflag = 1;
-					this.setyearsincurrentstatus(0);                           		//Status is et to zero as this projets will be "traded" in the market and the yeas should be resetted.
+					this.setyearsincurrentstatus(0);                           		//Status is et to zero as this projets will be "traded" in the market and the years should be resetted.
 					this.addtonumberofownershipchange();
 				}
 			}

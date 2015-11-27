@@ -34,7 +34,8 @@ public class SellStrategy1 extends GenericStrategy {
 		int numMSSteps = AllVariables.tacticNumMustSellSteps_PASellStrategy1;
 		int numRestSteps = AllVariables.tacticNumRestSteps_PASellStrategy1;
 		double percMustSellVol;
-		double percRestVol;
+		double percRestVol
+		;
 		double multMustSellPrice;
 
 		strategyname = "SellStrategy1";

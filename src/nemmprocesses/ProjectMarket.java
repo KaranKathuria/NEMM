@@ -77,7 +77,7 @@ public class ProjectMarket {
 			}
 		}
 		Collections.sort(projectsforredistribution, new CommonMethods.customprojectcomparator());			//Sorting the of a DAs project awaiting from lowest certprieneeded to highest certpriceneeded
-		int marginalindeks = (int) (AllVariables.initialowenershipchangepercentile * projectsforredistribution.size()) - 1;
+		int marginalindeks = (int) (AllVariables.initialowenershipchangepercentile * projectsforredistribution.size()) - 1;  //
 		marginalcertpriceneeded = projectsforredistribution.get(marginalindeks).getcertpriceneeded();
 	}
 	
@@ -111,7 +111,7 @@ public class ProjectMarket {
 				int newownerindeks = RandomHelper.nextIntFromTo(0, tempmax);
 				//Change ownership
 				CompanyAgent oldowner = PP.getMyCompany();
-				DeveloperAgent newowner = sortedDeveloperAgents_norway.get(newownerindeks);
+				DeveloperAgent newowner = sortedDeveloperAgents_sweden.get(newownerindeks);
 				newowner.addproject(PP);
 				oldowner.getmyprojects().remove(PP);	
 				PP.setMyCompany(newowner.getmycompany());				

@@ -73,13 +73,18 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	TheEnvironment.setwindscenario();				//Sets scenario	
 	TheEnvironment.setpowerpricescenario();			//Sets scenario
 	TheEnvironment.simulateweatherdistribtion();	//Generates wind-years.
+	
+	//No non-normal wind years in backtest.
+	if (!AllVariables.isbacktest){
+		TheEnvironment.simulateweatherdistribtion();	//Generates wind-years.
+		}
 		
 	//Distributing Plants, projects and demand among Agents
 	DistributeProjectsandPowerPlants.distributeallpowerplants(AllVariables.powerplantdistributioncode);	 //Distribute all PowerPlants among the Copmanies with PAgents.
 	DistributeProjectsandPowerPlants.distributeprojects(AllVariables.projectsdistributioncode);			 //Distribute all Projects among the Companies with DAgents.
 	DistributeDemandShares.distributedemand(AllVariables.demandsharedistrubutioncode);					 //Distribute all demand among the Companies with OPAgents.
 	ProjectDevelopment.updateDAgentsnumber();
-	//ProjectMarket.initialprojectmarket();																 //Added in Q4 2015. Distributes better porjects to better developers.
+	ProjectMarket.initialprojectmarket();																 //Added in Q4 2015. Distributes better porjects to better developers.
 	TheEnvironment.GlobalValues.updatebankbalance();													 //Calculates to certificate balance. Needed for FMA.
 	TheEnvironment.calculateLRMC_exougenousprojects();													 //Calculates LRMC and certprice needed for all exogenous projects. Must be done here after the projects has got an owner.
 	
@@ -144,7 +149,7 @@ public void annualmarketschedule() {
 	ProjectDevelopment.updateDAgentsnumber();	
 	ProjectDevelopment.projectidentification();					//Given how many projects the DA has in concession-stage and the limit, receice new projects. Needs updated numbers on numberofprojects in process and id
 	ProjectDevelopment.updateDAgentsnumber();					//Not really needed at end, but okey for displaypurposes.	
-	//ProjectMarket.simplifyedprojectmarket();					//Added Q4 2015. Trading of projects
+	ProjectMarket.simplifyedprojectmarket();					//Added Q4 2015. Trading of projects
 	ProjectDevelopment.updateDAgentsnumber();
 	
 }

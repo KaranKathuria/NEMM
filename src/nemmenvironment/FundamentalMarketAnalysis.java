@@ -190,9 +190,15 @@ public class FundamentalMarketAnalysis {
 		futuredemand = totalannufuturedemand;
 		}	
 		certificatebalance = certificatebalance + totalannucertproduction - totalannudemand;						//For the year i.
-
 		
-	if (i < AllVariables.yearstoendogprojects) {																	//Seperate rule for the end-projects.
+	//20151125 KK: Special section just added for backtest as the current impementaton of FMA gives a very high price intially becase there are limited projects availbale befor 2015.
+		int tempyearstoendogprojects = 0;
+		if (currentyear<2015) {
+		 tempyearstoendogprojects = 4; //Skips the LRMC calcs for 2012, 2013, 2014 and 2015
+			}
+	
+		
+	if (i < (Math.max(AllVariables.yearstoendogprojects,tempyearstoendogprojects))) {																	//Seperate rule for the end-projects.
 			double temp = 0.0;
 			if (certificatebalance >= 0){																	//Will there be shortfall in the future of the market? Which years shortfall?
 				temp = 0.0;}																					
@@ -206,7 +212,7 @@ public class FundamentalMarketAnalysis {
 		if (xyearfuturecertbalance < 0) {											//Should be the three year.That is which shortcoming should it build on? 2015111 KK Should this be current balance?!
 				
 				for (PowerPlant PP : allendogenousprojects) {						//All endogenous projects. Pooling together all projects in another stage than under construction.
-					if ((PP.getearlieststartyear()+1) <= (currentyear+i)) {			//If they can earliest be finished in time for this year. Added +1 as its highly unlikely that all are finished in "best case" time.
+					if ((PP.getearlieststartyear()) <= (currentyear+i)) {			//If they can earliest be finished in time for this year. Added +1 as its highly unlikely that all are finished in "best case" time. 20151125 KK removed +1 on the left side.
 				tempendogenousprojects.add(PP);	}}									//Add all relevant endogenous projects to this list.
 				int test = 2;
 			

@@ -44,6 +44,11 @@ public class ShortTermMarket {
 	private static double bestselloffer2;
 	private static double floor;
 	private static double roof;
+	private static double totalmustsellVol;
+	private static double totalrestsellVol;
+	private static double totalmustbuyVol;
+	private static double totalrestbuyVol;
+
 
 // ---- GJB Added
 	// ---- Class for storing the "active" bid and offer in the 
@@ -86,6 +91,10 @@ public class ShortTermMarket {
 		tradedvolume = 0;
 		pricestep = 0.25;
 		int i;
+		totalmustsellVol = 0;
+		totalrestsellVol = 0;
+		totalmustbuyVol = 0;
+		totalrestbuyVol = 0;
 		
 		// For display purposes
 		int counts = 0;
@@ -113,18 +122,23 @@ public class ShortTermMarket {
  */
 			Allselloffers.addAll(agent.getbeststrategy().getAgentsSellOffers());
 			//Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers()); For the time being the producer does not have buyoffers.
-			
+			totalmustsellVol = agent.getbeststrategy().getbesttactic().getsellofferone().getCertVolume() + totalmustsellVol;
+			totalrestsellVol = agent.getbeststrategy().getbesttactic().getselloffertwo().getCertVolume() + totalrestsellVol;
+
 			//For displaypurposes
-			if (agent.getbeststrategy().getalltactics().get(0).getsellofferone() == null) {selloffer1 = 0;} else{ 		  //For handling null-offers from agents without prod.
-			selloffer1 = agent.getbeststrategy().getalltactics().get(0).getsellofferone().getPrice();}
-			if (agent.getbeststrategy().getalltactics().get(0).getselloffertwo() == null) {selloffer2[counts] = 0;} else{ //For handling null-offers from agents without prod.
-			selloffer2[counts] = agent.getbeststrategy().getalltactics().get(0).getselloffertwo().getPrice();}
+			if (agent.getbeststrategy().getbesttactic().getsellofferone() == null) {selloffer1 = 0;} else{ 		  //For handling null-offers from agents without prod.
+			selloffer1 = agent.getbeststrategy().getbesttactic().getsellofferone().getPrice();}
+			if (agent.getbeststrategy().getbesttactic().getselloffertwo() == null) {selloffer2[counts] = 0;} else{ //For handling null-offers from agents without prod.
+			selloffer2[counts] = agent.getbeststrategy().getbesttactic().getselloffertwo().getPrice();}
 			if (agent.getbeststrategy().getbesttactic().getselloffertwo() == null) {bestselloffer2 = 0;} else{ 			  //For handling null-offers from agents without prod.
 			bestselloffer2 = agent.getbeststrategy().getbesttactic().getselloffertwo().getPrice();}
 			floor = agent.getbeststrategy().getalltactics().get(0).getfloorroofprice();
 			counts++;
 			
+			
 		}
+		int f =2;
+		int a = 2;
 		
 		for (final ActiveAgent agent : CommonMethods.getOPAgentList()) {
 			/* GJB -- REMOVE --
@@ -135,6 +149,9 @@ public class ShortTermMarket {
 			 * for its sell offers. It is up to it to get the best offer.
 			 */
 			Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers());
+			
+			totalmustbuyVol = agent.getbeststrategy().getbesttactic().getbuyofferone().getCertVolume() + totalmustbuyVol;
+			totalrestbuyVol = agent.getbeststrategy().getbesttactic().getbuyoffertwo().getCertVolume() + totalrestbuyVol;
 
 			if (agent.getbeststrategy().getalltactics().get(0).getbuyofferone() == null) {buyoffer1 = 0;} else{  //For handling null-offers from agents without demand.
 			buyoffer1 = agent.getbeststrategy().getalltactics().get(0).getbuyofferone().getPrice(); }
@@ -166,7 +183,7 @@ public class ShortTermMarket {
 		
 		tempsell = Allselloffers;
 		tempbuy = Allbuyoffers;
-		int a =2;
+		int t =2;
 
 		// Exit if there are no non-null bids or offers
 		int numberofbuyoffers = Allbuyoffers.size(); 
@@ -508,7 +525,7 @@ public static double getroof() {
 }
 
 //DisplayVariables
-//The beststrategy and tactis offers for a selecter PA and OPA
+//The beststrategy and tactis offers for a selected PA and OPA
 public static double getbuyoffer1() {
 return buyoffer1;
 }

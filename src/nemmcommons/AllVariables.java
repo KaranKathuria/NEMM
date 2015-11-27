@@ -2,7 +2,7 @@
  * Version info:
  *     All variables used in the model collected at one place
  *     
- *     Last altered data: 20140904
+ *     Last altered data: 2015
  *     Made by: Karan Kathuria
  */
 package nemmcommons;
@@ -69,15 +69,15 @@ public class AllVariables {
 	public static double minAlphaSTPrice = 0.5;
 	
 	// distribution cutoffs used for assigning a strategy to a given agent
-	public static double[] cutoffPAExit = new double[]{0.15,0.25,1.0};		//Last increasse the end. Middel increses the level, the first tend to give "correct" prices earlier.
-	public static double[] cutoffOPExit = new double[]{0.6,0.8,1.0};
+	public static double[] cutoffPAExit = new double[]{0.1,0.4,1.0};	//{0.19,0.6,0.7,1.0};	//Last increasse the end. Middel increses the level, the first tend to give "correct" prices earlier.
+	public static double[] cutoffOPExit = new double[]{0.4,0.9,1.0};
 	public static double[] cutoffTExit = new double[]{0.5,1.0};
 
 	//Parameters for the holding horizont and trading (the short term market).
 	// number of ticks for each strategy (e.g. 12 means the agent will try to sell its current physical position
 	// over the next 12 ticks - i.e. it will sell 1/12th in the next tick
-	public static int[] numTicksPAExit = new int[]{3,36,72};
-	public static int[] numTicksOPExit = new int[]{2,12,24};
+	public static int[] numTicksPAExit = new int[]{72,72,120};			// new int[]{2,6,12,72};
+	public static int[] numTicksOPExit = new int[]{2,10,60};			// new int[]{2,6,12,72};
 	public static int[] numTicksTExit = new int[]{86,86};
 	// Tactics - number of ticks to exit positions
 	// Number of exit strategies for each agent type
@@ -90,7 +90,7 @@ public class AllVariables {
 //	public static double multOfferVol_PASellStrategy1 = 2; // default max fraction of that month's physical position than can be sold in the month
 	public static int tacticDefaultLearn_PASellStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
 	// Sell share max and min levels (min used for must sell, max used for rest volume)
-	public static double tacticMinPhysPosSellShare_PASellStrategy1 = 0.02; // Minimum must sell % of physical position . Alot to say.This flattens and pushes it all down, price more dependent on curren balance dispite ratio and holding horizont.
+	public static double tacticMinPhysPosSellShare_PASellStrategy1 = 0.01; // Minimum must sell % of physical position . Alot to say.This flattens and pushes it all down, price more dependent on curren balance dispite ratio and holding horizont.
 	public static double tacticMaxPhysPosSellShare_PASellStrategy1 = 0.75; // Sell up to this fraction of the physical position
 //	public static double tacticDefaultMustSellPriceMult_PASellStrategy1 = 0.5;  // Default must sell price multiplier for the producer tactics (if used)
 	// Define the range of price multipliers for the target sales (must sell) and rest volumes 
@@ -143,25 +143,26 @@ public class AllVariables {
 
 	// ------- FundamentalMarketAnalysis and Project Developement
 	public static double penaltyratio = 1.5;						//What is the penalty compared to current market price?
-	public static int yearstoendogprojects = 3;						//Just to save time in the FMA. KK 20151118 var 2 i Q2 (2 og 3 har lite å si i Base Case). 
+	public static int yearstoendogprojects = 2;						//Just to save time in the FMA. KK 20151118 var 2 i Q2 (2 og 3 har lite å si i Base Case). 
 	public static double maxpricecerts = 150;						//To not get an errror in the FMA.
 	public static double initialRRRcorrector = 1.0;					//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis. Copnsate (0.098) for the learningfactor in inputt.
 	public static double RRRpostpondpremium = 0.025;				//Risk premium (basispoints 0.01 = 1%) need to be covered if the investment decision is to be postpond. 
 	public static int minpostpondyears = 1;							//How long the investment decision is postpond if postponed.Cannot see why this should be larger than 1. (only argument is if this is the real deal).
 	public static int MPECount = 17;								//Number of futuer years seen by the MPE-analysis. THats number-1 years ahead (including this year).
 	public static int LPECount = MPECount+minpostpondyears;			//Number of futuer years seen by the LPE-analysis
-	public static int yearsbuildout = 1;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA. KK20151118: Brukt 16 histoisk, men kan ikke forstå hvorfor det er rett!
-
+	public static int yearsbuildout = 4;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA. KK20151118: Brukt 16 histoisk, men kan ikke forstå hvorfor det er rett! Med verdi på 1 så bygger man ut for neste års underskudd i hvert iterert år, det betyr generalt at man bygger senere og ergo må bygge mere og dermed dyrere.
+	public static double[] RAR = new double[]{9,11};			//1 is maks, or we get obverse results for roof (see buystrategies1tactics)	//Previusly directly altered in CompanyAgent.java
+	
 	// ---- THE FMA and MPE/LPE
 	public static double stdmediumrunpriceexpect = 0.05;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.06;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	
 	//CompanyAgent regions
-	public static double[] companyregiondistribution = new double[]{0.2,0.4,1.0};	//first the prob for Norway, Sweden and third is both. Determines the chance for a new added company beeing in either one (then which) or both countires. 
+	public static double[] companyregiondistribution = new double[]{0.2,0.9,1.0};	//first the prob for Norway, Sweden and third is both. Determines the chance for a new added company beeing in either one (then which) or both countires. 
 
 	
 	//Project Development
-	public static double[] developerinvestmenttypedistribution = new double[]{0.1,0.6,0.9,1};	//{0.1,0.6,0.9,1} //{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
+	public static double[] developerinvestmenttypedistribution = new double[]{0.15,0.45,0.95,1};	//{0.1,0.6,0.9,1} 45//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
 	public static int numberoftickstocalculatehistcertprice = 2;	//This could be exptended to about 6. THis is basically the parameter setting how long memory developers have when taking investment decison based on current price. 
 	public static int numberofyearcertscanbehedged = 3;
 	public static int constructionconstraints = 4; 					//Gives number of projects under construction -limit. Reduing this makes the market "less optimal" 
@@ -173,8 +174,8 @@ public class AllVariables {
 	//Factor determining how aggressiv the build out is Random between max and min for each year. Less then one means that the construction limit for any given year is less then what is needed in terms of annual producion, whereas much higher then one limits to what all developers are willing to build (financially and resoruce wise)
 
 	public static double earlystageInvestRRRAdjustFactor = 0.0025;		//Premium when determining if the project identyfied should apply for concession.
-	public static double minInvestRRRAdjustFactor = 0.75;		//Corrector of 0.9 implies a lower bond on about 0.9*8=7.2% RRR. This is aboute 2-3 Euro per MW difference in cert price needed (NPV).
-	public static double maxInvestRRRAdjustFactor = 1.20;		//Not sure this is autually used ad Project development uses the market RRR
+	public static double minInvestRRRAdjustFactor = 0.7;		//Corrector of 0.9 implies a lower bond on about 0.9*8=7.2% RRR. This is aboute 2-3 Euro per MW difference in cert price needed (NPV).
+	public static double maxInvestRRRAdjustFactor = 1.18;		//Not sure this is autually used ad Project development uses the market RRR
 	
 	
 	// ---- Initial distribution of powerplants, projects and demandshares per region.
@@ -210,7 +211,7 @@ public class AllVariables {
 	
 	// ---- For the Project Market. Used for both initial distribution and the project shuffling each year. 06.06.2015 KK: Added after 2015 Q2 report.
 	public static double[] chanceofownershipchange = new double[]{0.2,0.2,0.4,0.6};		//Indicates the chance (%) of ownership change according to years postponed by curren owner when setting criteria flag. Thus, of a project have been postpone (not invested when it could) one year, there is a [0] chance for owernship change. For the second year, there is [1] chance, etc. Notice that one year is 2015 right after the decisions are made/not made..
-	public static double initialowenershipchangepercentile = 0.3;						//rated by certpriceneeded if build in 2016.
+	public static double initialowenershipchangepercentile = 0.2;						//As the cert price needed has not been calculated this value indicates which project in line determines the marginal project. If 100 projects, a value of 0.2 would indicate that the 20th best project is the cutoff. For all project better than this, there is a chanceofownershipchange[0] chance for redistirbution.
 }
 
 
