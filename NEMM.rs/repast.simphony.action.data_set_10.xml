@@ -1,35 +1,134 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Wind year test</name>
+  <name>PowerPlants and Projects</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
-    <start>1.0</start>
+    <start>0.0</start>
     <interval>1.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1296706298</hashCode>
+    <hashCode>70811299</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>wind4</string>
+      <string>In operation</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>wind4</id>
+        <id>In operation</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getwind4</methodName>
+        <methodName>gettotalnumberofpowerplantsinoperation</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>wind4_2</string>
+      <string>Projects under construction</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>wind4_2</id>
+        <id>Projects under construction</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getwind4_2</methodName>
+        <methodName>gettotalnumberofprojectsunderconstruction</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Projects awaiting investment decision</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Projects awaiting investment decision</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gettotalnumberofprojectsawatingID</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Projects in concession queue</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Projects in concession queue</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gettotalnumberofprojectsinconcessionqueue</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Projects identifyed</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Projects identifyed</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gettotalnumberofprojectsidentifyed</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Potential projects</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Potential projects</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gettotalnumberofpotentialprojects</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Projects trashed</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Projects trashed</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gettotalnumberofprojectstrashed</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Total plants and projects</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Total plants and projects</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>gettotalnumberofpowerplantandprojeects</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Powerplants Norway</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Powerplants Norway</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getplantsinNorway</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Powerplants Sweden</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Powerplants Sweden</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getplantsinSweden</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Buildout Norway</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Buildout Norway</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getbuildoutNorway</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Buildout Sweden</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Buildout Sweden</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getbuildoutSweden</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Numberownershipchange</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Numberownershipchange</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getnumberofownershipchange</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

@@ -40,8 +40,10 @@ public final class TheEnvironment {
                 public static NemmCalendar theCalendar;
                 public static double wind4;
                 public static double wind4_2;
-
                 
+                public static double produceragentscounter;
+                public static double obligatedpurchaseragentcounter;
+                public static double developeragentcounter;
                 
                 private TheEnvironment() {}
                 
@@ -62,6 +64,11 @@ public final class TheEnvironment {
                                allRegions = new ArrayList<Region>();  
                                alladjustedRRR = new ArrayList<ProjectRRR>();
                                allwindandppricescenarios = new ArrayList<Scenario>();
+                               
+                               produceragentscounter = 0;
+                               obligatedpurchaseragentcounter = 0;
+                               developeragentcounter = 0;
+                               
                 }
                 
                 // Populate the Environment ------------------------------------------------------------
@@ -248,8 +255,15 @@ public final class TheEnvironment {
                                public static double bestselloffer1;
                                public static double bestselloffer2;
                                
+                               //updated tacticMaxPhysPosSellShare_PASellStrategy1
+                               public static double updated_tacticMaxPhysPosSellShare_PASellStrategy1 = AllVariables.tacticMaxPhysPosSellShare_PASellStrategy1;
+                               
                                public GlobalValues() {
                                                currentmarketprice = ParameterWrapper.getpriceexpectation();
+                               }
+                               
+                               public static void setupdated_tacticMaxPhysPosSellShare_PASellStrategy1(double a) {
+                            	   updated_tacticMaxPhysPosSellShare_PASellStrategy1 = a; 
                                }
                                
                                public static void initglobalvalues() {

@@ -1,35 +1,36 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Project data</name>
-  <type>NON_AGGREGATE</type>
-  <sourceType>nemmagents.CompanyAgent</sourceType>
+  <name>Wind year test</name>
+  <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
-    <start>0.0</start>
-    <interval>12.0</interval>
+    <start>1.0</start>
+    <interval>1.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1070043407</hashCode>
+    <hashCode>-1296706298</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>numberofpowerplants</string>
+      <string>wind4</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>numberofpowerplants</id>
-        <className>nemmagents.CompanyAgent</className>
-        <methodName>getnumberofpowerplants</methodName>
+        <id>wind4</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getwind4</methodName>
+        <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>InvestmentRRR</string>
+      <string>wind4_2</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>InvestmentRRR</id>
-        <className>nemmagents.CompanyAgent</className>
-        <methodName>getInvestmentRRR</methodName>
+        <id>wind4_2</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getwind4_2</methodName>
+        <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

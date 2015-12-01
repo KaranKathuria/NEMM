@@ -85,7 +85,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		}
 		else {
 //			ret.setCertVolume(Math.max(0.0,Math.min(-maxBidOfferVolume-mustbuy,-physicalposition-mustbuy))); //rest of the monthly production bought at expected price.
-			ret.setCertVolume(Math.max(0.0,-physicalposition*Math.min(1.0, maxBidOfferVolumeMultiplier)-mustbuy)); //rest of the monthly production sold at expected price.			
+			ret.setCertVolume(Math.max(0.0,-physicalposition*Math.min(1.0, maxBidOfferVolumeMultiplier)-mustbuy)); //rest of the monthly production sold at expected price.		20151129 KK Could be altered to buy more (future demand).s	
 
 		}
 		ret.setPrice(Math.min(expectedprice*paramRestVolPriceMult, floorroofprice)); //Most likely that the second offer is at at pricemultiplier. Hence they buy what they dont must, at a pricemultiplier.
@@ -101,7 +101,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		if(TheEnvironment.theCalendar.getCurrentTick()<AllVariables.firstrealtick) {
 			floorroofprice = AllVariables.maxpricecerts;
 		} else {			
-			floorroofprice = AllVariables.maxpricecerts; //twoyearahead/Math.pow(tempdisc + 1, 2); //Hence this equals the discounted future expected cert price. Discounted with a risk free rate and a risk rate //In other words, the seller will not sell the variable part unless the sell price is better than the discounted future price expectations. In that case he would hold the certificates in two years.
+			floorroofprice = Math.min((twoyearahead/Math.pow(tempdisc + 1, 2)),AllVariables.maxroofprice); //Hence this equals the discounted future expected cert price. Discounted with a risk free rate and a risk rate //In other words, the seller will not sell the variable part unless the sell price is better than the discounted future price expectations. In that case he would hold the certificates in two years.
 		}	
 			//		floorroofprice = AllVariables.certMaxPrice;
 		maxBidOfferVolume = maxBidOfferVolumeMultiplier * this.getmyStrategy().getmyAgent().getlasttickdemand(); // * //What was demanded last tick (negativ number).

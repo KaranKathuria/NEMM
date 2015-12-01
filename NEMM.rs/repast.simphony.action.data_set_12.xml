@@ -1,252 +1,35 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Output data: Market and region</name>
-  <type>AGGREGATE</type>
+  <name>Project data</name>
+  <type>NON_AGGREGATE</type>
+  <sourceType>nemmagents.CompanyAgent</sourceType>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
-  <inclRandomSeed>true</inclRandomSeed>
+  <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
     <start>0.0</start>
-    <interval>1.0</interval>
+    <interval>12.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>1144585332</hashCode>
+    <hashCode>-1070043407</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Certificate price (Euro)</string>
+      <string>numberofpowerplants</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Certificate price (Euro)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>currentmarketprice</methodName>
-        <aggType>SUM</aggType>
+        <id>numberofpowerplants</id>
+        <className>nemmagents.CompanyAgent</className>
+        <methodName>getnumberofpowerplants</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Power price Norway (Euro)</string>
+      <string>InvestmentRRR</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Power price Norway (Euro)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getcurrentpowerprice_N</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Power price Sweden (Euro)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Power price Sweden (Euro)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getcurrentpowerprice_S</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Added annual production Norway (acc) (MWh)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Added annual production Norway (acc) (MWh)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getbuildoutNorway</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Added annual production Sweden (acc) (MWh)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Added annual production Sweden (acc) (MWh)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getbuildoutSweden</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Running scenario number</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Running scenario number</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getrunningscenarionumber</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Added wind capacity Norway (acc) (MW)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Added wind capacity Norway (acc) (MW)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getwindcapacityNorway</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Added wind capacity Sweden (acc) (MW)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Added wind capacity Sweden (acc) (MW)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getwindcapacitySweden</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Added hydro capacity Norway (acc) (MW)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Added hydro capacity Norway (acc) (MW)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>gethydrocapacityNorway</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Added hydro capacity Sweden (acc) (MW)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Added hydro capacity Sweden (acc) (MW)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>gethydrocapacitySweden</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Added all other capacity Norway (acc) (MW)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Added all other capacity Norway (acc) (MW)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallothercapacityNorway</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Added all other capacity Sweden (acc) (MW)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Added all other capacity Sweden (acc) (MW)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallothercapacitySweden</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Number of plants i Norway (acc)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Number of plants i Norway (acc)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getplantsinNorway</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Number of plants i Sweden (acc)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Number of plants i Sweden (acc)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getplantsinSweden</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Eligible annual production Total (MWh)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Eligible annual production Total (MWh)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getcertificateeligableannualproduction</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Eligible annual production Norway (MWh)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Eligible annual production Norway (MWh)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getcertificateeligableannualproductionNorway</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Eligible annual production Sweden (MWh)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Eligible annual production Sweden (MWh)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getcertificateeligableannualproductionSwedens</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Certificate balance (MW)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Certificate balance (MW)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>gettotalmarketphysicalposition</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Total capacity added Norway (acc) (MW)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Total capacity added Norway (acc) (MW)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>gettotalcapacityaddedNorway</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Total capacity added Sweden (acc) (MW)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Total capacity added Sweden (acc) (MW)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>gettotalcapacityaddedSweden</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Added wind production Norway (acc) (MWh)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Added wind production Norway (acc) (MWh)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getwindproductionNorway</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Added hydo production Norway (acc) (MWh)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Added hydo production Norway (acc) (MWh)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>gethydroproductionNorway</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Added hydro production Sweden (acc) (MWh)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Added hydro production Sweden (acc) (MWh)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>gethydroproductionSweden</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Added all other production Norway (acc) (MWh)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Added all other production Norway (acc) (MWh)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallotherproductionNorway</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Added all other production Sweden (acc) (MWh)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Added all other production Sweden (acc) (MWh)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getallotherproductionSweden</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Added wind production Sweden (acc) (MWh)</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Added wind production Sweden (acc) (MWh)</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getwindproductionSweden</methodName>
-        <aggType>SUM</aggType>
+        <id>InvestmentRRR</id>
+        <className>nemmagents.CompanyAgent</className>
+        <methodName>getInvestmentRRR</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

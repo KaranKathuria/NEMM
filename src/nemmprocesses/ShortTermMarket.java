@@ -153,10 +153,10 @@ public class ShortTermMarket {
 			totalmustbuyVol = agent.getbeststrategy().getbesttactic().getbuyofferone().getCertVolume() + totalmustbuyVol;
 			totalrestbuyVol = agent.getbeststrategy().getbesttactic().getbuyoffertwo().getCertVolume() + totalrestbuyVol;
 
-			if (agent.getbeststrategy().getalltactics().get(0).getbuyofferone() == null) {buyoffer1 = 0;} else{  //For handling null-offers from agents without demand.
-			buyoffer1 = agent.getbeststrategy().getalltactics().get(0).getbuyofferone().getPrice(); }
-			if (agent.getbeststrategy().getalltactics().get(0).getbuyoffertwo() == null) {buyoffer2[countb] = 0;} else{  //For handling null-offers from agents without demand.
-			buyoffer2[countb] = agent.getbeststrategy().getalltactics().get(0).getbuyoffertwo().getPrice();}
+			if (agent.getbeststrategy().getbesttactic().getbuyofferone() == null) {buyoffer1 = 0;} else{  //For handling null-offers from agents without demand.
+			buyoffer1 = agent.getbeststrategy().getbesttactic().getbuyofferone().getPrice(); }
+			if (agent.getbeststrategy().getbesttactic().getbuyoffertwo() == null) {buyoffer2[countb] = 0;} else{  //For handling null-offers from agents without demand.
+			buyoffer2[countb] = agent.getbeststrategy().getbesttactic().getbuyoffertwo().getPrice();}
 			if (agent.getbeststrategy().getbesttactic().getbuyoffertwo() == null) {bestbuyoffer2 = 0;} else{			 //For handling null-offers from agents without prod.
 			bestbuyoffer2 = agent.getbeststrategy().getbesttactic().getbuyoffertwo().getPrice();}
 			roof = agent.getbeststrategy().getalltactics().get(0).getfloorroofprice();
@@ -542,6 +542,18 @@ public static double[] getselloffer2() {
 return selloffer2;}
 public static double getbestselloffer2() {
 return bestselloffer2;
+}
+public static double totalmustsellVol() {
+return totalmustsellVol;
+}
+public static double totalrestsellVol() {
+return totalrestsellVol;
+}
+public static double totalmustbuyVol() {
+return totalmustbuyVol;
+}
+public static double totalrestbuyVol() {
+return totalrestbuyVol;
 }
 
 }

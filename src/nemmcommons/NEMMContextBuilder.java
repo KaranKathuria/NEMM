@@ -103,7 +103,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 // === Simulation schedule ====================================================================================================================================================================
 	
 // ---- Scales the bank according to the right real life position. 
-@ScheduledMethod(start = AllVariables.firstrealtick, priority = 3)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
+@ScheduledMethod(start = AllVariables.firstrealtick-1, priority = 3)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
 	public void scalephysicalpositions() {
 	UpdatePhysicalPosition.scalePAphysicalpos();
 	UpdatePhysicalPosition.scaleOPAphysicalpos();
@@ -113,7 +113,8 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 // ---- The monthly update
 @ScheduledMethod(start = 0, interval = 1, priority = 1)
 public void monthlymarketschedule() {
-		
+	
+	UpdatePhysicalPosition.update_tacticMaxPhysPosSellShare_PASellStrategy1();
 	// Forecast the market 
 	CVRatioCalculations.calculateallcvobjects();
 	Forcast.updateAllShortTermMarketPrognosis();
@@ -588,7 +589,21 @@ public void obligationsperiodshedule() {
 	public int getnumberofownershipchange() {return ProjectMarket.getnumberofownershipchange();}
 	
 		
-				
+	//20151127 KK
+	
+	public static double totalmustsellVol() {
+		return ShortTermMarket.totalmustsellVol();
+		}
+	public static double totalrestsellVol() {
+		return ShortTermMarket.totalrestsellVol();
+	}
+	public static double totalrestbuyVol() {
+		return ShortTermMarket.totalrestbuyVol();
+	}
+	public static double totalmustbuyVol() {
+		return ShortTermMarket.totalmustbuyVol();
+	}
+
 
 	
 }

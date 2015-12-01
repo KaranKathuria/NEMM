@@ -194,7 +194,8 @@ public class FundamentalMarketAnalysis {
 	//20151125 KK: Special section just added for backtest as the current impementaton of FMA gives a very high price intially becase there are limited projects availbale befor 2015.
 		int tempyearstoendogprojects = 0;
 		if (currentyear<2015) {
-		 tempyearstoendogprojects = 4; //Skips the LRMC calcs for 2012, 2013, 2014 and 2015
+		 tempyearstoendogprojects = 4; //Skips the LRMC calcs for 2012, 2013, 2014 (if currentyear = 2014, it skips 2014,2015,2016,2017)
+		 equilibriumpricesyearsahead.add(AllVariables.backtestminFMA);
 			}
 	
 		
@@ -203,7 +204,7 @@ public class FundamentalMarketAnalysis {
 			if (certificatebalance >= 0){																	//Will there be shortfall in the future of the market? Which years shortfall?
 				temp = 0.0;}																					
 			else {
-				temp = TheEnvironment.GlobalValues.currentmarketprice * AllVariables.penaltyratio;}		 			
+				temp = TheEnvironment.GlobalValues.currentmarketprice * AllVariables.penaltyratio;}	//KK20151130: Aadded for backtest 			
 			equilibriumpricesyearsahead.add(temp);
 	}	
 	else {

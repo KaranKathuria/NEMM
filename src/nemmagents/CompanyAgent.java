@@ -29,6 +29,7 @@ import nemmstrategy_shortterm.TradeStrategy1_new;
 import nemmstrategy_shortterm.TraderBuyUtilityMethod;
 import nemmstrategy_shortterm.TraderSellUtilityMethod;
 import nemmcommons.AllVariables;
+import nemmcommons.ParameterWrapper;
 import nemmcommons.VolumePrognosis;
 import nemmenvironment.PowerPlant;
 import nemmenvironment.Region;
@@ -83,8 +84,12 @@ public class CompanyAgent extends ParentAgent {
 				// Specify the type and get the number of ticks
 				//Random generator = new Random(); 
 				//double dPhysRnd = generator.nextDouble();
-
-				double dPhysRnd = RandomHelper.nextDouble();
+				double temp = 0;
+				TheEnvironment.produceragentscounter = TheEnvironment.produceragentscounter +1;
+				temp = TheEnvironment.produceragentscounter;
+				double dPhysRnd = temp/ParameterWrapper.getproduceragentsnumber(); //RandomHelper.nextDouble();
+				int a = 3;
+				
 				for (int stratID=AllVariables.numPAExitStrategies-1; stratID>=0; stratID--){
 					if (dPhysRnd <= AllVariables.cutoffPAExit[stratID]) {
 						numTicksToEmptyPosition = AllVariables.numTicksPAExit[stratID];
@@ -105,8 +110,14 @@ public class CompanyAgent extends ParentAgent {
 				buystrategy.setmyAgent(ActiveAgent.this);
 				allstrategies.add(buystrategy);
 				portfoliocapital = 0;
+				
+				//KK Added 20151201
+				double temp = 0;
+				TheEnvironment.obligatedpurchaseragentcounter = TheEnvironment.obligatedpurchaseragentcounter +1;
+				temp = TheEnvironment.obligatedpurchaseragentcounter;
+				double dPhysRnd = temp/ParameterWrapper.getobligatedpurchaseragentsnumber(); //RandomHelper.nextDouble();
 
-				double dPhysRnd = RandomHelper.nextDouble();
+				//double dPhysRnd = RandomHelper.nextDouble();
 				for (int stratID=AllVariables.numOPExitStrategies-1; stratID>=0; stratID--){
 					if (dPhysRnd <= AllVariables.cutoffOPExit[stratID]) {
 						numTicksToEmptyPosition = AllVariables.numTicksOPExit[stratID];
@@ -325,33 +336,94 @@ public class CompanyAgent extends ParentAgent {
 			constructionlimit = AllVariables.constructionconstraints;					//Max number of projects getting in from moving to construction. 
 			totalcapacitylimit = 100000000;
 			if (AllVariables.isbacktest) {
-				constructionlimit = constructionlimit*10;
-				totalcapacitylimit = totalcapacitylimit*10;
+				constructionlimit = constructionlimit*AllVariables.backtesteaseconstruction;
+				totalcapacitylimit = totalcapacitylimit*AllVariables.backtesteaseconstruction;
 			}
+			if (this.getregionpartcode() == 0) { //Norway
 			//1=invest based on long term price of certs (pure Fundamental based), 2=Invest on pure fundamental and some price, 3=Invest based on curren cert price and some fundamental, 4=Invest based on current cert price for two years
 			double investdecrand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
 			double a = investdecrand;
-					if (investdecrand <= AllVariables.developerinvestmenttypedistribution[0]) {
+					if (investdecrand <= AllVariables.developerinvestmenttypedistribution_Norway[0]) {
 						investmentdecisiontype = 1;
-						fundamentaleasefactor = 1;
+						fundamentaleasefactor = AllVariables.fundamentalfundamentaleasefactordistribution;
 						priceeasefactor = 5000;
 						}
-					if (investdecrand > AllVariables.developerinvestmenttypedistribution[0] && investdecrand <= AllVariables.developerinvestmenttypedistribution[1]) {
+					if (investdecrand > AllVariables.developerinvestmenttypedistribution_Norway[0] && investdecrand <= AllVariables.developerinvestmenttypedistribution_Norway[1]) {
 						investmentdecisiontype = 2;
-						fundamentaleasefactor = 1;
+						fundamentaleasefactor = AllVariables.fundamentalfundamentaleasefactordistribution;
 						priceeasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentpriceeasefactordistribution[0], AllVariables.developerinvestmentpriceeasefactordistribution[1]);
 						}
-					if (investdecrand > AllVariables.developerinvestmenttypedistribution[1] && investdecrand <= AllVariables.developerinvestmenttypedistribution[2]) {
+					if (investdecrand > AllVariables.developerinvestmenttypedistribution_Norway[1] && investdecrand <= AllVariables.developerinvestmenttypedistribution_Norway[2]) {
 						investmentdecisiontype = 3;
 						fundamentaleasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentfundamentaleasefactordistribution[0], AllVariables.developerinvestmentfundamentaleasefactordistribution[1]);
 						priceeasefactor = 1;
 						}
-					if (investdecrand > AllVariables.developerinvestmenttypedistribution[2]){
+					if (investdecrand > AllVariables.developerinvestmenttypedistribution_Norway[2]){
 						investmentdecisiontype = 4;
 						priceeasefactor = 1;			
 						fundamentaleasefactor = 5000;		
 						}
-		}
+			}
+			if (this.getregionpartcode() == 1) { //Sweden
+			//1=invest based on long term price of certs (pure Fundamental based), 2=Invest on pure fundamental and some price, 3=Invest based on curren cert price and some fundamental, 4=Invest based on current cert price for two years
+			double investdecrand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
+			double a = investdecrand;
+					if (investdecrand <= AllVariables.developerinvestmenttypedistribution_Sweden[0]) {
+						investmentdecisiontype = 1;
+						fundamentaleasefactor = AllVariables.fundamentalfundamentaleasefactordistribution;
+						priceeasefactor = 5000;
+						}
+					if (investdecrand > AllVariables.developerinvestmenttypedistribution_Sweden[0] && investdecrand <= AllVariables.developerinvestmenttypedistribution_Sweden[1]) {
+						investmentdecisiontype = 2;
+						fundamentaleasefactor = AllVariables.fundamentalfundamentaleasefactordistribution;
+						priceeasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentpriceeasefactordistribution[0], AllVariables.developerinvestmentpriceeasefactordistribution[1]);
+						}
+					if (investdecrand > AllVariables.developerinvestmenttypedistribution_Sweden[1] && investdecrand <= AllVariables.developerinvestmenttypedistribution_Sweden[2]) {
+						investmentdecisiontype = 3;
+						fundamentaleasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentfundamentaleasefactordistribution[0], AllVariables.developerinvestmentfundamentaleasefactordistribution[1]);
+						priceeasefactor = 1;
+						}
+					if (investdecrand > AllVariables.developerinvestmenttypedistribution_Sweden[2]){
+						investmentdecisiontype = 4;
+						priceeasefactor = 1;			
+						fundamentaleasefactor = 5000;		
+						}
+			}
+			if (this.getregionpartcode() == 2) { //both countries
+					//1=invest based on long term price of certs (pure Fundamental based), 2=Invest on pure fundamental and some price, 3=Invest based on curren cert price and some fundamental, 4=Invest based on current cert price for two years
+					double investdecrand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
+					double a = investdecrand;
+							if (investdecrand <= AllVariables.developerinvestmenttypedistribution[0]) {
+								investmentdecisiontype = 1;
+								fundamentaleasefactor = AllVariables.fundamentalfundamentaleasefactordistribution;
+								priceeasefactor = 5000;
+								}
+							if (investdecrand > AllVariables.developerinvestmenttypedistribution[0] && investdecrand <= AllVariables.developerinvestmenttypedistribution[1]) {
+								investmentdecisiontype = 2;
+								fundamentaleasefactor = AllVariables.fundamentalfundamentaleasefactordistribution;
+								priceeasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentpriceeasefactordistribution[0], AllVariables.developerinvestmentpriceeasefactordistribution[1]);
+								}
+							if (investdecrand > AllVariables.developerinvestmenttypedistribution[1] && investdecrand <= AllVariables.developerinvestmenttypedistribution[2]) {
+								investmentdecisiontype = 3;
+								fundamentaleasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentfundamentaleasefactordistribution[0], AllVariables.developerinvestmentfundamentaleasefactordistribution[1]);
+								priceeasefactor = 1;
+								}
+							if (investdecrand > AllVariables.developerinvestmenttypedistribution[2]){
+								investmentdecisiontype = 4;
+								priceeasefactor = 1;			
+								fundamentaleasefactor = 5000;		
+								}
+					}
+			if (this.getregionpartcode()>2) {
+				throw new IllegalArgumentException("3 is no region");}
+			
+			
+			
+			}
+			
+			
+			
+			
 		
 		public void updateDAnumbers(double cpdorconstr, int numpt, int numpf, int numpuc, int numpaid, int numpip, int numpid) {
 			capacitydevorundrconstr = cpdorconstr;
@@ -361,11 +433,12 @@ public class CompanyAgent extends ParentAgent {
 			numprojectsawaitingid = numpaid;
 			numprojectsinprocess = numpip;
 			numprojectsidentyfied = numpid;
+		
 		}
 		
 		//Add, set and get methods for DeveloperAgent
 		public int getsizecode() {return sizecode;}
-		public int getregionpartcode() {return regionpartcode;}
+		public int getregionpartcode() {return this.companyagent.regionpartcode;}
 		public CompanyAgent getmycompany() {return this.companyagent;}
 		public void addproject(PowerPlant PP) {myProjects.add(PP);	}
 		public ArrayList<PowerPlant> getmyprojects() {return myProjects;}
@@ -457,6 +530,19 @@ public class CompanyAgent extends ParentAgent {
 	
 	
 	public CompanyAgent(boolean p, boolean op, boolean t) {
+		
+		//20151117 Add something that makes a split if the agent has a developer agent. This should only be either in sweden or norway.0 = Norway 1 = Sweden, 2 = both
+		double regionpartrand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
+				if (regionpartrand <= AllVariables.companyregiondistribution[0]) {
+					regionpartcode = 0;
+					}
+				if (regionpartrand > AllVariables.developerinvestmenttypedistribution[0] && regionpartrand <= AllVariables.companyregiondistribution[1]) {
+					regionpartcode = 1;
+					}
+				if (regionpartrand > AllVariables.developerinvestmenttypedistribution[1] && regionpartrand <= AllVariables.companyregiondistribution[2]) {
+					regionpartcode = 2;
+					}
+		
 		if (p==true) {
 			produceragent = new ActiveAgent(1);
 			developeragent = new DeveloperAgent();}													//By default all and just all companies with PA have a DA.
@@ -471,17 +557,7 @@ public class CompanyAgent extends ParentAgent {
 		investmentRRR = RandomHelper.nextDoubleFromTo(AllVariables.minInvestRRRAdjustFactor, AllVariables.maxInvestRRRAdjustFactor);				//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
 		earlystageRRR = investmentRRR + AllVariables.earlystageInvestRRRAdjustFactor;																//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
 		regionpartcode = 2;																			//By default, all companies are active in both countries. (0=Norway, 1 = Sweden, 2 = both)
-		//20151117 Add something that makes a split if the agent has a developer agent. This should only be either in sweden or norway.
-		double regionpartrand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
-				if (regionpartrand <= AllVariables.companyregiondistribution[0]) {
-					regionpartcode = 0;
-					}
-				if (regionpartrand > AllVariables.developerinvestmenttypedistribution[0] && regionpartrand <= AllVariables.companyregiondistribution[1]) {
-					regionpartcode = 1;
-					}
-				if (regionpartrand > AllVariables.developerinvestmenttypedistribution[1] && regionpartrand <= AllVariables.companyregiondistribution[2]) {
-					regionpartcode = 2;
-					}	
+	
 	}
 	
 	//CompanyAgents get methods

@@ -10,6 +10,7 @@ package nemmprocesses;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
 import nemmagents.CompanyAgent;
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmagents.CompanyDemandShare;
@@ -75,7 +76,28 @@ public static void scaleTAphysicalpos() { //Scales the market physicalposition b
 	for (final ActiveAgent agent : CommonMethods.getTAgentList()) {
 		agent.scalephysicalposition(scaling);
 	}
+}
+}
+	//K20151129 added due to to much sell volumes.
+public static void update_tacticMaxPhysPosSellShare_PASellStrategy1() { //Scales tacticMaxPhysPosSellShare_PASellStrategy1
+	double totalmustsell = 0;
+	double totalrest = 0;
+	double newtacticMaxPhysPosSellShare_PASellStrategy1;
+	for (final ActiveAgent agent : CommonMethods.getPAgentList()) {
+			
+		totalmustsell = totalmustsell + Math.max(0.0, Math.max(agent.getphysicalnetposition()*AllVariables.tacticMinPhysPosSellShare_PASellStrategy1,
+				agent.getphysicalnetposition()/agent.getNumTicksToEmptyPosition()));
 	}
+	//if (TheEnvironment.GlobalValues.obligatedpurchasersphysiclaposition > 0) throw new Error("impssoble value for purchasers."); //Corrected. This can be positive. 
+
+	totalrest = Math.max(AllVariables.MaxPhysPosmulitiplier*((-TheEnvironment.GlobalValues.obligatedpurchasersphysiclaposition) - totalmustsell),0); //Cannot be negative.
+	newtacticMaxPhysPosSellShare_PASellStrategy1 = totalrest/TheEnvironment.GlobalValues.producersphysicalposition;
+
+	newtacticMaxPhysPosSellShare_PASellStrategy1 = Math.min(totalrest/TheEnvironment.GlobalValues.producersphysicalposition, 1.0);
+	
+	int a = 2;
+	TheEnvironment.GlobalValues.setupdated_tacticMaxPhysPosSellShare_PASellStrategy1(newtacticMaxPhysPosSellShare_PASellStrategy1);
+}
 
 }
 
@@ -210,7 +232,6 @@ public static void updatedemand() {
 	}
 } */
 
-}
 
 
 

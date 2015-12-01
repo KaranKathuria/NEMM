@@ -1,44 +1,35 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>DemandandSupply</name>
+  <name>Medium and long term price</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
-    <start>0.0</start>
+    <start>1.0</start>
     <interval>1.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>1216038642</hashCode>
+    <hashCode>-38034576</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Lasttickdemand</string>
+      <string>MPE</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Lasttickdemand</id>
+        <id>MPE</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>gettotaltickdemand</methodName>
+        <methodName>getmedimutermprice</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Lasttickproduction</string>
+      <string>LPE</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Lasttickproduction</id>
+        <id>LPE</id>
         <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>gettotaltickproducion</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>SupplyandDemand</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>SupplyandDemand</id>
-        <className>nemmcommons.NEMMContextBuilder</className>
-        <methodName>getticksupplyanddemandbalance</methodName>
+        <methodName>getlongtermprice</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
