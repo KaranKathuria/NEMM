@@ -336,7 +336,7 @@ public class CompanyAgent extends ParentAgent {
 			constructionlimit = AllVariables.constructionconstraints;					//Max number of projects getting in from moving to construction. 
 			totalcapacitylimit = 100000000;
 			if (AllVariables.isbacktest) {
-				constructionlimit = constructionlimit*AllVariables.backtesteaseconstruction;
+				constructionlimit = constructionlimit*AllVariables.backtesteaseconstruction+2;
 				totalcapacitylimit = totalcapacitylimit*AllVariables.backtesteaseconstruction;
 			}
 			if (this.getregionpartcode() == 0) { //Norway
@@ -345,13 +345,13 @@ public class CompanyAgent extends ParentAgent {
 			double a = investdecrand;
 					if (investdecrand <= AllVariables.developerinvestmenttypedistribution_Norway[0]) {
 						investmentdecisiontype = 1;
-						fundamentaleasefactor = AllVariables.fundamentalfundamentaleasefactordistribution;
+						fundamentaleasefactor = AllVariables.fundamentalfundamentaleasefactordistribution_Norway;
 						priceeasefactor = 5000;
 						}
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution_Norway[0] && investdecrand <= AllVariables.developerinvestmenttypedistribution_Norway[1]) {
 						investmentdecisiontype = 2;
-						fundamentaleasefactor = AllVariables.fundamentalfundamentaleasefactordistribution;
-						priceeasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentpriceeasefactordistribution[0], AllVariables.developerinvestmentpriceeasefactordistribution[1]);
+						fundamentaleasefactor = AllVariables.fundamentalfundamentaleasefactordistribution_Norway;
+						priceeasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentpriceeasefactordistribution_Norway[0], AllVariables.developerinvestmentpriceeasefactordistribution_Norway[1]);
 						}
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution_Norway[1] && investdecrand <= AllVariables.developerinvestmenttypedistribution_Norway[2]) {
 						investmentdecisiontype = 3;
@@ -370,13 +370,13 @@ public class CompanyAgent extends ParentAgent {
 			double a = investdecrand;
 					if (investdecrand <= AllVariables.developerinvestmenttypedistribution_Sweden[0]) {
 						investmentdecisiontype = 1;
-						fundamentaleasefactor = AllVariables.fundamentalfundamentaleasefactordistribution;
+						fundamentaleasefactor = AllVariables.fundamentalfundamentaleasefactordistribution_Sweden;
 						priceeasefactor = 5000;
 						}
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution_Sweden[0] && investdecrand <= AllVariables.developerinvestmenttypedistribution_Sweden[1]) {
 						investmentdecisiontype = 2;
-						fundamentaleasefactor = AllVariables.fundamentalfundamentaleasefactordistribution;
-						priceeasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentpriceeasefactordistribution[0], AllVariables.developerinvestmentpriceeasefactordistribution[1]);
+						fundamentaleasefactor = AllVariables.fundamentalfundamentaleasefactordistribution_Sweden;
+						priceeasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentpriceeasefactordistribution_Sweden[0], AllVariables.developerinvestmentpriceeasefactordistribution_Sweden[1]);
 						}
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution_Sweden[1] && investdecrand <= AllVariables.developerinvestmenttypedistribution_Sweden[2]) {
 						investmentdecisiontype = 3;

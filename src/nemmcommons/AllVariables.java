@@ -33,7 +33,6 @@ public class AllVariables {
 	public static double bankOPAfirstrealtick =   100000;																										//public static double bankOPAfirstrealtick =   1300000;//400000;//3558000;//		// soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
 	public static double bankTAfirstrealtick = 0;				//Bank at thefirstrealtick.	If tick 0 this should be 0
 	
-
 	
 	
 	//Number of tactics in each of the respective strategies. More tactics gives the agent more alternatives.
@@ -90,7 +89,7 @@ public class AllVariables {
 //	public static double multOfferVol_PASellStrategy1 = 2; // default max fraction of that month's physical position than can be sold in the month
 	public static int tacticDefaultLearn_PASellStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
 	// Sell share max and min levels (min used for must sell, max used for rest volume)
-	public static double tacticMinPhysPosSellShare_PASellStrategy1 = 0.05; // Minimum must sell % of physical position . Alot to say.This flattens and pushes it all down, price more dependent on curren balance dispite ratio and holding horizont.
+	public static double tacticMinPhysPosSellShare_PASellStrategy1 = 0.07; // Minimum must sell % of physical position . Alot to say.This flattens and pushes it all down, price more dependent on curren balance dispite ratio and holding horizont.
 	public static double tacticMaxPhysPosSellShare_PASellStrategy1 = 0.75; // Sell up to this fraction of the physical position in total. initially.
 	public static double MaxPhysPosmulitiplier = 1.9;						//Indicating the maximum the total sell volume can be lagrger then total demand for certs. Used to calcuate the above dynamically.
 //	public static double tacticDefaultMustSellPriceMult_PASellStrategy1 = 0.5;  // Default must sell price multiplier for the producer tactics (if used)
@@ -156,29 +155,34 @@ public class AllVariables {
 	public static double[] RAR = new double[]{0.42,0.48};			//1 is maks, or we get obverse results for roof (see buystrategies1tactics)	//Previusly directly altered in CompanyAgent.java
 	public static double backtestminFMA = 40;						//20151130 KK: added for backtest qickfix of FMA at 2012.
 	public static double fundamentalfundamentaleasefactordistribution = 1.1; //Indicates the fundamental ease factor for fundamental agents. Use as the FMA underestsimats the FMAprice as both agents and analys people know that all investmetns are not taken perfectly. quicfiks 20151201 KK.
-	
+	public static double fundamentalfundamentaleasefactordistribution_Norway = 1.1; //Indicates the fundamental ease factor for fundamental agents. Use as the FMA underestsimats the FMAprice as both agents and analys people know that all investmetns are not taken perfectly. quicfiks 20151201 KK. 1.1 means that FMA is 10 % higher than perfect FMA.
+	public static double fundamentalfundamentaleasefactordistribution_Sweden = 1.25; //Indicates the fundamental ease factor for fundamental agents. Use as the FMA underestsimats the FMAprice as both agents and analys people know that all investmetns are not taken perfectly. quicfiks 20151201 KK.
+
 	// ---- THE FMA and MPE/LPE
-	public static double stdmediumrunpriceexpect = 0.035;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	public static double stdlongrunpriceexpect = 0.045;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
+	public static double stdmediumrunpriceexpect = 0.03;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
+	public static double stdlongrunpriceexpect = 0.035;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	
 	//CompanyAgent regions
-	public static double[] companyregiondistribution = new double[]{0.15,1.0,1.0};	//first the prob for Norway, Sweden and third is both. Determines the chance for a new added company beeing in either one (then which) or both countires. 
+	public static double[] companyregiondistribution = new double[]{0.2,1.0,1.0};	//first the prob for Norway, Sweden and third is both. Determines the chance for a new added company beeing in either one (then which) or both countires. 
 
 	
 	//Project Development
 	public static double[] developerinvestmenttypedistribution = new double[]{0.5,0.55,0.95,1};	//{0.1,0.6,0.9,1} 45//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
 	
 	//KK Added 20150112. THe above is only used if the company is in both regions.
-	public static double[] developerinvestmenttypedistribution_Norway = new double[]{0.1,0.35,0.95,1};	//{0.1,0.6,0.9,1} 45//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
-	public static double[] developerinvestmenttypedistribution_Sweden = new double[]{0.55,0.65,0.95,1};	//{0.1,0.6,0.9,1} 45//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
+	public static double[] developerinvestmenttypedistribution_Norway = new double[]{0.1,0.3,0.9,1};	//{0.1,0.6,0.9,1} 45//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
+	public static double[] developerinvestmenttypedistribution_Sweden = new double[]{0.5,0.5,0.95,1};	//{0.1,0.6,0.9,1} 45//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
 
 	
 	public static int numberoftickstocalculatehistcertprice = 2;	//This could be exptended to about 6. THis is basically the parameter setting how long memory developers have when taking investment decison based on current price. 
 	public static int numberofyearcertscanbehedged = 3;
 	public static int constructionconstraints = 4; 					//Gives number of projects under construction -limit. Reduing this makes the market "less optimal" 
 	public static int preprojectandidentifyconstraint = 6;			//Times sizecode gives projects for prep and ident
-	public static int backtesteaseconstruction = 9;
+	public static int backtesteaseconstruction = 9;					//Multiplicator to ease construction constraint when backtesting.
 	public static double[] developerinvestmentpriceeasefactordistribution = new double[]{1.15,1.4};		//Started with 1.15, 1.4	//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
+	public static double[] developerinvestmentpriceeasefactordistribution_Norway = new double[]{1.1,1.15};		//Started with 1.15, 1.4	//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
+	public static double[] developerinvestmentpriceeasefactordistribution_Sweden = new double[]{1.2,1.4};		//Started with 1.15, 1.4	//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
+
 	public static double[] developerinvestmentfundamentaleasefactordistribution = new double[]{1.15,1.25};  //Q1: 1.01 - 1.07 The distribution of fundamentaleasefaactor to investmentagent type 3 (price based with ease cost curve). High number indicates little restriction.
 	public static double maxbuildoutaggressivness = 1.10; 			//As it is the final value that really limits the build out the spread must to large
 	public static double minbuildoutaggressivness = 1.06; 			//Remember that this is multiplied with the total future demand, hence 1.01 implies 67 MW of new capacity added in 2020 (and about half that in 2026).
