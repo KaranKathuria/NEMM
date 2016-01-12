@@ -13,23 +13,23 @@ import static nemmcommons.ParameterWrapper.*;
 
 public class AllVariables {
 	
-	public static String casename = "Q4 2015 Backtest"; 					//Name of the case ran. That is not the simulation, not the run, but the base case (or sensitivity case).
+	public static String casename = "Q4 2015 Base Case"; 					//Name of the case ran. That is not the simulation, not the run, but the base case (or sensitivity case).
 	
 	// ---  Alter these if backtest or test.
-	public static boolean isbacktest = true;					//Alters parts of the code (readexcel and scenario and Context) in order to run backtest (that is 2012 as start year and 300 ticks). Does not later the input data in AllVariables (bank, price etc).
-	public static final int IRRcalculationtick = 299;			//If above is true, this is 299. Used to alter the IRRcalucation in the contextbuilder which has to be om the last tick.
+	public static boolean isbacktest = false;					//Alters parts of the code (readexcel and scenario and Context) in order to run backtest (that is 2012 as start year and 300 ticks). Does not later the input data in AllVariables (bank, price etc).
+	public static final int IRRcalculationtick = 287;			//If above is true, this is 299. Used to alter the IRRcalucation in the contextbuilder which has to be om the last tick.
 	public static boolean useTestData = false;
 	// -- In addition do the following: For the years until the real tick, the projects must be finilized, hence in the context builder these schduals must be added (line 166). Also the values of this AllVariable file must be altered:
 	//firstrealtick = 36;
 	//public static double[] historiccertprices = new double[]{28.18,	26.84,	25.91,	24.59,	21.52,	19.28,	20.15,	20.88,	21.25,	20.94,	20.34,	18.67}; //
-	//public static double bankPAfirstrealtick =  7500000;																										//
-	//public static double bankOPAfirstrealtick =  1000000;																										//
+	//public static double bankPAfirstrealtick =  8400000;																										//
+	//public static double bankOPAfirstrealtick =  100000;																										//
 
 	
 	public static final int obintr = 12; // TheEnvironment.theCalendar.getNumTradePdsInObligatedPd();
-	public static final int firstrealtick = 12; //Altering this means you got to alter the contextbuilder! Currently this cannot be between 1 and 11 (inclusive). 
-	public static double[] historiccertprices = new double[]{28.18,	26.84,	25.91,	24.59,	21.52,	19.28,	20.15,	20.88,	21.25,	20.94,	20.34,	18.67}; // public static double[] historiccertprices = new double[]{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
-	public static double bankPAfirstrealtick =   8400000;		// public static double bankPAfirstrealtick =   10400000;//11700000;//10400000;//8302000;//	//Bank at thefirstrealtick. If tick 0 this should be 8800 000. For memo Dec 2014, 10500000 was used.  2014: 8302000
+	public static final int firstrealtick =48; //Altering this means you got to alter the contextbuilder! Currently this cannot be between 1 and 11 (inclusive). 
+	public static double[] historiccertprices = new double[]{20.14,	18.31,	24.84,	18.72,	18.21,	18.31,	19.75,	20.16,	20.93,	22.26,	22.85,	24.02,	23.66,	25.1,	23.14,	24.63,	21.57,	20.05,	21.13,	21.01,	22.39,	22.55,	21.57,	21.1,	20.04,	21.91,	20.45,	19.46,	19.73,	19.56,	19.52,	20.18,	20.72,	20.12,	19.45,	18.18,	17.5,	15.93,	14.95,	15.58,	15.76,	15.75,	14.85,	15.29,	16.82,	17.79,	17.33,	17.33};   //{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
+	public static double bankPAfirstrealtick =   11400000;		// public static double bankPAfirstrealtick =   10400000;//11700000;//10400000;//8302000;//	//Bank at thefirstrealtick. If tick 0 this should be 8800 000. For memo Dec 2014, 10500000 was used.  2014: 8302000
 	public static double bankOPAfirstrealtick =   100000;																										//public static double bankOPAfirstrealtick =   1300000;//400000;//3558000;//		// soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
 	public static double bankTAfirstrealtick = 0;				//Bank at thefirstrealtick.	If tick 0 this should be 0
 	
@@ -91,7 +91,7 @@ public class AllVariables {
 	// Sell share max and min levels (min used for must sell, max used for rest volume)
 	public static double tacticMinPhysPosSellShare_PASellStrategy1 = 0.07; // Minimum must sell % of physical position . Alot to say.This flattens and pushes it all down, price more dependent on curren balance dispite ratio and holding horizont.
 	public static double tacticMaxPhysPosSellShare_PASellStrategy1 = 0.75; // Sell up to this fraction of the physical position in total. initially.
-	public static double MaxPhysPosmulitiplier = 1.9;						//Indicating the maximum the total sell volume can be lagrger then total demand for certs. Used to calcuate the above dynamically.
+	public static double MaxPhysPosmulitiplier = 1.5;						//1.9 ved kalibrering Indicating the maximum the total sell volume can be lagrger then total demand for certs. Used to calcuate the above dynamically.
 //	public static double tacticDefaultMustSellPriceMult_PASellStrategy1 = 0.5;  // Default must sell price multiplier for the producer tactics (if used)
 	// Define the range of price multipliers for the target sales (must sell) and rest volumes 
 	public static double tacticMinMustSellPriceMult_PASellStrategy1 = 0.7;
@@ -157,33 +157,33 @@ public class AllVariables {
 	public static double fundamentalfundamentaleasefactordistribution = 1.1; //Indicates the fundamental ease factor for fundamental agents. Use as the FMA underestsimats the FMAprice as both agents and analys people know that all investmetns are not taken perfectly. quicfiks 20151201 KK.
 	public static double fundamentalfundamentaleasefactordistribution_Norway = 1.1; //Indicates the fundamental ease factor for fundamental agents. Use as the FMA underestsimats the FMAprice as both agents and analys people know that all investmetns are not taken perfectly. quicfiks 20151201 KK. 1.1 means that FMA is 10 % higher than perfect FMA.
 	public static double fundamentalfundamentaleasefactordistribution_Sweden = 1.25; //Indicates the fundamental ease factor for fundamental agents. Use as the FMA underestsimats the FMAprice as both agents and analys people know that all investmetns are not taken perfectly. quicfiks 20151201 KK.
-
+	public static double pricedeveloperspriceeasefactordistribution = 1.08; 			 //priceeasefactor used by pricedevelopers. added 20151204 KK. Should be 1, but to midofy earlier round-off in cert prices.
 	// ---- THE FMA and MPE/LPE
 	public static double stdmediumrunpriceexpect = 0.03;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.035;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	
 	//CompanyAgent regions
-	public static double[] companyregiondistribution = new double[]{0.2,1.0,1.0};	//first the prob for Norway, Sweden and third is both. Determines the chance for a new added company beeing in either one (then which) or both countires. 
+	public static double[] companyregiondistribution = new double[]{0.2,0.9,1.0};	//{0.2,1.0,1.0} //first the prob for Norway, Sweden and third is both. Determines the chance for a new added company beeing in either one (then which) or both countires. 
 
 	
 	//Project Development
 	public static double[] developerinvestmenttypedistribution = new double[]{0.5,0.55,0.95,1};	//{0.1,0.6,0.9,1} 45//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
 	
 	//KK Added 20150112. THe above is only used if the company is in both regions.
-	public static double[] developerinvestmenttypedistribution_Norway = new double[]{0.1,0.3,0.9,1};	//{0.1,0.6,0.9,1} 45//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
-	public static double[] developerinvestmenttypedistribution_Sweden = new double[]{0.5,0.5,0.95,1};	//{0.1,0.6,0.9,1} 45//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
+	public static double[] developerinvestmenttypedistribution_Norway = new double[]{0.1,0.3,0.95,1};	//{0.1,0.6,0.9,1} 45//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
+	public static double[] developerinvestmenttypedistribution_Sweden = new double[]{0.2,0.5,0.95,1};	//{0.1,0.6,0.9,1} 45//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
 
 	
-	public static int numberoftickstocalculatehistcertprice = 2;	//This could be exptended to about 6. THis is basically the parameter setting how long memory developers have when taking investment decison based on current price. 
+	public static int numberoftickstocalculatehistcertprice = 1;	//This could be exptended to about 6. THis is basically the parameter setting how long memory developers have when taking investment decison based on current price. 
 	public static int numberofyearcertscanbehedged = 3;
-	public static int constructionconstraints = 4; 					//Gives number of projects under construction -limit. Reduing this makes the market "less optimal" 
+	public static int constructionconstraints = 11; 					//Gives number of projects under construction -limit. Reduing this makes the market "less optimal" 
 	public static int preprojectandidentifyconstraint = 6;			//Times sizecode gives projects for prep and ident
 	public static int backtesteaseconstruction = 9;					//Multiplicator to ease construction constraint when backtesting.
 	public static double[] developerinvestmentpriceeasefactordistribution = new double[]{1.15,1.4};		//Started with 1.15, 1.4	//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
 	public static double[] developerinvestmentpriceeasefactordistribution_Norway = new double[]{1.1,1.15};		//Started with 1.15, 1.4	//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
 	public static double[] developerinvestmentpriceeasefactordistribution_Sweden = new double[]{1.2,1.4};		//Started with 1.15, 1.4	//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
 
-	public static double[] developerinvestmentfundamentaleasefactordistribution = new double[]{1.15,1.25};  //Q1: 1.01 - 1.07 The distribution of fundamentaleasefaactor to investmentagent type 3 (price based with ease cost curve). High number indicates little restriction.
+	public static double[] developerinvestmentfundamentaleasefactordistribution = new double[]{1.26,1.35};  //Q1: 1.01 - 1.07 The distribution of fundamentaleasefaactor to investmentagent type 3 (price based with ease cost curve). High number indicates little restriction.
 	public static double maxbuildoutaggressivness = 1.10; 			//As it is the final value that really limits the build out the spread must to large
 	public static double minbuildoutaggressivness = 1.06; 			//Remember that this is multiplied with the total future demand, hence 1.01 implies 67 MW of new capacity added in 2020 (and about half that in 2026).
 	//Factor determining how aggressiv the build out is Random between max and min for each year. Less then one means that the construction limit for any given year is less then what is needed in terms of annual producion, whereas much higher then one limits to what all developers are willing to build (financially and resoruce wise)
@@ -206,7 +206,7 @@ public class AllVariables {
 	// ---- Regulations for certificates deadline
 	public static boolean certificatespost2020_Norway = false;
 	public static boolean certificatespost2020_Sweden = true;
-	public static int cutoffyear_Norway = 2020;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
+	public static int cutoffyear_Norway = 2021;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
 	public static int cutoffyear_Sweden = 2021;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
 	// ---- The concession and preconstruction process
@@ -222,10 +222,10 @@ public class AllVariables {
 	// ---- For scenarios (wind and power price)
 	public static double meanwindproductionfactor = getmeanwindproductionfactor();
 	public static double stdwindfactor = getstdwindproductionfactor();
-	public static double maxstdwindfactor = 2.3;					//Cutoff deviation in wind production factor. If 3 this means that it cannot blow less or more then 3 times the standard deviation.
+	public static double maxstdwindfactor = 2.1;					//Cutoff deviation in wind production factor. If 3 this means that it cannot blow less or more then 3 times the standard deviation.
 	
 	// ---- For the Project Market. Used for both initial distribution and the project shuffling each year. 06.06.2015 KK: Added after 2015 Q2 report.
-	public static double[] chanceofownershipchange = new double[]{0.3,0.2,0.4,0.6};		//Indicates the chance (%) of ownership change according to years postponed by curren owner when setting criteria flag. Thus, of a project have been postpone (not invested when it could) one year, there is a [0] chance for owernship change. For the second year, there is [1] chance, etc. Notice that one year is 2015 right after the decisions are made/not made..
+	public static double[] chanceofownershipchange = new double[]{0.2,0.2,0.4,0.6};		//Indicates the chance (%) of ownership change according to years postponed by curren owner when setting criteria flag. Thus, of a project have been postpone (not invested when it could) one year, there is a [0] chance for owernship change. For the second year, there is [1] chance, etc. Notice that one year is 2015 right after the decisions are made/not made..
 	public static double initialowenershipchangepercentile = 0.4;						//As the cert price needed has not been calculated this value indicates which project in line determines the marginal project. If 100 projects, a value of 0.2 would indicate that the 20th best project is the cutoff. For all project better than this, there is a chanceofownershipchange[0] chance for redistirbution.
 }
 

@@ -20,11 +20,9 @@ import nemmstrategy_shortterm.BidOffer;
 import nemmstrategy_shortterm.GenericUtilityMethod;
 import nemmstrategy_shortterm.OPAUtilityMethod;
 import nemmstrategy_shortterm.PAUtilityMethod;
-import nemmstrategy_shortterm.TAUtilityMethod;
 import nemmstrategy_shortterm.BuyStrategy1;
 import nemmstrategy_shortterm.GenericStrategy;
 import nemmstrategy_shortterm.SellStrategy1;
-import nemmstrategy_shortterm.TradeStrategy1;
 import nemmstrategy_shortterm.TradeStrategy1_new;
 import nemmstrategy_shortterm.TraderBuyUtilityMethod;
 import nemmstrategy_shortterm.TraderSellUtilityMethod;
@@ -115,9 +113,8 @@ public class CompanyAgent extends ParentAgent {
 				double temp = 0;
 				TheEnvironment.obligatedpurchaseragentcounter = TheEnvironment.obligatedpurchaseragentcounter +1;
 				temp = TheEnvironment.obligatedpurchaseragentcounter;
-				double dPhysRnd = temp/ParameterWrapper.getobligatedpurchaseragentsnumber(); //RandomHelper.nextDouble();
+				double dPhysRnd = temp/ParameterWrapper.getobligatedpurchaseragentsnumber(); 
 
-				//double dPhysRnd = RandomHelper.nextDouble();
 				for (int stratID=AllVariables.numOPExitStrategies-1; stratID>=0; stratID--){
 					if (dPhysRnd <= AllVariables.cutoffOPExit[stratID]) {
 						numTicksToEmptyPosition = AllVariables.numTicksOPExit[stratID];
@@ -141,7 +138,7 @@ public class CompanyAgent extends ParentAgent {
 				tradestrategy.setmyAgent(ActiveAgent.this);
 				allstrategies.add(tradestrategy);
 				
-				//Setting the random "holding horizon" for trader agents.
+				
 				double dPhysRnd = RandomHelper.nextDouble();
 				for (int stratID=AllVariables.numTExitStrategies-1; stratID>=0; stratID--){
 					if (dPhysRnd <= AllVariables.cutoffTExit[stratID]) {
@@ -356,11 +353,11 @@ public class CompanyAgent extends ParentAgent {
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution_Norway[1] && investdecrand <= AllVariables.developerinvestmenttypedistribution_Norway[2]) {
 						investmentdecisiontype = 3;
 						fundamentaleasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentfundamentaleasefactordistribution[0], AllVariables.developerinvestmentfundamentaleasefactordistribution[1]);
-						priceeasefactor = 1;
+						priceeasefactor = AllVariables.pricedeveloperspriceeasefactordistribution;
 						}
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution_Norway[2]){
 						investmentdecisiontype = 4;
-						priceeasefactor = 1;			
+						priceeasefactor = AllVariables.pricedeveloperspriceeasefactordistribution;			
 						fundamentaleasefactor = 5000;		
 						}
 			}

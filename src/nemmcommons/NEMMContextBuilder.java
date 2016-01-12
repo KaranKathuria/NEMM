@@ -8,13 +8,14 @@ package nemmcommons;
 
 //Import field
 
+
+import cern.jet.random.engine.RandomEngine;
+import repast.simphony.random.RandomHelper;
 import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.dataLoader.ContextBuilder;
-import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import nemmagents.CompanyAgent;
-import nemmagents.MarketAnalysisAgent;
 import nemmenvironment.CVRatioCalculations;
 import nemmenvironment.FundamentalMarketAnalysis;
 import nemmenvironment.PowerPlant;
@@ -36,16 +37,17 @@ import static nemmcommons.ParameterWrapper.*;
 public class NEMMContextBuilder extends DefaultContext<Object> 
 		implements ContextBuilder<Object> {
 	
+	
 	@Override
 	public Context<Object> build(final Context<Object> context) {
-
+		
 		//Reads in parameters from the user interface
 		ParameterWrapper.reinit(); 														//Reads the parametervalues provided in the user interface
 		
 		//Create the Environment
 		TheEnvironment.InitEnvironment(); 												//Initiates ReadExcel, creates time and adds empty lists of Powerplants, projects and regions. Also initiates GlobalValues, the publicliy available market information in the model
 		TheEnvironment.PopulateEnvironment(); 											//initiates ReadExcel and reads in region data (demand and power price) and Powerplant and projects data 
-		
+
 		//Adds Agents to context. Notice that Agents specific data is not read in and only given through constructors.
 		for (int i = 0; i < getproduceragentsnumber(); ++i) {
 			final CompanyAgent agent = new CompanyAgent(true, false, false);
@@ -72,12 +74,8 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	//Sales the annual production of all wind power plants according to specifyed mean, standarddeviation and max(capped).
 	TheEnvironment.setwindscenario();				//Sets scenario	
 	TheEnvironment.setpowerpricescenario();			//Sets scenario
-	TheEnvironment.simulateweatherdistribtion();	//Generates wind-years.
-	
-	//No non-normal wind years in backtest.
-	if (!AllVariables.isbacktest){
-		TheEnvironment.simulateweatherdistribtion();	//Generates wind-years.
-		}
+	//TheEnvironment.simulateweatherdistribtion();	//Generates random wind-years.
+
 		
 	//Distributing Plants, projects and demand among Agents
 	DistributeProjectsandPowerPlants.distributeallpowerplants(AllVariables.powerplantdistributioncode);	 //Distribute all PowerPlants among the Copmanies with PAgents.
@@ -89,14 +87,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	TheEnvironment.calculateLRMC_exougenousprojects();													 //Calculates LRMC and certprice needed for all exogenous projects. Must be done here after the projects has got an owner.
 	
 	Forcast.initiateAllVolumePrognosis(); 	//Initiate MarketAnalysisagents and Volumeanalysisagents prognosis based om expected prodution for the future year
-	/*if (!AllVariables.useTestData){
-		FundamentalMarketAnalysis.runfundamentalmarketanalysis();										 //
-		Forcast.updateMPEandLPE();																		 //Takes the result from the FMA and sets the MAA`s MPE and LPE according to that. 
-	}
-	if (!AllVariables.betw12_24) {
-	ProjectDevelopment.startconstrucion();																 //Take 
-	ProjectDevelopment.startpreprojectandapplication();	 
-	}*/
+
 }
 	
 // ============================================================================================================================================================================================
@@ -170,7 +161,7 @@ public void preannualmarketschedule1() {
 	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.	
 }
 
-/*
+
 @ScheduledMethod(start = 12, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0 and higher than 12.
 public void preannualmarketschedule2() {
 	GlobalValues.annualglobalvalueupdate();
@@ -185,7 +176,15 @@ public void preannualmarketschedule3() {
 	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
 	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.	
 }
-*/
+
+
+@ScheduledMethod(start = 36, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0 and higher than 24.
+public void preannualmarketschedule4() {
+	GlobalValues.annualglobalvalueupdate();
+	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
+	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.	
+}
+
 
 
 

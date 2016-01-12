@@ -68,9 +68,9 @@ public class ProjectMarket {
 	public static void setmarginalcertpriceneeded() {
 		projectsforredistribution.clear();
 		for (PowerPlant PP : TheEnvironment.allPowerPlantsandProjects) {
-			if (PP.getstatus() > 2 && PP.getstatus() < 6) {
+			if (PP.getstatus() == 3 || PP.getstatus() == 5) {
 				
-				//Currently just the X-percentage of all projects (status 3,4,5) have a chance for redistribution. 
+				//Currently just the X-percentage of all projects (status 3,,5) have a chance for redistribution. 
 				//Maybe those that cannot be finished in time (for the deadline) should not be included.
 				PP.calculateLRMCandcertpriceneeded(2018, PP.getspecificRRR(), 3);
 				projectsforredistribution.add(PP);
