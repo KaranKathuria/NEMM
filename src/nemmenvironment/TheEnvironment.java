@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import repast.simphony.engine.environment.RunEnvironment;
-import repast.simphony.random.RandomHelper;
 import nemmagents.CompanyAgent;
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmagents.MarketAnalysisAgent;
@@ -17,7 +16,8 @@ import nemmcommons.YearArray;
 import nemmprocesses.ShortTermMarket;
 import inputreader.ReadExcel;
 
-import java.util.Comparator;
+import repast.simphony.random.RandomHelper;
+import cern.jet.random.Normal;
 
 import nemmtime.NemmCalendar;
 
@@ -44,12 +44,67 @@ public final class TheEnvironment {
                 public static double produceragentscounter;
                 public static double obligatedpurchaseragentcounter;
                 public static double developeragentcounter;
+                public static int a = 2;
+                
                 
                 private TheEnvironment() {}
                 
                 // Initialise the environment ------------------------------------------------------------
                 public static void InitEnvironment(){
                                // Create & set up the time calendar and create the lists to hold plants, projects and regions.
+                           
+                			//All testing 20160111 KK:
+                	
+                			/*
+                            RandomHelper.setSeed(1);
+                			RandomHelper.createUniform(); //Bruker timestamp som første, deretter følgen. om ikke seed resettes.
+                			Normal test;
+                			test = RandomHelper.createNormal(15, 1.2);
+                	                			
+                			int seed = RandomHelper.getSeed();
+                			
+                			int index = RandomHelper.nextIntFromTo(0, 10);
+                			int pindex = RandomHelper.nextIntFromTo(0, 10);
+                			int finetx = RandomHelper.nextIntFromTo(0, 10);
+                			
+                			double n1 = test.nextDouble();
+                			double n2 = test.nextDouble();
+                			double n3 = test.nextDouble();
+
+
+                			Normal test2;
+                			test2 = RandomHelper.createNormal(15, 1.2);
+                			RandomHelper.setSeed(1);
+                		
+
+                			int index2 = RandomHelper.getUniform().nextIntFromTo(0, 10);
+                			int pindex2 = RandomHelper.getUniform().nextIntFromTo(0, 10);
+                			int finetx2 = RandomHelper.getUniform().nextIntFromTo(0, 10); 
+                			
+                			double n4 = test2.nextDouble();
+                			double n5 = test2.nextDouble();
+                			double n6 = test2.nextDouble();
+                			
+                			//RandomHelper.setSeed(1);
+                			
+                			         
+                			//RandomHelper.setSeed(1);
+
+
+                			/*
+                			double n2 = RandomHelper.getNormal().nextDouble();
+                			double n3 = RandomHelper.getNormal().nextDouble();
+                			int fx = RandomHelper.getUniform().nextIntFromTo(0, 10);
+
+                			RandomHelper.createNormal(5, 1);
+                			double n21 = RandomHelper.getNormal().nextDouble();
+                			double n22 = RandomHelper.getNormal().nextDouble();
+                			double n23 = RandomHelper.getNormal().nextDouble();
+                			*/
+                			
+                			//a = index;
+                			
+                			
                                inputreader.ReadExcel.InitReadExcel();
                                inputreader.ReadExcel.ReadCreateTime();
                                GlobalValues.initglobalvalues();
@@ -154,12 +209,13 @@ public final class TheEnvironment {
                 
                 // KK: 20150512 Old version of simulateweather used before the scenarios where red in directly.
                 public static void simulateweatherdistribtion() {
-                               RandomHelper.createNormal(AllVariables.meanwindproductionfactor, AllVariables.stdwindfactor);                //Create the used normal distribution skal parametersers
+                			   Normal tempn;
+                               tempn = RandomHelper.createNormal(AllVariables.meanwindproductionfactor, AllVariables.stdwindfactor);                //Create the used normal distribution skal parametersers
                                int temptickid = 0;           
                                
                                //2 is Wind power
                                for (int i = 2012; i<TheEnvironment.theCalendar.getStartYear()+TheEnvironment.theCalendar.getNumYears();i++) {  //For all år
-                                               double temp = RandomHelper.getNormal().nextDouble();
+                                               double temp = tempn.nextDouble();
                                                int tf= 3;
                                                
                                                //Section below two cut max and min values for wind productionfactor.

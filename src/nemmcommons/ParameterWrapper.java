@@ -15,6 +15,7 @@ import repast.simphony.parameter.Parameters;
 public final class ParameterWrapper {
 	
 	// Parameter variables (and default values)
+	private static int randomSeed;
 	private static int produceragentsnumber;
 	private static int obligatedpurchaseragentsnumber;
 	private static int analysisagentsnumber;
@@ -36,6 +37,9 @@ public final class ParameterWrapper {
 	// Getter methods associated with parameters
 	
 	
+	public static int getrandomseed() {
+		return randomSeed;
+	}
 	public static double getmeanwindproductionfactor() {
 		return meanwindproductionfactor;
 	}
@@ -97,7 +101,8 @@ public final class ParameterWrapper {
 	public static void reinit() {
 		final Parameters parameters = RunEnvironment.getInstance().getParameters();
 		
-
+		randomSeed = ((Integer) parameters.getValue("randomSeed")).intValue();
+		
 		produceragentsnumber = ((Integer) parameters.getValue("produceragentsnumber")).intValue();
 
 		obligatedpurchaseragentsnumber = ((Integer) parameters.getValue("obligatedpurchaseragentsnumber")).intValue();

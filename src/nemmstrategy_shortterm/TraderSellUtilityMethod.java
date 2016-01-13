@@ -8,20 +8,17 @@ package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
 import repast.simphony.random.RandomHelper;
 import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
 import nemmenvironment.TheEnvironment;
 import nemmprocesses.UpdatePhysicalPosition;
-import cern.jet.random.Uniform;
 
 //Class definition
 public class TraderSellUtilityMethod extends GenericUtilityMethod{
 
 	// Class level variables
 	private int flagUtilityFunction;
-	private Uniform stream1Uniform;
 	
 	// Specific variables used for utility 2 (expected return)
 	private double alpha;
@@ -33,14 +30,13 @@ public class TraderSellUtilityMethod extends GenericUtilityMethod{
 		if (functionFlag < 1 || functionFlag > 2){
 			throw new IllegalArgumentException("DEBUG: Illegal flagUtilityFunction in PAUtilityMethod. Val = " + functionFlag);
 		}
-		stream1Uniform = RandomHelper.createUniform();
 		flagUtilityFunction = functionFlag;
 		switch (flagUtilityFunction){
 			case 1:
 				// No specific initialisation required
 				break;
 			case 2:
-				double rndUniform = stream1Uniform.nextDoubleFromTo(0, 1);
+				double rndUniform = RandomHelper.nextDoubleFromTo(0, 1);
 				alpha = AllVariables.tacticMaxUtilityAlphaPA*rndUniform + 
 					(1-rndUniform)*AllVariables.tacticMinUtilityAlphaPA;
 				flagFirstPd = 1;

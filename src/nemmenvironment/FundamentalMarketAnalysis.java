@@ -10,8 +10,6 @@ package nemmenvironment;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-
-import repast.simphony.random.RandomHelper;
 import nemmcommons.AllVariables;
 
 public class FundamentalMarketAnalysis {

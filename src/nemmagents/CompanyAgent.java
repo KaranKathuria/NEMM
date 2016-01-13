@@ -11,7 +11,6 @@ package nemmagents;
 //Import section for other methods
 // opmment
 import java.util.ArrayList;
-
 import repast.simphony.random.RandomHelper;
 import nemmagents.MarketAnalysisAgent;
 import nemmagents.ParentAgent;
@@ -34,8 +33,11 @@ import nemmenvironment.Region;
 import nemmenvironment.TheEnvironment;
 import nemmenvironment.TheEnvironment.GlobalValues;
 
+
+
 // Class definition
 public class CompanyAgent extends ParentAgent {
+	
 	
 	//ActiveAgent defined as inner class
 	public class ActiveAgent extends ParentAgent {
@@ -80,8 +82,7 @@ public class CompanyAgent extends ParentAgent {
 				// Goal is to set some agents who try to exit their physical position 
 				// quickly, others who can hold it for a while, and others who can hold for a long time
 				// Specify the type and get the number of ticks
-				//Random generator = new Random(); 
-				//double dPhysRnd = generator.nextDouble();
+				
 				double temp = 0;
 				TheEnvironment.produceragentscounter = TheEnvironment.produceragentscounter +1;
 				temp = TheEnvironment.produceragentscounter;
@@ -530,13 +531,14 @@ public class CompanyAgent extends ParentAgent {
 		
 		//20151117 Add something that makes a split if the agent has a developer agent. This should only be either in sweden or norway.0 = Norway 1 = Sweden, 2 = both
 		double regionpartrand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
+		int a =2;
 				if (regionpartrand <= AllVariables.companyregiondistribution[0]) {
 					regionpartcode = 0;
 					}
-				if (regionpartrand > AllVariables.developerinvestmenttypedistribution[0] && regionpartrand <= AllVariables.companyregiondistribution[1]) {
+				if (regionpartrand > AllVariables.companyregiondistribution[0] && regionpartrand <= AllVariables.companyregiondistribution[1]) {
 					regionpartcode = 1;
 					}
-				if (regionpartrand > AllVariables.developerinvestmenttypedistribution[1] && regionpartrand <= AllVariables.companyregiondistribution[2]) {
+				if (regionpartrand > AllVariables.companyregiondistribution[1] && regionpartrand <= AllVariables.companyregiondistribution[2]) {
 					regionpartcode = 2;
 					}
 		
@@ -553,7 +555,7 @@ public class CompanyAgent extends ParentAgent {
 		companyanalysisagent.setMyCompany(this);
 		investmentRRR = RandomHelper.nextDoubleFromTo(AllVariables.minInvestRRRAdjustFactor, AllVariables.maxInvestRRRAdjustFactor);				//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
 		earlystageRRR = investmentRRR + AllVariables.earlystageInvestRRRAdjustFactor;																//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
-		regionpartcode = 2;																			//By default, all companies are active in both countries. (0=Norway, 1 = Sweden, 2 = both)
+		//regionpartcode = 2;																			//By default, all companies are active in both countries. (0=Norway, 1 = Sweden, 2 = both)
 	
 	}
 	

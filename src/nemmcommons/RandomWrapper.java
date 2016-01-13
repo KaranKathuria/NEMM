@@ -10,31 +10,7 @@
 package nemmcommons;
 
 import cern.jet.random.Normal;
-import nemmenvironment.FundamentalMarketAnalysis;
-import repast.simphony.random.DefaultRandomRegistry;
-import repast.simphony.random.RandomHelper;
-import cern.jet.random.*;
-import cern.jet.random.engine.MersenneTwister;
+;
 /*
-public class RandomWrapper  {
-	
-	static Normal myNormalDistMPE;
-	static Normal myNormalDistLPE;
 
-	 public RandomWrapper() {
-		    MersenneTwister generator1 = new MersenneTwister(123);
-		    MersenneTwister generator2 = new MersenneTwister(321);
-
-		    myNormalDistMPE = new Normal(FundamentalMarketAnalysis.getMPE(), AllVariables.stdmediumrunpriceexpect, generator1);
-		    myNormalDistLPE = new Normal(FundamentalMarketAnalysis.getMPE(), AllVariables.stdmediumrunpriceexpect, generator2);
-		  }
-	
-	 public static Normal getmyNormalDistMPE() {
-		 return myNormalDistMPE;
-	 }
-	 public static Normal getmyNormalDistLPE() {
-		 return myNormalDistMPE;
-	 }
-
-}
 */

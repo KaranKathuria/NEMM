@@ -7,8 +7,6 @@
  */
 package nemmcommons;
 
-import nemmenvironment.TheEnvironment;
-import repast.simphony.random.RandomHelper;
 import static nemmcommons.ParameterWrapper.*;
 
 public class AllVariables {
@@ -163,7 +161,7 @@ public class AllVariables {
 	public static double stdlongrunpriceexpect = 0.035;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	
 	//CompanyAgent regions
-	public static double[] companyregiondistribution = new double[]{0.2,0.9,1.0};	//{0.2,1.0,1.0} //first the prob for Norway, Sweden and third is both. Determines the chance for a new added company beeing in either one (then which) or both countires. 
+	public static double[] companyregiondistribution = new double[]{0.0,0.2,1.0};	//{0.2,1.0,1.0} //first the prob for Norway, Sweden and third is both. Determines the chance for a new added company beeing in either one (then which) or both countires. 
 
 	
 	//Project Development

@@ -65,8 +65,7 @@ public abstract class GenericStrategy {
 	//Constructor for parant class. Not sure about this. This construction will note be used as this class is abstract. 
 	public GenericStrategy() {
 		// Specify the tacticPreferenceScore
-		//Random generator = new Random(); 
-
+		
 		myPreferenceScore = RandomHelper.nextIntFromTo(0, AllVariables.MaxTacticPreferenceScore - AllVariables.MinTacticPreferenceScore) + AllVariables.MinTacticPreferenceScore;
 		//myPreferenceScore = generator.nextInt(AllVariables.MaxTacticPreferenceScore - 
 		//												AllVariables.MinTacticPreferenceScore+1) 
@@ -217,7 +216,6 @@ public abstract class GenericStrategy {
 		}
 		
 		// Randomly choose the tactic to use next time
-		//Random generator = new Random(); 
 		double randX = RandomHelper.nextDouble(); //generator.nextDouble();
 		int keeplooking = 1;
 		int curIndex=0;

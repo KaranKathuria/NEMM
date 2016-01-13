@@ -3,10 +3,7 @@ package nemmenvironment;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-
 import org.apache.commons.lang3.ArrayUtils;
-
-import antlr.collections.List;
 import nemmcommons.AllVariables;
 import repast.simphony.random.RandomHelper;
 

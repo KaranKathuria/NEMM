@@ -9,12 +9,11 @@ package nemmcommons;
 //Import field
 
 
-import cern.jet.random.engine.RandomEngine;
-import repast.simphony.random.RandomHelper;
 import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.engine.schedule.ScheduledMethod;
+import repast.simphony.random.RandomHelper;
 import nemmagents.CompanyAgent;
 import nemmenvironment.CVRatioCalculations;
 import nemmenvironment.FundamentalMarketAnalysis;
@@ -38,12 +37,15 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 		implements ContextBuilder<Object> {
 	
 	
+	
 	@Override
 	public Context<Object> build(final Context<Object> context) {
 		
 		//Reads in parameters from the user interface
 		ParameterWrapper.reinit(); 														//Reads the parametervalues provided in the user interface
-		
+		RandomHelper.setSeed(ParameterWrapper.getrandomseed());
+		RandomHelper.createUniform();
+
 		//Create the Environment
 		TheEnvironment.InitEnvironment(); 												//Initiates ReadExcel, creates time and adds empty lists of Powerplants, projects and regions. Also initiates GlobalValues, the publicliy available market information in the model
 		TheEnvironment.PopulateEnvironment(); 											//initiates ReadExcel and reads in region data (demand and power price) and Powerplant and projects data 
@@ -71,10 +73,12 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	@ScheduledMethod(start = 0, priority = 4)
 	public void DistributionandInitiation() {
 	
+	//RandomHelper.setSeed(ParameterWrapper.getrandomseed());
+	
 	//Sales the annual production of all wind power plants according to specifyed mean, standarddeviation and max(capped).
 	TheEnvironment.setwindscenario();				//Sets scenario	
 	TheEnvironment.setpowerpricescenario();			//Sets scenario
-	//TheEnvironment.simulateweatherdistribtion();	//Generates random wind-years.
+	TheEnvironment.simulateweatherdistribtion();	//Generates random wind-years.
 
 		
 	//Distributing Plants, projects and demand among Agents

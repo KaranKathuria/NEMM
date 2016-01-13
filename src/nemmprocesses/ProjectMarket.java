@@ -9,7 +9,6 @@ package nemmprocesses;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
 import repast.simphony.random.RandomHelper;
 import nemmagents.CompanyAgent;
 import nemmagents.CompanyAgent.ActiveAgent;
@@ -57,6 +56,8 @@ public class ProjectMarket {
 		for (PowerPlant PP : TheEnvironment.allPowerPlantsandProjects) {	//Loops thorugh all, hence the logic is in the Power Plant method.
 			PP.updatacriteriaflag_initial();}
 		
+		
+		int a = 2;
 		//Update rank and exchange projects
 		updaterelativerank();												//updates all ranks and populate developer lists for each country.
 		exchangeprojects();													//Exchange projects

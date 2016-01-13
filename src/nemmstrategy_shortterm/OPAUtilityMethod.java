@@ -10,7 +10,6 @@ package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import cern.jet.random.Uniform;
 import repast.simphony.random.RandomHelper;
 import nemmcommons.AllVariables;
 import nemmcommons.CommonMethods;
@@ -25,7 +24,6 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 	// Specific variables used for utility 2 (expected return)
 	private double alpha;
 	private int flagFirstPd; // the first period has special rules for setting expectedProfit and expectedActivation
-	private Uniform stream1Uniform;
 	
 	// Constructor
 	public OPAUtilityMethod(int functionFlag) {
@@ -33,15 +31,13 @@ public class OPAUtilityMethod extends GenericUtilityMethod{
 			throw new IllegalArgumentException("DEBUG: Illegal flagUtilityFunction in OPAUtilityMethod. Val = " + functionFlag);
 		}
 		flagUtilityFunction = functionFlag;
-		// Initialise the uniform random number stream
-		stream1Uniform = RandomHelper.createUniform();
 		// Using the second utility function approach requires special treatment in the first tick
 		switch (flagUtilityFunction){
 		case 1:
 			// No specific initialisation required
 			break;
 		case 2:
-			double rndUniform = stream1Uniform.nextDoubleFromTo(0, 1);
+			double rndUniform = RandomHelper.nextDoubleFromTo(0, 1);
 			alpha = AllVariables.tacticMaxUtilityAlphaOP*rndUniform + 
 				(1-rndUniform)*AllVariables.tacticMinUtilityAlphaOP;
 			flagFirstPd = 1;

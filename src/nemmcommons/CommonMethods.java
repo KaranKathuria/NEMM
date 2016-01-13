@@ -22,6 +22,7 @@ import nemmenvironment.LRMCCurve.Curvepair;
 import nemmtime.NemmCalendar;
 import nemmtime.NemmTime;
 import repast.simphony.engine.environment.RunState;
+import cern.jet.random.Normal;
 
 public class CommonMethods {
 	

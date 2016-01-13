@@ -16,6 +16,7 @@ import nemmenvironment.FundamentalMarketAnalysis;
 import nemmenvironment.TheEnvironment;
 // Import
 import nemmprocesses.ShortTermMarket;
+import nemmcommons.NEMMContextBuilder;
 
 
 //Class definitions. Note that this is a  class as all its member variables are .
@@ -41,6 +42,8 @@ public class MarketPrognosis {
 	
 	//Methods
 	public MarketPrognosis() {
+		
+
 		if (TheEnvironment.allRegions.size()>2) {
 			throw new IllegalArgumentException("MarketPrognisis object does not currently handle more than two regions");}
 		
@@ -126,13 +129,15 @@ public class MarketPrognosis {
 		
 		//Calculates standardeviation based on the magnitude of the price. Creates a random normal distribution and retrives the next double. Not good programing!
 		//In order to have a consisten market view (bullish or berish) the same sign before the offset is to be used.
-
-		RandomHelper.createNormal(MPE, AllVariables.stdmediumrunpriceexpect*MPE);
-		mediumrunpriceexpectations = Math.max(0.0, RandomHelper.getNormal().nextDouble()); 
+		Normal MPEn;
+		MPEn = RandomHelper.createNormal(MPE, AllVariables.stdmediumrunpriceexpect*MPE);
+		mediumrunpriceexpectations = Math.max(0.0, MPEn.nextDouble()); 
 		int posnegative = (int) ((mediumrunpriceexpectations-MPE)/(Math.abs(mediumrunpriceexpectations-MPE)));	//-1 = negative offset +1 = postive offset.
 		
-		RandomHelper.createNormal(LPE, AllVariables.stdlongrunpriceexpect*LPE);
-		double templongrunexpectations = Math.max(0,RandomHelper.getNormal().nextDouble()); 
+		Normal LPEn;
+		LPEn = RandomHelper.createNormal(LPE, AllVariables.stdlongrunpriceexpect*LPE);
+		//double test3 = RandomHelper.getNormal().nextDouble();
+		double templongrunexpectations = Math.max(0,LPEn.nextDouble()); 
 		double tempoffset = Math.abs(templongrunexpectations - LPE);
 		longrunpriceexpectatations = (posnegative * tempoffset) + LPE;
 		
