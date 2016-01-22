@@ -124,7 +124,9 @@ public class ProjectDevelopment {
 					int a = 2;	//Test that the two certprice needed are somewhat different depending on investmentRRR
 
 					//Then the profitability criteria. Notice that the curoffpricees are already multiplied with the ease factor above. 
-				if (((equivivalentfactor*certpriceneedednow) <= cutoffcertprice_fma) && ((equivivalentfactor*certpriceneededownRRR) <= cutoffcertprice_price)) {													//Starting with the best, if its worth investing...
+				if (((equivivalentfactor*certpriceneedednow) <= cutoffcertprice_fma) && ((equivivalentfactor*certpriceneededownRRR) <= cutoffcertprice_price) && DA.iscvvaluesufficient(cutoffcertprice_price, certpriceneededownRRR)) {													//Starting with the best, if its worth investing...
+					//20160120 KK: Added: Okey, if worth investing based on this. What about CV-value? lagt til i siste ledd i ifen over.
+				
 					
 					//Okey. If its worth investing now, is it more lucrative to postpond the investment?
 					double postponedRRR = RRRpostponedtemplist.get(projects_pointer);
@@ -217,7 +219,6 @@ public class ProjectDevelopment {
 		PP.setstatus(3);																	//For those whom are outside remove back to status 3 (also those that er 3 where never altered.
 		}
 		}
-
 		
 }
 	//Legg inn LRMC_own også på 

@@ -38,6 +38,7 @@ public class ProjectMarket {
 	//The annual projectmarket used all years expect the intial year (as non projects have been activly not taken forward)
 	public static void simplifyedprojectmarket() {
 		
+		
 		//Make sure that flags are updated
 		for (PowerPlant PP : TheEnvironment.allPowerPlantsandProjects) {	//Loops thorugh all, hence the logic is in the Power Plant method.
 			PP.updatacriteriaflag_standard();}
@@ -49,6 +50,7 @@ public class ProjectMarket {
 	}
 	
 	public static void initialprojectmarket() {
+		
 		
 		//First, the benchmark for determining what good or bad projects are must be determined.
 		setmarginalcertpriceneeded();

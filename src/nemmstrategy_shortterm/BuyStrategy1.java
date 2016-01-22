@@ -10,6 +10,7 @@ package nemmstrategy_shortterm;
 
 import repast.simphony.random.RandomHelper;
 import nemmcommons.AllVariables;
+import nemmcommons.ParameterWrapper;
 
 
 
@@ -18,11 +19,17 @@ public class BuyStrategy1 extends GenericStrategy {
 	private BidOffer buyofferone;
 	private BidOffer buyoffertwo;
 	
+	
+	
 	//Constructor for OPABidstrategy adding the four offers to arraylist of offers.
 	public BuyStrategy1() {
 		
+		
+		
 		// Run the super constructor
 		super();
+		
+		
 		
 		// Local variables
 		double randomMultStep;

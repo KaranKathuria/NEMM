@@ -43,8 +43,6 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 		
 		//Reads in parameters from the user interface
 		ParameterWrapper.reinit(); 														//Reads the parametervalues provided in the user interface
-		RandomHelper.setSeed(ParameterWrapper.getrandomseed());
-		RandomHelper.createUniform();
 
 		//Create the Environment
 		TheEnvironment.InitEnvironment(); 												//Initiates ReadExcel, creates time and adds empty lists of Powerplants, projects and regions. Also initiates GlobalValues, the publicliy available market information in the model
@@ -72,14 +70,15 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	//Distribution and initiation 
 	@ScheduledMethod(start = 0, priority = 4)
 	public void DistributionandInitiation() {
-	
-	//RandomHelper.setSeed(ParameterWrapper.getrandomseed());
-	
+		
 	//Sales the annual production of all wind power plants according to specifyed mean, standarddeviation and max(capped).
 	TheEnvironment.setwindscenario();				//Sets scenario	
 	TheEnvironment.setpowerpricescenario();			//Sets scenario
+	
+	//No random wind in backtest.
+	if (!AllVariables.isbacktest){
 	TheEnvironment.simulateweatherdistribtion();	//Generates random wind-years.
-
+	}
 		
 	//Distributing Plants, projects and demand among Agents
 	DistributeProjectsandPowerPlants.distributeallpowerplants(AllVariables.powerplantdistributioncode);	 //Distribute all PowerPlants among the Copmanies with PAgents.
@@ -165,6 +164,8 @@ public void preannualmarketschedule1() {
 	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.	
 }
 
+//In backtesting this method falls out:
+///*
 
 @ScheduledMethod(start = 12, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0 and higher than 12.
 public void preannualmarketschedule2() {
@@ -181,18 +182,13 @@ public void preannualmarketschedule3() {
 	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.	
 }
 
-
-@ScheduledMethod(start = 36, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0 and higher than 24.
+@ScheduledMethod(start = 36, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0 and higher than 36.
 public void preannualmarketschedule4() {
 	GlobalValues.annualglobalvalueupdate();
 	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
 	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.	
 }
-
-
-
-
-
+//*/
 
 //All obligation periods updates to come below. Priority 2 says this is done before the monthlymaret schedual.
 @ScheduledMethod(start = 1, interval = AllVariables.obintr, priority = 2)
@@ -509,7 +505,7 @@ public void obligationsperiodshedule() {
 			return 0;
 		}
 		
-		int temp = AllVariables.numTicksPAExit[0];
+		int temp = AllVariables.numTicksPAExit[1];
 
 		for (int i=0;i<CommonMethods.getPAgentList().size();i++) {
 			if (CommonMethods.getPAgentList().get(i).getNumTicksToEmptyPosition() == temp) {
@@ -522,7 +518,7 @@ public void obligationsperiodshedule() {
 			return 0;
 		}
 		
-		int temp = AllVariables.numTicksPAExit[1];
+		int temp = AllVariables.numTicksPAExit[2];
 
 		for (int i=0;i<CommonMethods.getPAgentList().size();i++) {
 			if (CommonMethods.getPAgentList().get(i).getNumTicksToEmptyPosition() == temp) {
@@ -535,11 +531,11 @@ public void obligationsperiodshedule() {
 			return 0;
 		}
 		
-		int temp = AllVariables.numTicksPAExit[2];
+		int temp = AllVariables.cvvaluehorizont;//AllVariables.numTicksPAExit[3];
 
 		for (int i=0;i<CommonMethods.getPAgentList().size();i++) {
-			if (CommonMethods.getPAgentList().get(i).getNumTicksToEmptyPosition() == temp) {
-				return CommonMethods.getPAgentList().get(i).getagentcompanyanalysisagent().getmarketanalysisagent().getCertValueProducer();
+			if (CommonMethods.getDAgentList().get(i).getcvvaluehorizont() == temp) {
+				return CommonMethods.getDAgentList().get(i).getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getCertValueDeveloper();
 		}}
 		return 0.0;}
 	

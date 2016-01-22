@@ -71,7 +71,7 @@ public class DistributeProjectsandPowerPlants {
 			else { 																		 //Sweden
 				int assign = RandomHelper.nextIntFromTo(0,randintervalSweden);
 				PP.setMyCompany(probadjustedagentlistSweden.get(assign).getmycompany()); //Sets the powerplants to a random company in the relevant arraylist of Sweden.
-				probadjustedagentlistNorway.get(assign).addpowerplant(PP);				 //The same PowerPlant is also added to that specific agents production list.
+				probadjustedagentlistSweden.get(assign).addpowerplant(PP);				 //The same PowerPlant is also added to that specific agents production list.
 			}
 		}
 			
@@ -136,8 +136,8 @@ public class DistributeProjectsandPowerPlants {
 			else { 																		//Sweden
 				int assign = RandomHelper.nextIntFromTo(0,randintervalSweden);
 				PP.setMyCompany(probadjustedagentlistSweden.get(assign).getmycompany()); //Sets the project to a random company in the relevant arraylist of Sweden.
-				probadjustedagentlistNorway.get(assign).addproject(PP);   				 //Adds the same project to the CompanyAgents list myProjects.
-
+				probadjustedagentlistSweden.get(assign).addproject(PP);   				 //Adds the same project to the CompanyAgents list myProjects.
+				//Feilen her var at prosjektet ble satt til en utbygger i Sverige (begge land), mens hos en agent i Norge fikk tildelt prosjektet. Ett annet i hvert fall. 
 			}
 		}
 	

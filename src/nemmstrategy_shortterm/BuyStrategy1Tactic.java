@@ -76,13 +76,23 @@ public class BuyStrategy1Tactic extends GenericTactic {
 
 	private BidOffer creatBidTwo(double expectedprice, double physicalposition,  double lasttickdemand, double mustbuy) {////physicalpos and lasttickdem are negatie number. 
 		BidOffer ret = new BidOffer();
+		double restvolpart1;
+		double restvolpart2;
+		
 		if (physicalposition == 0) {
 			ret.setCertVolume(0.0);
 		}
 		else {
-//			ret.setCertVolume(Math.max(0.0,Math.min(-maxBidOfferVolume-mustbuy,-physicalposition-mustbuy))); //rest of the monthly production bought at expected price.
-			ret.setCertVolume(Math.max(0.0,-physicalposition*Math.min(1.0, maxBidOfferVolumeMultiplier)-mustbuy)); //rest of the monthly production sold at expected price.		20151129 KK Could be altered to buy more (future demand).s	
-
+			
+			restvolpart1 = (Math.max(0.0,-physicalposition*Math.min(1.0, maxBidOfferVolumeMultiplier)-mustbuy));  //rest of the monthly production sold at expected price.	
+			restvolpart2 = AllVariables.shareoffuturehhdemandpurchased * this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getholdinghtickdemand(); //future known demand.
+					
+			ret.setCertVolume(restvolpart1 + restvolpart2);
+			
+			double  a= this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getholdinghtickdemand();
+			
+			int at = 2;
+			
 		}
 		ret.setPrice(Math.min(expectedprice*paramRestVolPriceMult, floorroofprice)); //Most likely that the second offer is at at pricemultiplier. Hence they buy what they dont must, at a pricemultiplier.
 		return ret;
@@ -104,9 +114,9 @@ public class BuyStrategy1Tactic extends GenericTactic {
 //		maxppvolume = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getCurObPdCertDemand(); //12 months total demand.
 	}
 		
-	
+	//Mulig å endre kjøpingen.
 	public void updatetacticbuyoffers() {
-		double physicalposition = this.getmyStrategy().getmyAgent().getphysicalnetposition();
+		double physicalposition = this.getmyStrategy().getmyAgent().getphysicalnetposition(); // this.getmyStrategy().getmyAgent().getDemandVolume()
 		double expectedprice = this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getmarketanalysisagent().getmarketprognosis().getstpriceexpectation();
 		double lasttickdemand = this.getmyStrategy().getmyAgent().getlasttickdemand();
 		

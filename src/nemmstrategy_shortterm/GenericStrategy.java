@@ -13,7 +13,6 @@ import java.util.Collections;
 import repast.simphony.random.RandomHelper;
 import nemmagents.CompanyAgent.ActiveAgent;
 import nemmcommons.AllVariables;
-import nemmcommons.CommonMethods;
 import nemmenvironment.TheEnvironment;
 
 // 
@@ -64,6 +63,7 @@ public abstract class GenericStrategy {
 
 	//Constructor for parant class. Not sure about this. This construction will note be used as this class is abstract. 
 	public GenericStrategy() {
+		
 		// Specify the tacticPreferenceScore
 		
 		myPreferenceScore = RandomHelper.nextIntFromTo(0, AllVariables.MaxTacticPreferenceScore - AllVariables.MinTacticPreferenceScore) + AllVariables.MinTacticPreferenceScore;

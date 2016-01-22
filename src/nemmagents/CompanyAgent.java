@@ -316,6 +316,7 @@ public class CompanyAgent extends ParentAgent {
 		private double priceeasefactor;					//for price agents, this is 1, For fundamental agents this is either large or varies between 1-2.
 		private int relativerank_norway;						//This is the relative rank of the developer i terms of the owner Company Agents wacc. 1 is thus implying that the developer has the lowest wacc of all.
 		private int relativerank_sweden;						//This is the relative rank of the developer i terms of the owner Company Agents wacc. 1 is thus implying that the developer has the lowest wacc of all.
+		private int cvvaluehorizont; // number of ticks the agent will try to empty its position over
 
 		
 		//Endogenous variables 
@@ -333,11 +334,12 @@ public class CompanyAgent extends ParentAgent {
 			projectprocessandidylimit = sizecode*AllVariables.preprojectandidentifyconstraint;	//func of sizecode: = 3*sizecode. Problem as sizecode only defines size in one region. whereas //Max number of project getting identifyed or in proecss.
 			constructionlimit = AllVariables.constructionconstraints;					//Max number of projects getting in from moving to construction. 
 			totalcapacitylimit = 100000000;
+			cvvaluehorizont = AllVariables.cvvaluehorizont;
 			if (AllVariables.isbacktest) {
 				constructionlimit = constructionlimit*AllVariables.backtesteaseconstruction+2;
 				totalcapacitylimit = totalcapacitylimit*AllVariables.backtesteaseconstruction;
 			}
-			if (this.getregionpartcode() == 0) { //Norway
+			if (this.getregionpartcode() == 1) { //Norway
 			//1=invest based on long term price of certs (pure Fundamental based), 2=Invest on pure fundamental and some price, 3=Invest based on curren cert price and some fundamental, 4=Invest based on current cert price for two years
 			double investdecrand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
 			double a = investdecrand;
@@ -362,7 +364,7 @@ public class CompanyAgent extends ParentAgent {
 						fundamentaleasefactor = 5000;		
 						}
 			}
-			if (this.getregionpartcode() == 1) { //Sweden
+			if (this.getregionpartcode() == 3) { //Sweden
 			//1=invest based on long term price of certs (pure Fundamental based), 2=Invest on pure fundamental and some price, 3=Invest based on curren cert price and some fundamental, 4=Invest based on current cert price for two years
 			double investdecrand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
 			double a = investdecrand;
@@ -389,7 +391,7 @@ public class CompanyAgent extends ParentAgent {
 			}
 			if (this.getregionpartcode() == 2) { //both countries
 					//1=invest based on long term price of certs (pure Fundamental based), 2=Invest on pure fundamental and some price, 3=Invest based on curren cert price and some fundamental, 4=Invest based on current cert price for two years
-					double investdecrand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
+					double investdecrand = RandomHelper.nextDoubleFromTo(0.0, AllVariables.developerinvestmenttypedistribution[2]);
 					double a = investdecrand;
 							if (investdecrand <= AllVariables.developerinvestmenttypedistribution[0]) {
 								investmentdecisiontype = 1;
@@ -412,16 +414,12 @@ public class CompanyAgent extends ParentAgent {
 								fundamentaleasefactor = 5000;		
 								}
 					}
-			if (this.getregionpartcode()>2) {
-				throw new IllegalArgumentException("3 is no region");}
-			
-			
-			
+			if (this.getregionpartcode()>3 || this.getregionpartcode() < 1) {
+				throw new IllegalArgumentException("THis is no region");}
+						
 			}
 			
-			
-			
-			
+	
 		
 		public void updateDAnumbers(double cpdorconstr, int numpt, int numpf, int numpuc, int numpaid, int numpip, int numpid) {
 			capacitydevorundrconstr = cpdorconstr;
@@ -431,10 +429,23 @@ public class CompanyAgent extends ParentAgent {
 			numprojectsawaitingid = numpaid;
 			numprojectsinprocess = numpip;
 			numprojectsidentyfied = numpid;
+		}
 		
+		public boolean iscvvaluesufficient(double cutoffcertprice_price, double certpriceneeded) {
+			boolean ret = false;
+			double tempcurrentprice = (cutoffcertprice_price/this.priceeasefactor); //Backengineerd to get current price
+			
+			double temp = this.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getCertValueDeveloper();
+			if (tempcurrentprice < (this.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getCertValueDeveloper()*this.priceeasefactor)
+					|| certpriceneeded < (this.getmycompany().getcompanyanalysisagent().getmarketanalysisagent().getCertValueDeveloper() ) ) {	// *this.priceeasefactor) Only true if CV value is larger than curren price. Kan vurdere å inkludere priceeasen her.
+				ret = true;
+			}
+			int a = 3;
+			return ret;
 		}
 		
 		//Add, set and get methods for DeveloperAgent
+		public int getcvvaluehorizont() {return cvvaluehorizont;}
 		public int getsizecode() {return sizecode;}
 		public int getregionpartcode() {return this.companyagent.regionpartcode;}
 		public CompanyAgent getmycompany() {return this.companyagent;}
@@ -530,13 +541,13 @@ public class CompanyAgent extends ParentAgent {
 	public CompanyAgent(boolean p, boolean op, boolean t) {
 		
 		//20151117 Add something that makes a split if the agent has a developer agent. This should only be either in sweden or norway.0 = Norway 1 = Sweden, 2 = both
-		double regionpartrand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
+		double regionpartrand = RandomHelper.nextDoubleFromTo(0.0, AllVariables.companyregiondistribution[2]);
 		int a =2;
 				if (regionpartrand <= AllVariables.companyregiondistribution[0]) {
-					regionpartcode = 0;
+					regionpartcode = 1;
 					}
 				if (regionpartrand > AllVariables.companyregiondistribution[0] && regionpartrand <= AllVariables.companyregiondistribution[1]) {
-					regionpartcode = 1;
+					regionpartcode = 3;
 					}
 				if (regionpartrand > AllVariables.companyregiondistribution[1] && regionpartrand <= AllVariables.companyregiondistribution[2]) {
 					regionpartcode = 2;
@@ -546,8 +557,10 @@ public class CompanyAgent extends ParentAgent {
 			produceragent = new ActiveAgent(1);
 			developeragent = new DeveloperAgent();}													//By default all and just all companies with PA have a DA.
 		if (op==true) {
+			regionpartcode = 2; //set this agent to both conutries as for the demand sake country dividing is not neede.
 			obligatedpurchaseragent = new ActiveAgent(2);}
 		if (t==true) {
+			regionpartcode = 2; //set this agent to both conutries as for the demand sake country dividing is not neede.
 			traderagent = new ActiveAgent(3);}
 		
 		companyname = "Company " + this.getID();													
@@ -555,7 +568,7 @@ public class CompanyAgent extends ParentAgent {
 		companyanalysisagent.setMyCompany(this);
 		investmentRRR = RandomHelper.nextDoubleFromTo(AllVariables.minInvestRRRAdjustFactor, AllVariables.maxInvestRRRAdjustFactor);				//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
 		earlystageRRR = investmentRRR + AllVariables.earlystageInvestRRRAdjustFactor;																//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
-		//regionpartcode = 2;																			//By default, all companies are active in both countries. (0=Norway, 1 = Sweden, 2 = both)
+		//regionpartcode = 2;																			//By default, all companies are active in both countries. (1=Norway, 3 = Sweden, 2 = both)
 	
 	}
 	

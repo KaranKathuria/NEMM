@@ -215,12 +215,12 @@ public final class TheEnvironment {
                                
                                //2 is Wind power
                                for (int i = 2012; i<TheEnvironment.theCalendar.getStartYear()+TheEnvironment.theCalendar.getNumYears();i++) {  //For all år
-                                               double temp = tempn.nextDouble();
+                                               Double temp = tempn.nextDouble();
                                                int tf= 3;
                                                
                                                //Section below two cut max and min values for wind productionfactor.
                                                                if(temp<(AllVariables.meanwindproductionfactor*(1-(AllVariables.stdwindfactor*AllVariables.maxstdwindfactor)))) {
-                                                                              temp = (AllVariables.meanwindproductionfactor*(1-(AllVariables.stdwindfactor*AllVariables.maxstdwindfactor)));
+                                                                              temp = AllVariables.meanwindproductionfactor*(1-(AllVariables.stdwindfactor*AllVariables.maxstdwindfactor));
                                                                }
                                                                double d = (1+(AllVariables.stdwindfactor*AllVariables.maxstdwindfactor));
                                                                if(temp > (AllVariables.meanwindproductionfactor*d)) {

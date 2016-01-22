@@ -10,6 +10,7 @@ package nemmcommons;
 // Import
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.parameter.Parameters;
+import repast.simphony.random.RandomHelper;
 
 //Class definitions
 public final class ParameterWrapper {
@@ -129,6 +130,9 @@ public final class ParameterWrapper {
 		
 		numTradePdsInObPd = ((Integer) parameters.getValue("numObPdsInYear")).intValue();*/
 		
+		//KK 20160101
+		RandomHelper.setSeed(randomSeed);
+		RandomHelper.createUniform();
 		
 	}
 

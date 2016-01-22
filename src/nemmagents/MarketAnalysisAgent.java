@@ -28,6 +28,7 @@ public class MarketAnalysisAgent extends ParentAgent {
 	private double certValueProducer;
 	private double certValueTrader;
 	private double certValuePurchaser;
+	private double certValueDeveloper;
 	private double prevCertValueRatio;
 	
 	public MarketAnalysisAgent() {
@@ -60,6 +61,7 @@ public class MarketAnalysisAgent extends ParentAgent {
 		int numTicksToEmptyProd = 0;
 		int numTicksToEmptyPurch = 0;
 		int numTicksToEmptyTrad = 0;
+		int developerhorizont = 0;
 		int numTicksToEmpty;
 		
 		// Note - we get the "numTicksToEmpty" from each of the above agents each tick. This is because
@@ -71,22 +73,26 @@ public class MarketAnalysisAgent extends ParentAgent {
 			numTicksToEmptyProd = myCAAgent.getMyCompany().getproduceragent().getNumTicksToEmptyPosition();
 		}
 		if (myCAAgent.getMyCompany().getobligatedpurchaseragent()!=null) {
-			// Note: the obligated purchaser does not use the CV stuff as yet - this is in place
-			// for when they do
 			 numTicksToEmptyPurch = myCAAgent.getMyCompany().getobligatedpurchaseragent().getNumTicksToEmptyPosition();
 		}
 		if (myCAAgent.getMyCompany().gettraderagent()!=null) {
 			numTicksToEmptyTrad = myCAAgent.getMyCompany().gettraderagent().getNumTicksToEmptyPosition();
 		}
-		numTicksToEmpty = Math.max(numTicksToEmptyTrad, Math.max(numTicksToEmptyPurch, numTicksToEmptyProd));
+		if (myCAAgent.getMyCompany().getdeveloperagent()!=null) {
+			developerhorizont = myCAAgent.getMyCompany().getdeveloperagent().getcvvaluehorizont();
+		}
+		
+		numTicksToEmpty = Math.max(developerhorizont, Math.max(numTicksToEmptyTrad, Math.max(numTicksToEmptyPurch, numTicksToEmptyProd)));
 		
 		if(numTicksToEmpty>=0) {
-			marketprognosis.updateCertValueData(numTicksToEmpty);
+			marketprognosis.updateCertValueData(numTicksToEmpty); //As this calculation is the same for all actors by finding the max we calculate CVvalues for all ticks up to max.
 		} 
 			
 		certValueTrader = 0;
 		certValueProducer = 0;
 		certValuePurchaser = 0;
+		certValueDeveloper = 0;
+		
 		if (numTicksToEmptyProd>0) {
 			 certValueProducer = calcCertificateValueNew(numTicksToEmptyProd);
 		}
@@ -98,7 +104,9 @@ public class MarketAnalysisAgent extends ParentAgent {
 		if (numTicksToEmptyTrad>0) {
 			 certValueTrader = calcCertificateValueNew(numTicksToEmptyTrad);
 		}
-		
+		if (developerhorizont>0) {
+			certValueDeveloper = calcCertificateValueNew(developerhorizont);
+		}
 		
 	}
 	
@@ -113,13 +121,16 @@ public class MarketAnalysisAgent extends ParentAgent {
 	public double getCertValuePurchaser() {
 		return certValuePurchaser;
 	}
-
 	
+	public double getCertValueDeveloper() {
+		return certValueDeveloper;
+	}
+
 	public double calcCertificateValueNew(int numTicksAheadMax) {
 		// returns the analysis agent's estimate of the certificate value
 		// over the coming numTicksAhead ticks (thereafter the value is assumed 0)
 		double certVal=0;
-		double discRate = 0.025/12; // Get the correct version of this
+		double discRate = 0.025/12; // Get the correct version of this. How? This is probably a 
 		double priceSpot;
 		double certShortfall;
 		double ratioCurrent;
@@ -141,7 +152,6 @@ public class MarketAnalysisAgent extends ParentAgent {
 		double ratioAdj;
 		double priceEstimate;
 		double prodExcess;
-		
 		double bankCurrentStart;
 		double bankFutureStart;
 		double totalDemandFromCurrent;
