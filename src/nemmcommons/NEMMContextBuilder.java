@@ -61,6 +61,10 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 			final CompanyAgent agent = new CompanyAgent(false, false, true);
 			context.add(agent);}
 		
+		for (int i = 0; i < AllVariables.numberofpensionfunds; ++i) {
+			final CompanyAgent agent = new CompanyAgent(AllVariables.pensionfundInvestRRRAdjustFactor);
+			context.add(agent);}
+		
 		for (PowerPlant PP : TheEnvironment.allPowerPlantsandProjects) {
 			context.add(PP);
 		}
@@ -165,7 +169,7 @@ public void preannualmarketschedule1() {
 }
 
 //In backtesting this method falls out:
-///*
+/*
 
 @ScheduledMethod(start = 12, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0 and higher than 12.
 public void preannualmarketschedule2() {
@@ -188,7 +192,7 @@ public void preannualmarketschedule4() {
 	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
 	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.	
 }
-//*/
+*/
 
 //All obligation periods updates to come below. Priority 2 says this is done before the monthlymaret schedual.
 @ScheduledMethod(start = 1, interval = AllVariables.obintr, priority = 2)

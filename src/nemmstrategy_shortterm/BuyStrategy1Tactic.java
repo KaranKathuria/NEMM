@@ -107,6 +107,7 @@ public class BuyStrategy1Tactic extends GenericTactic {
 		if(TheEnvironment.theCalendar.getCurrentTick()<AllVariables.firstrealtick) {
 			floorroofprice = AllVariables.maxpricecerts;
 		} else {			
+			// Not buy higher than this.
 			floorroofprice = twoyearahead/Math.pow(tempdisc + 1, 2); //Hence this equals the discounted future expected cert price. Discounted with a risk free rate and a risk rate //In other words, the seller will not sell the variable part unless the sell price is better than the discounted future price expectations. In that case he would hold the certificates in two years.
 		}	
 			//		floorroofprice = AllVariables.certMaxPrice;

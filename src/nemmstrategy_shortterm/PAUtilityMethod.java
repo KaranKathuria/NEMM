@@ -167,6 +167,9 @@ public class PAUtilityMethod extends GenericUtilityMethod{
 					}
 					else {
 						certValue=myAgent.getagentcompanyanalysisagent().getmarketanalysisagent().getCertValueProducer();
+						if (AllVariables.limitproducerCV) {
+							certValue = Math.min(certValue, myAgent.getagentcompanyanalysisagent().getmarketanalysisagent().getCertValueDeveloper());
+						}	
 						
 					}					
 					curRestVal = curOfferVol*certValue; // value of unsold certificates

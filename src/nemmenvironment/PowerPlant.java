@@ -513,8 +513,9 @@ public class PowerPlant implements Cloneable{
 		
 		// That is, no point in trading projects if it cannot be build within the deadline
 		else {
+			if (this.getcertpriceneeded() < ProjectMarket.getmarginalcertpriceneeded()) {
 		
-		if (this.status == 3 || this.status == 5) {	//Only those beeing stoped by the developer are moved to a better developer. (for status 5, all DA are fundamental, hence moving to a better developer does not really help.
+		if (this.status == 3) { // || this.status == 5) {	//Only those beeing stoped by the developer are moved to a better developer. (for status 5, all DA are fundamental, hence moving to a better developer does not really help.
 			double rand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
 			
 			//Rules for changing projectmarketcandidateflag
@@ -550,7 +551,7 @@ public class PowerPlant implements Cloneable{
 			}
 		}
 
-			}
+			}}
 				
 	}
 	public void updatacriteriaflag_initial() {

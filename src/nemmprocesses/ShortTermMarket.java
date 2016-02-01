@@ -100,7 +100,7 @@ public class ShortTermMarket {
 		int counts = 0;
 		int countb = 0;
 		buyoffer2 = new double[ParameterWrapper.getobligatedpurchaseragentsnumber()];
-		selloffer2 = new double[ParameterWrapper.getobligatedpurchaseragentsnumber()];
+		selloffer2 = new double[CommonMethods.getPAgentList().size()];
 		
 // GJB This needs to be moved into ACTIVE AGENT
 // it is here temporarily 

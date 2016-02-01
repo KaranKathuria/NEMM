@@ -361,6 +361,15 @@ public class ProjectDevelopment {
 		int numprojectsidentyfied=0;
 		
 		for (DeveloperAgent DA : CommonMethods.getDAgentList()) {
+			
+			capacitydevorundrconstr=0;
+			numprojectstrashed=0;
+			numprojectsfinished=0;
+			numprojectsunderconstr =0;
+			numprojectsawaitingid=0;
+			numprojectsinprocess=0;
+			numprojectsidentyfied=0;
+			
 			for (PowerPlant PP : DA.getmyprojects()) {
 				if (PP.getstatus() == 0) {
 					numprojectstrashed = numprojectstrashed +1;}

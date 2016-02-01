@@ -14,11 +14,11 @@ public class AllVariables {
 	public static String casename = "Q1 2016"; 					//Name of the case ran. That is not the simulation, not the run, but the base case (or sensitivity case).
 	
 	// ---  Alter these if backtest or test.
-	public static boolean isbacktest = false;					//Alters parts of the code (readexcel and scenario and Context) in order to run backtest (that is 2012 as start year and 300 ticks). Does not later the input data in AllVariables (bank, price etc).
-	public static final int IRRcalculationtick = 287;			//If above is true, this is 299. Used to alter the IRRcalucation in the contextbuilder which has to be om the last tick.
+	public static boolean isbacktest = true;					//Alters parts of the code (readexcel and scenario and Context) in order to run backtest (that is 2012 as start year and 300 ticks). Does not later the input data in AllVariables (bank, price etc).
+	public static final int IRRcalculationtick = 299;			//If above is true, this is 299. Used to alter the IRRcalucation in the contextbuilder which has to be om the last tick.
 	public static boolean useTestData = false;
 	
-	/* -- In addition do the following: For the years until the real tick, the projects must be finilized, hence in the context builder these schduals must be added (or removed) (line 166 onwards). Also the values of this AllVariable file must be altered:
+	///* -- In addition do the following: For the years until the real tick, the projects must be finilized, hence in the context builder these schduals must be added (or removed) (line 166 onwards). Also the values of this AllVariable file must be altered:
 	//Husk også å sette norsk cutoff til 2020.
 	//Also alter the construction constrain as this is already eased with a seperate number.
 	public static final int obintr = 12; // TheEnvironment.theCalendar.getNumTradePdsInObligatedPd();
@@ -27,16 +27,16 @@ public class AllVariables {
 	public static double bankPAfirstrealtick =  8400000;																										//
 	public static double bankOPAfirstrealtick =  100000;
 	public static double bankTAfirstrealtick = 0;
-	*/
+	//*/
 	
-	///*
+	/*
 	public static final int obintr = 12; // TheEnvironment.theCalendar.getNumTradePdsInObligatedPd();
 	public static final int firstrealtick =48; //Altering this means you got to alter the contextbuilder! Currently this cannot be between 1 and 11 (inclusive). 
 	public static double[] historiccertprices = new double[]{20.14,	18.31,	24.84,	18.72,	18.21,	18.31,	19.75,	20.16,	20.93,	22.26,	22.85,	24.02,	23.66,	25.1,	23.14,	24.63,	21.57,	20.05,	21.13,	21.01,	22.39,	22.55,	21.57,	21.1,	20.04,	21.91,	20.45,	19.46,	19.73,	19.56,	19.52,	20.18,	20.72,	20.12,	19.45,	18.18,	17.5,	15.93,	14.95,	15.58,	15.76,	15.75,	14.85,	15.29,	16.82,	17.79,	17.33,	17.33};   //{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
 	public static double bankPAfirstrealtick =   11400000;		// public static double bankPAfirstrealtick =   10400000;//11700000;//10400000;//8302000;//	//Bank at thefirstrealtick. If tick 0 this should be 8800 000. For memo Dec 2014, 10500000 was used.  2014: 8302000
-	public static double bankOPAfirstrealtick =   100000;																										//public static double bankOPAfirstrealtick =   1300000;//400000;//3558000;//		// soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
+	public static double bankOPAfirstrealtick =    400000;																										//public static double bankOPAfirstrealtick =   1300000;//400000;//3558000;//		// soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
 	public static double bankTAfirstrealtick = 0;				//Bank at thefirstrealtick.	If tick 0 this should be 0
-	//*/
+	*/
 	
 	
 	//Number of tactics in each of the respective strategies. More tactics gives the agent more alternatives.
@@ -84,6 +84,7 @@ public class AllVariables {
 	public static int[] numTicksOPExit = new int[]{2,6,12,60};			// new int[]{2,6,12,72};
 	public static int[] numTicksTExit = new int[]{86,86};
 	public static int cvvaluehorizont = 60;					//72 = 6 år			//Corresponding holdinghorisont (that is CV value horizont) for developer agents.
+	public static boolean limitproducerCV = true; 			//If true CVproducer <= CVdeveloper
 	
 	// Tactics - number of ticks to exit positions
 	// Number of exit strategies for each agent type
@@ -155,7 +156,7 @@ public class AllVariables {
 	// ------- FundamentalMarketAnalysis and Project Developement
 	public static double penaltyratio = 1.5;						//What is the penalty compared to current market price?
 	public static int yearstoendogprojects = 3;						//Just to save time in the FMA. KK 20151118 var 2 i Q2 (2 og 3 har lite å si i Base Case). 
-	public static double maxpricecerts = 125;						//To not get an errror in the FMA.
+	public static double maxpricecerts = 150;						//To not get an errror in the FMA.Also used to cap max buy price for rest volume.
 	public static double maxroofprice = 125;
 	public static double initialRRRcorrector = 1.0;					//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis. Copnsate (0.098) for the learningfactor in inputt.
 	public static double RRRpostpondpremium = 0.025;				//Risk premium (basispoints 0.01 = 1%) need to be covered if the investment decision is to be postpond. 
@@ -185,7 +186,7 @@ public class AllVariables {
 	
 	public static int numberoftickstocalculatehistcertprice = 2;	//This could be exptended to about 6. THis is basically the parameter setting how long memory developers have when taking investment decison based on current price. 
 	public static int numberofyearcertscanbehedged = 3;
-	public static int constructionconstraints =12; 	//11 BC			//Gives number of projects under construction -limit. Reduing this makes the market "less optimal" 
+	public static int constructionconstraints = 6; 	//11 BC			//Gives number of projects under construction -limit. Reduing this makes the market "less optimal" 
 	public static int preprojectandidentifyconstraint = 6;			//Times sizecode gives projects for prep and ident
 	public static int backtesteaseconstruction = 2;					//Multiplicator to ease construction constraint when backtesting.This needs to be calibrate in realtion to easefactors. 
 	public static double[] developerinvestmentpriceeasefactordistribution = new double[]{1.15,1.25};		//Started with 1.15, 1.4	//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
@@ -202,7 +203,7 @@ public class AllVariables {
 	
 	
 	// ---- Initial distribution of powerplants, projects and demandshares per region.
-	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2. Se distributeprjectsandpowerplants.java for details.
+	public static int powerplantdistributioncode = 1; 	// 1=Unifrom, but siezecode=1 gets nada (0)., 2=probabilityadjusted1 3=probabilityadjusted2. Se distributeprjectsandpowerplants.java for details.
 	public static int projectsdistributioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 	public static int demandsharedistrubutioncode = 1; 	// 1=Unifrom, 2=probabilityadjusted1 3=probabilityadjusted2
 	
@@ -214,7 +215,7 @@ public class AllVariables {
 	// ---- Regulations for certificates deadline
 	public static boolean certificatespost2020_Norway = false;
 	public static boolean certificatespost2020_Sweden = true;
-	public static int cutoffyear_Norway = 2021;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
+	public static int cutoffyear_Norway = 2020;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
 	public static int cutoffyear_Sweden = 2021;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
 	// ---- The concession and preconstruction process
@@ -230,13 +231,18 @@ public class AllVariables {
 	// ---- For scenarios (wind and power price)
 	public static double meanwindproductionfactor = getmeanwindproductionfactor();
 	public static double stdwindfactor = getstdwindproductionfactor();
-	public static double maxstdwindfactor = 2.1;					//Cutoff deviation in wind production factor. If 3 this means that it cannot blow less or more then 3 times the standard deviation.
+	public static double maxstdwindfactor = 2.4;					//Cutoff deviation in wind production factor. If 3 this means that it cannot blow less or more then 3 times the standard deviation.
 	
 	// ---- For the Project Market. Used for both initial distribution and the project shuffling each year. 06.06.2015 KK: Added after 2015 Q2 report.
 	public static double[] chanceofownershipchange = new double[]{0.2,0.2,0.3,0.4};		//Indicates the chance (%) of ownership change according to years postponed by curren owner when setting criteria flag. Thus, of a project have been postpone (not invested when it could) one year, there is a [0] chance for owernship change. For the second year, there is [1] chance, etc. Notice that one year is 2015 right after the decisions are made/not made..
-	public static double initialowenershipchangepercentile = 0.4;						//As the cert price needed has not been calculated this value indicates which project in line determines the marginal project. If 100 projects, a value of 0.2 would indicate that the 20th best project is the cutoff. For all project better than this, there is a chanceofownershipchange[0] chance for redistirbution.
+	public static double initialowenershipchangepercentile = 0.2;						//As the cert price needed has not been calculated this value indicates which project in line determines the marginal project. If 100 projects, a value of 0.2 would indicate that the 20th best project is the cutoff. For all project better than this, there is a chanceofownershipchange[0] chance for redistirbution.
 
-
+	//Adding pensionfund 
+	public static int numberofpensionfunds = 2;							//They are all investment strategy type 3. (price, with some respekct for fundamntal) and in both countries.
+	public static int holdinghorizontpensionproducer = 60;
+	public static double pensionfundInvestRRRAdjustFactor = 0.5;		//wACC = origonal prject specific times this, hence 0.5*8% = 4 %
+	public static int pfconstructionconstraints = 4;
+	public static int pfregioncode = 3; //1 = Norway, 2 = Both, 3 = Sweden.
 }
 
 

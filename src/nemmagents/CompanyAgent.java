@@ -95,11 +95,12 @@ public class CompanyAgent extends ParentAgent {
 					}
 				}
 				physicalnetposition = 10*numTicksToEmptyPosition*numTicksToEmptyPosition;				//20151126 KK: Multiplied with HH to distrribute bank to thos with long HH. this is more like the real world. Times number of agents this equals initial bank, but as this is scaled anyhow it matters little.
+				sizecode = 2;	//For all
 
 
 				// ---- end GJB Added
 												
-			} else if (type == 2) {
+			} if (type == 2) {
 				activeagenttypename = "ObligatedPurchaserAgent";
 				lasttickdemand = 0;
 				// here we need a way to have different utilities
@@ -122,11 +123,11 @@ public class CompanyAgent extends ParentAgent {
 					}
 				}
 				physicalnetposition = 1000;				//20151126 KK:Times number of agents this equals initial bank, but as this is scaled anyhow it matters little. Unequal PA, this volume is not distributed to those buying less (rather the opposit).
+				sizecode = 2;	//For all
 
-				
 				// ---- end GJB Added
 				
-			} else { //Notice that else is all other added as Trader agents. This is okey for now but should call an expetion later. 
+			} if (type == 3) { //Notice that else is all other added as Trader agents. This is okey for now but should call an expetion later. 
 				activeagenttypename = "TraderAgent";
 				physicalnetposition = 0;
 				// here we need a way to have different utilities
@@ -146,15 +147,36 @@ public class CompanyAgent extends ParentAgent {
 						numTicksToEmptyPosition = AllVariables.numTicksTExit[stratID];
 					}
 				}
+				sizecode = 2;	//For all
+
 						
 			} 
+			if (type == 4) {	//20160128 KK Pensionfund producer
+				activeagenttypename = "PensionProducerAgent";
+				lasttickproduction = 0;
+				// here we need a way to have different utilities
+				// currently hard coded to the default
+				utilitymethod = new PAUtilityMethod(nemmcommons.AllVariables.utilityDefault_PA);
+				SellStrategy1 sellstrategy = new SellStrategy1();
+				sellstrategy.setmyAgent(ActiveAgent.this);
+				allstrategies.add(sellstrategy);
+				portfoliocapital = 0;
+
+				double temp = 0;
+				TheEnvironment.produceragentscounter = TheEnvironment.produceragentscounter +1;
+				numTicksToEmptyPosition = AllVariables.holdinghorizontpensionproducer;
+				
+				physicalnetposition = 0;				
+				sizecode = 1;	//Indication that this producer does NOT get any powerplants initially.
+				
+			}
+			
 			RAR = RandomHelper.nextDoubleFromTo(AllVariables.RAR[0], AllVariables.RAR[1]);	
 
 			companyagent = CompanyAgent.this;
 			this.utilitymethod.setmyAgent(ActiveAgent.this);
 			beststrategy = allstrategies.get(0); // Choose the first one initially 
 			numberofstrategies = allstrategies.size();
-			sizecode = 2;
 		}
 		
 		//Get methods for the ActiveAgent
@@ -328,7 +350,8 @@ public class CompanyAgent extends ParentAgent {
 		private int numprojectsinprocess;
 		private int numprojectsidentyfied;
 		
-		public DeveloperAgent() {
+		public DeveloperAgent(int type) {
+			if (type==1) {
 			companyagent = CompanyAgent.this;
 			sizecode = 2;								//By default all developmentagents have normal amount of activety. (1= few, 2=normal, 3=alot) used in intial distribution of projects.
 			projectprocessandidylimit = sizecode*AllVariables.preprojectandidentifyconstraint;	//func of sizecode: = 3*sizecode. Problem as sizecode only defines size in one region. whereas //Max number of project getting identifyed or in proecss.
@@ -414,10 +437,24 @@ public class CompanyAgent extends ParentAgent {
 								fundamentaleasefactor = 5000;		
 								}
 					}
-			if (this.getregionpartcode()>3 || this.getregionpartcode() < 1) {
-				throw new IllegalArgumentException("THis is no region");}
 						
 			}
+			if (type==2) { //Pension developer 
+				companyagent = CompanyAgent.this;
+				sizecode = 1;							//0 initial projects
+				projectprocessandidylimit = sizecode*AllVariables.preprojectandidentifyconstraint;	//func of sizecode: = 3*sizecode. Problem as sizecode only defines size in one region. whereas //Max number of project getting identifyed or in proecss.
+				constructionlimit = AllVariables.pfconstructionconstraints;					//Max number of projects getting in from moving to construction. 
+				totalcapacitylimit = 100000000;
+				cvvaluehorizont = AllVariables.cvvaluehorizont;
+				investmentdecisiontype = 3;
+				fundamentaleasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentfundamentaleasefactordistribution[0], AllVariables.developerinvestmentfundamentaleasefactordistribution[1]);
+				priceeasefactor = 1;
+				
+			}
+				
+			if (this.getregionpartcode()>3 || this.getregionpartcode() < 1) {
+				throw new IllegalArgumentException("THis is no region");}
+		}
 			
 	
 		
@@ -540,7 +577,7 @@ public class CompanyAgent extends ParentAgent {
 	
 	public CompanyAgent(boolean p, boolean op, boolean t) {
 		
-		//20151117 Add something that makes a split if the agent has a developer agent. This should only be either in sweden or norway.0 = Norway 1 = Sweden, 2 = both
+		//20151117 Add something that makes a split if the agent has a developer agent. This should only be either in sweden or norway.1 = Norway 3 = Sweden, 2 = both
 		double regionpartrand = RandomHelper.nextDoubleFromTo(0.0, AllVariables.companyregiondistribution[2]);
 		int a =2;
 				if (regionpartrand <= AllVariables.companyregiondistribution[0]) {
@@ -555,7 +592,7 @@ public class CompanyAgent extends ParentAgent {
 		
 		if (p==true) {
 			produceragent = new ActiveAgent(1);
-			developeragent = new DeveloperAgent();}													//By default all and just all companies with PA have a DA.
+			developeragent = new DeveloperAgent(1);}													//By default all and just all companies with PA have a DA.
 		if (op==true) {
 			regionpartcode = 2; //set this agent to both conutries as for the demand sake country dividing is not neede.
 			obligatedpurchaseragent = new ActiveAgent(2);}
@@ -568,9 +605,24 @@ public class CompanyAgent extends ParentAgent {
 		companyanalysisagent.setMyCompany(this);
 		investmentRRR = RandomHelper.nextDoubleFromTo(AllVariables.minInvestRRRAdjustFactor, AllVariables.maxInvestRRRAdjustFactor);				//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
 		earlystageRRR = investmentRRR + AllVariables.earlystageInvestRRRAdjustFactor;																//Correct name should be earlystageRRR corrector. This factor is mulitplied with the specificRRR.
-		//regionpartcode = 2;																			//By default, all companies are active in both countries. (1=Norway, 3 = Sweden, 2 = both)
+		//regionpartcode = 2;		
+	}	//By default, all companies are active in both countries. (1=Norway, 3 = Sweden, 2 = both)
 	
-	}
+		public CompanyAgent(double RRR) { //pensionfund
+			regionpartcode = AllVariables.pfregioncode;		//1 = norway, 2 = both, 3 = sweden
+			produceragent = new ActiveAgent(4);
+			developeragent = new DeveloperAgent(2);	
+			companyname = "Company " + this.getID();													
+			companyanalysisagent = new CompanyAnalysisAgent();	
+			companyanalysisagent.setMyCompany(this);
+			investmentRRR = RRR;			//Correct name should be investmentRRR corrector. This factor is mulitplied with the specificRRR.
+			earlystageRRR = investmentRRR;
+			
+			//By default all and just all companies with PA have a DA.
+			
+		}
+
+	
 	
 	//CompanyAgents get methods
 	public ActiveAgent getproduceragent() {return produceragent;}

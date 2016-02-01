@@ -38,7 +38,8 @@ public class ProjectMarket {
 	//The annual projectmarket used all years expect the intial year (as non projects have been activly not taken forward)
 	public static void simplifyedprojectmarket() {
 		
-		
+		//First, the benchmark for determining what good or bad projects are must be determined.
+		setmarginalcertpriceneeded();
 		//Make sure that flags are updated
 		for (PowerPlant PP : TheEnvironment.allPowerPlantsandProjects) {	//Loops thorugh all, hence the logic is in the Power Plant method.
 			PP.updatacriteriaflag_standard();}
@@ -71,7 +72,8 @@ public class ProjectMarket {
 	public static void setmarginalcertpriceneeded() {
 		projectsforredistribution.clear();
 		for (PowerPlant PP : TheEnvironment.allPowerPlantsandProjects) {
-			if (PP.getstatus() == 3 || PP.getstatus() == 5) {
+			//Includes all projects.
+			if (PP.getstatus() > 2 && PP.getstatus() < 6) {
 				
 				//Currently just the X-percentage of all projects (status 3,,5) have a chance for redistribution. 
 				//Maybe those that cannot be finished in time (for the deadline) should not be included.
@@ -110,7 +112,7 @@ public class ProjectMarket {
 				}
 				//Sweden
 			else {
-				int tempmax = PP.getMyCompany().getdeveloperagent().getrelativerank_sweden() - 1;
+				int tempmax = PP.getMyCompany().getdeveloperagent().getrelativerank_sweden() - 1; //In theory it can be redistributed to the same owner. 
 				int newownerindeks = RandomHelper.nextIntFromTo(0, tempmax);
 				//Change ownership
 				CompanyAgent oldowner = PP.getMyCompany();
@@ -124,7 +126,7 @@ public class ProjectMarket {
 	}
 	
 	public static void updaterelativerank() {
-		//Sorts and rank relevent developers 
+		//Sorts and rank developers accordin to their contry relative wacc
 		if (sortedDeveloperAgents_norway.isEmpty() == false) {
 		sortedDeveloperAgents_norway.clear();}
 		
@@ -133,9 +135,9 @@ public class ProjectMarket {
 
 		//Add to all the relevant lists
 		for (DeveloperAgent DA : CommonMethods.getDAgentList()) {
-			if (DA.getregionpartcode() == 0) {
-				sortedDeveloperAgents_norway.add(DA);}
 			if (DA.getregionpartcode() == 1) {
+				sortedDeveloperAgents_norway.add(DA);}
+			if (DA.getregionpartcode() == 3) {
 				sortedDeveloperAgents_sweden.add(DA);}
 			if (DA.getregionpartcode() == 2) {
 				sortedDeveloperAgents_norway.add(DA);
