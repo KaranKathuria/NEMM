@@ -3,7 +3,6 @@
  *     File defining the class and methods used to read in input values from excel. Notice that the three methods all have do bee run in a preset order when 
  *     initializing the Environment. First time, then regions, then plants. 
  *     
- *     Last altered data: 20140903
  *     Made by: Karan Kathuria og Anders
  */
 
@@ -61,7 +60,7 @@ public class ReadExcel {
  			filePath = working_directory + File.separator + "Q4_2015_NEMM_2012_backtest_typ2.xlsx"; 
  		}
  		else {
- 			filePath = working_directory + File.separator + "Q12016_NEMM_Inputdata.xlsx";//"NEMM_realdata.xlsx"; // "Q4_2015_NEMM_2012_backtest.xlsx" //Q22015_NEMM_Inputdata.xlsx
+ 			filePath = working_directory + File.separator + AllVariables.inputfile; 
  			
  		}
 

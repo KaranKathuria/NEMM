@@ -159,8 +159,6 @@ public void Finalupdate() {
 	ProjectDevelopment.calculateallIRRs();	
 }
 
-// ---- Certain parts marked out if realtick is less than 36, but dependent on how much less. (KK: 20151116) 
-
 //Simple scheduals that must be ran in order to update the world in runs where the firstrealtick is not 0.
 @ScheduledMethod(start = 0, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0.
 public void preannualmarketschedule1() {
@@ -168,7 +166,7 @@ public void preannualmarketschedule1() {
 	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.	
 }
 
-//In backtesting this method falls out:
+// ---- IN CASE OF BACKTEST = TRUE, MARK THE BELOW OUT.
 /*
 
 @ScheduledMethod(start = 12, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0 and higher than 12.
