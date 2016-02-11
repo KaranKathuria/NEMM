@@ -140,6 +140,7 @@ public class DistributeProjectsandPowerPlants {
 				//Feilen her var at prosjektet ble satt til en utbygger i Sverige (begge land), mens hos en agent i Norge fikk tildelt prosjektet. Ett annet i hvert fall. 
 			}
 		}
+		int a = 3;
 	
 		}
 		}
