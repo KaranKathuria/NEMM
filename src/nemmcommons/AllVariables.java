@@ -20,7 +20,7 @@ public class AllVariables {
 	//Step 1: Starts.
 	
 	public static String casename = "2016_H1_BaseCase"; 					//Name of the case ran. That is not the simulation, not the run, but the base case (or sensitivity case).
-	public static String inputfile = "Q12016_NEMM_Inputdata.xlsx";			//Name of inputfile (in case not a backtest. If backtest, the below is used).
+	public static String inputfile = "2016_H1_NEMM_2016.xlsx";			//Name of inputfile (in case not a backtest. If backtest, the below is used).
 	public static String backtestfile = "Q4_2015_NEMM_2012_backtest_typ2.xlsx";
 	public static boolean isbacktest = false;					//Alters parts of the code (readexcel and scenario and Context) in order to run backtest (that is 2012 as start year and 300 ticks). Does not later the input data in AllVariables (bank, price etc).
 	public static boolean useTestData = false;					
