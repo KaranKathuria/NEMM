@@ -20,12 +20,13 @@ public class AllVariables {
 	//Step 1: Starts.
 	
 	public static String casename = "2016_H1_BaseCase"; 					//Name of the case ran. That is not the simulation, not the run, but the base case (or sensitivity case).
-	public static String inputfile = "Q12016_NEMM_Inputdata.xlsx";			//Name of inputfile (in case not a backtest).
-	public static boolean isbacktest = true;					//Alters parts of the code (readexcel and scenario and Context) in order to run backtest (that is 2012 as start year and 300 ticks). Does not later the input data in AllVariables (bank, price etc).
+	public static String inputfile = "Q12016_NEMM_Inputdata.xlsx";			//Name of inputfile (in case not a backtest. If backtest, the below is used).
+	public static String backtestfile = "Q4_2015_NEMM_2012_backtest_typ2.xlsx";
+	public static boolean isbacktest = false;					//Alters parts of the code (readexcel and scenario and Context) in order to run backtest (that is 2012 as start year and 300 ticks). Does not later the input data in AllVariables (bank, price etc).
 	public static boolean useTestData = false;					
-	public static final int IRRcalculationtick = 299;			//If above is true, this is 299, else 287.
+	public static final int IRRcalculationtick = 287;			//If above is true, this is 299, else 287.
 
-	///* ---- IN CASE OF BACKTEST 
+	/* ---- IN CASE OF BACKTEST 
 	//In addition to unmarking this section, For the years until the real tick, the projects must be finalized, hence the Contextbuilder these schduals must be added (or removed) (line 166 onwards). 
 	//Also the values of this AllVariable file must be altered: Cutoff-date Norway = 2020.
 	public static final int obintr = 12;
@@ -34,16 +35,16 @@ public class AllVariables {
 	public static double bankPAfirstrealtick =  8400000;																									
 	public static double bankOPAfirstrealtick =  100000;
 	public static double bankTAfirstrealtick = 0;
-	//*/
+	*/
 	
-	/*//---- IN CASE NOT BACKTEST - INCLUDE THIS SECTION.
+	//---- IN CASE NOT BACKTEST - INCLUDE THIS SECTION.
 	public static final int obintr = 12; 
 	public static final int firstrealtick = 48; //Altering this means you got to alter the contextbuilder! Currently this cannot be between 1 and 11. 48 = january 2016.
 	public static double[] historiccertprices = new double[]{20.14,	18.31,	24.84,	18.72,	18.21,	18.31,	19.75,	20.16,	20.93,	22.26,	22.85,	24.02,	23.66,	25.1,	23.14,	24.63,	21.57,	20.05,	21.13,	21.01,	22.39,	22.55,	21.57,	21.1,	20.04,	21.91,	20.45,	19.46,	19.73,	19.56,	19.52,	20.18,	20.72,	20.12,	19.45,	18.18,	17.5,	15.93,	14.95,	15.58,	15.76,	15.75,	14.85,	15.29,	16.82,	17.79,	17.33,	17.33};   //{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
 	public static double bankPAfirstrealtick =   11400000;		
 	public static double bankOPAfirstrealtick =    400000;		//Soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
 	public static double bankTAfirstrealtick = 0;				
-	*/
+	
 	
 	//Step 1: Ends
 	//================================================================================================================================================================================================

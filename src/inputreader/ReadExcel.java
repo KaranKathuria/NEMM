@@ -57,7 +57,7 @@ public class ReadExcel {
  			filePath = working_directory + File.separator + "NEMM_testdata.xls"; 
  		}
  		if (AllVariables.isbacktest){
- 			filePath = working_directory + File.separator + "Q4_2015_NEMM_2012_backtest_typ2.xlsx"; 
+ 			filePath = working_directory + File.separator + AllVariables.backtestfile; 
  		}
  		else {
  			filePath = working_directory + File.separator + AllVariables.inputfile; 
