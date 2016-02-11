@@ -40,7 +40,7 @@ public class AllVariables {
 	//---- IN CASE NOT BACKTEST - INCLUDE THIS SECTION.
 	public static final int obintr = 12; 
 	public static final int firstrealtick = 48; //Altering this means you got to alter the contextbuilder! Currently this cannot be between 1 and 11. 48 = january 2016.
-	public static double[] historiccertprices = new double[]{20.14,	18.31,	24.84,	18.72,	18.21,	18.31,	19.75,	20.16,	20.93,	22.26,	22.85,	24.02,	23.66,	25.1,	23.14,	24.63,	21.57,	20.05,	21.13,	21.01,	22.39,	22.55,	21.57,	21.1,	20.04,	21.91,	20.45,	19.46,	19.73,	19.56,	19.52,	20.18,	20.72,	20.12,	19.45,	18.18,	17.5,	15.93,	14.95,	15.58,	15.76,	15.75,	14.85,	15.29,	16.82,	17.79,	17.33,	17.33};   //{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
+	public static double[] historiccertprices = new double[]{20.58,	18.72,	25.39,	19.13,	18.61,	18.72,	20.18,	20.6,	21.39,	22.75,	23.35,	24.55,	24.16,	25.63,	23.63,	25.15,	22.02,	20.47,	21.57,	21.45,	22.87,	23.02,	22.02,	21.54,	20.45,	22.35,	20.86,	19.85,	20.13,	19.95,	19.91,	20.58,	21.14,	20.52,	19.84,	18.55,	17.83,	16.24,	15.24,	15.88,	16.06,	16.05,	15.13,	15.58,	17.14,	18.13,	17.85,	17.39};   //{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
 	public static double bankPAfirstrealtick =   11400000;		
 	public static double bankOPAfirstrealtick =    400000;		//Soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
 	public static double bankTAfirstrealtick = 0;				
@@ -109,7 +109,7 @@ public class AllVariables {
 	//Regulations for certificates deadline
 	public static boolean certificatespost2020_Norway = false;
 	public static boolean certificatespost2020_Sweden = true;
-	public static int cutoffyear_Norway = 2020;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
+	public static int cutoffyear_Norway = 2021;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
 	public static int cutoffyear_Sweden = 2021;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
 	//MARKET COORDINATION STRENGTH - Factor determining how aggressiv the build out is Random between max and min for each year. To which extend developers looks at other decisions.
