@@ -122,7 +122,7 @@ public class CompanyAgent extends ParentAgent {
 						numTicksToEmptyPosition = AllVariables.numTicksOPExit[stratID];
 					}
 				}
-				physicalnetposition = 1000;				//20151126 KK:Times number of agents this equals initial bank, but as this is scaled anyhow it matters little. Unequal PA, this volume is not distributed to those buying less (rather the opposit).
+				physicalnetposition = 10*numTicksToEmptyPosition;				
 				sizecode = 2;	//For all
 
 				// ---- end GJB Added

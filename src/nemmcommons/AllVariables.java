@@ -249,7 +249,7 @@ public class AllVariables {
 	//WIND VARIATION
 	public static double meanwindproductionfactor = getmeanwindproductionfactor();		//read from GUI
 	public static double stdwindfactor = getstdwindproductionfactor();					//read from GUI
-	public static double maxstdwindfactor = 2.4;					//Cutoff deviation in wind production factor. If 3 this means that it cannot blow less or more then 3 times the standard deviation.
+	public static double maxstdwindfactor = 2.1;					//Cutoff deviation in wind production factor. If 3 this means that it cannot blow less or more then 3 times the standard deviation.
 
 	//Generic Strategy 
 	public static int MaxTacticPreferenceScore = 6; //6   Not sure how strongly this affects prices.

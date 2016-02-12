@@ -102,7 +102,7 @@ public class DistributeDemandShares {
 		
 	for (int i = 0; i < probadjustedagentlistSweden.size() ; i++) {
 		int assign = RandomHelper.nextIntFromTo(0,randintervalSweden);
-		probadjustedagentlistNorway.get(assign).AddDemandShare(demandshareunitreg2, region2);} //THe randomly selected OPA object gets the demandshare. This is done as many times as there are demandshares. 
+		probadjustedagentlistSweden.get(assign).AddDemandShare(demandshareunitreg2, region2);} //THe randomly selected OPA object gets the demandshare. This is done as many times as there are demandshares. 
 		
 	}		
 

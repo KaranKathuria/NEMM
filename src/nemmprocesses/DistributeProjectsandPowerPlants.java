@@ -31,7 +31,7 @@ public class DistributeProjectsandPowerPlants {
 		
 		//Assignes the probabilitydistribution used among the PAagents with various sizecodes.
 		switch (distcode) {
-			case 1: distribution[0] = 0; distribution[1] = 1; distribution[2] = 1;
+			case 1: distribution[0] = 0; distribution[1] = 1; distribution[2] = 1;	//20160128 KK notice distribution = 0 then the "pensjonsfond" does get initial projects is sizecode = 1:
 			break;
 			case 2: distribution[0] = 1; distribution[1] = 2; distribution[2] = 3;
 			break;
@@ -74,6 +74,7 @@ public class DistributeProjectsandPowerPlants {
 				probadjustedagentlistSweden.get(assign).addpowerplant(PP);				 //The same PowerPlant is also added to that specific agents production list.
 			}
 		}
+		int a = 3;
 			
 		}
 		
