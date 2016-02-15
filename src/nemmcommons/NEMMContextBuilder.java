@@ -20,6 +20,7 @@ import nemmenvironment.FundamentalMarketAnalysis;
 import nemmenvironment.PowerPlant;
 import nemmenvironment.TheEnvironment;
 import nemmenvironment.TheEnvironment.GlobalValues;
+import nemmprocesses.ControlStation;
 import nemmprocesses.DistributeProjectsandPowerPlants;
 import nemmprocesses.Forcast;
 import nemmprocesses.ProjectDevelopment;
@@ -78,6 +79,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	//Sales the annual production of all wind power plants according to specifyed mean, standarddeviation and max(capped).
 	TheEnvironment.setwindscenario();				//Sets scenario	
 	TheEnvironment.setpowerpricescenario();			//Sets scenario
+	TheEnvironment.setcertdemand(); 					//If law is in TWh demand, certDemand = targetcertdemand (named expectedcertdemand).
 	
 	//No random wind in backtest.
 	if (!AllVariables.isbacktest){
@@ -103,7 +105,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 // ---- Scales the bank according to the right real life position. 
 @ScheduledMethod(start = AllVariables.firstrealtick-1, priority = 3)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
 	public void scalephysicalpositions() {
-	UpdatePhysicalPosition.scalePAphysicalpos();
+	UpdatePhysicalPosition.scalePAphysicalpos(AllVariables.bankPAfirstrealtick);
 	UpdatePhysicalPosition.scaleOPAphysicalpos();
 	UpdatePhysicalPosition.scaleTAphysicalpos();
 }
@@ -133,7 +135,12 @@ public void monthlymarketschedule() {
 @ScheduledMethod(start = AllVariables.firstrealtick, interval = 12, priority = 2)		//Priority 2 means that whenever the tick is 12 this will be ran first. If the priority is the same, the order is random.
 public void annualmarketschedule() {
 	GlobalValues.annualglobalvalueupdate();
-
+	
+	//If the law is change so that the demand is qouted in certificates, this will note be ran.
+	if (AllVariables.certificatedemandinqouta) {
+	ControlStation.controlstationupdate();
+	}
+	
 	//if not testdata
 	if (!AllVariables.useTestData){
 		FundamentalMarketAnalysis.runfundamentalmarketanalysis();	

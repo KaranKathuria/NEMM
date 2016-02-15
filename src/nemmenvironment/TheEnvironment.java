@@ -242,6 +242,12 @@ public final class TheEnvironment {
                                }
                 }
                 
+                public static void setcertdemand() {
+                	if(!AllVariables.certificatedemandinqouta) {
+                	//Danger danger. Overwriting the certdemand with expected cert demand.
+                	TheEnvironment.allRegions.get(0).getMyDemand().setCertDemand(TheEnvironment.allRegions.get(0).getMyDemand().getExpectedCertDemand_all());
+                	}
+                }
                 
                 public static void  calculateLRMC_exougenousprojects() {
                 	for (PowerPlant PP : allPowerPlantsandProjects) {

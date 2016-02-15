@@ -119,7 +119,7 @@ public class VolumePrognosis {
 			
 			//Holding horizont
 			for (int j = fromTick; j < Math.min(fromTick+tempholdinghdem,maxTicks); ++j) {
-				holdinghtickdemand = holdinghtickdemand + (CDS.getDemandShare(j) * CDS.getMyRegion().getMyDemand().getCertDemand(j)); //Sum of all demand wihtin the hodinghorizont.
+				holdinghtickdemand = holdinghtickdemand + (CDS.getDemandShare(j) * CDS.getMyRegion().getMyDemand().getExpectedCertDemand(j)); //getCertDemand(j)); //Sum of all demand wihtin the hodinghorizont.
 				}
 			int f = 3;
 			int a = 3;

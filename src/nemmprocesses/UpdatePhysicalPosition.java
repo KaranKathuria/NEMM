@@ -33,8 +33,8 @@ public static void updateAllAgentPositions() {
 	}
 }
 
-public static void scalePAphysicalpos() { //Scales the market physicalposition by altering the producers physicalposition.
-	double totalpos_should = AllVariables.bankPAfirstrealtick;
+public static void scalePAphysicalpos(double realPAbank) { //Scales the market physicalposition by altering the producers physicalposition.
+	double totalpos_should = realPAbank;
 	double producertotalpos_is = TheEnvironment.GlobalValues.producersphysicalposition;
 	double delta = producertotalpos_is-totalpos_should; //positive number means we need to scale down.
 	if (producertotalpos_is <= 0) throw new Error("impssoble value for prduceres. THis cannot be scaled");

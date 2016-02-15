@@ -119,12 +119,12 @@ public class FundamentalMarketAnalysis {
 		for (int aar = i; aar < numberofyears; ++aar) {
 		for (Region R : TheEnvironment.allRegions) {																	
 			for (int j = 0; j < numberofticksinyear; j++) { 																	
-				totalannufuturedemand = totalannufuturedemand + R.getMyDemand().getCertDemand(currenttick+j+(numberofticksinyear*aar));  	//j runs from 0-11. Currentick is the starttick. i is the iterated year.
+				totalannufuturedemand = totalannufuturedemand + R.getMyDemand().getExpectedCertDemand(currenttick+j+(numberofticksinyear*aar));  	//j runs from 0-11. Currentick is the starttick. i is the iterated year.
 				if (aar < (i+xyearsused)) {
-				xyearfuturecertdemand = xyearfuturecertdemand + R.getMyDemand().getCertDemand(currenttick+j+(numberofticksinyear*aar));	//For the x futuer years
+				xyearfuturecertdemand = xyearfuturecertdemand + R.getMyDemand().getExpectedCertDemand(currenttick+j+(numberofticksinyear*aar));	//For the x futuer years
 				}
 				if (aar == i) {
-				totalannudemand = totalannudemand + R.getMyDemand().getCertDemand(currenttick+j+(numberofticksinyear*aar));
+				totalannudemand = totalannudemand + R.getMyDemand().getExpectedCertDemand(currenttick+j+(numberofticksinyear*aar)); 
 				}
 			}
 		}}

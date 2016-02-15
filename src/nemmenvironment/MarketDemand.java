@@ -130,6 +130,11 @@ public class MarketDemand {
 		return demandcalc;
 	}
 	
+	public double[] getExpectedCertDemand_all() {
+		return expectedcertDemand.getArray();
+		
+	}
+	
 
 	
 } 

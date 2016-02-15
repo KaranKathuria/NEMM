@@ -113,7 +113,7 @@ public class AllVariables {
 	public static int cutoffyear_Sweden = 2021;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
 	//MARKET COORDINATION STRENGTH - Factor determining how aggressiv the build out is Random between max and min for each year. To which extend developers looks at other decisions.
-	public static double maxbuildoutaggressivness = 1.05; 			//As it is the final value that really limits the build out the spread must to large. 1 = no overinvestment.
+	public static double maxbuildoutaggressivness = 1.06; 			//As it is the final value that really limits the build out the spread must to large. 1 = no overinvestment.
 	public static double minbuildoutaggressivness = 1.04; 			//Remember that this is multiplied with the total future demand, hence 1.01 implies 67 MW of new capacity added in 2020 (and about half that in 2026).
 
 	//CONCESSION PROSESS
@@ -131,6 +131,11 @@ public class AllVariables {
 	public static double pensionfundInvestRRRAdjustFactor = 0.5;		//wACC = origonal prject specific times this, hence 0.5*8% = 4 %
 	public static int pfconstructionconstraints = 4;
 	public static int pfregioncode = 3; //1 = Norway, 2 = Both, 3 = Sweden.
+	
+	//CONTROL STATION MARKET ADJUSTMENTS
+	public static boolean certificatedemandinqouta = true; //True or false indication if the sertificate demand is in written as qouta or as sertificates. If false, then the demand is NOT adjusted following control station.
+	public static int[] controlstationtick = new int[]{60, 84, 108, 132, 180, 228, 276}; //timing of controll station. If above is true, this tick indicates sertificate bank corrections. If false, not in use. 
+	
 	
 	//Step 2: Ends
 	//================================================================================================================================================================================================
@@ -249,7 +254,7 @@ public class AllVariables {
 	//WIND VARIATION
 	public static double meanwindproductionfactor = getmeanwindproductionfactor();		//read from GUI
 	public static double stdwindfactor = getstdwindproductionfactor();					//read from GUI
-	public static double maxstdwindfactor = 2.1;					//Cutoff deviation in wind production factor. If 3 this means that it cannot blow less or more then 3 times the standard deviation.
+	public static double maxstdwindfactor = 2.4;					//Cutoff deviation in wind production factor. If 3 this means that it cannot blow less or more then 3 times the standard deviation.
 
 	//Generic Strategy 
 	public static int MaxTacticPreferenceScore = 6; //6   Not sure how strongly this affects prices.
