@@ -79,7 +79,7 @@ public class NEMMContextBuilder extends DefaultContext<Object>
 	//Sales the annual production of all wind power plants according to specifyed mean, standarddeviation and max(capped).
 	TheEnvironment.setwindscenario();				//Sets scenario	
 	TheEnvironment.setpowerpricescenario();			//Sets scenario
-	TheEnvironment.setcertdemand(); 					//If law is in TWh demand, certDemand = targetcertdemand (named expectedcertdemand).
+	TheEnvironment.simulatecertdemand(); 					//If law is in TWh demand, certDemand = targetcertdemand (named expectedcertdemand).
 	
 	//No random wind in backtest.
 	if (!AllVariables.isbacktest){
@@ -175,6 +175,7 @@ public void preannualmarketschedule1() {
 
 // ==================================================================
 // ---- IN CASE OF BACKTEST = TRUE, MARK THE BELOW OUT until line 193
+///*
 
 
 @ScheduledMethod(start = 12, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0 and higher than 12.
@@ -198,6 +199,7 @@ public void preannualmarketschedule4() {
 	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
 	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.	
 }
+//*/
 //===================================================================
 
 //All obligation periods updates to come below. Priority 2 says this is done before the monthlymaret schedual.

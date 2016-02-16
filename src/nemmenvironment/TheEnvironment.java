@@ -242,10 +242,43 @@ public final class TheEnvironment {
                                }
                 }
                 
-                public static void setcertdemand() {
+                public static void simulatecertdemand() {
                 	if(!AllVariables.certificatedemandinqouta) {
                 	//Danger danger. Overwriting the certdemand with expected cert demand.
                 	TheEnvironment.allRegions.get(0).getMyDemand().setCertDemand(TheEnvironment.allRegions.get(0).getMyDemand().getExpectedCertDemand_all());
+                	TheEnvironment.allRegions.get(1).getMyDemand().setCertDemand(TheEnvironment.allRegions.get(1).getMyDemand().getExpectedCertDemand_all());
+                	}
+                	else {
+                	// Simulate the natural variation in annual cert demand in the same manner as wind variation.
+                		 Normal tempn2;
+                         tempn2 = RandomHelper.createNormal(AllVariables.meancertdemandfactor, AllVariables.stdcertdemandfactor);                //Create the used normal distribution skal parametersers
+                         int temptickid = 0;           
+                         
+                         //2 is Wind power
+                         for (int i = 2012; i<TheEnvironment.theCalendar.getStartYear()+TheEnvironment.theCalendar.getNumYears();i++) {  //For all år
+                                         Double temp = tempn2.nextDouble();
+                                         int tf= 3;
+                                         
+                                         //Section below tp cut max and min values for certdemand factor.
+                                                         if(temp<(AllVariables.meancertdemandfactor*(1-(AllVariables.stdcertdemandfactor*AllVariables.maxstdcertdemandfactor)))) {
+                                                                        temp = AllVariables.meancertdemandfactor*(1-(AllVariables.stdcertdemandfactor*AllVariables.maxstdcertdemandfactor));
+                                                         }
+                                                         double d = (1+(AllVariables.stdcertdemandfactor*AllVariables.maxstdcertdemandfactor));
+                                                         if(temp > (AllVariables.meancertdemandfactor*d)) {
+                                                                        temp = AllVariables.meancertdemandfactor*(1+(AllVariables.stdcertdemandfactor*AllVariables.maxstdcertdemandfactor));
+                                                         }
+                                         //section end
+                                          for (int k = 0; k<TheEnvironment.theCalendar.getNumTradePdsInYear(); k++) {
+
+                                          for (Region R : TheEnvironment.allRegions) {
+                                                          
+                                                          double org = R.getMyDemand().getCertDemand(temptickid);
+                                                          double test = R.getMyDemand().getCertDemand(temptickid)*temp;
+                                                          R.getMyDemand().setCertDemand_tick((R.getMyDemand().getCertDemand(temptickid)*temp),temptickid);
+                                                          }        
+                                                          temptickid=temptickid+1;
+                	}
+                }
                 	}
                 }
                 

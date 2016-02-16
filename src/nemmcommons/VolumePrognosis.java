@@ -114,7 +114,7 @@ public class VolumePrognosis {
 			
 			//Obligation period
 			for (int i = fromTick; i < Math.min(fromTick+numTicksRemainingInObPd,maxTicks); ++i) {
-				curObPdDemand = curObPdDemand + (CDS.getDemandShare(i) * CDS.getMyRegion().getMyDemand().getCertDemand(i)); //The tick`s next ticks
+				curObPdDemand = curObPdDemand + (CDS.getDemandShare(i) * CDS.getMyRegion().getMyDemand().getExpectedCertDemand(i)); //The tick`s next ticks
 				}
 			
 			//Holding horizont

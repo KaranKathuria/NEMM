@@ -40,7 +40,7 @@ public class AllVariables {
 	//---- IN CASE NOT BACKTEST - INCLUDE THIS SECTION.
 	public static final int obintr = 12; 
 	public static final int firstrealtick = 48; //Altering this means you got to alter the contextbuilder! Currently this cannot be between 1 and 11. 48 = january 2016.
-	public static double[] historiccertprices = new double[]{20.58,	18.72,	25.39,	19.13,	18.61,	18.72,	20.18,	20.6,	21.39,	22.75,	23.35,	24.55,	24.16,	25.63,	23.63,	25.15,	22.02,	20.47,	21.57,	21.45,	22.87,	23.02,	22.02,	21.54,	20.45,	22.35,	20.86,	19.85,	20.13,	19.95,	19.91,	20.58,	21.14,	20.52,	19.84,	18.55,	17.83,	16.24,	15.24,	15.88,	16.06,	16.05,	15.13,	15.58,	17.14,	18.13,	17.85,	17.39};   //{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
+	public static double[] historiccertprices = new double[]{20.58,	18.72,	25.39,	19.13,	18.61,	18.72,	20.18,	20.6,	21.39,	22.75,	23.35,	24.55,	24.16,	25.63,	23.63,	25.15,	22.02,	20.47,	21.57,	21.45,	22.87,	23.02,	22.02,	21.54,	20.45,	22.35,	20.86,	19.85,	20.13,	19.95,	19.91,	20.58,	21.14,	20.52,	19.84,	18.55,	17.83,	16.24,	15.24,	15.88,	16.06,	16.05,	15.13,	15.58,	17.14,	18.13,	17.85,	17.15};   //{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
 	public static double bankPAfirstrealtick =   11400000;		
 	public static double bankOPAfirstrealtick =    400000;		//Soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
 	public static double bankTAfirstrealtick = 0;				
@@ -86,7 +86,7 @@ public class AllVariables {
 	public static double fundamentalfundamentaleasefactordistribution_Sweden = 1.25; //Indicates the fundamental ease factor for fundamental agents. Use as the FMA underestsimats the FMAprice as both agents and analys people know that all investmetns are not taken perfectly. quicfiks 20151201 KK.
 	public static double[] developerinvestmentpriceeasefactordistribution = new double[]{1.15,1.25};		//Started with 1.15, 1.4	//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
 	public static double[] developerinvestmentpriceeasefactordistribution_Norway = new double[]{1.1,1.15};		//Started with 1.15, 1.4	//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
-	public static double[] developerinvestmentpriceeasefactordistribution_Sweden = new double[]{1.3,1.4};		//Started with 1.15, 1.4	//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
+	public static double[] developerinvestmentpriceeasefactordistribution_Sweden = new double[]{1.25,1.35};		//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
 	//Given to investmentstrategy type 3 and 4
 	public static double[] developerinvestmentfundamentaleasefactordistribution = new double[]{1.3,1.4};  //The distribution of fundamentaleasefaactor to investmentagent type 3 (price based with ease cost curve). High number indicates little restriction.
 	public static double pricedeveloperspriceeasefactordistribution = 1.0; 								  //Priceeasefactor used by pricedevelopers (3). added 20151204 KK. Should be 1, but to midofy earlier round-off in cert prices.
@@ -114,7 +114,7 @@ public class AllVariables {
 	
 	//MARKET COORDINATION STRENGTH - Factor determining how aggressiv the build out is Random between max and min for each year. To which extend developers looks at other decisions.
 	public static double maxbuildoutaggressivness = 1.06; 			//As it is the final value that really limits the build out the spread must to large. 1 = no overinvestment.
-	public static double minbuildoutaggressivness = 1.04; 			//Remember that this is multiplied with the total future demand, hence 1.01 implies 67 MW of new capacity added in 2020 (and about half that in 2026).
+	public static double minbuildoutaggressivness = 1.03; 			//Remember that this is multiplied with the total future demand, hence 1.01 implies 67 MW of new capacity added in 2020 (and about half that in 2026).
 
 	//CONCESSION PROSESS
 	public static int maxyearsinconcessionqueue = 3;				//Number of years in addition to minimum number of years in concession queue given as input from excel. After this, if not having received concession, the project is trashed.
@@ -133,8 +133,8 @@ public class AllVariables {
 	public static int pfregioncode = 3; //1 = Norway, 2 = Both, 3 = Sweden.
 	
 	//CONTROL STATION MARKET ADJUSTMENTS
-	public static boolean certificatedemandinqouta = true; //True or false indication if the sertificate demand is in written as qouta or as sertificates. If false, then the demand is NOT adjusted following control station.
-	public static int[] controlstationtick = new int[]{60, 84, 108, 132, 180, 228, 276}; //timing of controll station. If above is true, this tick indicates sertificate bank corrections. If false, not in use. 
+	public static boolean certificatedemandinqouta = true; //Inication if the sertificate demand is in written as qouta in the law. If true, then the demand is adjusted following control station. IF false, its adjusted every year.
+	public static int[] controlstationtick = new int[]{60, 84, 108, 132, 156, 180, 228, 276}; //timing of controll station. If above is true, this tick indicates sertificate bank corrections. If false, not in use. 
 	
 	
 	//Step 2: Ends
@@ -256,6 +256,11 @@ public class AllVariables {
 	public static double stdwindfactor = getstdwindproductionfactor();					//read from GUI
 	public static double maxstdwindfactor = 2.4;					//Cutoff deviation in wind production factor. If 3 this means that it cannot blow less or more then 3 times the standard deviation.
 
+	//CERT DEMAND VARIATION
+	public static double meancertdemandfactor = 1;					//Systematically over/under estimation
+	public static double stdcertdemandfactor = 0.031;				//Based on Optimeering uncertainty analysis.
+	public static double maxstdcertdemandfactor = 2;				//Cut-off as more extreame outcomes than this would trigger other heating sources or less demand.
+	
 	//Generic Strategy 
 	public static int MaxTacticPreferenceScore = 6; //6   Not sure how strongly this affects prices.
 	public static int MinTacticPreferenceScore = 2; //2

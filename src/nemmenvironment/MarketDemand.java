@@ -42,6 +42,16 @@ public class MarketDemand {
 		expectedcertDemand.setArray(cd);	
 	}
 	
+	public void setCertDemand_tick(double newdem, int... tickID) {
+		if (tickID.length > 0) {	
+			this.certDemand.setElement(newdem, tickID[0]);
+		}
+		else {
+			int curTick = TheEnvironment.theCalendar.getCurrentTick();
+			this.certDemand.setElement(newdem, curTick);
+		}
+	}
+	
 	// Methods --------------------------------------------------------------
 	
 	// The setAllDemands allows us to send a single demand and quota, or else an array of demands and quota values
