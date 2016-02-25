@@ -1,7 +1,8 @@
 
-/nemmcommons
-/inputreader
-/nemmenvironment
-/nemmprocesses
-/nemmstrategy_shortterm
-/nemmagents
+/inputreader/
+/nemmagents/
+/nemmcommons/
+/nemmenvironment/
+/nemmprocesses/
+/nemmstrategy_shortterm/
+/nemmtime/

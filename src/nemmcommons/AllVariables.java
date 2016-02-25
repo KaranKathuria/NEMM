@@ -126,14 +126,14 @@ public class AllVariables {
 	public static double initialowenershipchangepercentile = 0.2;						//As the cert price needed has not been calculated this value indicates which project in line determines the marginal project. If 100 projects, a value of 0.2 would indicate that the 20th best project is the cutoff. For all project better than this, there is a chanceofownershipchange[0] chance for redistirbution.
 
 	//PENSION FUND DEVELOPERS
-	public static int numberofpensionfunds = 2;							//They are all investment strategy type 3. (price, with some respekct for fundamntal) and in both countries.
+	public static int numberofpensionfunds = 0;							//They are all investment strategy type 3. (price, with some respekct for fundamntal) and in both countries.
 	public static int holdinghorizontpensionproducer = 60;
-	public static double pensionfundInvestRRRAdjustFactor = 0.5;		//wACC = origonal prject specific times this, hence 0.5*8% = 4 %
+	public static double pensionfundInvestRRRAdjustFactor = 0.6;		//wACC = origonal prject specific times this, hence 0.5*8% = 4 %
 	public static int pfconstructionconstraints = 4;
-	public static int pfregioncode = 3; //1 = Norway, 2 = Both, 3 = Sweden.
+	public static int pfregioncode = 2; //1 = Norway, 2 = Both, 3 = Sweden.
 	
 	//CONTROL STATION MARKET ADJUSTMENTS
-	public static boolean certificatedemandinqouta = true; //Inication if the sertificate demand is in written as qouta in the law. If true, then the demand is adjusted following control station. IF false, its adjusted every year.
+	public static boolean certificatedemandinqouta = true; //True indicating that certficatea is written as qouta in the law (2015). If true, then the demand is adjusted following the control station. IF false, its adjusted every year.
 	public static int[] controlstationtick = new int[]{60, 84, 108, 132, 156, 180, 228, 276}; //timing of controll station. If above is true, this tick indicates sertificate bank corrections. If false, not in use. 
 	
 	

@@ -12,6 +12,7 @@ package nemmcommons;
 import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.dataLoader.ContextBuilder;
+import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.random.RandomHelper;
 import nemmagents.CompanyAgent;
@@ -163,7 +164,8 @@ public void annualmarketschedule() {
 //  ---- Last update to calculate prosjekt IRR// KK 20151119: Changes to 299 in the backtest.
 @ScheduledMethod(start = AllVariables.IRRcalculationtick, interval = 0, priority = 3)		
 public void Finalupdate() {
-	ProjectDevelopment.calculateallIRRs();	
+	ProjectDevelopment.calculateallIRRs();
+	RunEnvironment.getInstance().endAt(AllVariables.IRRcalculationtick);
 }
 
 //Simple scheduals that must be ran in order to update the world in runs where the firstrealtick is not 0.
@@ -214,7 +216,8 @@ public void obligationsperiodshedule() {
 	// - This OB volumwheigted average price. 
 	// - Peneltyprice  .. the opa agents could have a field "expected" penelty price that they use to calculate their penelty. 	
 }
-	
+
+
 
 
 

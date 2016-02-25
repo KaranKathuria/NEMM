@@ -36,7 +36,7 @@ import java.nio.file.Paths;
 public class ReadExcel {
 	 // Get working directory
 	 private static String working_directory = Paths.get("").toAbsolutePath().toString();
-	 private static int plantsnumber;
+	 private static int plantsnumber; 
 	 private static int technologiesnumber;
 	 private static int regionsnumber;
 	 private static int genprofileentries;
@@ -60,12 +60,11 @@ public class ReadExcel {
  			filePath = working_directory + File.separator + AllVariables.backtestfile; 
  		}
  		else {
- 			filePath = working_directory + File.separator + AllVariables.inputfile; 
+ 			filePath = working_directory + File.separator + "data" + File.separator + AllVariables.inputfile; 
  			
  		}
 
  	}
- 
 	public static void ReadExcel() {}
 	
 	public static void ReadCreateTime() {

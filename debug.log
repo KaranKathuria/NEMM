@@ -1,727 +1,98 @@
-FATAL [Thread-7] 2016-01-13 11:35:55,951 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IllegalArgumentException: Error: No producers in either Norway or Sweden. How strange.
-	at nemmprocesses.DistributeProjectsandPowerPlants.distributeallpowerplants(DistributeProjectsandPowerPlants.java:62)
-	at nemmcommons.NEMMContextBuilder.DistributionandInitiation(NEMMContextBuilder.java:86)
-	... 9 more
-FATAL [Thread-5] 2016-01-13 14:06:34,126 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IllegalArgumentException: Error: Zero CompanyAgents with production
-	at nemmprocesses.DistributeProjectsandPowerPlants.distributeallpowerplants(DistributeProjectsandPowerPlants.java:28)
-	at nemmcommons.NEMMContextBuilder.DistributionandInitiation(NEMMContextBuilder.java:85)
-	... 9 more
-FATAL [Thread-5] 2016-01-13 14:06:40,031 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IllegalArgumentException: Error: Zero CompanyAgents with production
-	at nemmprocesses.DistributeProjectsandPowerPlants.distributeallpowerplants(DistributeProjectsandPowerPlants.java:28)
-	at nemmcommons.NEMMContextBuilder.DistributionandInitiation(NEMMContextBuilder.java:85)
-	... 9 more
-FATAL [Thread-6] 2016-01-13 14:07:55,621 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IllegalArgumentException: Error: Zero CompanyAgents with production
-	at nemmprocesses.DistributeProjectsandPowerPlants.distributeallpowerplants(DistributeProjectsandPowerPlants.java:28)
-	at nemmcommons.NEMMContextBuilder.DistributionandInitiation(NEMMContextBuilder.java:85)
-	... 9 more
-FATAL [Thread-5] 2016-01-20 09:03:51,426 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.NullPointerException
-	at nemmcommons.VolumePrognosis.updateVolumePrognosis(VolumePrognosis.java:74)
-	at nemmcommons.VolumePrognosis.initialiseVolumePrognosis(VolumePrognosis.java:63)
-	at nemmprocesses.Forcast.initiateAllVolumePrognosis(Forcast.java:38)
-	at nemmcommons.NEMMContextBuilder.DistributionandInitiation(NEMMContextBuilder.java:91)
-	... 9 more
-FATAL [Thread-5] 2016-01-20 13:13:23,657 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (48.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.Error: Unresolved compilation problem: 
-	Type mismatch: cannot convert from double to int
-
-	at nemmagents.CompanyAgent$DeveloperAgent.iscvvaluesufficient(CompanyAgent.java:436)
-	at nemmprocesses.ProjectDevelopment.startconstrucion(ProjectDevelopment.java:127)
-	at nemmcommons.NEMMContextBuilder.annualmarketschedule(NEMMContextBuilder.java:141)
-	... 9 more
-FATAL [Thread-5] 2016-01-20 13:29:11,481 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (288.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IndexOutOfBoundsException: Index: 288, Size: 288
-	at java.util.ArrayList.rangeCheck(Unknown Source)
-	at java.util.ArrayList.get(Unknown Source)
-	at nemmtime.NemmCalendar.getTimeBlock(NemmCalendar.java:67)
-	at nemmenvironment.FundamentalMarketAnalysis.runfundamentalmarketanalysis(FundamentalMarketAnalysis.java:83)
-	at nemmcommons.NEMMContextBuilder.annualmarketschedule(NEMMContextBuilder.java:134)
-	... 9 more
-FATAL [Thread-5] 2016-01-20 13:48:19,244 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IndexOutOfBoundsException: Index: 86, Size: 86
-	at java.util.ArrayList.rangeCheck(Unknown Source)
-	at java.util.ArrayList.get(Unknown Source)
-	at nemmenvironment.CVRatioCalculations.getCVObject(CVRatioCalculations.java:20)
-	at nemmcommons.MarketPrognosis.updateCertValueData(MarketPrognosis.java:264)
-	at nemmagents.MarketAnalysisAgent.updateCertValuePrognosis(MarketAnalysisAgent.java:88)
-	at nemmprocesses.Forcast.updateAllCertValuePrognosis(Forcast.java:25)
-	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:118)
-	... 9 more
-FATAL [Thread-5] 2016-01-20 13:50:35,782 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IndexOutOfBoundsException: Index: 86, Size: 86
-	at java.util.ArrayList.rangeCheck(Unknown Source)
-	at java.util.ArrayList.get(Unknown Source)
-	at nemmenvironment.CVRatioCalculations.getCVObject(CVRatioCalculations.java:20)
-	at nemmcommons.MarketPrognosis.updateCertValueData(MarketPrognosis.java:264)
-	at nemmagents.MarketAnalysisAgent.updateCertValuePrognosis(MarketAnalysisAgent.java:88)
-	at nemmprocesses.Forcast.updateAllCertValuePrognosis(Forcast.java:25)
-	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:118)
-	... 9 more
-FATAL [Thread-5] 2016-01-20 13:52:16,402 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IndexOutOfBoundsException: Index: 86, Size: 86
-	at java.util.ArrayList.rangeCheck(Unknown Source)
-	at java.util.ArrayList.get(Unknown Source)
-	at nemmenvironment.CVRatioCalculations.getCVObject(CVRatioCalculations.java:20)
-	at nemmcommons.MarketPrognosis.updateCertValueData(MarketPrognosis.java:264)
-	at nemmagents.MarketAnalysisAgent.updateCertValuePrognosis(MarketAnalysisAgent.java:88)
-	at nemmprocesses.Forcast.updateAllCertValuePrognosis(Forcast.java:25)
-	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:118)
-	... 9 more
-FATAL [Thread-5] 2016-01-20 14:09:56,292 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (288.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IndexOutOfBoundsException: Index: 288, Size: 288
-	at java.util.ArrayList.rangeCheck(Unknown Source)
-	at java.util.ArrayList.get(Unknown Source)
-	at nemmtime.NemmCalendar.getTimeBlock(NemmCalendar.java:67)
-	at nemmenvironment.FundamentalMarketAnalysis.runfundamentalmarketanalysis(FundamentalMarketAnalysis.java:83)
-	at nemmcommons.NEMMContextBuilder.annualmarketschedule(NEMMContextBuilder.java:134)
-	... 9 more
-FATAL [Thread-6] 2016-01-20 14:23:44,563 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (288.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IndexOutOfBoundsException: Index: 288, Size: 288
-	at java.util.ArrayList.rangeCheck(Unknown Source)
-	at java.util.ArrayList.get(Unknown Source)
-	at nemmtime.NemmCalendar.getTimeBlock(NemmCalendar.java:67)
-	at nemmenvironment.FundamentalMarketAnalysis.runfundamentalmarketanalysis(FundamentalMarketAnalysis.java:83)
-	at nemmcommons.NEMMContextBuilder.annualmarketschedule(NEMMContextBuilder.java:134)
-	... 9 more
-FATAL [Thread-5] 2016-01-21 09:07:21,038 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (12.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.ArrayIndexOutOfBoundsException: 12
-	at nemmprocesses.ShortTermMarket.runshorttermmarket(ShortTermMarket.java:228)
-	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:117)
-	... 9 more
-FATAL [Thread-5] 2016-01-21 09:21:05,378 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (12.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.ArrayIndexOutOfBoundsException: 12
-	at nemmprocesses.ShortTermMarket.runshorttermmarket(ShortTermMarket.java:228)
-	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:117)
-	... 9 more
-FATAL [Thread-5] 2016-01-21 12:46:35,469 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (300.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IndexOutOfBoundsException: Index: 300, Size: 300
-	at java.util.ArrayList.rangeCheck(Unknown Source)
-	at java.util.ArrayList.get(Unknown Source)
-	at nemmtime.NemmCalendar.getTimeBlock(NemmCalendar.java:67)
-	at nemmenvironment.FundamentalMarketAnalysis.runfundamentalmarketanalysis(FundamentalMarketAnalysis.java:83)
-	at nemmcommons.NEMMContextBuilder.annualmarketschedule(NEMMContextBuilder.java:135)
-	... 9 more
-ERROR [AWT-EventQueue-0] 2016-01-21 13:33:50,849 repast.simphony.ui.RSApplication - Scenario Load Error
-repast.simphony.scenario.ScenarioLoadException: java.lang.ArrayIndexOutOfBoundsException: 7
-	at repast.simphony.scenario.ScenarioLoader.load(ScenarioLoader.java:220)
-	at repast.simphony.ui.RSApplication.open(RSApplication.java:353)
-	at repast.simphony.ui.RSAppConfigurator.postWindowOpen(RSAppConfigurator.java:39)
-	at saf.core.ui.GUICreatorDelegate.runDisplay(GUICreatorDelegate.java:188)
-	at saf.core.ui.GUICreator$1.run(GUICreator.java:18)
-	at simphony.util.ThreadUtilities$Runner.run(ThreadUtilities.java:33)
-	at simphony.util.ThreadUtilities.runInEventThread(ThreadUtilities.java:47)
-	at saf.core.ui.GUICreator.runDisplay(GUICreator.java:16)
-	at repast.simphony.ui.RSUIPlugin$1.run(RSUIPlugin.java:104)
-	at java.awt.event.InvocationEvent.dispatch(Unknown Source)
-	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
-	at java.awt.EventQueue.access$200(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue.dispatchEvent(Unknown Source)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.run(Unknown Source)
-Caused by: java.lang.RuntimeException: java.lang.ArrayIndexOutOfBoundsException: 7
-	at javassist.bytecode.AnnotationsAttribute.getAnnotations(AnnotationsAttribute.java:230)
-	at javassist.bytecode.AnnotationsAttribute.getAnnotation(AnnotationsAttribute.java:184)
-	at repast.simphony.engine.watcher.WatcheeDataFinder.findWatches(WatcheeDataFinder.java:400)
-	at repast.simphony.engine.watcher.WatcheeDataFinder.run(WatcheeDataFinder.java:149)
-	at repast.simphony.engine.watcher.WatcheeInstrumentor.instrument(WatcheeInstrumentor.java:83)
-	at repast.simphony.scenario.ScenarioWatcheeInitializer.initWatchees(ScenarioWatcheeInitializer.java:73)
-	at repast.simphony.scenario.ScenarioWatcheeInitializer.run(ScenarioWatcheeInitializer.java:34)
-	at repast.simphony.scenario.ScenarioLoader.load(ScenarioLoader.java:114)
-	... 22 more
-Caused by: java.lang.ArrayIndexOutOfBoundsException: 7
-	at javassist.bytecode.ByteArray.readU16bit(ByteArray.java:27)
-	at javassist.bytecode.AnnotationsAttribute$Walker.memberValuePair(AnnotationsAttribute.java:354)
-	at javassist.bytecode.AnnotationsAttribute$Walker.annotation(AnnotationsAttribute.java:348)
-	at javassist.bytecode.AnnotationsAttribute$Parser.annotation(AnnotationsAttribute.java:620)
-	at javassist.bytecode.AnnotationsAttribute$Walker.annotation(AnnotationsAttribute.java:343)
-	at javassist.bytecode.AnnotationsAttribute$Parser.annotationArray(AnnotationsAttribute.java:610)
-	at javassist.bytecode.AnnotationsAttribute$Walker.annotationArray(AnnotationsAttribute.java:330)
-	at javassist.bytecode.AnnotationsAttribute$Walker.annotationArray(AnnotationsAttribute.java:325)
-	at javassist.bytecode.AnnotationsAttribute$Parser.parseAnnotations(AnnotationsAttribute.java:588)
-	at javassist.bytecode.AnnotationsAttribute.getAnnotations(AnnotationsAttribute.java:227)
-	... 29 more
-FATAL [Thread-5] 2016-01-21 13:48:20,053 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (288.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IndexOutOfBoundsException: Index: 288, Size: 288
-	at java.util.ArrayList.rangeCheck(Unknown Source)
-	at java.util.ArrayList.get(Unknown Source)
-	at nemmtime.NemmCalendar.getTimeBlock(NemmCalendar.java:67)
-	at nemmenvironment.FundamentalMarketAnalysis.runfundamentalmarketanalysis(FundamentalMarketAnalysis.java:83)
-	at nemmcommons.NEMMContextBuilder.annualmarketschedule(NEMMContextBuilder.java:135)
-	... 9 more
-FATAL [Thread-5] 2016-01-21 13:52:39,400 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (288.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IndexOutOfBoundsException: Index: 288, Size: 288
-	at java.util.ArrayList.rangeCheck(Unknown Source)
-	at java.util.ArrayList.get(Unknown Source)
-	at nemmtime.NemmCalendar.getTimeBlock(NemmCalendar.java:67)
-	at nemmenvironment.FundamentalMarketAnalysis.runfundamentalmarketanalysis(FundamentalMarketAnalysis.java:83)
-	at nemmcommons.NEMMContextBuilder.annualmarketschedule(NEMMContextBuilder.java:135)
-	... 9 more
-FATAL [Thread-5] 2016-01-21 16:27:05,124 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (288.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IndexOutOfBoundsException: Index: 288, Size: 288
-	at java.util.ArrayList.rangeCheck(Unknown Source)
-	at java.util.ArrayList.get(Unknown Source)
-	at nemmtime.NemmCalendar.getTimeBlock(NemmCalendar.java:67)
-	at nemmenvironment.FundamentalMarketAnalysis.runfundamentalmarketanalysis(FundamentalMarketAnalysis.java:83)
-	at nemmcommons.NEMMContextBuilder.annualmarketschedule(NEMMContextBuilder.java:135)
-	... 9 more
-FATAL [Thread-5] 2016-01-22 08:34:37,762 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IndexOutOfBoundsException: Index: 22, Size: 20
-	at java.util.ArrayList.rangeCheck(Unknown Source)
-	at java.util.ArrayList.get(Unknown Source)
-	at nemmprocesses.DistributeProjectsandPowerPlants.distributeallpowerplants(DistributeProjectsandPowerPlants.java:74)
-	at nemmcommons.NEMMContextBuilder.DistributionandInitiation(NEMMContextBuilder.java:84)
-	... 9 more
-FATAL [Thread-5] 2016-01-22 08:48:03,106 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IndexOutOfBoundsException: Index: 21, Size: 20
-	at java.util.ArrayList.rangeCheck(Unknown Source)
-	at java.util.ArrayList.get(Unknown Source)
-	at nemmprocesses.DistributeProjectsandPowerPlants.distributeprojects(DistributeProjectsandPowerPlants.java:139)
-	at nemmcommons.NEMMContextBuilder.DistributionandInitiation(NEMMContextBuilder.java:85)
-	... 9 more
-FATAL [Thread-5] 2016-01-22 10:24:06,978 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IllegalArgumentException: Error: No producers in either Norway or Sweden. How strange.
-	at nemmprocesses.DistributeProjectsandPowerPlants.distributeallpowerplants(DistributeProjectsandPowerPlants.java:62)
-	at nemmcommons.NEMMContextBuilder.DistributionandInitiation(NEMMContextBuilder.java:84)
-	... 9 more
-FATAL [Thread-5] 2016-01-28 17:01:58,111 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.ArrayIndexOutOfBoundsException: 40
-	at nemmprocesses.ShortTermMarket.runshorttermmarket(ShortTermMarket.java:132)
-	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:121)
-	... 9 more
-FATAL [Thread-5] 2016-01-29 09:20:14,950 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.ArrayIndexOutOfBoundsException: 40
-	at nemmprocesses.ShortTermMarket.runshorttermmarket(ShortTermMarket.java:132)
-	at nemmcommons.NEMMContextBuilder.monthlymarketschedule(NEMMContextBuilder.java:121)
-	... 9 more
-FATAL [Thread-6] 2016-01-29 13:58:00,558 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (287.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IllegalArgumentException: Cannot calculate profitability or IR if the plant is not ended);
-	at nemmenvironment.PowerPlant.calculateIRR(PowerPlant.java:423)
-	at nemmprocesses.ProjectDevelopment.calculateallIRRs(ProjectDevelopment.java:396)
-	at nemmcommons.NEMMContextBuilder.Finalupdate(NEMMContextBuilder.java:159)
-	... 9 more
-FATAL [Thread-7] 2016-01-29 13:58:49,719 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (287.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IllegalArgumentException: Cannot calculate profitability or IR if the plant is not ended);
-	at nemmenvironment.PowerPlant.calculateIRR(PowerPlant.java:423)
-	at nemmprocesses.ProjectDevelopment.calculateallIRRs(ProjectDevelopment.java:396)
-	at nemmcommons.NEMMContextBuilder.Finalupdate(NEMMContextBuilder.java:159)
-	... 9 more
-FATAL [Thread-9] 2016-01-29 14:00:13,147 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (287.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IllegalArgumentException: Cannot calculate profitability or IR if the plant is not ended);
-	at nemmenvironment.PowerPlant.calculateIRR(PowerPlant.java:423)
-	at nemmprocesses.ProjectDevelopment.calculateallIRRs(ProjectDevelopment.java:396)
-	at nemmcommons.NEMMContextBuilder.Finalupdate(NEMMContextBuilder.java:159)
-	... 9 more
-FATAL [Thread-10] 2016-01-29 14:00:58,751 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (287.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IllegalArgumentException: Cannot calculate profitability or IR if the plant is not ended);
-	at nemmenvironment.PowerPlant.calculateIRR(PowerPlant.java:423)
-	at nemmprocesses.ProjectDevelopment.calculateallIRRs(ProjectDevelopment.java:396)
-	at nemmcommons.NEMMContextBuilder.Finalupdate(NEMMContextBuilder.java:159)
-	... 9 more
-FATAL [Thread-11] 2016-01-29 14:02:55,264 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (287.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IllegalArgumentException: Cannot calculate profitability or IR if the plant is not ended);
-	at nemmenvironment.PowerPlant.calculateIRR(PowerPlant.java:423)
-	at nemmprocesses.ProjectDevelopment.calculateallIRRs(ProjectDevelopment.java:396)
-	at nemmcommons.NEMMContextBuilder.Finalupdate(NEMMContextBuilder.java:159)
-	... 9 more
-ERROR [AWT-EventQueue-0] 2016-02-15 15:09:12,152 repast.simphony.ui.RSApplication - Error while initializing simulation
-java.lang.NullPointerException
-	at nemmcommons.TickArray.<init>(TickArray.java:16)
-	at nemmenvironment.TheEnvironment$GlobalValues.initglobalvalues(TheEnvironment.java:328)
-	at nemmenvironment.TheEnvironment.InitEnvironment(TheEnvironment.java:110)
-	at nemmcommons.NEMMContextBuilder.build(NEMMContextBuilder.java:49)
-	at repast.simphony.dataLoader.engine.ClassNameContextBuilder.build(ClassNameContextBuilder.java:41)
-	at repast.simphony.dataLoader.engine.DataLoaderControllerAction.runInitialize(DataLoaderControllerAction.java:48)
-	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:214)
-	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:1)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:287)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
-	at repast.simphony.util.collections.NaryTree.preOrderTraversal(NaryTree.java:283)
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:212)
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:383)
-	at repast.simphony.ui.RSApplication.initSim(RSApplication.java:160)
-	at repast.simphony.ui.RSApplication.start(RSApplication.java:192)
-	at repast.simphony.ui.action.StartRun.actionPerformed(StartRun.java:17)
-	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
-	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
-	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
-	at java.awt.Component.processMouseEvent(Unknown Source)
-	at javax.swing.JComponent.processMouseEvent(Unknown Source)
-	at java.awt.Component.processEvent(Unknown Source)
-	at java.awt.Container.processEvent(Unknown Source)
-	at java.awt.Component.dispatchEventImpl(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Window.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
-	at java.awt.EventQueue.access$200(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue.dispatchEvent(Unknown Source)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.run(Unknown Source)
-FATAL [Thread-5] 2016-02-16 15:16:24,622 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.Error: Unresolved compilation problem: 
-	tempn cannot be resolved to a variable
-
-	at nemmenvironment.TheEnvironment.simulatecertdemand(TheEnvironment.java:254)
-	at nemmcommons.NEMMContextBuilder.DistributionandInitiation(NEMMContextBuilder.java:82)
-	... 9 more
-FATAL [Thread-5] 2016-02-16 15:24:40,033 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.Error: Unresolved compilation problem: 
-	tempn cannot be resolved to a variable
-
-	at nemmenvironment.TheEnvironment.simulatecertdemand(TheEnvironment.java:254)
-	at nemmcommons.NEMMContextBuilder.DistributionandInitiation(NEMMContextBuilder.java:82)
-	... 9 more
+INFO  [AWT-EventQueue-0] 2016-02-25 10:54:03,125 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Karan\git\NEMM\batch\batch_params.xml to
+	C:\Users\Karan\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 10:54:15,572 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Karan\AppData\Local\Temp\Karan_localhost990888283084114403.zip to 
+C:\Users\Karan\AppData\Local\Temp\simphony_model_1456394051348 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 10:54:15,606 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 10:54:15,606 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,0710
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 10:54:15,606 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Karan\AppData\Local\Temp\simphony_model_1456394051348\Karan_localhost990888283084114403.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 10:54:16,496 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [Thread-4] 2016-02-25 10:54:49,784 repast.simphony.batch.ssh.LocalSession - Notice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is needed
+INFO  [pool-3-thread-1] 2016-02-25 10:55:16,520 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456394051348 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 10:55:16,521 repast.simphony.batch.ssh.SessionsDriver - Run Time: 1,0152
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 10:55:16,538 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Karan\AppData\Local\Temp\simphony_model_1456394051348
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 10:55:16,553 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Karan/git/NEMM/Output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 10:55:16,585 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0008
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 10:55:16,585 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 1,0875
+INFO  [AWT-EventQueue-0] 2016-02-25 10:57:00,945 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Karan\git\NEMM\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-25 10:57:00,951 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Karan\git\NEMM\batch\batch_params.xml to
+	C:\Users\Karan\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-2] 2016-02-25 10:57:11,199 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Karan\AppData\Local\Temp\Karan_localhost2314198010397634679.zip to 
+C:\Users\Karan\AppData\Local\Temp\simphony_model_1456394227522 ...
+INFO  [SwingWorker-pool-2-thread-2] 2016-02-25 10:57:11,234 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-2] 2016-02-25 10:57:11,234 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,0619
+INFO  [SwingWorker-pool-2-thread-2] 2016-02-25 10:57:11,234 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Karan\AppData\Local\Temp\simphony_model_1456394227522\Karan_localhost2314198010397634679.zip
+INFO  [SwingWorker-pool-2-thread-2] 2016-02-25 10:57:12,000 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-4-thread-1] 2016-02-25 10:58:12,014 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456394227522 for DONE:  no
+INFO  [Thread-5] 2016-02-25 10:58:15,689 repast.simphony.batch.ssh.LocalSession - Notice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is needed
+INFO  [pool-4-thread-1] 2016-02-25 10:59:12,016 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456394227522 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-2] 2016-02-25 10:59:12,017 repast.simphony.batch.ssh.SessionsDriver - Run Time: 2,0130
+INFO  [SwingWorker-pool-2-thread-2] 2016-02-25 10:59:12,018 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Karan\AppData\Local\Temp\simphony_model_1456394227522
+INFO  [SwingWorker-pool-2-thread-2] 2016-02-25 10:59:12,018 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Karan/git/NEMM/Output
+INFO  [SwingWorker-pool-2-thread-2] 2016-02-25 10:59:12,034 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0003
+INFO  [SwingWorker-pool-2-thread-2] 2016-02-25 10:59:12,034 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 2,0752
+INFO  [AWT-EventQueue-0] 2016-02-25 14:28:20,634 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Karan\git\NEMM\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-25 14:28:20,718 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Karan\git\NEMM\batch\batch_params.xml to
+	C:\Users\Karan\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:28:31,800 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Karan\AppData\Local\Temp\Karan_localhost4382882394712689663.zip to 
+C:\Users\Karan\AppData\Local\Temp\simphony_model_1456406908076 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:28:31,843 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:28:31,843 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,0628
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:28:31,843 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Karan\AppData\Local\Temp\simphony_model_1456406908076\Karan_localhost4382882394712689663.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:28:32,850 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-25 14:29:02,883 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456406908076 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:29:32,894 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456406908076 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:30:02,910 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456406908076 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:30:32,917 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456406908076 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:31:02,928 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456406908076 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:31:32,950 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456406908076 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:32:02,956 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456406908076 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:32:32,964 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456406908076 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:33:02,975 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456406908076 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:33:32,984 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456406908076 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:34:03,019 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456406908076 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:34:33,039 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456406908076 for DONE:  no
+INFO  [Thread-4] 2016-02-25 14:34:42,599 repast.simphony.batch.ssh.LocalSession - Notice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is needed
+INFO  [Thread-4] 2016-02-25 14:34:44,395 repast.simphony.batch.ssh.LocalSession - Notice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is needed
+INFO  [pool-3-thread-1] 2016-02-25 14:35:03,047 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456406908076 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:35:03,064 repast.simphony.batch.ssh.SessionsDriver - Run Time: 6,5203
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:35:03,111 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Karan\AppData\Local\Temp\simphony_model_1456406908076
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:35:03,127 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Karan/git/NEMM/Output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:35:03,262 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0033
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:35:03,263 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 6,5867
+INFO  [AWT-EventQueue-0] 2016-02-25 14:40:55,278 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\Karan\git\NEMM\output\config.props
+INFO  [AWT-EventQueue-0] 2016-02-25 14:40:55,376 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\Karan\git\NEMM\batch\batch_params.xml to
+	C:\Users\Karan\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:41:06,072 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Karan\AppData\Local\Temp\Karan_localhost6459324731830241870.zip to 
+C:\Users\Karan\AppData\Local\Temp\simphony_model_1456407662603 ...
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:41:06,105 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:41:06,105 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,0584
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:41:06,105 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Karan\AppData\Local\Temp\simphony_model_1456407662603\Karan_localhost6459324731830241870.zip
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:41:06,995 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2016-02-25 14:41:37,080 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456407662603 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:42:07,095 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456407662603 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:42:37,107 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456407662603 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:43:07,125 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456407662603 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:43:37,141 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456407662603 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:44:07,150 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456407662603 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:44:37,154 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456407662603 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:45:07,227 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456407662603 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:45:37,233 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456407662603 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:46:07,243 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456407662603 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:46:37,281 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456407662603 for DONE:  no
+INFO  [pool-3-thread-1] 2016-02-25 14:47:07,325 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456407662603 for DONE:  no
+INFO  [Thread-4] 2016-02-25 14:47:12,791 repast.simphony.batch.ssh.LocalSession - Notice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is needed
+INFO  [Thread-4] 2016-02-25 14:47:13,155 repast.simphony.batch.ssh.LocalSession - Notice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out more than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is neededNotice: Developers wants to built out less than is needed
+INFO  [pool-3-thread-1] 2016-02-25 14:47:37,330 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1456407662603 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:47:37,338 repast.simphony.batch.ssh.SessionsDriver - Run Time: 6,5205
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:47:37,370 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Karan\AppData\Local\Temp\simphony_model_1456407662603
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:47:37,385 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Karan/git/NEMM/Output
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:47:37,542 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0034
+INFO  [SwingWorker-pool-2-thread-1] 2016-02-25 14:47:37,542 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 6,5826
