@@ -40,7 +40,7 @@ public class AllVariables {
 	//---- IN CASE NOT BACKTEST - INCLUDE THIS SECTION.
 	public static final int obintr = 12; 
 	public static final int firstrealtick = 48; //Altering this means you got to alter the contextbuilder! Currently this cannot be between 1 and 11. 48 = january 2016.
-	public static double[] historiccertprices = new double[]{20.58,	18.72,	25.39,	19.13,	18.61,	18.72,	20.18,	20.6,	21.39,	22.75,	23.35,	24.55,	24.16,	25.63,	23.63,	25.15,	22.02,	20.47,	21.57,	21.45,	22.87,	23.02,	22.02,	21.54,	20.45,	22.35,	20.86,	19.85,	20.13,	19.95,	19.91,	20.58,	21.14,	20.52,	19.84,	18.55,	17.83,	16.24,	15.24,	15.88,	16.06,	16.05,	15.13,	15.58,	17.14,	18.13,	17.85,	17.15};   //{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
+	public static double[] historiccertprices = new double[]{20.58,	18.72,	25.39,	19.13,	18.61,	18.72,	20.18,	20.6,	21.39,	22.75,	23.35,	24.55,	24.16,	25.63,	23.63,	25.15,	22.02,	20.47,	21.57,	21.45,	22.87,	23.02,	22.02,	21.54,	20.45,	22.35,	20.86,	19.85,	20.13,	19.95,	19.91,	20.58,	21.14,	20.52,	19.84,	18.55,	17.83,	16.24,	15.24,	15.88,	16.06,	16.05,	15.13,	15.58,	17.14,	18.13,	17.85,	17.00};   //{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
 	public static double bankPAfirstrealtick =   11400000;		
 	public static double bankOPAfirstrealtick =    400000;		//Soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
 	public static double bankTAfirstrealtick = 0;				
@@ -126,9 +126,9 @@ public class AllVariables {
 	public static double initialowenershipchangepercentile = 0.2;						//As the cert price needed has not been calculated this value indicates which project in line determines the marginal project. If 100 projects, a value of 0.2 would indicate that the 20th best project is the cutoff. For all project better than this, there is a chanceofownershipchange[0] chance for redistirbution.
 
 	//PENSION FUND DEVELOPERS
-	public static int numberofpensionfunds = 0;							//They are all investment strategy type 3. (price, with some respekct for fundamntal) and in both countries.
+	public static int numberofpensionfunds = 1;							//They are all investment strategy type 3. (price, with some respekct for fundamntal) and in both countries.
 	public static int holdinghorizontpensionproducer = 60;
-	public static double pensionfundInvestRRRAdjustFactor = 0.6;		//wACC = origonal prject specific times this, hence 0.5*8% = 4 %
+	public static double pensionfundInvestRRRAdjustFactor = 0.65;		//wACC = origonal prject specific times this, hence 0.5*8% = 4 %
 	public static int pfconstructionconstraints = 4;
 	public static int pfregioncode = 2; //1 = Norway, 2 = Both, 3 = Sweden.
 	
