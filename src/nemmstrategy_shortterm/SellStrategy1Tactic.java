@@ -134,7 +134,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 			floorroofprice = 0.0;
 		} else {
 			//will not sell rest below this price
-			floorroofprice = twoyearahead/Math.pow(tempdisc + 1, 2); //Hence this equals the discounted future expected cert price. Discounted with a risk free rate and a risk rate //In other words, the seller will not sell the variable part unless the sell price is better than the discounted future price expectations. In that case he would hold the certificates in two years.
+			floorroofprice = Math.min(twoyearahead,AllVariables.maximumfloorprice)/Math.pow(tempdisc + 1, 2); //Hence this equals the discounted future expected cert price. Discounted with a risk free rate and a risk rate //In other words, the seller will not sell the variable part unless the sell price is better than the discounted future price expectations. In that case he would hold the certificates in two years.
 		}
 //		floorroofprice = 0; // test no floor price
 		//maxBidOfferVolume = maxBidOfferVolumeMultiplier * this.getmyStrategy().getmyAgent().getlasttickproduction(); // * //What i produced the last tick

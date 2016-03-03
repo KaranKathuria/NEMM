@@ -35,15 +35,18 @@ public class ProjectDevelopment {
 		for (PowerPlant PP : TheEnvironment.projectsunderconstruction) {
 			if (PP.getstartyear() == currentyear) {
 				PP.setstatus(1);
-					if (!PP.getMyRegion().getcertificatespost2020flag() && currentyear > PP.getMyRegion().getcutoffyear()) {	//Takes care of projecs post 2020 in regions without certs post 2020.
+					if (!PP.getMyRegion().getcertificatespost2020flag() && currentyear > PP.getMyRegion().getcutoffyear()) {	//This takes care of projecs post 2020 in regions without certs post 2020.
 						PP.setendyear(PP.getMyRegion().getcutoffyear());							//Does not matter what year this is set to.
 						PP.setStarttick(currenttick+1);
 						PP.setendtick(currenttick);}												//Setting this back in time, hence these certs are never produced.
 					else {
 						PP.setendyear(Math.min(PP.getlifetime()+currentyear, Math.min(currentyear+15, TheEnvironment.theCalendar.getEndYear())));	//Takes care of projects "in overgangsordningen" with 1 year lifetime.
-						int temp = currenttick + RandomHelper.nextIntFromTo(0, TheEnvironment.theCalendar.getNumTradePdsInYear()-1);
+						int temp = currenttick + RandomHelper.nextIntFromTo(0, TheEnvironment.theCalendar.getNumTradePdsInYear()-1); //KK 20160303 
 						PP.setStarttick(temp);	//Randoml set starttick between now and 12 tick ahead.
-						PP.setendtick(temp+(TheEnvironment.theCalendar.getNumTradePdsInYear()*(PP.getendyear()-currentyear)));
+						//if (currentyear>2020){  //KK 20160303 The original is actually gets its wrong as it sets project buildt after 2020 to only produce 14 years + rand tick.
+						//	temp = 11;
+						//}
+						PP.setendtick(temp+(TheEnvironment.theCalendar.getNumTradePdsInYear()*(PP.getendyear()-currentyear))); 
 					}
 				
 				TheEnvironment.allPowerPlants.add(PP);			//Add to all operations powerplants
@@ -187,7 +190,7 @@ public class ProjectDevelopment {
 		}
 		
 		//For checking purposes.
-		if (tempcertsdeveloperswantstobuild > totalcertsneededbuilt) {
+		if (tempcertsdeveloperswantstobuild >= totalcertsneededbuilt) {
 			System.out.print("Notice: Developers wants to built out more than is needed");}
 		else {
 			System.out.print("Notice: Developers wants to built out less than is needed");}
@@ -197,7 +200,7 @@ public class ProjectDevelopment {
 		double tempbuildout = 0.0;
 		Collections.shuffle(temp_allprojectthatcanbebuild);
 		for (PowerPlant PP : temp_allprojectthatcanbebuild) {
-			if (tempbuildout < buildoutcutoff) {	//Continue to build out as long as there is neeed and aggressivness i allowed. 
+			if (tempbuildout <= buildoutcutoff) {	//Continue to build out as long as there is neeed and aggressivness i allowed. 
 				if (!PP.getMyRegion().getcertificatespost2020flag() && (currentyear+PP.getminconstructionyears()) > PP.getMyRegion().getcutoffyear()) {
 					System.out.print("Notice: Projects does not qualify for certs, but is built anyway");
 					PP.setstatus(2);

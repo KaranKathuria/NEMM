@@ -41,8 +41,8 @@ public class AllVariables {
 	public static final int obintr = 12; 
 	public static final int firstrealtick = 48; //Altering this means you got to alter the contextbuilder! Currently this cannot be between 1 and 11. 48 = january 2016.
 	public static double[] historiccertprices = new double[]{20.58,	18.72,	25.39,	19.13,	18.61,	18.72,	20.18,	20.6,	21.39,	22.75,	23.35,	24.55,	24.16,	25.63,	23.63,	25.15,	22.02,	20.47,	21.57,	21.45,	22.87,	23.02,	22.02,	21.54,	20.45,	22.35,	20.86,	19.85,	20.13,	19.95,	19.91,	20.58,	21.14,	20.52,	19.84,	18.55,	17.83,	16.24,	15.24,	15.88,	16.06,	16.05,	15.13,	15.58,	17.14,	18.13,	17.85,	17.00};   //{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
-	public static double bankPAfirstrealtick =   11400000;		
-	public static double bankOPAfirstrealtick =    400000;		//Soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
+	public static double bankPAfirstrealtick =   14400000;		//Faktisk bank 
+	public static double bankOPAfirstrealtick =    600000;		//Soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
 	public static double bankTAfirstrealtick = 0;				
 	
 	
@@ -108,13 +108,13 @@ public class AllVariables {
 	
 	//Regulations for certificates deadline
 	public static boolean certificatespost2020_Norway = false;
-	public static boolean certificatespost2020_Sweden = true;
+	public static boolean certificatespost2020_Sweden = false;
 	public static int cutoffyear_Norway = 2021;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
 	public static int cutoffyear_Sweden = 2021;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
 	//MARKET COORDINATION STRENGTH - Factor determining how aggressiv the build out is Random between max and min for each year. To which extend developers looks at other decisions.
-	public static double maxbuildoutaggressivness = 1.06; 			//As it is the final value that really limits the build out the spread must to large. 1 = no overinvestment.
-	public static double minbuildoutaggressivness = 1.03; 			//Remember that this is multiplied with the total future demand, hence 1.01 implies 67 MW of new capacity added in 2020 (and about half that in 2026).
+	public static double maxbuildoutaggressivness = 0.98; 			//As it is the final value that really limits the build out the spread must to large. 1 = no overinvestment.
+	public static double minbuildoutaggressivness = 0.95; 			//Remember that this is multiplied with the total future demand, hence 1.01 implies 67 MW of new capacity added in 2020 (and about half that in 2026).
 
 	//CONCESSION PROSESS
 	public static int maxyearsinconcessionqueue = 3;				//Number of years in addition to minimum number of years in concession queue given as input from excel. After this, if not having received concession, the project is trashed.
@@ -125,7 +125,7 @@ public class AllVariables {
 	public static double[] chanceofownershipchange = new double[]{0.2,0.2,0.3,0.4};		//Indicates the chance (%) of ownership change according to years postponed by curren owner when setting criteria flag. Thus, of a project have been postpone (not invested when it could) one year, there is a [0] chance for owernship change. For the second year, there is [1] chance, etc. Notice that one year is 2015 right after the decisions are made/not made..
 	public static double initialowenershipchangepercentile = 0.2;						//As the cert price needed has not been calculated this value indicates which project in line determines the marginal project. If 100 projects, a value of 0.2 would indicate that the 20th best project is the cutoff. For all project better than this, there is a chanceofownershipchange[0] chance for redistirbution.
 
-	//PENSION FUND DEVELOPERS
+	//PENSION FUND DEVELOPERS 
 	public static int numberofpensionfunds = 1;							//They are all investment strategy type 3. (price, with some respekct for fundamntal) and in both countries.
 	public static int holdinghorizontpensionproducer = 60;
 	public static double pensionfundInvestRRRAdjustFactor = 0.65;		//wACC = origonal prject specific times this, hence 0.5*8% = 4 %
@@ -246,10 +246,11 @@ public class AllVariables {
 	public static int MPECount = 17;								//Number of futuer years seen by the MPE-analysis. THats number-1 years ahead (including this year).
 	public static int LPECount = MPECount+minpostpondyears;			//Number of futuer years seen by the LPE-analysis
 	public static int yearsbuildout = 5;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA. KK20151118: Brukt 16 histoisk, men kan ikke forstå hvorfor det er rett! Med verdi på 1 så bygger man ut for neste års underskudd i hvert iterert år, det betyr generalt at man bygger senere og ergo må bygge mere og dermed dyrere.
-	public static double[] RAR = new double[]{0.42,0.48};			//1 is maks, or we get obverse results for roof (see buystrategies1tactics)	//Previusly directly altered in CompanyAgent.java
+	public static double[] RAR = new double[]{0.34,0.50};			//1 is maksimum. Higher number gives a wider range of roof and floor around the FMA. A bigger spread of numbers gives bigger variation between agents.
 	public static double backtestminFMA = 40;						//20151130 KK: added for backtest qickfix of FMA at 2012.
 	public static double stdmediumrunpriceexpect = 0.03;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.035;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
+	public static double maximumfloorprice = 85;					//The maximum floor used by SellStrategies. Even though the discointed FMA should imply a floorprice higher than this, this would be limited her. In pracis, this number can be divided on 2 to get the actual floor.
 	
 	//WIND VARIATION
 	public static double meanwindproductionfactor = getmeanwindproductionfactor();		//read from GUI
@@ -259,7 +260,7 @@ public class AllVariables {
 	//CERT DEMAND VARIATION
 	public static double meancertdemandfactor = 1;					//Systematically over/under estimation
 	public static double stdcertdemandfactor = 0.031;				//Based on Optimeering uncertainty analysis.
-	public static double maxstdcertdemandfactor = 2;				//Cut-off as more extreame outcomes than this would trigger other heating sources or less demand.
+	public static double maxstdcertdemandfactor = 1.8;				//Cut-off as more extreame outcomes than this would trigger other heating sources or less demand.
 	
 	//Generic Strategy 
 	public static int MaxTacticPreferenceScore = 6; //6   Not sure how strongly this affects prices.
