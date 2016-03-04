@@ -162,7 +162,15 @@ public class SellStrategy1Tactic extends GenericTactic {
 					physicalposition/myStrategy.getmyAgent().getNumTicksToEmptyPosition())));
 
 		}
-		ret.setPrice(paramMustSellPriceMult*expectedprice);
+		//SET PRICE
+		//If the price is near zero, the price steps would be very small, hence we introduced the minimum price stem. This different up than down. 
+		double newprice;
+		if (paramMustSellPriceMult>=1){
+		newprice = Math.max(paramMustSellPriceMult*expectedprice, expectedprice+(AllVariables.minimumpricstepineuro_up*paramMustSellPriceMult));
+		} else {
+		newprice = paramMustSellPriceMult*expectedprice;
+		}
+		ret.setPrice(newprice);
 		
 		if (TheEnvironment.theCalendar.getCurrentTick() == 50) {
 			int temp=0;
@@ -185,8 +193,14 @@ public class SellStrategy1Tactic extends GenericTactic {
 //			ret.setCertVolume(Math.max(0.0,Math.min(maxBidOfferVolume-mustsell,physicalposition-mustsell))); //rest of the monthly production sold at expected price.			
 			ret.setCertVolume(Math.max(0.0,Math.min(1.0, maxBidOfferVolumeMultiplier)*(physicalposition-mustsell))); //rest of the monthly production sold at expected price.		KK 20151129 Interesting. why not the above?	
 		}
-		//Added max.max 20150519
-		ret.setPrice(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice)); //Prices not symmetric around expected price with must of the volume tried sold at at premium (1+discount)*expt.
+		//Added max.max 20150519 and 20160303
+		double newprice;
+		if (paramRestVolPriceMult>=1){
+		newprice = Math.max(paramRestVolPriceMult*expectedprice, expectedprice+(AllVariables.minimumpricstepineuro_up*paramRestVolPriceMult));
+		} else { //Should also have a logic.
+		newprice = paramRestVolPriceMult*expectedprice;
+		}
+		ret.setPrice(Math.max(newprice, floorroofprice)); //Prices not symmetric around expected price with must of the volume tried sold at at premium (1+discount)*expt.
 		//ret.setPrice(Math.min(Math.max(expectedprice*paramRestVolPriceMult, floorroofprice), AllVariables.certMaxPrice));
 		
 		return ret;

@@ -1,0 +1,41 @@
+<repast.simphony.data2.engine.FileSinkDescriptor>
+  <name>Market and region</name>
+  <dataSet>Output data: Market and region</dataSet>
+  <delimiter>;</delimiter>
+  <format>TABULAR</format>
+  <sourceIds class="linked-hash-set">
+    <string>run</string>
+    <string>tick</string>
+    <string>Running scenario number</string>
+    <string>random_seed</string>
+    <string>Certificate price (Euro)</string>
+    <string>Power price Norway (Euro)</string>
+    <string>Power price Sweden (Euro)</string>
+    <string>Number of plants i Norway (acc)</string>
+    <string>Number of plants i Sweden (acc)</string>
+    <string>Added annual production Norway (acc) (MWh)</string>
+    <string>Added annual production Sweden (acc) (MWh)</string>
+    <string>Eligible annual production Norway (MWh)</string>
+    <string>Eligible annual production Sweden (MWh)</string>
+    <string>Eligible annual production Total (MWh)</string>
+    <string>Added wind capacity Norway (acc) (MW)</string>
+    <string>Added wind capacity Sweden (acc) (MW)</string>
+    <string>Added hydro capacity Norway (acc) (MW)</string>
+    <string>Added hydro capacity Sweden (acc) (MW)</string>
+    <string>Added all other capacity Norway (acc) (MW)</string>
+    <string>Added all other capacity Sweden (acc) (MW)</string>
+    <string>Certificate balance (MW)</string>
+    <string>Total capacity added Norway (acc) (MW)</string>
+    <string>Total capacity added Sweden (acc) (MW)</string>
+    <string>Added wind production Norway (acc) (MWh)</string>
+    <string>Added hydo production Norway (acc) (MWh)</string>
+    <string>Added all other production Norway (acc) (MWh)</string>
+    <string>Added hydro production Sweden (acc) (MWh)</string>
+    <string>Added all other production Sweden (acc) (MWh)</string>
+    <string>Added wind production Sweden (acc) (MWh)</string>
+    <string>Total production</string>
+    <string>Total demand</string>
+  </sourceIds>
+  <fileName>Output\Market and region.csv</fileName>
+  <addTimeStamp>true</addTimeStamp>
+</repast.simphony.data2.engine.FileSinkDescriptor>

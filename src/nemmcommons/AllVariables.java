@@ -108,12 +108,12 @@ public class AllVariables {
 	
 	//Regulations for certificates deadline
 	public static boolean certificatespost2020_Norway = false;
-	public static boolean certificatespost2020_Sweden = false;
+	public static boolean certificatespost2020_Sweden = true;
 	public static int cutoffyear_Norway = 2021;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
 	public static int cutoffyear_Sweden = 2021;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
-	//MARKET COORDINATION STRENGTH - Factor determining how aggressiv the build out is Random between max and min for each year. To which extend developers looks at other decisions.
-	public static double maxbuildoutaggressivness = 0.98; 			//As it is the final value that really limits the build out the spread must to large. 1 = no overinvestment.
+	//MARKET COORDINATION STRENGTH - Factor determining how aggressiv the build out is. Each developer recives a number between min and max that is used to estimate the future shortfall/overinvestment.
+	public static double maxbuildoutaggressivness = 1.05; 			//As it is the final value that really limits the build out the spread must to large. 1 = no overinvestment.
 	public static double minbuildoutaggressivness = 0.95; 			//Remember that this is multiplied with the total future demand, hence 1.01 implies 67 MW of new capacity added in 2020 (and about half that in 2026).
 
 	//CONCESSION PROSESS
@@ -134,7 +134,7 @@ public class AllVariables {
 	
 	//CONTROL STATION MARKET ADJUSTMENTS
 	public static boolean certificatedemandinqouta = true; //True indicating that certficatea is written as qouta in the law (2015). If true, then the demand is adjusted following the control station. IF false, its adjusted every year.
-	public static int[] controlstationtick = new int[]{60, 84, 108, 132, 156, 180, 228, 276}; //timing of controll station. If above is true, this tick indicates sertificate bank corrections. If false, not in use. 
+	public static int[] controlstationtick = new int[]{60, 84, 108, 132, 156, 180, 204, 228, 252, 276}; //timing of controll station. If above is true, this tick indicates sertificate bank corrections. If false, not in use. 
 	
 	
 	//Step 2: Ends
@@ -204,6 +204,9 @@ public class AllVariables {
 	public static double tacticMinUtilityAlphaPA = 0.2;
 	// Penalty ratio for not selling "turnover" (Must sell) certificates
 	public static double tacticTurnoverPenaltyPA = 0.5;
+	//Minimum price steps for all bids.
+	public static double minimumpricstepineuro_up = 0;
+	public static double minimumpricstepineuro_down = 0;
 	
 	// ---- OBLIGATED PURCHASER STRATEGIES AND TACTIC PARAMETERS
 	public static int tacticDefaultLearn_OPBuyStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)

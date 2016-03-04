@@ -1,0 +1,94 @@
+<repast.simphony.data2.engine.DataSetDescriptor>
+  <name>Certificate Price</name>
+  <type>AGGREGATE</type>
+  <inclTick>true</inclTick>
+  <inclBatchRun>false</inclBatchRun>
+  <inclRandomSeed>false</inclRandomSeed>
+  <scheduleParams>
+    <start>0.0</start>
+    <interval>1.0</interval>
+    <priority>-Infinity</priority>
+    <pType>LAST</pType>
+    <duration>-1.0</duration>
+    <frequency>REPEAT</frequency>
+    <hashCode>1804531736</hashCode>
+  </scheduleParams>
+  <atEnd>false</atEnd>
+  <methodDataSources class="linked-hash-map">
+    <entry>
+      <string>Cert price</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Cert price</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>currentmarketprice</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Expected price</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Expected price</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getpriceexpetations</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Floor</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Floor</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getfloor</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Roof</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Roof</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getroof</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Powerprice_N</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Powerprice_N</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getcurrentpowerprice_N</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>CertificateValue_Lon_Prod</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>CertificateValue_Lon_Prod</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getCVvalue_long_producer</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>CertificateValue_Prod</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>CertificateValue_Prod</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getCVvalue_short_producer</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>CertificateValue_Purch</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>CertificateValue_Purch</id>
+        <className>nemmcommons.NEMMContextBuilder</className>
+        <methodName>getCVvalue_medium_producer</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+  </methodDataSources>
+  <countSources class="linked-hash-map"/>
+  <customNADataSources class="linked-hash-map"/>
+  <customAggDataSources class="linked-hash-map"/>
+</repast.simphony.data2.engine.DataSetDescriptor>

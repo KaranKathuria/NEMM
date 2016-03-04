@@ -339,6 +339,7 @@ public class CompanyAgent extends ParentAgent {
 		private int relativerank_norway;						//This is the relative rank of the developer i terms of the owner Company Agents wacc. 1 is thus implying that the developer has the lowest wacc of all.
 		private int relativerank_sweden;						//This is the relative rank of the developer i terms of the owner Company Agents wacc. 1 is thus implying that the developer has the lowest wacc of all.
 		private int cvvaluehorizont; // number of ticks the agent will try to empty its position over
+		private double buildoutaggressivness;			//How the developer views the future market supply/demand. Replase the old buildoutaggressivness
 
 		
 		//Endogenous variables 
@@ -358,6 +359,7 @@ public class CompanyAgent extends ParentAgent {
 			constructionlimit = AllVariables.constructionconstraints;					//Max number of projects getting in from moving to construction. 
 			totalcapacitylimit = 100000000;
 			cvvaluehorizont = AllVariables.cvvaluehorizont;
+			buildoutaggressivness = RandomHelper.nextDoubleFromTo(AllVariables.minbuildoutaggressivness, AllVariables.maxbuildoutaggressivness);
 			if (AllVariables.isbacktest) {
 				constructionlimit = constructionlimit*AllVariables.backtesteaseconstruction+2;
 				totalcapacitylimit = totalcapacitylimit*AllVariables.backtesteaseconstruction;
@@ -449,7 +451,7 @@ public class CompanyAgent extends ParentAgent {
 				investmentdecisiontype = 3;
 				fundamentaleasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentfundamentaleasefactordistribution[0], AllVariables.developerinvestmentfundamentaleasefactordistribution[1]);
 				priceeasefactor = 1;
-				
+				buildoutaggressivness = RandomHelper.nextDoubleFromTo(AllVariables.minbuildoutaggressivness, AllVariables.maxbuildoutaggressivness);
 			}
 				
 			if (this.getregionpartcode()>3 || this.getregionpartcode() < 1) {
@@ -501,6 +503,7 @@ public class CompanyAgent extends ParentAgent {
 		public void setrelativerank_norway(int a) {this.relativerank_norway = a;}
 		public int getrelativerank_sweden() {return relativerank_sweden;}
 		public void setrelativerank_sweden(int a) {this.relativerank_sweden = a;}
+		public double getbuildoutaggressivness() {return this.buildoutaggressivness;}
 		
 		
 	}

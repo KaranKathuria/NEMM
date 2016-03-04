@@ -43,9 +43,9 @@ public class ProjectDevelopment {
 						PP.setendyear(Math.min(PP.getlifetime()+currentyear, Math.min(currentyear+15, TheEnvironment.theCalendar.getEndYear())));	//Takes care of projects "in overgangsordningen" with 1 year lifetime.
 						int temp = currenttick + RandomHelper.nextIntFromTo(0, TheEnvironment.theCalendar.getNumTradePdsInYear()-1); //KK 20160303 
 						PP.setStarttick(temp);	//Randoml set starttick between now and 12 tick ahead.
-						//if (currentyear>2020){  //KK 20160303 The original is actually gets its wrong as it sets project buildt after 2020 to only produce 14 years + rand tick.
-						//	temp = 11;
-						//}
+						if (currentyear>2020){  //KK 20160303 The original is actually gets its wrong as it sets project buildt after 2020 to only produce 14 years + rand tick.
+						temp = currenttick+11;
+						}
 						PP.setendtick(temp+(TheEnvironment.theCalendar.getNumTradePdsInYear()*(PP.getendyear()-currentyear))); 
 					}
 				
@@ -170,12 +170,8 @@ public class ProjectDevelopment {
 		//Then something that uses the normalproduction of the plants added and the cutoff to determine the need for annual production. Then uses this to limit the total buildout.
 		double tempfutureproduction = FundamentalMarketAnalysis.getbalanceandfutureproduction();
 		double tempfuturedemand = FundamentalMarketAnalysis.getfuturedemand();
-		double a = tempfuturedemand;  //Positiv number
-		int c =2;
 		
-		double tempfactor = RandomHelper.nextDoubleFromTo(AllVariables.minbuildoutaggressivness, AllVariables.maxbuildoutaggressivness);	//Calculating the build-out limitation factor. Used to determining the "gold rush" limit factor used below.
 		
-		double buildoutcutoff = Math.max(((tempfuturedemand*tempfactor)-tempfutureproduction),0.0);			//Rather then using the factor for balance (which is not good when there is no need for certs, the factor is multiplied with demand before adding current balance and all future production.
 		double totalcertsneededbuilt = Math.max(-FundamentalMarketAnalysis.getallfuturecertificatebalance(), 0.0);		//Gets all the future uncovered need for certificates (normal year assumption) from the FMA
 		double tempcertsdeveloperswantstobuild=0;														//Total certs added from the projects that the developers wants to build out.
 		int t = 2;
@@ -195,11 +191,16 @@ public class ProjectDevelopment {
 		else {
 			System.out.print("Notice: Developers wants to built out less than is needed");}
 			
-		
+
 		//Then we loop through all that can be build out, ensure that we do not "gold rush" and only build out if status = 9 (the developer actually wants to build it).
 		double tempbuildout = 0.0;
 		Collections.shuffle(temp_allprojectthatcanbebuild);
 		for (PowerPlant PP : temp_allprojectthatcanbebuild) {
+			
+			//Removed 03.03.2016: double tempfactor = RandomHelper.nextDoubleFromTo(AllVariables.minbuildoutaggressivness, AllVariables.maxbuildoutaggressivness);	//Calculating the build-out limitation factor. Used to determining the "gold rush" limit factor used below.
+			double tempfactor = PP.getMyCompany().getdeveloperagent().getbuildoutaggressivness();	//Calculating the build-out limitation factor. Used to determining the "gold rush" limit factor used below.
+			double buildoutcutoff = Math.max(((tempfuturedemand*tempfactor)-tempfutureproduction),0.0);			//Rather then using the factor for balance (which is not good when there is no need for certs, the factor is multiplied with demand before adding current balance and all future production.
+
 			if (tempbuildout <= buildoutcutoff) {	//Continue to build out as long as there is neeed and aggressivness i allowed. 
 				if (!PP.getMyRegion().getcertificatespost2020flag() && (currentyear+PP.getminconstructionyears()) > PP.getMyRegion().getcutoffyear()) {
 					System.out.print("Notice: Projects does not qualify for certs, but is built anyway");
