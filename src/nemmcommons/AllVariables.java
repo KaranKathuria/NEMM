@@ -113,7 +113,7 @@ public class AllVariables {
 	public static int cutoffyear_Sweden = 2021;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
 	//MARKET COORDINATION STRENGTH - Factor determining how aggressiv the build out is. Each developer recives a number between min and max that is used to estimate the future shortfall/overinvestment.
-	public static double maxbuildoutaggressivness = 1.05; 			//As it is the final value that really limits the build out the spread must to large. 1 = no overinvestment.
+	public static double maxbuildoutaggressivness = 1.03; 			//As it is the final value that really limits the build out the spread must to large. 1 = no overinvestment.
 	public static double minbuildoutaggressivness = 0.95; 			//Remember that this is multiplied with the total future demand, hence 1.01 implies 67 MW of new capacity added in 2020 (and about half that in 2026).
 
 	//CONCESSION PROSESS
@@ -205,8 +205,8 @@ public class AllVariables {
 	// Penalty ratio for not selling "turnover" (Must sell) certificates
 	public static double tacticTurnoverPenaltyPA = 0.5;
 	//Minimum price steps for all bids.
-	public static double minimumpricstepineuro_up = 0;
-	public static double minimumpricstepineuro_down = 0;
+	public static double minimumpricstepineuro_up = 0.5;
+	public static double minimumpricstepineuro_down = 0.5;
 	
 	// ---- OBLIGATED PURCHASER STRATEGIES AND TACTIC PARAMETERS
 	public static int tacticDefaultLearn_OPBuyStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
