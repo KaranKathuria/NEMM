@@ -159,7 +159,7 @@ public class MarketAnalysisAgent extends ParentAgent {
 		
 		// Parameters used in the analysis
 		numTicksRemaining = Math.max(0,TheEnvironment.theCalendar.getNumTicks()-TheEnvironment.theCalendar.getCurrentTick()
-				-numTicksAheadMax+1);
+				-1); //20160307KK: Former: "-numTicksAheadMax+1);"
 		numTicksAhead = Math.min(numTicksRemaining, numTicksAheadMax);
 		numRatioAdjustments = AllVariables.ratioAdjFactor.length;
 		if(numTicksAhead>0) {

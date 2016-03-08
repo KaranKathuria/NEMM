@@ -62,6 +62,10 @@ public class CVRatioCalculations {
 		int currentyear = TheEnvironment.theCalendar.getCurrentYear();
 		int yearsleft = TheEnvironment.theCalendar.getNumYears() - (currentyear - TheEnvironment.theCalendar.getStartYear());
 		int ticksinayear = TheEnvironment.theCalendar.getNumTradePdsInYear();
+		//KK Added 20160307 to correct for inpute larger than 287.
+		if (thetick_tickID >= totalticks) {
+			thetick_tickID = totalticks-1;
+		}
 		
 		double currentfuturedemand = 0;															//wrong nameAll future demand from now
 		double thetickfuturedemand = 0;															//All future demand from thetick.

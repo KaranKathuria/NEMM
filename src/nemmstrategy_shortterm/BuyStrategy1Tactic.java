@@ -68,7 +68,15 @@ public class BuyStrategy1Tactic extends GenericTactic {
 			ret.setCertVolume(Math.max(0.0, Math.max(-physicalposition*paramMustBuyShare, 
 					-physicalposition/myStrategy.getmyAgent().getNumTicksToEmptyPosition())));
 		}
-		ret.setPrice(paramMustBuyPriceMult*expectedprice); //Given must buy volume price. 
+		double newprice;
+		if (paramMustBuyPriceMult>1){
+			newprice = Math.max(paramMustBuyPriceMult*expectedprice, expectedprice+(AllVariables.minimumpricstepineuro_up*paramMustBuyPriceMult));
+		}else if (paramMustBuyPriceMult<1){
+				newprice = Math.max(Math.min(paramMustBuyPriceMult*expectedprice, expectedprice-(AllVariables.minimumpricstepineuro_down*paramMustBuyPriceMult)),0.0);	
+		} else {
+		newprice = paramMustBuyPriceMult*expectedprice;	
+			}
+		ret.setPrice(newprice); //Given must buy volume price. 
 
 		return ret;
 	}
@@ -88,13 +96,18 @@ public class BuyStrategy1Tactic extends GenericTactic {
 			restvolpart2 = AllVariables.shareoffuturehhdemandpurchased * this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getholdinghtickdemand(); //future known demand.
 					
 			ret.setCertVolume(restvolpart1 + restvolpart2);
-			
-			double  a= this.getmyStrategy().getmyAgent().getagentcompanyanalysisagent().getvolumeanalysisagent().getvolumeprognosis().getholdinghtickdemand();
-			
-			int at = 2;
-			
 		}
-		ret.setPrice(Math.min(expectedprice*paramRestVolPriceMult, floorroofprice)); //Most likely that the second offer is at at pricemultiplier. Hence they buy what they dont must, at a pricemultiplier.
+		double newprice;
+		if (paramRestVolPriceMult>1){
+			newprice = Math.max(paramRestVolPriceMult*expectedprice, expectedprice+(AllVariables.minimumpricstepineuro_up*paramRestVolPriceMult));
+		} 
+		else if (paramRestVolPriceMult<1){
+			newprice = Math.max(Math.min(paramRestVolPriceMult*expectedprice, expectedprice-(AllVariables.minimumpricstepineuro_down*paramRestVolPriceMult)),0.0);	
+		}
+		else {
+			newprice = paramRestVolPriceMult*expectedprice;
+		}
+		ret.setPrice(Math.min(newprice, floorroofprice)); //Most likely that the second offer is at at pricemultiplier. Hence they buy what they dont must, at a pricemultiplier.
 		return ret;
 	}
 	

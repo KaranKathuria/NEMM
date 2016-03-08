@@ -9,7 +9,6 @@ package nemmstrategy_shortterm;
 
 import java.util.ArrayList;
 
-
 import nemmcommons.AllVariables;
 import nemmenvironment.TheEnvironment;
 import nemmprocesses.ShortTermMarket;
@@ -165,18 +164,15 @@ public class SellStrategy1Tactic extends GenericTactic {
 		//SET PRICE
 		//If the price is near zero, the price steps would be very small, hence we introduced the minimum price stem. This different up than down. 
 		double newprice;
-		if (paramMustSellPriceMult>=1){
+		if (paramMustSellPriceMult>1){
 		newprice = Math.max(paramMustSellPriceMult*expectedprice, expectedprice+(AllVariables.minimumpricstepineuro_up*paramMustSellPriceMult));
+		} else if (paramMustSellPriceMult<1){
+			newprice = Math.max(Math.min(paramMustSellPriceMult*expectedprice, expectedprice-(AllVariables.minimumpricstepineuro_down*paramMustSellPriceMult)),0.0);	
 		} else {
 		newprice = paramMustSellPriceMult*expectedprice;
 		}
 		ret.setPrice(newprice);
-		
-		if (TheEnvironment.theCalendar.getCurrentTick() == 50) {
-			int temp=0;
-			temp = 1;
-		}
-		
+	
 		return ret;
 		}
 		
@@ -195,8 +191,10 @@ public class SellStrategy1Tactic extends GenericTactic {
 		}
 		//Added max.max 20150519 and 20160303
 		double newprice;
-		if (paramRestVolPriceMult>=1){
+		if (paramRestVolPriceMult>1){
 		newprice = Math.max(paramRestVolPriceMult*expectedprice, expectedprice+(AllVariables.minimumpricstepineuro_up*paramRestVolPriceMult));
+		} else if (paramRestVolPriceMult<1){
+			newprice = Math.max(Math.min(paramRestVolPriceMult*expectedprice, expectedprice-(AllVariables.minimumpricstepineuro_down*paramRestVolPriceMult)),0.0);	
 		} else { //Should also have a logic.
 		newprice = paramRestVolPriceMult*expectedprice;
 		}
