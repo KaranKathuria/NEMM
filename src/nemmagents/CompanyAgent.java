@@ -189,6 +189,7 @@ public class CompanyAgent extends ParentAgent {
 		public GenericStrategy getbeststrategy() {return beststrategy;}
 		public void setbeststrategy(GenericStrategy s) {beststrategy = s;}
 		public ArrayList<GenericStrategy> getallstrategies() {return allstrategies;}
+		public void setnumTicksToEmptyPosition(int a) {this.numTicksToEmptyPosition = a;}
 		
 		// ---- GJB Added
 		public int getNumTicksToEmptyPosition() {

@@ -136,6 +136,11 @@ public class AllVariables {
 	public static boolean certificatedemandinqouta = true; //True indicating that certficatea is written as qouta in the law (2015). If true, then the demand is adjusted following the control station. IF false, its adjusted every year.
 	public static int[] controlstationtick = new int[]{60, 84, 108, 132, 156, 180, 204, 228, 252, 276}; //timing of controll station. If above is true, this tick indicates sertificate bank corrections. If false, not in use. 
 	
+	//CHANGE IN HOLDINGHORIZON
+	public static boolean changeinholdinghorzint = true; //If false, this is not modelled
+	public static double changeshare = 0.8; //Probability that buyers and sellers from the lowest hh whom changes hh.
+	public static int newhh = 12;			//Ticks added
+	public static int tickforchangeinhh = 73; //75 = april 2018
 	
 	//Step 2: Ends
 	//================================================================================================================================================================================================

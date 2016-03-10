@@ -24,6 +24,7 @@ import nemmenvironment.TheEnvironment.GlobalValues;
 import nemmprocesses.ControlStation;
 import nemmprocesses.DistributeProjectsandPowerPlants;
 import nemmprocesses.Forcast;
+import nemmprocesses.HorizonChange;
 import nemmprocesses.ProjectDevelopment;
 import nemmprocesses.ProjectMarket;
 import nemmprocesses.ShortTermMarket;
@@ -129,6 +130,7 @@ public void monthlymarketschedule() {
 	
 	//Reads the values to the global values arrays. Also calcualtes display values.
 	TheEnvironment.GlobalValues.monthlyglobalvalueupdate();
+	HorizonChange.horizontchangeprocess();
 		
 }
 
@@ -137,7 +139,7 @@ public void monthlymarketschedule() {
 public void annualmarketschedule() {
 	GlobalValues.annualglobalvalueupdate();
 	
-	//If the law is change so that the demand is qouted in certificates, this will note be ran.
+	//If the law is change so that the demand is qouted in certificates, this will NOT be ran.
 	if (AllVariables.certificatedemandinqouta) {
 	ControlStation.controlstationupdate();
 	}
