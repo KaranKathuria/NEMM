@@ -103,7 +103,7 @@ public class FundamentalMarketAnalysis {
 		//Adding to allPowerPlants from the plants in process that will be finished.
 		for (PowerPlant PP : projectsunderconstruction_copy) {
 			if (PP.getstartyear() == currentyear+i) {									 //Currentyear + i is the iterated year. Hence if they start this year --> Move.
-				if (!PP.getMyRegion().getcertificatespost2020flag() && (PP.getstartyear()) > PP.getMyRegion().getcutoffyear()) { //If certflag is false and years is larger than cuoffyear.
+				if (!PP.getMyRegion().getcertificatespost2020flag() && (PP.getstartyear()) >= PP.getMyRegion().getcutoffyear()) { //If certflag is false and years is larger than cuoffyear.
 					PP.setendyear(PP.getstartyear()-1);
 				}
 				else {

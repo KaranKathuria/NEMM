@@ -133,14 +133,18 @@ public class AllVariables {
 	public static int pfregioncode = 2; //1 = Norway, 2 = Both, 3 = Sweden.
 	
 	//CONTROL STATION MARKET ADJUSTMENTS
-	public static boolean certificatedemandinqouta = true; //True indicating that certficatea is written as qouta in the law (2015). If true, then the demand is adjusted following the control station. IF false, its adjusted every year.
+	public static boolean certificatedemandinqouta = false; //True indicating that certficatea is written as qouta in the law (2015). If true, then the demand is adjusted following the control station. IF false, its adjusted every year.
 	public static int[] controlstationtick = new int[]{60, 84, 108, 132, 156, 180, 204, 228, 252, 276}; //timing of controll station. If above is true, this tick indicates sertificate bank corrections. If false, not in use. 
 	
 	//CHANGE IN HOLDINGHORIZON
 	public static boolean changeinholdinghorzint = true; //If false, this is not modelled
-	public static double changeshare = 0.8; //Probability that buyers and sellers from the lowest hh whom changes hh.
-	public static int newhh = 12;			//Ticks added
-	public static int tickforchangeinhh = 73; //75 = april 2018
+	public static double changeshare1 = 0.5; //Probability that buyers and sellers from the lowest hh whom changes hh, in the first hhchange process.
+	public static double changeshare2 = 0.9; //Probability that buyers and sellers from the lowest hh whom changes hh, in the second hhchange process.
+	public static int newhh1 = 12;			//Ticks added to the hh of the shortest market participants  [0]
+	public static int newhh2 = 30;			//Ticks added to the hh of the second shortest market participants [1]
+	public static int tickforchangeinhh1 = 73; //75 = april 2018 first pricess start tick
+	public static int tickforchangeinhh2 = 80; //75 = april 2018 second pricess start tick
+
 	
 	//Step 2: Ends
 	//================================================================================================================================================================================================
