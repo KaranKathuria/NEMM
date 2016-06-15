@@ -41,7 +41,7 @@ public class AllVariables {
 	public static final int obintr = 12; 
 	public static final int firstrealtick = 48; //Altering this means you got to alter the contextbuilder! Currently this cannot be between 1 and 11. 48 = january 2016.
 	public static double[] historiccertprices = new double[]{20.58,	18.72,	25.39,	19.13,	18.61,	18.72,	20.18,	20.6,	21.39,	22.75,	23.35,	24.55,	24.16,	25.63,	23.63,	25.15,	22.02,	20.47,	21.57,	21.45,	22.87,	23.02,	22.02,	21.54,	20.45,	22.35,	20.86,	19.85,	20.13,	19.95,	19.91,	20.58,	21.14,	20.52,	19.84,	18.55,	17.83,	16.24,	15.24,	15.88,	16.06,	16.05,	15.13,	15.58,	17.14,	18.13,	17.85,	17.00};   //{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
-	public static double bankPAfirstrealtick =   14400000;		//Faktisk bank 
+	public static double bankPAfirstrealtick =   16400000;		//Faktisk bank //
 	public static double bankOPAfirstrealtick =    600000;		//Soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
 	public static double bankTAfirstrealtick = 0;				
 	
