@@ -20,7 +20,7 @@ public class AllVariables {
 	//Step 1: Starts.
 	
 	public static String casename = "2016_H1_BaseCase"; 					//Name of the case ran. That is not the simulation, not the run, but the base case (or sensitivity case).
-	public static String inputfile = "2016_H1_NEMM_2016.xlsx";			//Name of inputfile (in case not a backtest. If backtest, the below is used).
+	public static String inputfile = "2016_H2_MARC_2016.xlsx";			//Name of inputfile (in case not a backtest. If backtest, the below is used).
 	public static String backtestfile = "Q4_2015_NEMM_2012_backtest_typ2.xlsx";
 	public static boolean isbacktest = false;					//Alters parts of the code (readexcel and scenario and Context) in order to run backtest (that is 2012 as start year and 300 ticks). Does not later the input data in AllVariables (bank, price etc).
 	public static boolean useTestData = false;					
@@ -108,7 +108,7 @@ public class AllVariables {
 	
 	//Regulations for certificates deadline
 	public static boolean certificatespost2020_Norway = false;
-	public static boolean certificatespost2020_Sweden = true;
+	public static boolean certificatespost2020_Sweden = false;
 	public static int cutoffyear_Norway = 2021;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
 	public static int cutoffyear_Sweden = 2021;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
@@ -133,7 +133,7 @@ public class AllVariables {
 	public static int pfregioncode = 2; //1 = Norway, 2 = Both, 3 = Sweden.
 	
 	//CONTROL STATION MARKET ADJUSTMENTS
-	public static boolean certificatedemandinqouta = false; //True indicating that certficatea is written as qouta in the law (2015). If true, then the demand is adjusted following the control station. IF false, its adjusted every year.
+	public static boolean certificatedemandinqouta = true; //True indicating that certficatea is written as qouta in the law (2015). If true, then the demand is adjusted following the control station. IF false, its adjusted every year.
 	public static int[] controlstationtick = new int[]{60, 84, 108, 132, 156, 180, 204, 228, 252, 276}; //timing of controll station. If above is true, this tick indicates sertificate bank corrections. If false, not in use. 
 	
 	//CHANGE IN HOLDINGHORIZON
