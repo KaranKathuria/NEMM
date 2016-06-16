@@ -52,10 +52,10 @@ public class ReadExcel {
 	 //se
 	 
  	public static void InitReadExcel() {
-
+ 		/* KK 201606161 to save memory this is marked out.
  		if (AllVariables.useTestData){
  			filePath = working_directory + File.separator + "NEMM_testdata.xls"; 
- 		}
+ 		} */
  		if (AllVariables.isbacktest){
  			filePath = working_directory + File.separator + AllVariables.backtestfile; 
  		}
@@ -90,7 +90,7 @@ public class ReadExcel {
 			
 					
 		}catch(Exception e) {
-	        System.out.println("!! Bang Timeerror !! xlRead() : " + e );
+	        System.out.println("!! Bang Timeerror 1 !! xlRead() : " + e );
 	    }
 	}
 		
@@ -224,7 +224,7 @@ public class ReadExcel {
 				}
 				
 			}catch(Exception e) {
-		        System.out.println("!! Bang Powerplanterror !! xlRead() : " + e );
+		        System.out.println("!! Bang Powerplanterror  !! xlRead() : " + e );
 		    }
 	    
 	    

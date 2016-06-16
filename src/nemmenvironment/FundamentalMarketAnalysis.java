@@ -202,7 +202,7 @@ public class FundamentalMarketAnalysis {
 			if (certificatebalance >= 0){																	//Will there be shortfall in the future of the market? Which years shortfall?
 				temp = 0.0;}																					
 			else {
-				temp = TheEnvironment.GlobalValues.currentmarketprice * AllVariables.penaltyratio;}	//KK20151130: Aadded for backtest 			
+				temp = 0.0;}//TheEnvironment.GlobalValues.currentmarketprice * AllVariables.penaltyratio;}	//KK20151130: Aadded for backtest 			
 			equilibriumpricesyearsahead.add(temp);
 	}	
 	else {
@@ -211,12 +211,18 @@ public class FundamentalMarketAnalysis {
 		if (xyearfuturecertbalance < 0) {											//Should be the three year.That is which shortcoming should it build on? 2015111 KK Should this be current balance?!
 				
 				for (PowerPlant PP : allendogenousprojects) {						//All endogenous projects. Pooling together all projects in another stage than under construction.
-					if ((PP.getearlieststartyear()) <= (currentyear+i)) {			//If they can earliest be finished in time for this year. Added +1 as its highly unlikely that all are finished in "best case" time. 20151125 KK removed +1 on the left side.
-				tempendogenousprojects.add(PP);	}}									//Add all relevant endogenous projects to this list.
-				int test = 2;
+					PP.updateearlieststartyear();
+				//20160616 advances IF to ensure that the FMA is correct after cutoffs. Projects after cutoff will
+				if ( ((PP.getearlieststartyear() <= (currentyear+i)))){// && PP.getMyRegion().getcertificatespost2020flag()) ||
+					 //((PP.getearlieststartyear() <= (currentyear+i)) && ((currentyear+i) <= PP.getMyRegion().getcutoffyear()) && !PP.getMyRegion().getcertificatespost2020flag())  ) {		// && PP.getMyRegion().getcertificatespost2020flag()  !PP.getMyRegion().getcertificatespost2020flag() && (PP.getstartyear()) >= PP.getMyRegion().getcutoffyear()	//If they can earliest be finished in time for this year. Added +1 as its highly unlikely that all are finished in "best case" time. 20151125 KK removed +1 on the left side.
+				
+					tempendogenousprojects.add(PP);	}}									//Add all relevant endogenous projects to this list.
 			
 			//What if there is a shortcoming and there are no certificate plants available? Needs to be handle
-				if (tempendogenousprojects.size() < 1) {throw new Error("There is no projects that can be finished in order to meet demand");}
+				if (tempendogenousprojects.size() < 1) {						//throw new Error("There is no projects that can be finished in order to meet demand");}
+					equilibriumpricesyearsahead.add(0.0);
+				}
+				else {
 				
 				LRMCCurve yearcurve = new LRMCCurve(currentyear, currentyear+i);		  //Calculates the certpriceneeded for all objects in the list and calculates the equilibrium price. 
 				yearcurve.calculatelrmccurve(tempendogenousprojects, xyearfuturecertbalance, xyearsused); //Which certificate balance to fulfill. 
@@ -229,7 +235,7 @@ public class FundamentalMarketAnalysis {
 						}
 					}
 				equilibriumpricesyearsahead.add(yearcurve.getequilibriumprice());			//Stores just the equilibrium price from the LRMC curve. Could be an idea to store the object itself, or the curvepair. 
-				}
+				}}
 			else { //Positive certificate balance.
 				equilibriumpricesyearsahead.add(0.0);}	//In case there are no shortcommings, the price is set to 0.	
 		}

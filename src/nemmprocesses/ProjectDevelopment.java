@@ -42,7 +42,7 @@ public class ProjectDevelopment {
 					else {
 						PP.setendyear(Math.min(PP.getlifetime()+currentyear, Math.min(currentyear+15, TheEnvironment.theCalendar.getEndYear())));	//Takes care of projects "in overgangsordningen" with 1 year lifetime.
 						int temp = currenttick + RandomHelper.nextIntFromTo(0, TheEnvironment.theCalendar.getNumTradePdsInYear()-1); //KK 20160303 
-						PP.setStarttick(temp);	//Randoml set starttick between now and 12 tick ahead.
+						PP.setStarttick(temp);	//Random set starttick between now and 12 tick ahead.
 						if (currentyear>2020){  //KK 20160303 The original is actually gets its wrong as it sets project buildt after 2020 to only produce 14 years + rand tick.
 						temp = currenttick+11;
 						}
@@ -225,7 +225,7 @@ public class ProjectDevelopment {
 		}
 		
 }
-	//Legg inn LRMC_own også på 
+
 	//Method updating projects to receive concession from status 4=in process to 3=awaiting investment decision. 
 	//Currently randomized such that project can receive concession after a given number of years until a max. After that they are trash if they have not got concession.
 	public static void receivingconcession() {
@@ -250,8 +250,8 @@ public class ProjectDevelopment {
 			
 			//If in the lottery for getting concession.
 			if ((PP.getyearsincurrentstatus() >= PP.getminyearinprocess()) && (PP.getyearsincurrentstatus() < maxyearsinconcessionqueue)) {
-				int rand = RandomHelper.nextIntFromTo(1, 10);
-				if (rand <= AllVariables.annualprobforreceivingconcession*10)	{ 				//Tricksy way of having a given chance for receiving concession. If concession:
+				double rand = RandomHelper.nextDoubleFromTo(0.0, 1.0);
+				if (rand <= AllVariables.annualprobforreceivingconcession)	{ 				//Tricksy way of having a given chance for receiving concession. If concession:
 					
 					PP.setstatus(3);															//The project is granted concession, hence status = 3.
 					PP.setyearsincurrentstatus(0); 												//Updating status means clearing years with this status.

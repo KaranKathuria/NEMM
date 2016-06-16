@@ -102,7 +102,8 @@ public class PowerPlant implements Cloneable{
 			earlieststartyear = minyearinprocess + minconstructionyears + TheEnvironment.theCalendar.getStartYear();	//This is really best case.
 			}
 		//defaults to avoid nulls in powerplant output and to not having 2012 values in plants not build (for cert needed and LRMC), the initials as set her.
-
+		
+		yearsincurrentstatus = 0;
 		IRR = 0.0;
 		LRMC = 0.0;
 		LRMC_ownRRR = 0.0;
@@ -354,10 +355,13 @@ public class PowerPlant implements Cloneable{
 		
 		//Calculating the needed average cert price is not trival as the certificates are only valid for a subperiod of the lifetime. First take into account the yearsofcertificates
 		double NPVfactor_certyears = calculateNPVfactor(yearswithcertificates, usedRRR);
-
-		//Calculating the needed price for certificates, with the correct assumptions of when the plant is eligable and the simulation-current local power price. T
-		certpriceneeded = (LRMC*NPVfactor_lifetime - usedpowerprice*NPVfactor_lifetime) / NPVfactor_certyears; //Drawback: IS the powerprice assumption okey?
-	}
+		
+		if (NPVfactor_certyears == 0.0) {
+			certpriceneeded = 10000.0;
+		} else {
+		certpriceneeded = Math.max((((LRMC*NPVfactor_lifetime) - (usedpowerprice*NPVfactor_lifetime)) / NPVfactor_certyears),0.0); //Drawback: IS the powerprice assumption okey?
+		}
+		}
 	
 	public void calculateLRMCandcertpriceneeded_ownRRR(int currentyear, int powerpricecode) {
 		//Not sure there is a good reason for not sending the powerprice directly in the method (KK). One advantage is that its implementation is easier to change later.
@@ -398,10 +402,14 @@ public class PowerPlant implements Cloneable{
 		
 		//Calculating the needed average cert price is not trival as the certificates are only valid for a subperiod of the lifetime. First take into account the yearsofcertificates
 		double NPVfactor_certyears = calculateNPVfactor(yearswithcertificates, usedRRR);
-
+		
 		//Calculating the needed price for certificates, with the correct assumptions of when the plant is eligable and the simulation-current local power price. T
-		certpriceneeded_ownRRR = (LRMC_ownRRR*NPVfactor_lifetime - usedpowerprice*NPVfactor_lifetime) / NPVfactor_certyears; //Drawback: IS the powerprice assumption okey?
-	}
+		if (NPVfactor_certyears == 0.0) {
+			certpriceneeded_ownRRR = 10000.0;
+		} else {
+		certpriceneeded_ownRRR = Math.max((((LRMC_ownRRR*NPVfactor_lifetime) - (usedpowerprice*NPVfactor_lifetime)) / NPVfactor_certyears),0.0); //Drawback: IS the powerprice assumption okey?
+		}
+		}
 	
 	public void updateearlieststartyear() {
 		if (status == 3) {

@@ -118,8 +118,8 @@ public class AllVariables {
 
 	//CONCESSION PROSESS
 	public static int maxyearsinconcessionqueue = 3;				//Number of years in addition to minimum number of years in concession queue given as input from excel. After this, if not having received concession, the project is trashed.
-	public static double annualprobforreceivingconcession = 0.35;	//Only with one decimal as the random generater uses int.
-	public static int expectedyersinconcession = 5;					//When deciding for concession, how long to the developers expected the project to be in line. Needed due to learningcurve/CAPEX estimation.
+	public static double annualprobforreceivingconcession = 0.4;	//Only with one decimal as the random generater uses int.
+	public static int expectedyersinconcession = 4;					//When deciding for concession, how long to the developers expected the project to be in line. Needed due to learningcurve/CAPEX estimation.
 
 	//PROJECT MARKET
 	public static double[] chanceofownershipchange = new double[]{0.2,0.2,0.3,0.4};		//Indicates the chance (%) of ownership change according to years postponed by curren owner when setting criteria flag. Thus, of a project have been postpone (not invested when it could) one year, there is a [0] chance for owernship change. For the second year, there is [1] chance, etc. Notice that one year is 2015 right after the decisions are made/not made..
@@ -249,7 +249,7 @@ public class AllVariables {
 
 	// ---- FUNDAMENTAL MARKET ANALYSIS AND DEVELOPER LRMC
 	public static double penaltyratio = 1.5;						//What is the penalty compared to current market price?
-	public static int yearstoendogprojects = 3;						//Just to save time in the FMA. KK 20151118 var 2 i Q2 (2 og 3 har lite å si i Base Case). 
+	public static int yearstoendogprojects = 2;						//Just to save time in the FMA. KK 20151118 var 2 i Q2 (2 og 3 har lite å si i Base Case). 
 	public static double maxpricecerts = 150;						//To not get an errror in the FMA.Also used to cap max buy price for rest volume.
 	public static double maxroofprice = 125;
 	public static double initialRRRcorrector = 1.0;					//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis. Copnsate (0.098) for the learningfactor in inputt.
@@ -257,12 +257,12 @@ public class AllVariables {
 	public static int minpostpondyears = 1;							//How long the investment decision is postpond if postponed.Cannot see why this should be larger than 1. (only argument is if this is the real deal).
 	public static int MPECount = 17;								//Number of futuer years seen by the MPE-analysis. THats number-1 years ahead (including this year).
 	public static int LPECount = MPECount+minpostpondyears;			//Number of futuer years seen by the LPE-analysis
-	public static int yearsbuildout = 5;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA. KK20151118: Brukt 16 histoisk, men kan ikke forstå hvorfor det er rett! Med verdi på 1 så bygger man ut for neste års underskudd i hvert iterert år, det betyr generalt at man bygger senere og ergo må bygge mere og dermed dyrere.
+	public static int yearsbuildout = 6;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA. KK20151118: Brukt 16 histoisk, men kan ikke forstå hvorfor det er rett! Med verdi på 1 så bygger man ut for neste års underskudd i hvert iterert år, det betyr generalt at man bygger senere og ergo må bygge mere og dermed dyrere.
 	public static double[] RAR = new double[]{0.34,0.50};			//1 is maksimum. Higher number gives a wider range of roof and floor around the FMA. A bigger spread of numbers gives bigger variation between agents.
 	public static double backtestminFMA = 40;						//20151130 KK: added for backtest qickfix of FMA at 2012.
 	public static double stdmediumrunpriceexpect = 0.03;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.035;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	public static double maximumfloorprice = 85;					//The maximum floor used by SellStrategies. Even though the discointed FMA should imply a floorprice higher than this, this would be limited her. In pracis, this number can be divided on 2 to get the actual floor.
+	public static double maximumfloorprice = 80;					//The maximum floor used by SellStrategies. Even though the discointed FMA should imply a floorprice higher than this, this would be limited her. In pracis, this number can be divided on 2 to get the actual floor.
 	
 	//WIND VARIATION
 	public static double meanwindproductionfactor = getmeanwindproductionfactor();		//read from GUI
