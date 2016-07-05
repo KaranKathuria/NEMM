@@ -341,7 +341,8 @@ public class CompanyAgent extends ParentAgent {
 		private int relativerank_sweden;						//This is the relative rank of the developer i terms of the owner Company Agents wacc. 1 is thus implying that the developer has the lowest wacc of all.
 		private int cvvaluehorizont; // number of ticks the agent will try to empty its position over
 		private double buildoutaggressivness;			//How the developer views the future market supply/demand. Replase the old buildoutaggressivness
-
+		
+		private boolean buildiftargerisreached;		    //Indicates if the developer agent buids even if the 2020 28.4 target is reached, or not.
 		
 		//Endogenous variables 
 		private double capacitydevorundrconstr;
@@ -361,6 +362,7 @@ public class CompanyAgent extends ParentAgent {
 			totalcapacitylimit = 100000000;
 			cvvaluehorizont = AllVariables.cvvaluehorizont;
 			buildoutaggressivness = RandomHelper.nextDoubleFromTo(AllVariables.minbuildoutaggressivness, AllVariables.maxbuildoutaggressivness);
+			buildiftargerisreached = false; //Default for type1 developer agents.
 			if (AllVariables.isbacktest) {
 				constructionlimit = constructionlimit*AllVariables.backtesteaseconstruction+2;
 				totalcapacitylimit = totalcapacitylimit*AllVariables.backtesteaseconstruction;
@@ -378,7 +380,8 @@ public class CompanyAgent extends ParentAgent {
 						investmentdecisiontype = 2;
 						fundamentaleasefactor = AllVariables.fundamentalfundamentaleasefactordistribution_Norway;
 						priceeasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentpriceeasefactordistribution_Norway[0], AllVariables.developerinvestmentpriceeasefactordistribution_Norway[1]);
-						}
+						buildiftargerisreached = true;
+					}
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution_Norway[1] && investdecrand <= AllVariables.developerinvestmenttypedistribution_Norway[2]) {
 						investmentdecisiontype = 3;
 						fundamentaleasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentfundamentaleasefactordistribution[0], AllVariables.developerinvestmentfundamentaleasefactordistribution[1]);
@@ -387,7 +390,7 @@ public class CompanyAgent extends ParentAgent {
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution_Norway[2]){
 						investmentdecisiontype = 4;
 						priceeasefactor = AllVariables.pricedeveloperspriceeasefactordistribution;			
-						fundamentaleasefactor = 5000;		
+						fundamentaleasefactor = 5000;
 						}
 			}
 			if (this.getregionpartcode() == 3) { //Sweden
@@ -403,7 +406,8 @@ public class CompanyAgent extends ParentAgent {
 						investmentdecisiontype = 2;
 						fundamentaleasefactor = AllVariables.fundamentalfundamentaleasefactordistribution_Sweden;
 						priceeasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentpriceeasefactordistribution_Sweden[0], AllVariables.developerinvestmentpriceeasefactordistribution_Sweden[1]);
-						}
+						buildiftargerisreached = true;	
+					}
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution_Sweden[1] && investdecrand <= AllVariables.developerinvestmenttypedistribution_Sweden[2]) {
 						investmentdecisiontype = 3;
 						fundamentaleasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentfundamentaleasefactordistribution[0], AllVariables.developerinvestmentfundamentaleasefactordistribution[1]);
@@ -412,7 +416,7 @@ public class CompanyAgent extends ParentAgent {
 					if (investdecrand > AllVariables.developerinvestmenttypedistribution_Sweden[2]){
 						investmentdecisiontype = 4;
 						priceeasefactor = 1;			
-						fundamentaleasefactor = 5000;		
+						fundamentaleasefactor = 5000;
 						}
 			}
 			if (this.getregionpartcode() == 2) { //both countries
@@ -453,6 +457,7 @@ public class CompanyAgent extends ParentAgent {
 				fundamentaleasefactor = RandomHelper.nextDoubleFromTo(AllVariables.developerinvestmentfundamentaleasefactordistribution[0], AllVariables.developerinvestmentfundamentaleasefactordistribution[1]);
 				priceeasefactor = 1;
 				buildoutaggressivness = RandomHelper.nextDoubleFromTo(AllVariables.minbuildoutaggressivness, AllVariables.maxbuildoutaggressivness);
+				buildiftargerisreached = false;
 			}
 				
 			if (this.getregionpartcode()>3 || this.getregionpartcode() < 1) {
@@ -505,6 +510,7 @@ public class CompanyAgent extends ParentAgent {
 		public int getrelativerank_sweden() {return relativerank_sweden;}
 		public void setrelativerank_sweden(int a) {this.relativerank_sweden = a;}
 		public double getbuildoutaggressivness() {return this.buildoutaggressivness;}
+		public boolean getbuildiftargerisreached() {return buildiftargerisreached;}
 		
 		
 	}

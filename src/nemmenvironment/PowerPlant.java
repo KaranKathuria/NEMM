@@ -461,9 +461,7 @@ public class PowerPlant implements Cloneable{
 		this.IRR = Irr.irr(totalcashflow, 0.05);	
 
 		}
-		
-		
-		
+			
 	}
 	public static double calculateNPVfactor(int years, double RRR) {
 		double NPVfactor = 0;

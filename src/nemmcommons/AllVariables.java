@@ -108,9 +108,13 @@ public class AllVariables {
 	
 	//Regulations for certificates deadline
 	public static boolean certificatespost2020_Norway = false;
-	public static boolean certificatespost2020_Sweden = false;
+	public static boolean certificatespost2020_Sweden = true;
 	public static int cutoffyear_Norway = 2021;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
 	public static int cutoffyear_Sweden = 2021;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
+	
+	public static int buildouttargetyear = 2020; 					//Year for build out target (by this year, hence 2020, means 31.12.2020).
+	public static double totalbuildouttarget = 28400000;			//Total targeted buildout by the system measured in normal year annual production (MWh).
+	
 	
 	//MARKET COORDINATION STRENGTH - Factor determining how aggressiv the build out is. Each developer recives a number between min and max that is used to estimate the future shortfall/overinvestment.
 	public static double maxbuildoutaggressivness = 1.03; 			//As it is the final value that really limits the build out the spread must to large. 1 = no overinvestment.
@@ -239,12 +243,12 @@ public class AllVariables {
 	public static double tacticMinUtilityAlphaOP = 0.2;
 	
 	// ---- CERTIFICATE VALUE CALCULATION PARAMETERS
-	public static double certMaxPrice = 125;
+	public static double certMaxPrice = 200;
 	public static double certMinPrice = 0;
 	public static double[] ratioAdjFactor = new double[]{0.8,1,1.2}; // used to capture uncertainty in the ratio estimates
 	public static double[] ratioAdjProb = new double[]{0.3,0.4,0.3}; // same
 	public static double sdevCVSupply = 0.0; // Std dev of supply prognosis used in CV calcs in %
-	public static double valueCertShortfall = 125; // value (cost) of not having enough certificates
+	public static double valueCertShortfall = 200; // value (cost) of not having enough certificates
 	public static boolean flagDiscountCV = true;
 
 	// ---- FUNDAMENTAL MARKET ANALYSIS AND DEVELOPER LRMC
@@ -257,7 +261,7 @@ public class AllVariables {
 	public static int minpostpondyears = 1;							//How long the investment decision is postpond if postponed.Cannot see why this should be larger than 1. (only argument is if this is the real deal).
 	public static int MPECount = 17;								//Number of futuer years seen by the MPE-analysis. THats number-1 years ahead (including this year).
 	public static int LPECount = MPECount+minpostpondyears;			//Number of futuer years seen by the LPE-analysis
-	public static int yearsbuildout = 6;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA. KK20151118: Brukt 16 histoisk, men kan ikke forstå hvorfor det er rett! Med verdi på 1 så bygger man ut for neste års underskudd i hvert iterert år, det betyr generalt at man bygger senere og ergo må bygge mere og dermed dyrere.
+	public static int yearsbuildout = 10;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA. KK20151118: Brukt 16 histoisk, men kan ikke forstå hvorfor det er rett! Med verdi på 1 så bygger man ut for neste års underskudd i hvert iterert år, det betyr generalt at man bygger senere og ergo må bygge mere og dermed dyrere.
 	public static double[] RAR = new double[]{0.34,0.50};			//1 is maksimum. Higher number gives a wider range of roof and floor around the FMA. A bigger spread of numbers gives bigger variation between agents.
 	public static double backtestminFMA = 40;						//20151130 KK: added for backtest qickfix of FMA at 2012.
 	public static double stdmediumrunpriceexpect = 0.03;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)

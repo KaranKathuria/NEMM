@@ -253,7 +253,7 @@ public void obligationsperiodshedule() {
 		return ShortTermMarket.getmarketsupply();
 	}
 	public double STMtradedvolume() {
-		return ShortTermMarket.gettradedvolume();
+		return ShortTermMarket.gettradedvolume();//TheEnvironment.GlobalValues.totalwithintargetbuildout
 	}
 	
 	public double getproducersphysicalposition() {

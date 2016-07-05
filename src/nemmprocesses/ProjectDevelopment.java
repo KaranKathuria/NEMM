@@ -10,6 +10,7 @@ package nemmprocesses;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
 import repast.simphony.random.RandomHelper;
 import nemmagents.CompanyAgent.DeveloperAgent;
 import nemmcommons.AllVariables;
@@ -17,6 +18,7 @@ import nemmcommons.CommonMethods;
 import nemmenvironment.FundamentalMarketAnalysis;
 import nemmenvironment.PowerPlant;
 import nemmenvironment.TheEnvironment;
+import nemmenvironment.TheEnvironment.GlobalValues;
 
 public class ProjectDevelopment {
 	//Variables
@@ -37,7 +39,7 @@ public class ProjectDevelopment {
 				PP.setstatus(1);
 					if (!PP.getMyRegion().getcertificatespost2020flag() && currentyear > PP.getMyRegion().getcutoffyear()) {	//This takes care of projecs post 2020 in regions without certs post 2020.
 						PP.setendyear(PP.getMyRegion().getcutoffyear());							//Does not matter what year this is set to.
-						PP.setStarttick(currenttick+1);
+						PP.setStarttick(TheEnvironment.theCalendar.getNumTicks());
 						PP.setendtick(currenttick);}												//Setting this back in time, hence these certs are never produced.
 					else {
 						PP.setendyear(Math.min(PP.getlifetime()+currentyear, Math.min(currentyear+15, TheEnvironment.theCalendar.getEndYear())));	//Takes care of projects "in overgangsordningen" with 1 year lifetime.
@@ -171,10 +173,9 @@ public class ProjectDevelopment {
 		double tempfutureproduction = FundamentalMarketAnalysis.getbalanceandfutureproduction();
 		double tempfuturedemand = FundamentalMarketAnalysis.getfuturedemand();
 		
-		
 		double totalcertsneededbuilt = Math.max(-FundamentalMarketAnalysis.getallfuturecertificatebalance(), 0.0);		//Gets all the future uncovered need for certificates (normal year assumption) from the FMA
 		double tempcertsdeveloperswantstobuild=0;														//Total certs added from the projects that the developers wants to build out.
-		int t = 2;
+		
 		//To add up the total certs from the projects that now are marked as status = 9 (or in the temp_allprojectthatcanbebuild list)
 		for (PowerPlant PP : temp_allprojectthatcanbebuild) {
 			PP.calculateLRMCandcertpriceneeded(currentyear, PP.getspecificRRR(), 3);			//This to ensure that it the correct numbers stored in LRMC, and not the postponed one. and Certpriceneeded when its build. For output purposes.
@@ -193,7 +194,9 @@ public class ProjectDevelopment {
 			
 
 		//Then we loop through all that can be build out, ensure that we do not "gold rush" and only build out if status = 9 (the developer actually wants to build it).
-		double tempbuildout = 0.0;
+		double tempbuildout = 0.0; //measured in total amount of certificate produced
+		double tempbuildoutnormalyear = 0.0; //measured in total normal year annual production.
+		
 		Collections.shuffle(temp_allprojectthatcanbebuild);
 		for (PowerPlant PP : temp_allprojectthatcanbebuild) {
 			
@@ -202,23 +205,38 @@ public class ProjectDevelopment {
 			double buildoutcutoff = Math.max(((tempfuturedemand*tempfactor)-tempfutureproduction),0.0);			//Rather then using the factor for balance (which is not good when there is no need for certs, the factor is multiplied with demand before adding current balance and all future production.
 
 			if (tempbuildout <= buildoutcutoff) {	//Continue to build out as long as there is neeed and aggressivness i allowed. 
-				if (!PP.getMyRegion().getcertificatespost2020flag() && (currentyear+PP.getminconstructionyears()) > PP.getMyRegion().getcutoffyear()) {
+				
+				//Added 04.07.2016 based on comment by Statkraft. When reaching the target, people will stop building. In short, target is reached by cutoffyear, do not build. 
+				
+				
+				double target = TheEnvironment.GlobalValues.totalwithintargetbuildout;
+				double f = AllVariables.totalbuildouttarget;
+	
+				if ((PP.getMyCompany().getdeveloperagent().getbuildiftargerisreached()) || (!GlobalValues.buildouttargetreached)){
+							
+				//if (target <= AllVariables.totalbuildouttarget){ //TheEnvironment.GlobalValues.totalwithintargetbuildout
+					
+					if (!PP.getMyRegion().getcertificatespost2020flag() && (currentyear+PP.getminconstructionyears()) > PP.getMyRegion().getcutoffyear()) {
 					System.out.print("Notice: Projects does not qualify for certs, but is built anyway");
 					PP.setstatus(2);
 					PP.setyearsincurrentstatus(0);  										//Setting this for consistency for project reaching new stag. This value is note used in later stages.
 					PP.setstartyear(currentyear + PP.getminconstructionyears());			//Adding a startdate. Notice that this is done here rather than in the finalizeprojects.
 					TheEnvironment.projectsunderconstruction.add(PP);						//Add to the Environment list of projects in process.
 					TheEnvironment.projectsawaitinginvestmentdecision.remove(PP);			//Removing from Environment list of awaitinginvestmentsdecisions
-				}
-				else {
+					}
+					else {
 					tempbuildout = tempbuildout + (PP.getestimannualprod()*Math.min(15, 2035-(currentyear+PP.getminconstructionyears())));
 					PP.setstatus(2);
 					PP.setyearsincurrentstatus(0);  										//Setting this for consistency for project reaching new stag. This value is note used in later stages.
 					PP.setstartyear(currentyear + PP.getminconstructionyears());			//Adding a startdate. Notice that this is done here rather than in the finalizeprojects.
 					TheEnvironment.projectsunderconstruction.add(PP);						//Add to the Environment list of projects in process.
 					TheEnvironment.projectsawaitinginvestmentdecision.remove(PP);			//Removing from Environment list of awaitinginvestmentsdecisions
-			}
+					}
 		}
+				else {
+					PP.setstatus(3);																	//For those whom are outside remove back to status 3 (also those that er 3 where never altered.
+					}
+			}
 		else {
 		PP.setstatus(3);																	//For those whom are outside remove back to status 3 (also those that er 3 where never altered.
 		}

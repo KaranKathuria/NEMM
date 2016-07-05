@@ -322,8 +322,11 @@ public final class TheEnvironment {
                                public static double hydroproductionaddedSweden;          //Accumulated hydro-production added in Norway (MWh)
                                public static double allotherproductionaddedNorway;       //Accumulated other in the terms (bio, solar, and other) added in Norway. This added with hydro and wind is total.
                                public static double allotherproductionaddedSweden;       //Accumulated other in the terms (bio, solar, and other) added in Sweden. This added with hydro and wind is total.
-
                                
+                               public static double totalwithintargetbuildout;			 //Total buildout within the cert market target, measured in normalyearproduction within target date (See Allvariables.buildouttargetyear). 
+                               public static int targettick; 
+                               public static boolean buildouttargetreached;
+
                                // Future cert prices
                                public static double endofyearpluss1;
                                public static double endofyearpluss2;
@@ -377,6 +380,10 @@ public final class TheEnvironment {
                                                totaltickdemand = 0;
                                                totalmarketphysicalposition = 0;                                                                            //Must be set to the sum of all agents startingposition. Just used for graph values.
                                                
+                                               buildouttargetreached = false;
+                                               totalwithintargetbuildout = 0;
+                                               targettick = ((AllVariables.buildouttargetyear - theCalendar.getStartYear())*theCalendar.getNumTradePdsInYear())+(theCalendar.getNumTradePdsInYear()-1);
+                                               
                                }
                                
                                public static void updatebankbalance() {
@@ -400,7 +407,7 @@ public final class TheEnvironment {
                                                currentmarketprice = ShortTermMarket.getcurrentmarketprice();
                                                certificateprice.setElement(ShortTermMarket.getcurrentmarketprice(), theCalendar.getCurrentTick()); //Adds certPrice to history.
                                                updateavrhistoriccertprice();                                                                                                                                                                                                                                                                               //Updates the averagecertprice
-                                               
+                                                                                              
                                                numberofbuyoffersstm = ShortTermMarket.getnumberofbuyoffers();
                                                numberofselloffersstm = ShortTermMarket.getnumberofselloffers();
                                                
@@ -496,10 +503,12 @@ public final class TheEnvironment {
                                                                               }
                                                                              }
                                                                }
+                                           	   
                                                }
                                                
                                                for (PowerPlant PP : TheEnvironment.allPowerPlants) {
-                                              	   	//Tickwise buildout. Notice the equal to 0 thus excluding overgagnsordningen.
+                                              	   	//total buildout. Notice the equal to 0 thus excluding overgagnsordningen.
+
                                               	   if (theCalendar.getCurrentTick() >= PP.getStartTick() && theCalendar.getCurrentTick() < PP.getendtick() && PP.getovergangsordningflag() == 0) {
                                               		   				//Region wise
                                                                   if (PP.getMyRegion() == TheEnvironment.allRegions.get(0)) {
@@ -509,9 +518,20 @@ public final class TheEnvironment {
                                                                   else {
                                                                  	  certificateeligableannualproductionSweden = certificateeligableannualproductionSweden + PP.getestimannualprod();
   
-                                                                  }
+                                                                  }                                                                             
                                               	   }
                                                }
+                                               
+                                               if ((theCalendar.getCurrentTick() <= targettick) && (!buildouttargetreached) ) {
+                                            	   totalwithintargetbuildout = 0;
+                                            	   totalwithintargetbuildout = buildoutSweden + buildoutNorway;
+                                             	  int a = 2;
+                                               
+                                             	  if (totalwithintargetbuildout >= AllVariables.totalbuildouttarget){
+                                            	   buildouttargetreached = true;
+                                             	  }
+                                               }
+                                            	   
                                }
                                                
                                                         
