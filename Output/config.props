@@ -1,7 +1,7 @@
 model.archive = C:/Users/Karan/git/NEMM/Output/complete_model.jar
 batch.params.file = scenario.rs/batch_params.xml
 ssh.key_dir = C:/Users/Karan/.ssh
-poll.frequency = 30.0
+poll.frequency = 60.0
 model.output = C:/Users/Karan/git/NEMM/Output
 
 vm.arguments = -Xmx1024M

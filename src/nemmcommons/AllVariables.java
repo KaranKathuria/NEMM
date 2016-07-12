@@ -2,7 +2,7 @@
  * Version info:
  *     All variables used in the model collected at one place
  *     
- *     Last altered data: 2015
+ *     Last altered date: 2016
  *     Made by: Karan Kathuria
  */
 package nemmcommons;
@@ -20,7 +20,7 @@ public class AllVariables {
 	//Step 1: Starts.
 	
 	public static String casename = "2016_H1_BaseCase"; 					//Name of the case ran. That is not the simulation, not the run, but the base case (or sensitivity case).
-	public static String inputfile = "2016_H2_MARC_2016.xlsx";			//Name of inputfile (in case not a backtest. If backtest, the below is used).
+	public static String inputfile = "2016_NVE_2016_BC.xlsx";			//Name of inputfile (in case not a backtest. If backtest, the below is used).
 	public static String backtestfile = "Q4_2015_NEMM_2012_backtest_typ2.xlsx";
 	public static boolean isbacktest = false;					//Alters parts of the code (readexcel and scenario and Context) in order to run backtest (that is 2012 as start year and 300 ticks). Does not later the input data in AllVariables (bank, price etc).
 	public static boolean useTestData = false;					
@@ -41,8 +41,8 @@ public class AllVariables {
 	public static final int obintr = 12; 
 	public static final int firstrealtick = 48; //Altering this means you got to alter the contextbuilder! Currently this cannot be between 1 and 11. 48 = january 2016.
 	public static double[] historiccertprices = new double[]{20.58,	18.72,	25.39,	19.13,	18.61,	18.72,	20.18,	20.6,	21.39,	22.75,	23.35,	24.55,	24.16,	25.63,	23.63,	25.15,	22.02,	20.47,	21.57,	21.45,	22.87,	23.02,	22.02,	21.54,	20.45,	22.35,	20.86,	19.85,	20.13,	19.95,	19.91,	20.58,	21.14,	20.52,	19.84,	18.55,	17.83,	16.24,	15.24,	15.88,	16.06,	16.05,	15.13,	15.58,	17.14,	18.13,	17.85,	17.00};   //{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
-	public static double bankPAfirstrealtick =   16400000;		//Faktisk bank //
-	public static double bankOPAfirstrealtick =    600000;		//Soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
+	public static double bankPAfirstrealtick =   16800000;		//Faktisk bank //
+	public static double bankOPAfirstrealtick =    800000;		//Soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
 	public static double bankTAfirstrealtick = 0;				
 	
 	
@@ -81,14 +81,14 @@ public class AllVariables {
 	
 	//DEVELOPER EASE FACTORS
 	//Given to investmentstrategy type 1 and 2:
-	public static double fundamentalfundamentaleasefactordistribution = 1.18; //Indicates the fundamental ease factor for fundamental agents. Use as the FMA underestsimats the FMAprice as both agents and analys people know that all investmetns are not taken perfectly. quicfiks 20151201 KK.
-	public static double fundamentalfundamentaleasefactordistribution_Norway = 1.18; //Indicates the fundamental ease factor for fundamental agents. Use as the FMA underestsimats the FMAprice as both agents and analys people know that all investmetns are not taken perfectly. quicfiks 20151201 KK. 1.1 means that FMA is 10 % higher than perfect FMA.
-	public static double fundamentalfundamentaleasefactordistribution_Sweden = 1.25; //Indicates the fundamental ease factor for fundamental agents. Use as the FMA underestsimats the FMAprice as both agents and analys people know that all investmetns are not taken perfectly. quicfiks 20151201 KK.
-	public static double[] developerinvestmentpriceeasefactordistribution = new double[]{1.15,1.25};		//Started with 1.15, 1.4	//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
-	public static double[] developerinvestmentpriceeasefactordistribution_Norway = new double[]{1.1,1.15};		//Started with 1.15, 1.4	//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
-	public static double[] developerinvestmentpriceeasefactordistribution_Sweden = new double[]{1.25,1.35};		//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
+	public static double fundamentalfundamentaleasefactordistribution = 1.08; //Indicates the fundamental ease factor for fundamental agents. Use as the FMA underestsimats the FMAprice as both agents and analys people know that all investmetns are not taken perfectly. quicfiks 20151201 KK.
+	public static double fundamentalfundamentaleasefactordistribution_Norway = 1.08; //Indicates the fundamental ease factor for fundamental agents. Use as the FMA underestsimats the FMAprice as both agents and analys people know that all investmetns are not taken perfectly. quicfiks 20151201 KK. 1.1 means that FMA is 10 % higher than perfect FMA.
+	public static double fundamentalfundamentaleasefactordistribution_Sweden = 1.15; //Indicates the fundamental ease factor for fundamental agents. Use as the FMA underestsimats the FMAprice as both agents and analys people know that all investmetns are not taken perfectly. quicfiks 20151201 KK.
+	public static double[] developerinvestmentpriceeasefactordistribution = new double[]{1.05,1.15};		//Started with 1.15, 1.4	//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
+	public static double[] developerinvestmentpriceeasefactordistribution_Norway = new double[]{1.0,1.05};		//Started with 1.15, 1.4	//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
+	public static double[] developerinvestmentpriceeasefactordistribution_Sweden = new double[]{1.15,1.15};		//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
 	//Given to investmentstrategy type 3 and 4
-	public static double[] developerinvestmentfundamentaleasefactordistribution = new double[]{1.3,1.4};  //The distribution of fundamentaleasefaactor to investmentagent type 3 (price based with ease cost curve). High number indicates little restriction.
+	public static double[] developerinvestmentfundamentaleasefactordistribution = new double[]{1.2,1.3};  //The distribution of fundamentaleasefaactor to investmentagent type 3 (price based with ease cost curve). High number indicates little restriction.
 	public static double pricedeveloperspriceeasefactordistribution = 1.0; 								  //Priceeasefactor used by pricedevelopers (3). added 20151204 KK. Should be 1, but to midofy earlier round-off in cert prices.
 
 	//DEVELOPER CONSTRAINTS
@@ -108,12 +108,12 @@ public class AllVariables {
 	
 	//Regulations for certificates deadline
 	public static boolean certificatespost2020_Norway = false;
-	public static boolean certificatespost2020_Sweden = true;
+	public static boolean certificatespost2020_Sweden = false;
 	public static int cutoffyear_Norway = 2021;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
 	public static int cutoffyear_Sweden = 2021;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
-	public static int buildouttargetyear = 2020; 					//Year for build out target (by this year, hence 2020, means 31.12.2020).
-	public static double totalbuildouttarget = 28400000;			//Total targeted buildout by the system measured in normal year annual production (MWh).
+	public static int buildouttargetyear = 2021; 					//Year for build out target (by this year, hence 2020, means 31.12.2020).
+	public static double totalbuildouttarget = 28400000;//28400000; //46400000		//Total targeted buildout by the system measured in normal year annual production (MWh).
 	
 	
 	//MARKET COORDINATION STRENGTH - Factor determining how aggressiv the build out is. Each developer recives a number between min and max that is used to estimate the future shortfall/overinvestment.
@@ -132,7 +132,7 @@ public class AllVariables {
 	//PENSION FUND DEVELOPERS 
 	public static int numberofpensionfunds = 1;							//They are all investment strategy type 3. (price, with some respekct for fundamntal) and in both countries.
 	public static int holdinghorizontpensionproducer = 60;
-	public static double pensionfundInvestRRRAdjustFactor = 0.65;		//wACC = origonal prject specific times this, hence 0.5*8% = 4 %
+	public static double pensionfundInvestRRRAdjustFactor = 0.82;		//wACC = origonal prject specific times this, hence 0.5*8% = 4 %
 	public static int pfconstructionconstraints = 4;
 	public static int pfregioncode = 2; //1 = Norway, 2 = Both, 3 = Sweden.
 	
@@ -224,7 +224,7 @@ public class AllVariables {
 	// ---- OBLIGATED PURCHASER STRATEGIES AND TACTIC PARAMETERS
 	public static int tacticDefaultLearn_OPBuyStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
 	// Define the max and min volumes to be purchased in any given period
-	public static double tacticMinPhysPosBuyShare_OPBuyStrategy1 = 0.25; // Default must Buy share for the purchaser tactics (if used)
+	public static double tacticMinPhysPosBuyShare_OPBuyStrategy1 = 0.35; // Default must Buy share for the purchaser tactics (if used)
 	public static double tacticMaxPhysPosBuyShare_OPBuyStrategy1 = 1; 	 //default max fraction of physical position that can be purchased in the month
 	public static double tacticDefaultMustBuyPriceMult_OPBuyStrategy1 = 1.5;  // Default must Buy price multiplier for the producer tactics (if used)
 	public static double tacticMinMustBuyPriceMult_OPBuyStrategy1 = 0.7;
@@ -261,7 +261,7 @@ public class AllVariables {
 	public static int minpostpondyears = 1;							//How long the investment decision is postpond if postponed.Cannot see why this should be larger than 1. (only argument is if this is the real deal).
 	public static int MPECount = 17;								//Number of futuer years seen by the MPE-analysis. THats number-1 years ahead (including this year).
 	public static int LPECount = MPECount+minpostpondyears;			//Number of futuer years seen by the LPE-analysis
-	public static int yearsbuildout = 10;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA. KK20151118: Brukt 16 histoisk, men kan ikke forstå hvorfor det er rett! Med verdi på 1 så bygger man ut for neste års underskudd i hvert iterert år, det betyr generalt at man bygger senere og ergo må bygge mere og dermed dyrere.
+	public static int yearsbuildout = 9;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA. KK20151118: Brukt 16 histoisk, men kan ikke forstå hvorfor det er rett! Med verdi på 1 så bygger man ut for neste års underskudd i hvert iterert år, det betyr generalt at man bygger senere og ergo må bygge mere og dermed dyrere.
 	public static double[] RAR = new double[]{0.34,0.50};			//1 is maksimum. Higher number gives a wider range of roof and floor around the FMA. A bigger spread of numbers gives bigger variation between agents.
 	public static double backtestminFMA = 40;						//20151130 KK: added for backtest qickfix of FMA at 2012.
 	public static double stdmediumrunpriceexpect = 0.03;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
