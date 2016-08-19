@@ -20,7 +20,7 @@ public class AllVariables {
 	//Step 1: Starts.
 	
 	public static String casename = "2016_H1_BaseCase"; 					//Name of the case ran. That is not the simulation, not the run, but the base case (or sensitivity case).
-	public static String inputfile = "2016_NVE_2016_BC.xlsx";			//Name of inputfile (in case not a backtest. If backtest, the below is used).
+	public static String inputfile = "2016_NVE_2016_NY.xlsx";			//Name of inputfile (in case not a backtest. If backtest, the below is used).
 	public static String backtestfile = "Q4_2015_NEMM_2012_backtest_typ2.xlsx";
 	public static boolean isbacktest = false;					//Alters parts of the code (readexcel and scenario and Context) in order to run backtest (that is 2012 as start year and 300 ticks). Does not later the input data in AllVariables (bank, price etc).
 	public static boolean useTestData = false;					
@@ -110,10 +110,10 @@ public class AllVariables {
 	public static boolean certificatespost2020_Norway = false;
 	public static boolean certificatespost2020_Sweden = false;
 	public static int cutoffyear_Norway = 2021;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
-	public static int cutoffyear_Sweden = 2021;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
+	public static int cutoffyear_Sweden = 2030;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
-	public static int buildouttargetyear = 2021; 					//Year for build out target (by this year, hence 2020, means 31.12.2020).
-	public static double totalbuildouttarget = 28400000;//28400000; //46400000		//Total targeted buildout by the system measured in normal year annual production (MWh).
+	public static int buildouttargetyear = 2030; 					//Year for build out target (by this year, hence 2020, means 31.12.2020).
+	public static double totalbuildouttarget = 46400000;//28400000; //46400000		//Total targeted buildout by the system measured in normal year annual production (MWh).
 	
 	
 	//MARKET COORDINATION STRENGTH - Factor determining how aggressiv the build out is. Each developer recives a number between min and max that is used to estimate the future shortfall/overinvestment.
