@@ -81,7 +81,7 @@ public class TraderBuyStrategy1Tactic extends GenericTactic {
 		else {
 		ret.setCertVolume(AllVariables.traderrestbuyvol);
 		}
-		ret.setPrice(Math.min(expectedprice*paramRestVolPriceMult, floorroofprice)); //Most likely that the second offer is at at pricemultiplier. Hence they buy what they dont must, at a pricemultiplier.
+		ret.setPrice(expectedprice*paramRestVolPriceMult);//Math.min(expectedprice*paramRestVolPriceMult, floorroofprice)); //Most likely that the second offer is at at pricemultiplier. Hence they buy what they dont must, at a pricemultiplier.
 		return ret;
 	}
 	
