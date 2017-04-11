@@ -203,6 +203,13 @@ public void preannualmarketschedule4() {
 	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
 	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.	
 }
+
+@ScheduledMethod(start = 48, interval = 0, priority = 2)		//Must be ran if the realstarttick is not 0 and higher than 48.
+public void preannualmarketschedule5() {
+	GlobalValues.annualglobalvalueupdate();
+	ProjectDevelopment.finalizeprojects();						//Updating projects that are finished. All starting at start are already started, hence start=12.
+	ProjectDevelopment.updateDAgentsnumber();					//Need to update DA number before taking decisions on projects to invest in.	
+}
 //*/
 //===================================================================
 

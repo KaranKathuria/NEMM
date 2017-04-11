@@ -19,8 +19,8 @@ public class AllVariables {
 	//================================================================================================================================================================================================
 	//Step 1: Starts.
 	
-	public static String casename = "2016_H1_BaseCase"; 					//Name of the case ran. That is not the simulation, not the run, but the base case (or sensitivity case).
-	public static String inputfile = "2016_NVE_2016_NY.xlsx";			//Name of inputfile (in case not a backtest. If backtest, the below is used).
+	public static String casename = "2017_H1_BaseCase"; 					//Name of the case ran. That is not the simulation, not the run, but the base case (or sensitivity case).
+	public static String inputfile = "2017_H1_MARC_2017.xlsx";			//Name of inputfile (in case not a backtest. If backtest, the below is used).
 	public static String backtestfile = "Q4_2015_NEMM_2012_backtest_typ2.xlsx";
 	public static boolean isbacktest = false;					//Alters parts of the code (readexcel and scenario and Context) in order to run backtest (that is 2012 as start year and 300 ticks). Does not later the input data in AllVariables (bank, price etc).
 	public static boolean useTestData = false;					
@@ -39,9 +39,9 @@ public class AllVariables {
 	
 	//---- IN CASE NOT BACKTEST - INCLUDE THIS SECTION.
 	public static final int obintr = 12; 
-	public static final int firstrealtick = 48; //Altering this means you got to alter the contextbuilder! Currently this cannot be between 1 and 11. 48 = january 2016.
-	public static double[] historiccertprices = new double[]{20.58,	18.72,	25.39,	19.13,	18.61,	18.72,	20.18,	20.6,	21.39,	22.75,	23.35,	24.55,	24.16,	25.63,	23.63,	25.15,	22.02,	20.47,	21.57,	21.45,	22.87,	23.02,	22.02,	21.54,	20.45,	22.35,	20.86,	19.85,	20.13,	19.95,	19.91,	20.58,	21.14,	20.52,	19.84,	18.55,	17.83,	16.24,	15.24,	15.88,	16.06,	16.05,	15.13,	15.58,	17.14,	18.13,	17.85,	17.00};   //{20.2,	18.37,	24.92,	18.77,	18.26,	18.37,	19.81,	20.22,	20.99,	22.33,	22.92,	24.09,	23.71,	25.15,	23.19,	24.68,	21.61,	20.09,	21.17,	21.05,	22.44,	22.59,	21.61,	21.14,	20.06,	21.93,	20.47,	19.48,	19.75,	19.58,	19.54,	20.2,	20.75,	20.14,	19.47,	18.2};
-	public static double bankPAfirstrealtick =   16800000;		//Faktisk bank //
+	public static final int firstrealtick = 60; //Altering this means you got to alter the contextbuilder! Currently this cannot be between 1 and 11. 48 = january 2016.
+	public static double[] historiccertprices = new double[]{18.15,	17.23,	18.27,	18.18,	17.85,	18.5,	20.85,	22.68,	24.03,	24.38,	25.56,	26.34,	27.32,	29.25,	29.09,	27.06,	21.71,	22.34,	21.42,	23.05,	24.6,	24.46,	22.66,	20.61,	20.56,	22.83,	21.31,	20.43,	20.43,	20.58,	20.29,	20.8,	21.29,	20.8,	20.04,	19.18,	17.87,	16.51,	15.35,	16.11,	16.35,	16.21,	15.74,	15.95,	17.13,	18.2,	17.83,	17.63,	17.94,	15.91,	14.92,	15.25,	15.28,	14.59,	13.25,	13.97,	15.35,	15.08,	14.12,	12.65};
+	public static double bankPAfirstrealtick =   11000000;		//Faktisk bank //
 	public static double bankOPAfirstrealtick =    800000;		//Soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
 	public static double bankTAfirstrealtick = 0;				
 	
@@ -110,10 +110,10 @@ public class AllVariables {
 	public static boolean certificatespost2020_Norway = false;
 	public static boolean certificatespost2020_Sweden = false;
 	public static int cutoffyear_Norway = 2021;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
-	public static int cutoffyear_Sweden = 2030;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
+	public static int cutoffyear_Sweden = 2021;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
-	public static int buildouttargetyear = 2030; 					//Year for build out target (by this year, hence 2020, means 31.12.2020).
-	public static double totalbuildouttarget = 46400000;//28400000; //46400000		//Total targeted buildout by the system measured in normal year annual production (MWh).
+	public static int buildouttargetyear = 2021; 					//Year for build out target (by this year, hence 2020, means 31.12.2020).
+	public static double totalbuildouttarget = 28400000;//28400000; //46400000		//Total targeted buildout by the system measured in normal year annual production (MWh).
 	
 	
 	//MARKET COORDINATION STRENGTH - Factor determining how aggressiv the build out is. Each developer recives a number between min and max that is used to estimate the future shortfall/overinvestment.
