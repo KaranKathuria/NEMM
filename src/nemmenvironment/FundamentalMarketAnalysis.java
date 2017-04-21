@@ -81,7 +81,7 @@ public class FundamentalMarketAnalysis {
 		
 		int currenttick = TheEnvironment.theCalendar.getCurrentTick();
 		int currentyear = TheEnvironment.theCalendar.getTimeBlock(currenttick).year + TheEnvironment.theCalendar.getStartYear();
-		int numberofyears = 2035 - currentyear + 1;
+		int numberofyears = TheEnvironment.theCalendar.getEndYear() - currentyear + 1;
 		int numberofticksinyear = TheEnvironment.theCalendar.getNumTradePdsInYear();		
 		certificatebalance = TheEnvironment.GlobalValues.totalmarketphysicalposition;
 		ArrayList<PowerPlant> tempremoval = new ArrayList<PowerPlant>();
@@ -174,7 +174,7 @@ public class FundamentalMarketAnalysis {
 			if (PP.getstartyear() > PP.getMyRegion().getcutoffyear() && !PP.getMyRegion().getcertificatespost2020flag()) { //If post c and in regions without certs, do nothing.
 			}
 			else {
-				totalannufuturecertproduction = totalannufuturecertproduction + (PP.getestimannualprod()*Math.min(15, 2035-PP.getstartyear()));
+				totalannufuturecertproduction = totalannufuturecertproduction + (PP.getestimannualprod()*Math.min(15, TheEnvironment.theCalendar.getEndYear()-PP.getstartyear()));
 				if (PP.getstartyear() < (currentyear+i+xyearsused)) {
 					xyearfuturecertproduction = xyearfuturecertproduction + (PP.getestimannualprod()*((currentyear+i+xyearsused)-PP.getstartyear())) - (0.5*PP.getestimannualprod()); //To take account for the midyear start.
 			}}

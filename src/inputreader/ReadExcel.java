@@ -135,7 +135,7 @@ public class ReadExcel {
 				}
 				
 				//KK20151117: 48 or (49 for backtesting) ensuring right startingpoint for second region.
-				int t = 48;
+				int t = 68;
 		 		if (AllVariables.isbacktest){t = 49;}
 		 	
 				for(int f = 0; f < years; f++){
@@ -246,8 +246,7 @@ public class ReadExcel {
 				int sizecat = (int) RRR_sheet.getRow(2+j).getCell(2).getNumericCellValue();
 				int costcat = (int) RRR_sheet.getRow(2+j).getCell(3).getNumericCellValue();
 				double RRR = RRR_sheet.getRow(2+j).getCell(4).getNumericCellValue();
-			
-			
+				
 				ProjectRRR PR = new ProjectRRR(TheEnvironment.allRegions.get(newregion_ID-1), newtech_ID, sizecat, costcat, RRR); 
 				TheEnvironment.alladjustedRRR.add(PR);
 			}					
@@ -281,7 +280,7 @@ public class ReadExcel {
                         }
                         newscen.setWindyearmultiplier(newprodfactor);
                         
-                        int numb_price_entries = 47;	// hardcoded for now. //47 for normal, 49 for backtesting.
+                        int numb_price_entries = 68;	// hardcoded for now. //67 for normal, 49 for backtesting.
                  		if (AllVariables.isbacktest){
                  			 numb_price_entries = 49;}
                         
@@ -302,7 +301,7 @@ public class ReadExcel {
                  
                  
           }catch(Exception e){
-            System.out.println("!! Bang RRR Error !! xlRead() : " + e );
+            System.out.println("!! Bang Scenarios Error !! xlRead() : " + e );
         }
           
                         

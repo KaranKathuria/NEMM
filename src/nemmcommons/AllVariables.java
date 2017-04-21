@@ -24,8 +24,8 @@ public class AllVariables {
 	public static String backtestfile = "Q4_2015_NEMM_2012_backtest_typ2.xlsx";
 	public static boolean isbacktest = false;					//Alters parts of the code (readexcel and scenario and Context) in order to run backtest (that is 2012 as start year and 300 ticks). Does not later the input data in AllVariables (bank, price etc).
 	public static boolean useTestData = false;					
-	public static final int IRRcalculationtick = 287;			//If above is true, this is 299, else 287.
-
+	public static final int IRRcalculationtick = 407;			//If above is true, this is 299, else 287. 407 is end for 2045.
+	
 	/* ---- IN CASE OF BACKTEST 
 	//In addition to unmarking this section, For the years until the real tick, the projects must be finalized, hence the Contextbuilder these schduals must be added (or removed) (line 166 onwards). 
 	//Also the values of this AllVariable file must be altered: Cutoff-date Norway = 2020.
@@ -110,10 +110,10 @@ public class AllVariables {
 	public static boolean certificatespost2020_Norway = false;
 	public static boolean certificatespost2020_Sweden = false;
 	public static int cutoffyear_Norway = 2021;						//The last year the plant must be in operation in order to be eligable for certificates in Norway. Currently 2020 or 2021
-	public static int cutoffyear_Sweden = 2021;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
+	public static int cutoffyear_Sweden = 2030;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
-	public static int buildouttargetyear = 2021; 					//Year for build out target (by this year, hence 2020, means 31.12.2020).
-	public static double totalbuildouttarget = 28400000;//28400000; //46400000		//Total targeted buildout by the system measured in normal year annual production (MWh).
+	public static int buildouttargetyear = 2030; 					//Year for build out target (by this year, hence 2020, means 31.12.2020).
+	public static double totalbuildouttarget = 46400000;//28400000; //46400000		//Total targeted buildout by the system measured in normal year annual production (MWh).
 	
 	
 	//MARKET COORDINATION STRENGTH - Factor determining how aggressiv the build out is. Each developer recives a number between min and max that is used to estimate the future shortfall/overinvestment.
@@ -138,7 +138,7 @@ public class AllVariables {
 	
 	//CONTROL STATION MARKET ADJUSTMENTS
 	public static boolean certificatedemandinqouta = true; //True indicating that certficatea is written as qouta in the law (2015). If true, then the demand is adjusted following the control station. IF false, its adjusted every year.
-	public static int[] controlstationtick = new int[]{60, 84, 108, 132, 156, 180, 204, 228, 252, 276}; //timing of controll station. If above is true, this tick indicates sertificate bank corrections. If false, not in use. 
+	public static int[] controlstationtick = new int[]{60, 84, 108, 132, 156, 180, 204, 228, 252, 276, 300, 324, 348, 372, 396}; //60, 84, 108, 132, 156, 180, 204, 228, 252, 276 //timing of controll station. If above is true, this tick indicates sertificate bank corrections. If false, not in use. 
 	
 	//CHANGE IN HOLDINGHORIZON
 	public static boolean changeinholdinghorzint = true; //If false, this is not modelled
@@ -224,7 +224,7 @@ public class AllVariables {
 	// ---- OBLIGATED PURCHASER STRATEGIES AND TACTIC PARAMETERS
 	public static int tacticDefaultLearn_OPBuyStrategy1 = 0; // Default learning algorithm for producer tactics (0 = none)
 	// Define the max and min volumes to be purchased in any given period
-	public static double tacticMinPhysPosBuyShare_OPBuyStrategy1 = 0.35; // Default must Buy share for the purchaser tactics (if used)
+	public static double tacticMinPhysPosBuyShare_OPBuyStrategy1 = 0.3; // Default must Buy share for the purchaser tactics (if used)
 	public static double tacticMaxPhysPosBuyShare_OPBuyStrategy1 = 1; 	 //default max fraction of physical position that can be purchased in the month
 	public static double tacticDefaultMustBuyPriceMult_OPBuyStrategy1 = 1.5;  // Default must Buy price multiplier for the producer tactics (if used)
 	public static double tacticMinMustBuyPriceMult_OPBuyStrategy1 = 0.7;

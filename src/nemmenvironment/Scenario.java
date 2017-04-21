@@ -27,11 +27,11 @@ public class Scenario {
 		windyearmultiplier = new YearArray();
 		if (AllVariables.isbacktest == true) {
 		annualpowerpricerregion1 = new double[49]; //Should ideally not be hard-coded, but for now okey. The years is total number of spot-price years given. //20151117 alterded from 47-49 for backtestts
-		annualpowerpricerregion2 =  new double[49]; //This is larger than YearArray (24) due to forwardprice-initilization.
+		annualpowerpricerregion2 =  new double[49]; //This is larger than YearArray (34) due to forwardprice-initilization.
 		}
 		else {
-		annualpowerpricerregion1 = new double[47]; //Should ideally not be hard-coded, but for now okey. The years is total number of spot-price years given. //20151117 alterded from 47-49 for backtestts
-		annualpowerpricerregion2 =  new double[47]; //This is larger than YearArray (24) due to forwardprice-initilization.
+		annualpowerpricerregion1 = new double[68]; //Should ideally not be hard-coded, but for now okey. The years is total number of spot-price years given. //20151117 alterded from 47-49 for backtestts
+		annualpowerpricerregion2 =  new double[68]; //This is larger than YearArray (34) due to forwardprice-initilization.
 		}
 	}
 
