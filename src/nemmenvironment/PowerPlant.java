@@ -341,9 +341,10 @@ public class PowerPlant implements Cloneable{
 		}
 
 		int yearsoftechnologyimprovment = currentyear - TheEnvironment.theCalendar.getStartYear();
+		int endyear = TheEnvironment.theCalendar.getEndYear();
 		
 		//Her is the certificatelogic
-		int yearswithcertificates = Math.min(15,(2035-(currentyear+minconstructionyears)));				//Notice the "+minconstructionyears" for taking account of buidingperiod when finding the certeligable period.
+		int yearswithcertificates = Math.min(15,(endyear-(currentyear+minconstructionyears)));				//Notice the "+minconstructionyears" for taking account of buidingperiod when finding the certeligable period.
 			if (!myRegion.getcertificatespost2020flag() && (currentyear+minconstructionyears) > myRegion.getcutoffyear()) { //If certflag is false and years is larger than cuoffyear.
 					yearswithcertificates = 0;}
 		
@@ -390,7 +391,7 @@ public class PowerPlant implements Cloneable{
 		int yearsoftechnologyimprovment = currentyear - TheEnvironment.theCalendar.getStartYear();
 		
 		//Her is the certificatelogic
-		int yearswithcertificates = Math.min(15,(2035-(currentyear+minconstructionyears)));				//Notice the "+minconstructionyears" for taking account of buidingperiod when finding the certeligable period.
+		int yearswithcertificates = Math.min(15,(endyear-(currentyear+minconstructionyears)));				//Notice the "+minconstructionyears" for taking account of buidingperiod when finding the certeligable period.
 			if (!myRegion.getcertificatespost2020flag() && (currentyear+minconstructionyears) > myRegion.getcutoffyear()) { //If certflag is false and years is larger than cuoffyear.
 					yearswithcertificates = 0;}
 		

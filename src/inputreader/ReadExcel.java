@@ -30,7 +30,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.nio.file.Paths;
-//HSSF documentation at https://poi.apache.org/apidocs/
+//HSSF documentation at https://poi.apache.org/apidocs/ baismannen
 
 // Object reading in from excel
 public class ReadExcel {

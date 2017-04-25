@@ -4,6 +4,6 @@ ssh.key_dir = C:/Users/Karan/.ssh
 poll.frequency = 60.0
 model.output = C:/Users/Karan/git/NEMM/Output
 
-vm.arguments = -Xmx1024M
-local.0.instances = 2
+vm.arguments = -Xmx2048M
+local.0.instances = 1
 local.0.working_directory = C:/Users/Karan/AppData/Local/Temp/

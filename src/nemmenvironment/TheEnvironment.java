@@ -191,7 +191,7 @@ public final class TheEnvironment {
                                                int gg=runningscenario.getAnnualpowerpricerregion1().length;
                                                int t=3;
                                                                               for (int j = 0; j<TheEnvironment.theCalendar.getNumYears();j++) {
-                                                                                              tempams_N[j] = Norway.getMyForwardPrice(i).getValue(j) * runningscenario.getAnnualpowerpricerregion1()[j+i]; //Here the fwd of year 2035 will go from 2035 - 2058 (+23)
+                                                                                              tempams_N[j] = Norway.getMyForwardPrice(i).getValue(j) * runningscenario.getAnnualpowerpricerregion1()[j+i]; //Here the fwd of year 2045 + 34
                                                                                               tempams_S[j] = Sweden.getMyForwardPrice(i).getValue(j) * runningscenario.getAnnualpowerpricerregion2()[j+i];
                                                                               }
                                                                               //Then for each fwd-year we set the annualmarketseries representing that years fwd-curve.

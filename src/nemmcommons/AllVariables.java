@@ -25,6 +25,7 @@ public class AllVariables {
 	public static boolean isbacktest = false;					//Alters parts of the code (readexcel and scenario and Context) in order to run backtest (that is 2012 as start year and 300 ticks). Does not later the input data in AllVariables (bank, price etc).
 	public static boolean useTestData = false;					
 	public static final int IRRcalculationtick = 407;			//If above is true, this is 299, else 287. 407 is end for 2045.
+	public static final double maximumcertificateprice = 250;	//KK: Added April 2017 to as some high price scenarios overshadows the maximum price.
 	
 	/* ---- IN CASE OF BACKTEST 
 	//In addition to unmarking this section, For the years until the real tick, the projects must be finalized, hence the Contextbuilder these schduals must be added (or removed) (line 166 onwards). 
@@ -41,8 +42,8 @@ public class AllVariables {
 	public static final int obintr = 12; 
 	public static final int firstrealtick = 60; //Altering this means you got to alter the contextbuilder! Currently this cannot be between 1 and 11. 48 = january 2016.
 	public static double[] historiccertprices = new double[]{18.15,	17.23,	18.27,	18.18,	17.85,	18.5,	20.85,	22.68,	24.03,	24.38,	25.56,	26.34,	27.32,	29.25,	29.09,	27.06,	21.71,	22.34,	21.42,	23.05,	24.6,	24.46,	22.66,	20.61,	20.56,	22.83,	21.31,	20.43,	20.43,	20.58,	20.29,	20.8,	21.29,	20.8,	20.04,	19.18,	17.87,	16.51,	15.35,	16.11,	16.35,	16.21,	15.74,	15.95,	17.13,	18.2,	17.83,	17.63,	17.94,	15.91,	14.92,	15.25,	15.28,	14.59,	13.25,	13.97,	15.35,	15.08,	14.12,	12.65};
-	public static double bankPAfirstrealtick =   11000000;		//Faktisk bank //
-	public static double bankOPAfirstrealtick =    800000;		//Soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
+	public static double bankPAfirstrealtick =   11400000;		//Faktisk bank //
+	public static double bankOPAfirstrealtick =    400000;		//Soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
 	public static double bankTAfirstrealtick = 0;				
 	
 	
@@ -64,7 +65,7 @@ public class AllVariables {
 	
 	//FORWARD BUYING AND MARKET BALANCE
 	public static double shareoffuturehhdemandpurchased = 0.02; //20160120 Share of future demand within the holding horizont that a OPA can buy (in rest vol).
-	public static double MaxPhysPosmulitiplier = 2;				//Indicating the maximum the total sell volume can be lager than total demand for certs. Calcuate the above dynamically. THe latter not including forward buying from OPA.
+	public static double MaxPhysPosmulitiplier = 5;				//Indicating the maximum the total sell volume can be lager than total demand for certs. Calcuate the above dynamically. THe latter not including forward buying from OPA.
 		
 	// ---- COMPANY AND DEVELOPER DISTRIBUTION, STRATEGIES AND CONSTRAINTS
 	
@@ -113,11 +114,11 @@ public class AllVariables {
 	public static int cutoffyear_Sweden = 2030;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
 	public static int buildouttargetyear = 2030; 					//Year for build out target (by this year, hence 2020, means 31.12.2020).
-	public static double totalbuildouttarget = 46400000;//28400000; //46400000		//Total targeted buildout by the system measured in normal year annual production (MWh).
+	public static double totalbuildouttarget = 46500000;//28400000; //46400000	+ 500000 pga justeringer.	//Total targeted buildout by the system measured in normal year annual production (MWh).
 	
 	
 	//MARKET COORDINATION STRENGTH - Factor determining how aggressiv the build out is. Each developer recives a number between min and max that is used to estimate the future shortfall/overinvestment.
-	public static double maxbuildoutaggressivness = 1.03; 			//As it is the final value that really limits the build out the spread must to large. 1 = no overinvestment.
+	public static double maxbuildoutaggressivness = 1.04; 			//As it is the final value that really limits the build out the spread must to large. 1 = no overinvestment.
 	public static double minbuildoutaggressivness = 0.95; 			//Remember that this is multiplied with the total future demand, hence 1.01 implies 67 MW of new capacity added in 2020 (and about half that in 2026).
 
 	//CONCESSION PROSESS
@@ -146,8 +147,8 @@ public class AllVariables {
 	public static double changeshare2 = 0.9; //Probability that buyers and sellers from the lowest hh whom changes hh, in the second hhchange process.
 	public static int newhh1 = 12;			//Ticks added to the hh of the shortest market participants  [0]
 	public static int newhh2 = 30;			//Ticks added to the hh of the second shortest market participants [1]
-	public static int tickforchangeinhh1 = 73; //75 = april 2018 first pricess start tick
-	public static int tickforchangeinhh2 = 80; //75 = april 2018 second pricess start tick
+	public static int tickforchangeinhh1 = 200; //75 = april 2018 first pricess start tick 200 er septemer 2028
+	public static int tickforchangeinhh2 = 205; //75 = april 2018 second pricess start tick
 
 	
 	//Step 2: Ends
@@ -261,7 +262,7 @@ public class AllVariables {
 	public static int minpostpondyears = 1;							//How long the investment decision is postpond if postponed.Cannot see why this should be larger than 1. (only argument is if this is the real deal).
 	public static int MPECount = 17;								//Number of futuer years seen by the MPE-analysis. THats number-1 years ahead (including this year).
 	public static int LPECount = MPECount+minpostpondyears;			//Number of futuer years seen by the LPE-analysis
-	public static int yearsbuildout = 9;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA. KK20151118: Brukt 16 histoisk, men kan ikke forstå hvorfor det er rett! Med verdi på 1 så bygger man ut for neste års underskudd i hvert iterert år, det betyr generalt at man bygger senere og ergo må bygge mere og dermed dyrere.
+	public static int yearsbuildout = 16;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA. KK20151118: Brukt 16 histoisk, men kan ikke forstå hvorfor det er rett! Med verdi på 1 så bygger man ut for neste års underskudd i hvert iterert år, det betyr generalt at man bygger senere og ergo må bygge mere og dermed dyrere.
 	public static double[] RAR = new double[]{0.34,0.50};			//1 is maksimum. Higher number gives a wider range of roof and floor around the FMA. A bigger spread of numbers gives bigger variation between agents.
 	public static double backtestminFMA = 40;						//20151130 KK: added for backtest qickfix of FMA at 2012.
 	public static double stdmediumrunpriceexpect = 0.03;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)

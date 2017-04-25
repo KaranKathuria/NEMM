@@ -146,7 +146,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		BidOffer ret = new BidOffer();
 		// Must sell is set to the maximum of the must sell share * last ticks production, and the difference between
 		// the physical position and the desired/target max physical position
-		if (lasttickproduction == 0) {
+		if (physicalposition == 0) { //lasttickproduction
 			ret.setCertVolume(0.0);
 		}
 		else {
@@ -189,6 +189,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 //			ret.setCertVolume(Math.max(0.0,Math.min(maxBidOfferVolume-mustsell,physicalposition-mustsell))); //rest of the monthly production sold at expected price.			
 			ret.setCertVolume(Math.max(0.0,Math.min(1.0, maxBidOfferVolumeMultiplier)*(physicalposition-mustsell))); //rest of the monthly production sold at expected price.		KK 20151129 Interesting. why not the above?	
 		}
+		int tt=2;
 		//Added max.max 20150519 and 20160303
 		double newprice;
 		if (paramRestVolPriceMult>1){

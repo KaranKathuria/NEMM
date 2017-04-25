@@ -124,7 +124,7 @@ public class ShortTermMarket {
 			//Allbuyoffers.addAll(agent.getbeststrategy().getAgentsBuyOffers()); For the time being the producer does not have buyoffers.
 			totalmustsellVol = agent.getbeststrategy().getbesttactic().getsellofferone().getCertVolume() + totalmustsellVol;
 			totalrestsellVol = agent.getbeststrategy().getbesttactic().getselloffertwo().getCertVolume() + totalrestsellVol;
-
+			int a = 2;
 			//For displaypurposes
 			if (agent.getbeststrategy().getbesttactic().getsellofferone() == null) {selloffer1 = 0;} else{ 		  //For handling null-offers from agents without prod.
 			selloffer1 = agent.getbeststrategy().getbesttactic().getsellofferone().getPrice();}
@@ -472,7 +472,7 @@ public class ShortTermMarket {
 		double tempshb = shareofmarginalbuyofferbought;
 		double tempshs = shareofmarignalselloffersold;
 		*/
-		currentmarketprice = certPrice;
+		currentmarketprice = Math.min(certPrice, AllVariables.maximumcertificateprice);
 	}
 
 // ---- Methods used in the clearing code

@@ -1,63 +1,6 @@
-FATAL [Thread-5] 2017-04-21 15:27:01,983 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Thread.java:745)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
-	at java.util.ArrayList.rangeCheck(ArrayList.java:635)
-	at java.util.ArrayList.get(ArrayList.java:411)
-	at nemmenvironment.TheEnvironment.setwindscenario(TheEnvironment.java:150)
-	at nemmcommons.NEMMContextBuilder.DistributionandInitiation(NEMMContextBuilder.java:82)
-	... 9 more
-FATAL [Thread-5] 2017-04-21 15:38:08,923 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Thread.java:745)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
-	at java.util.ArrayList.rangeCheck(ArrayList.java:635)
-	at java.util.ArrayList.get(ArrayList.java:411)
-	at nemmenvironment.TheEnvironment.setwindscenario(TheEnvironment.java:150)
-	at nemmcommons.NEMMContextBuilder.DistributionandInitiation(NEMMContextBuilder.java:82)
-	... 9 more
-FATAL [Thread-5] 2017-04-21 15:42:12,100 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (0.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Thread.java:745)
-Caused by: java.lang.reflect.InvocationTargetException
-	at nemmcommons.NEMMContextBuilder$$FastClassByCGLIB$$6704a700.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
-	at java.util.ArrayList.rangeCheck(ArrayList.java:635)
-	at java.util.ArrayList.get(ArrayList.java:411)
-	at nemmenvironment.TheEnvironment.setwindscenario(TheEnvironment.java:150)
-	at nemmcommons.NEMMContextBuilder.DistributionandInitiation(NEMMContextBuilder.java:82)
-	... 9 more
+INFO  [pool-3-thread-1] 2017-04-25 10:04:04,047 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\Karan\AppData\Local\Temp\simphony_model_1493106834711 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2017-04-25 10:04:04,050 repast.simphony.batch.ssh.SessionsDriver - Run Time: 10,0349
+INFO  [SwingWorker-pool-2-thread-1] 2017-04-25 10:04:04,100 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\Karan\AppData\Local\Temp\simphony_model_1493106834711
+INFO  [SwingWorker-pool-2-thread-1] 2017-04-25 10:04:04,116 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/Karan/git/NEMM/Output
+INFO  [SwingWorker-pool-2-thread-1] 2017-04-25 10:04:04,200 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0025
+INFO  [SwingWorker-pool-2-thread-1] 2017-04-25 10:04:04,200 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 10,1584

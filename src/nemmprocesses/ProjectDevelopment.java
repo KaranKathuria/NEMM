@@ -183,7 +183,7 @@ public class ProjectDevelopment {
 					//Nothing tempcertsdeveloperswantstobuild = tempcertsdeveloperswantstobuild
 				}
 				else {
-					tempcertsdeveloperswantstobuild = tempcertsdeveloperswantstobuild + (PP.getestimannualprod()*Math.min(15, 2035-(currentyear+PP.getminconstructionyears())));} 
+					tempcertsdeveloperswantstobuild = tempcertsdeveloperswantstobuild + (PP.getestimannualprod()*Math.min(15, TheEnvironment.theCalendar.getEndYear()-(currentyear+PP.getminconstructionyears())));} 
 		}
 		
 		//For checking purposes.
@@ -225,7 +225,7 @@ public class ProjectDevelopment {
 					TheEnvironment.projectsawaitinginvestmentdecision.remove(PP);			//Removing from Environment list of awaitinginvestmentsdecisions
 					}
 					else {
-					tempbuildout = tempbuildout + (PP.getestimannualprod()*Math.min(15, 2035-(currentyear+PP.getminconstructionyears())));
+					tempbuildout = tempbuildout + (PP.getestimannualprod()*Math.min(15, TheEnvironment.theCalendar.getEndYear()-(currentyear+PP.getminconstructionyears())));
 					PP.setstatus(2);
 					PP.setyearsincurrentstatus(0);  										//Setting this for consistency for project reaching new stag. This value is note used in later stages.
 					PP.setstartyear(currentyear + PP.getminconstructionyears());			//Adding a startdate. Notice that this is done here rather than in the finalizeprojects.

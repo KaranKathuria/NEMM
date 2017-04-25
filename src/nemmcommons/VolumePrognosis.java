@@ -121,11 +121,6 @@ public class VolumePrognosis {
 			for (int j = fromTick; j < Math.min(fromTick+tempholdinghdem,maxTicks); ++j) {
 				holdinghtickdemand = holdinghtickdemand + (CDS.getDemandShare(j) * CDS.getMyRegion().getMyDemand().getExpectedCertDemand(j)); //getCertDemand(j)); //Sum of all demand wihtin the hodinghorizont.
 				}
-			int f = 3;
-			int a = 3;
-			
-			
-			
 			
 		}
 		tickCertProduction[tickID] = curTickProd;
