@@ -60,7 +60,7 @@ public class AllVariables {
 	public static int[] numTicksPAExit = new int[]{2,6,12,72};			
 	public static int[] numTicksOPExit = new int[]{2,6,12,60};			
 	public static int[] numTicksTExit = new int[]{86,86};
-	public static int cvvaluehorizont = 60;						//72 = 6 years	- Corresponding holdinghorisont (that is CV value horizont) for developer agents.
+	public static int cvvaluehorizont = 72;						//72 = 6 years	- Corresponding holdinghorisont (that is CV value horizont) for developer agents.
 	public static boolean limitproducerCV = true; 				//If true CVproducer <= CVdeveloper. Logical constraint.
 	
 	//FORWARD BUYING AND MARKET BALANCE
@@ -114,7 +114,7 @@ public class AllVariables {
 	public static int cutoffyear_Sweden = 2030;						//As above for Sweden. Not in use if certificatespost2020_Sweden = true.
 	
 	public static int buildouttargetyear = 2030; 					//Year for build out target (by this year, hence 2020, means 31.12.2020).
-	public static double totalbuildouttarget = 46500000;//28400000; //46400000	+ 500000 pga justeringer.	//Total targeted buildout by the system measured in normal year annual production (MWh).
+	public static double totalbuildouttarget = 46800000;//28400000; //46400000	+ 500000 pga justeringer.	//Total targeted buildout by the system measured in normal year annual production (MWh).
 	
 	
 	//MARKET COORDINATION STRENGTH - Factor determining how aggressiv the build out is. Each developer recives a number between min and max that is used to estimate the future shortfall/overinvestment.
@@ -122,17 +122,17 @@ public class AllVariables {
 	public static double minbuildoutaggressivness = 0.95; 			//Remember that this is multiplied with the total future demand, hence 1.01 implies 67 MW of new capacity added in 2020 (and about half that in 2026).
 
 	//CONCESSION PROSESS
-	public static int maxyearsinconcessionqueue = 3;				//Number of years in addition to minimum number of years in concession queue given as input from excel. After this, if not having received concession, the project is trashed.
+	public static int maxyearsinconcessionqueue = 4;				//Number of years in addition to minimum number of years in concession queue given as input from excel. After this, if not having received concession, the project is trashed.
 	public static double annualprobforreceivingconcession = 0.4;	//Only with one decimal as the random generater uses int.
-	public static int expectedyersinconcession = 4;					//When deciding for concession, how long to the developers expected the project to be in line. Needed due to learningcurve/CAPEX estimation.
+	public static int expectedyersinconcession = 2;					//When deciding for concession, how long to the developers expected the project to be in line. Needed due to learningcurve/CAPEX estimation.
 
 	//PROJECT MARKET
-	public static double[] chanceofownershipchange = new double[]{0.2,0.2,0.3,0.4};		//Indicates the chance (%) of ownership change according to years postponed by curren owner when setting criteria flag. Thus, of a project have been postpone (not invested when it could) one year, there is a [0] chance for owernship change. For the second year, there is [1] chance, etc. Notice that one year is 2015 right after the decisions are made/not made..
+	public static double[] chanceofownershipchange = new double[]{0.2,0.3,0.4,0.4};		//Indicates the chance (%) of ownership change according to years postponed by curren owner when setting criteria flag. Thus, of a project have been postpone (not invested when it could) one year, there is a [0] chance for owernship change. For the second year, there is [1] chance, etc. Notice that one year is 2015 right after the decisions are made/not made..
 	public static double initialowenershipchangepercentile = 0.2;						//As the cert price needed has not been calculated this value indicates which project in line determines the marginal project. If 100 projects, a value of 0.2 would indicate that the 20th best project is the cutoff. For all project better than this, there is a chanceofownershipchange[0] chance for redistirbution.
 
 	//PENSION FUND DEVELOPERS 
 	public static int numberofpensionfunds = 1;							//They are all investment strategy type 3. (price, with some respekct for fundamntal) and in both countries.
-	public static int holdinghorizontpensionproducer = 60;
+	public static int holdinghorizontpensionproducer = 72;
 	public static double pensionfundInvestRRRAdjustFactor = 0.82;		//wACC = origonal prject specific times this, hence 0.5*8% = 4 %
 	public static int pfconstructionconstraints = 4;
 	public static int pfregioncode = 2; //1 = Norway, 2 = Both, 3 = Sweden.
@@ -147,8 +147,8 @@ public class AllVariables {
 	public static double changeshare2 = 0.9; //Probability that buyers and sellers from the lowest hh whom changes hh, in the second hhchange process.
 	public static int newhh1 = 12;			//Ticks added to the hh of the shortest market participants  [0]
 	public static int newhh2 = 30;			//Ticks added to the hh of the second shortest market participants [1]
-	public static int tickforchangeinhh1 = 200; //75 = april 2018 first pricess start tick 200 er septemer 2028
-	public static int tickforchangeinhh2 = 205; //75 = april 2018 second pricess start tick
+	public static int tickforchangeinhh1 = 185; //75 = april 2018 first pricess start tick 200 er septemer 2028
+	public static int tickforchangeinhh2 = 200; //75 = april 2018 second pricess start tick
 
 	
 	//Step 2: Ends
