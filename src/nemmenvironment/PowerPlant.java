@@ -345,7 +345,7 @@ public class PowerPlant implements Cloneable{
 		
 		//Her is the certificatelogic
 		int yearswithcertificates = Math.min(15,(endyear-(currentyear+minconstructionyears)));				//Notice the "+minconstructionyears" for taking account of buidingperiod when finding the certeligable period.
-			if (!myRegion.getcertificatespost2020flag() && (currentyear+minconstructionyears) > myRegion.getcutoffyear()) { //If certflag is false and years is larger than cuoffyear.
+			if (!this.myRegion.getcertificatespost2020flag() && (currentyear+minconstructionyears) > this.myRegion.getcutoffyear()) { //If certflag is false and years is larger than cuoffyear.
 					yearswithcertificates = 0;}
 		
 		double newCapex = capex*Math.pow((1-annualcostreduction),yearsoftechnologyimprovment);			//Note that the Capex value of the powerplant is not set/updated.
@@ -368,6 +368,7 @@ public class PowerPlant implements Cloneable{
 		//Not sure there is a good reason for not sending the powerprice directly in the method (KK). One advantage is that its implementation is easier to change later.
 		//Current year referes to actual year number (2012..), not YearID (0,1...)
 		double usedRRR = myCompany.getInvestmentRRR()*this.specificRRR;
+		int ts=2;
 		double usedpowerprice = 0;
 		int futureyearspowerprice = 5 + TheEnvironment.theCalendar.getTimeBlock(TheEnvironment.theCalendar.getCurrentTick()).year;		//5 indication 5 years horizont from when either the investment decision or the FMA i ran. That is, all Powerprices are regarded from the year ran.
 		//Notice that the above future price uses the current (simulation tick) +5, and not the currentyear +5. Arguably beacuse this (simulation) +5 is the best knowledge when doing it. Hence the FMA does not have full foresight on powerprice.
@@ -389,10 +390,11 @@ public class PowerPlant implements Cloneable{
 		}
 
 		int yearsoftechnologyimprovment = currentyear - TheEnvironment.theCalendar.getStartYear();
+		int endyear = TheEnvironment.theCalendar.getEndYear();
 		
 		//Her is the certificatelogic
 		int yearswithcertificates = Math.min(15,(endyear-(currentyear+minconstructionyears)));				//Notice the "+minconstructionyears" for taking account of buidingperiod when finding the certeligable period.
-			if (!myRegion.getcertificatespost2020flag() && (currentyear+minconstructionyears) > myRegion.getcutoffyear()) { //If certflag is false and years is larger than cuoffyear.
+			if (!this.myRegion.getcertificatespost2020flag() && (currentyear+minconstructionyears) > this.myRegion.getcutoffyear()) { //If certflag is false and years is larger than cuoffyear.
 					yearswithcertificates = 0;}
 		
 		double newCapex = capex*Math.pow((1-annualcostreduction),yearsoftechnologyimprovment);			//Note that the Capex value of the powerplant is not set/updated.
@@ -403,10 +405,11 @@ public class PowerPlant implements Cloneable{
 		
 		//Calculating the needed average cert price is not trival as the certificates are only valid for a subperiod of the lifetime. First take into account the yearsofcertificates
 		double NPVfactor_certyears = calculateNPVfactor(yearswithcertificates, usedRRR);
-		
+		int test = 10;
 		//Calculating the needed price for certificates, with the correct assumptions of when the plant is eligable and the simulation-current local power price. T
 		if (NPVfactor_certyears == 0.0) {
 			certpriceneeded_ownRRR = 10000.0;
+			
 		} else {
 		certpriceneeded_ownRRR = Math.max((((LRMC_ownRRR*NPVfactor_lifetime) - (usedpowerprice*NPVfactor_lifetime)) / NPVfactor_certyears),0.0); //Drawback: IS the powerprice assumption okey?
 		}

@@ -87,7 +87,7 @@ public class FundamentalMarketAnalysis {
 		ArrayList<PowerPlant> tempremoval = new ArrayList<PowerPlant>();
 		
 		//Calculation for all future LRMC curves begins. i stands for iterated year. for each i there is a aar from i to end, that to sum up future production from i.
-		for (int i = 0; i < numberofyears; ++i ) {
+		for (int i = 0; i <= numberofyears; ++i ) {
 			tempendogenousprojects.clear();												//Important to clear so that the same endog project is not buildt twice.
 			double totalannufuturedemand = 0;											//All futuredemand from i and to the end
 			double totalannufuturecertproduction = 0;									//All futuresupply form i and to the end
@@ -102,7 +102,7 @@ public class FundamentalMarketAnalysis {
 						
 		//Adding to allPowerPlants from the plants in process that will be finished.
 		for (PowerPlant PP : projectsunderconstruction_copy) {
-			if (PP.getstartyear() == currentyear+i) {									 //Currentyear + i is the iterated year. Hence if they start this year --> Move.
+			if (PP.getstartyear() <= currentyear+i+xyearsused) {			//KK 2017 "+xyearsused" added					 //Currentyear + i is the iterated year. Hence if they start this year --> Move.
 				if (!PP.getMyRegion().getcertificatespost2020flag() && (PP.getstartyear()) >= PP.getMyRegion().getcutoffyear()) { //If certflag is false and years is larger than cuoffyear.
 					PP.setendyear(PP.getstartyear()-1);
 				}
@@ -213,7 +213,7 @@ public class FundamentalMarketAnalysis {
 				for (PowerPlant PP : allendogenousprojects) {						//All endogenous projects. Pooling together all projects in another stage than under construction.
 					PP.updateearlieststartyear();
 				//20160616 advances IF to ensure that the FMA is correct after cutoffs. Projects after cutoff will
-				if ( ((PP.getearlieststartyear() <= (currentyear+i)))){// && PP.getMyRegion().getcertificatespost2020flag()) ||
+				if ( ((PP.getearlieststartyear() < (currentyear+i+xyearsused)))){// !!!KK2017!!! && 0 --> < PP.getMyRegion().getcertificatespost2020flag()) ||
 					 //((PP.getearlieststartyear() <= (currentyear+i)) && ((currentyear+i) <= PP.getMyRegion().getcutoffyear()) && !PP.getMyRegion().getcertificatespost2020flag())  ) {		// && PP.getMyRegion().getcertificatespost2020flag()  !PP.getMyRegion().getcertificatespost2020flag() && (PP.getstartyear()) >= PP.getMyRegion().getcutoffyear()	//If they can earliest be finished in time for this year. Added +1 as its highly unlikely that all are finished in "best case" time. 20151125 KK removed +1 on the left side.
 				
 					tempendogenousprojects.add(PP);	}}									//Add all relevant endogenous projects to this list.

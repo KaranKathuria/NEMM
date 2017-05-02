@@ -40,16 +40,19 @@ public class ProjectDevelopment {
 					if (!PP.getMyRegion().getcertificatespost2020flag() && currentyear > PP.getMyRegion().getcutoffyear()) {	//This takes care of projecs post 2020 in regions without certs post 2020.
 						PP.setendyear(PP.getMyRegion().getcutoffyear());							//Does not matter what year this is set to.
 						PP.setStarttick(TheEnvironment.theCalendar.getNumTicks());
-						PP.setendtick(currenttick);}												//Setting this back in time, hence these certs are never produced.
+						PP.setendtick(currenttick-1);}												//Setting this back in time, hence these certs are never produced.
 					else {
 						PP.setendyear(Math.min(PP.getlifetime()+currentyear, Math.min(currentyear+15, TheEnvironment.theCalendar.getEndYear())));	//Takes care of projects "in overgangsordningen" with 1 year lifetime.
 						int temp = currenttick + RandomHelper.nextIntFromTo(0, TheEnvironment.theCalendar.getNumTradePdsInYear()-1); //KK 20160303 
 						PP.setStarttick(temp);	//Random set starttick between now and 12 tick ahead.
-						if (currentyear>2020){  //KK 20160303 The original is actually gets its wrong as it sets project buildt after 2020 to only produce 14 years + rand tick.
-						temp = currenttick+11;
-						}
-						PP.setendtick(temp+(TheEnvironment.theCalendar.getNumTradePdsInYear()*(PP.getendyear()-currentyear))); 
-					}
+						//if (currentyear>2020){  //KK 20160303 The original is actually gets its wrong as it sets project buildt after 2020 to only produce 14 years + rand tick.
+						//temp = currenttick+11;
+						//}
+						if (!PP.getMyRegion().getcertificatespost2020flag()){
+						PP.setendtick(Math.min(AllVariables.IRRcalculationtick,temp+(TheEnvironment.theCalendar.getNumTradePdsInYear()*(PP.getendyear()-currentyear)))); //KK 2017. Merket det over og lagt inn dette!
+						} else {
+						PP.setendtick(temp+(TheEnvironment.theCalendar.getNumTradePdsInYear()*(PP.getendyear()-currentyear))); //KK 2017. Merket det over og lagt inn dette!
+					}}
 				
 				TheEnvironment.allPowerPlants.add(PP);			//Add to all operations powerplants
 				PP.getMyCompany().getmypowerplants().add(PP);	//Add to company`s list of powerplants
@@ -84,14 +87,15 @@ public class ProjectDevelopment {
 			double usedRRR = PP.getspecificRRR(); //DA.getmycompany().getInvestmentRRR()* removed as all should use the same RRR (its a benchmark for the project)
 			double postponedRRR = usedRRR + AllVariables.RRRpostpondpremium;					//If postponed, there should be a risk premium. For now (se AllVariables) but 0.01 (1%).
 			
-
 				if (PP.getstatus() == 3) {														//3=Awaiting investment decision.
+					int ti = 10;
 					PP.addyearsincurrentstatus(1);												//Increasing number of years with this status with one.
 					templist.add(PP);															//Adds all the projects, regardsless of having a cert price needed to high or low.
 					RRRpostponedtemplist.add(postponedRRR);										//A not so good workaround for saving the projet specific postponedRRR
 					PP.calculateLRMCandcertpriceneeded(currentyear, usedRRR, 3);				//Using the market forward power price in that given reigon. Notice that this is calculated for when the year the project can be invested in, not the year it can be finished!!
 					PP.calculateLRMCandcertpriceneeded_ownRRR(currentyear, 3);
 					estimateRRR = usedRRR*DA.getmycompany().getInvestmentRRR();
+					int t = 33;
 				}
 			}
 			
@@ -179,6 +183,7 @@ public class ProjectDevelopment {
 		//To add up the total certs from the projects that now are marked as status = 9 (or in the temp_allprojectthatcanbebuild list)
 		for (PowerPlant PP : temp_allprojectthatcanbebuild) {
 			PP.calculateLRMCandcertpriceneeded(currentyear, PP.getspecificRRR(), 3);			//This to ensure that it the correct numbers stored in LRMC, and not the postponed one. and Certpriceneeded when its build. For output purposes.
+			PP.calculateLRMCandcertpriceneeded_ownRRR(currentyear, 3);							//KK: Added 2017. This to ensure that it the correct numbers stored in LRMC, and not the postponed one. and Certpriceneeded when its build. For output purposes.
 				if (!PP.getMyRegion().getcertificatespost2020flag() && (currentyear+PP.getminconstructionyears()) > PP.getMyRegion().getcutoffyear()) {
 					//Nothing tempcertsdeveloperswantstobuild = tempcertsdeveloperswantstobuild
 				}

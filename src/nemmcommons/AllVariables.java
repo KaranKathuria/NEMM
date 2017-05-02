@@ -20,12 +20,11 @@ public class AllVariables {
 	//Step 1: Starts.
 	
 	public static String casename = "2017_H1_BaseCase"; 					//Name of the case ran. That is not the simulation, not the run, but the base case (or sensitivity case).
-	public static String inputfile = "2017_H1_MARC_2017.xlsx";			//Name of inputfile (in case not a backtest. If backtest, the below is used).
+	public static String inputfile = "2017_H1_MARC_2017_S1.xlsx";			//Name of inputfile (in case not a backtest. If backtest, the below is used).
 	public static String backtestfile = "Q4_2015_NEMM_2012_backtest_typ2.xlsx";
 	public static boolean isbacktest = false;					//Alters parts of the code (readexcel and scenario and Context) in order to run backtest (that is 2012 as start year and 300 ticks). Does not later the input data in AllVariables (bank, price etc).
 	public static boolean useTestData = false;					
 	public static final int IRRcalculationtick = 407;			//If above is true, this is 299, else 287. 407 is end for 2045.
-	public static final double maximumcertificateprice = 250;	//KK: Added April 2017 to as some high price scenarios overshadows the maximum price.
 	
 	/* ---- IN CASE OF BACKTEST 
 	//In addition to unmarking this section, For the years until the real tick, the projects must be finalized, hence the Contextbuilder these schduals must be added (or removed) (line 166 onwards). 
@@ -41,9 +40,9 @@ public class AllVariables {
 	//---- IN CASE NOT BACKTEST - INCLUDE THIS SECTION.
 	public static final int obintr = 12; 
 	public static final int firstrealtick = 60; //Altering this means you got to alter the contextbuilder! Currently this cannot be between 1 and 11. 48 = january 2016.
-	public static double[] historiccertprices = new double[]{18.15,	17.23,	18.27,	18.18,	17.85,	18.5,	20.85,	22.68,	24.03,	24.38,	25.56,	26.34,	27.32,	29.25,	29.09,	27.06,	21.71,	22.34,	21.42,	23.05,	24.6,	24.46,	22.66,	20.61,	20.56,	22.83,	21.31,	20.43,	20.43,	20.58,	20.29,	20.8,	21.29,	20.8,	20.04,	19.18,	17.87,	16.51,	15.35,	16.11,	16.35,	16.21,	15.74,	15.95,	17.13,	18.2,	17.83,	17.63,	17.94,	15.91,	14.92,	15.25,	15.28,	14.59,	13.25,	13.97,	15.35,	15.08,	14.12,	12.65};
+	public static double[] historiccertprices = new double[]{18.15,	17.23,	18.27,	18.18,	17.85,	18.5,	20.85,	22.68,	24.03,	24.38,	25.56,	26.34,	27.32,	29.25,	29.09,	27.06,	21.71,	22.34,	21.42,	23.05,	24.6,	24.46,	22.66,	20.61,	20.56,	22.83,	21.31,	20.43,	20.43,	20.58,	20.29,	20.8,	21.29,	20.8,	20.04,	19.18,	17.87,	16.51,	15.35,	16.11,	16.35,	16.21,	15.74,	15.95,	17.13,	18.2,	17.83,	17.63,	17.94,	15.91,	14.92,	15.25,	15.28,	14.59,	13.25,	13.97,	15.35,	15.08,	11.12,	7.95};
 	public static double bankPAfirstrealtick =   11400000;		//Faktisk bank //
-	public static double bankOPAfirstrealtick =    400000;		//Soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf
+	public static double bankOPAfirstrealtick =    400000;		//Soure: http://downloads.montel.no/ELSERT15/Hans%20Petter%20Kildal.pdf og NVE.
 	public static double bankTAfirstrealtick = 0;				
 	
 	
@@ -59,20 +58,24 @@ public class AllVariables {
 	public static double[] cutoffTExit = new double[]{0.5,1.0};
 	public static int[] numTicksPAExit = new int[]{2,6,12,72};			
 	public static int[] numTicksOPExit = new int[]{2,6,12,60};			
-	public static int[] numTicksTExit = new int[]{86,86};
+	public static int[] numTicksTExit = new int[]{6,180};
 	public static int cvvaluehorizont = 72;						//72 = 6 years	- Corresponding holdinghorisont (that is CV value horizont) for developer agents.
 	public static boolean limitproducerCV = true; 				//If true CVproducer <= CVdeveloper. Logical constraint.
 	
 	//FORWARD BUYING AND MARKET BALANCE
 	public static double shareoffuturehhdemandpurchased = 0.02; //20160120 Share of future demand within the holding horizont that a OPA can buy (in rest vol).
 	public static double MaxPhysPosmulitiplier = 5;				//Indicating the maximum the total sell volume can be lager than total demand for certs. Calcuate the above dynamically. THe latter not including forward buying from OPA.
-		
+	
+	//Short Term market
+	public static final double maximumcertificateprice = 250;	//KK: Added April 2017 to as some high price scenarios overshadows the maximum price.
+	public static final double minimumscertificateprice = 3;	//KK: Added as the transaction cost are assumed to be about this.
+	
 	// ---- COMPANY AND DEVELOPER DISTRIBUTION, STRATEGIES AND CONSTRAINTS
 	
 	//COMPANY REGIOAND AND INVESTMENT STRATEGY DISTRIBUTION
 	public static double[] companyregiondistribution = new double[]{0.2,0.8,1.0};	//{0.2,1.0,1.0} //first the prob for Norway, Sweden and third is both. Determines the chance for a new added company beeing in either one (then which) or both countires. (region part 1 = N, 2 = both,  3 = sweden)
 	public static double[] developerinvestmenttypedistribution = new double[]{0.2,0.5,0.95,1};	//In use for agents in both regions {F,FP,PF,R}. Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
-	public static double[] developerinvestmenttypedistribution_Norway = new double[]{0.1,0.3,0.95,1};	//{0.1,0.6,0.9,1} 45//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
+	public static double[] developerinvestmenttypedistribution_Norway = new double[]{0.12,0.3,0.95,1};	//{0.1,0.6,0.9,1} 45//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
 	public static double[] developerinvestmenttypedistribution_Sweden = new double[]{0.2,0.5,0.95,1};	//{0.1,0.6,0.9,1} 45//{F,FP,PF,R} Distribution of investmentagents-type 1 and 2 is the fundamental, where 2 is fundamental and dependent on price times a mulitplicator. 3 is the current price for all years with some varing dependent on cost curve, 4 is restricted to current price for x years.
 	
 	//DISTRIBUTIONCODE OF PLANT, PROJECTS AND DEMAND SHARES
@@ -86,7 +89,7 @@ public class AllVariables {
 	public static double fundamentalfundamentaleasefactordistribution_Norway = 1.08; //Indicates the fundamental ease factor for fundamental agents. Use as the FMA underestsimats the FMAprice as both agents and analys people know that all investmetns are not taken perfectly. quicfiks 20151201 KK. 1.1 means that FMA is 10 % higher than perfect FMA.
 	public static double fundamentalfundamentaleasefactordistribution_Sweden = 1.15; //Indicates the fundamental ease factor for fundamental agents. Use as the FMA underestsimats the FMAprice as both agents and analys people know that all investmetns are not taken perfectly. quicfiks 20151201 KK.
 	public static double[] developerinvestmentpriceeasefactordistribution = new double[]{1.05,1.15};		//Started with 1.15, 1.4	//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
-	public static double[] developerinvestmentpriceeasefactordistribution_Norway = new double[]{1.0,1.05};		//Started with 1.15, 1.4	//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
+	public static double[] developerinvestmentpriceeasefactordistribution_Norway = new double[]{1.05,1.10};		//Started with 1.15, 1.4	//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
 	public static double[] developerinvestmentpriceeasefactordistribution_Sweden = new double[]{1.15,1.15};		//The distribution of priceeasefactor given to investmentagent type 2 (fundamental with ease price). High number indicates little restriction.(Type 1 typically has 500 on this).
 	//Given to investmentstrategy type 3 and 4
 	public static double[] developerinvestmentfundamentaleasefactordistribution = new double[]{1.2,1.3};  //The distribution of fundamentaleasefaactor to investmentagent type 3 (price based with ease cost curve). High number indicates little restriction.
@@ -118,7 +121,7 @@ public class AllVariables {
 	
 	
 	//MARKET COORDINATION STRENGTH - Factor determining how aggressiv the build out is. Each developer recives a number between min and max that is used to estimate the future shortfall/overinvestment.
-	public static double maxbuildoutaggressivness = 1.04; 			//As it is the final value that really limits the build out the spread must to large. 1 = no overinvestment.
+	public static double maxbuildoutaggressivness = 1.05; 			//As it is the final value that really limits the build out the spread must to large. 1 = no overinvestment.
 	public static double minbuildoutaggressivness = 0.95; 			//Remember that this is multiplied with the total future demand, hence 1.01 implies 67 MW of new capacity added in 2020 (and about half that in 2026).
 
 	//CONCESSION PROSESS
@@ -127,12 +130,12 @@ public class AllVariables {
 	public static int expectedyersinconcession = 2;					//When deciding for concession, how long to the developers expected the project to be in line. Needed due to learningcurve/CAPEX estimation.
 
 	//PROJECT MARKET
-	public static double[] chanceofownershipchange = new double[]{0.2,0.3,0.4,0.4};		//Indicates the chance (%) of ownership change according to years postponed by curren owner when setting criteria flag. Thus, of a project have been postpone (not invested when it could) one year, there is a [0] chance for owernship change. For the second year, there is [1] chance, etc. Notice that one year is 2015 right after the decisions are made/not made..
+	public static double[] chanceofownershipchange = new double[]{0.1,0.2,0.3,0.4};		//Indicates the chance (%) of ownership change according to years postponed by curren owner when setting criteria flag. Thus, of a project have been postpone (not invested when it could) one year, there is a [0] chance for owernship change. For the second year, there is [1] chance, etc. Notice that one year is 2015 right after the decisions are made/not made..
 	public static double initialowenershipchangepercentile = 0.2;						//As the cert price needed has not been calculated this value indicates which project in line determines the marginal project. If 100 projects, a value of 0.2 would indicate that the 20th best project is the cutoff. For all project better than this, there is a chanceofownershipchange[0] chance for redistirbution.
 
 	//PENSION FUND DEVELOPERS 
-	public static int numberofpensionfunds = 1;							//They are all investment strategy type 3. (price, with some respekct for fundamntal) and in both countries.
-	public static int holdinghorizontpensionproducer = 72;
+	public static int numberofpensionfunds = 3;							//They are all investment strategy type 3. (price, with some respekct for fundamntal) and in both countries.
+	public static int holdinghorizontpensionproducer = 90;
 	public static double pensionfundInvestRRRAdjustFactor = 0.82;		//wACC = origonal prject specific times this, hence 0.5*8% = 4 %
 	public static int pfconstructionconstraints = 4;
 	public static int pfregioncode = 2; //1 = Norway, 2 = Both, 3 = Sweden.
@@ -147,8 +150,8 @@ public class AllVariables {
 	public static double changeshare2 = 0.9; //Probability that buyers and sellers from the lowest hh whom changes hh, in the second hhchange process.
 	public static int newhh1 = 12;			//Ticks added to the hh of the shortest market participants  [0]
 	public static int newhh2 = 30;			//Ticks added to the hh of the second shortest market participants [1]
-	public static int tickforchangeinhh1 = 185; //75 = april 2018 first pricess start tick 200 er septemer 2028
-	public static int tickforchangeinhh2 = 200; //75 = april 2018 second pricess start tick
+	public static int tickforchangeinhh1 = 154; //75 = april 2018 first pricess start tick 200 er septemer 2028
+	public static int tickforchangeinhh2 = 170; //75 = april 2018 second pricess start tick
 
 	
 	//Step 2: Ends
@@ -173,7 +176,7 @@ public class AllVariables {
 	public static double tradermustbuyvol = 10;
 	public static double traderrestbuyvol = 100000;
 	public static double tradermaximumshortpos = -0; 	
-	public static double tradermaximumlongpos = 400000;	
+	public static double tradermaximumlongpos = 1000000;	
 	//Per 2014 var total beholdning tradere ca 2.5 millioner Så gitt 5 tradere så burde ikke denne være mer en 500 000.s
 	
 	// ---- BIDDING STRATEGY AND UTILITY PARAMETERS 
@@ -244,30 +247,30 @@ public class AllVariables {
 	public static double tacticMinUtilityAlphaOP = 0.2;
 	
 	// ---- CERTIFICATE VALUE CALCULATION PARAMETERS
-	public static double certMaxPrice = 200;
+	public static double certMaxPrice = 250;
 	public static double certMinPrice = 0;
 	public static double[] ratioAdjFactor = new double[]{0.8,1,1.2}; // used to capture uncertainty in the ratio estimates
 	public static double[] ratioAdjProb = new double[]{0.3,0.4,0.3}; // same
 	public static double sdevCVSupply = 0.0; // Std dev of supply prognosis used in CV calcs in %
-	public static double valueCertShortfall = 200; // value (cost) of not having enough certificates
+	public static double valueCertShortfall = 250; // value (cost) of not having enough certificates
 	public static boolean flagDiscountCV = true;
 
 	// ---- FUNDAMENTAL MARKET ANALYSIS AND DEVELOPER LRMC
 	public static double penaltyratio = 1.5;						//What is the penalty compared to current market price?
-	public static int yearstoendogprojects = 2;						//Just to save time in the FMA. KK 20151118 var 2 i Q2 (2 og 3 har lite å si i Base Case). 
+	public static int yearstoendogprojects = 1;						//Just to save time in the FMA. KK 20151118 var 2 i Q2 (2 og 3 har lite å si i Base Case). 
 	public static double maxpricecerts = 150;						//To not get an errror in the FMA.Also used to cap max buy price for rest volume.
 	public static double maxroofprice = 125;
 	public static double initialRRRcorrector = 1.0;					//Corrector used to corrct the project specificRRR to usedRRR in the Fundamental Market Analysis. Copnsate (0.098) for the learningfactor in inputt.
 	public static double RRRpostpondpremium = 0.025;				//Risk premium (basispoints 0.01 = 1%) need to be covered if the investment decision is to be postpond. 
 	public static int minpostpondyears = 1;							//How long the investment decision is postpond if postponed.Cannot see why this should be larger than 1. (only argument is if this is the real deal).
-	public static int MPECount = 17;								//Number of futuer years seen by the MPE-analysis. THats number-1 years ahead (including this year).
+	public static int MPECount = 15;								//Number of futuer years seen by the MPE-analysis. THats number-1 years ahead (including this year).
 	public static int LPECount = MPECount+minpostpondyears;			//Number of futuer years seen by the LPE-analysis
-	public static int yearsbuildout = 16;							//Number of years aggragate shortcoming that is assumbed build in one year in the FMA. KK20151118: Brukt 16 histoisk, men kan ikke forstå hvorfor det er rett! Med verdi på 1 så bygger man ut for neste års underskudd i hvert iterert år, det betyr generalt at man bygger senere og ergo må bygge mere og dermed dyrere.
+	public static int yearsbuildout = 17;				//16 man får senere utbygging med lavere.			//Number of years aggragate shortcoming that is assumbed build in one year in the FMA. KK20151118: Brukt 16 histoisk, men kan ikke forstå hvorfor det er rett! Med verdi på 1 så bygger man ut for neste års underskudd i hvert iterert år, det betyr generalt at man bygger senere og ergo må bygge mere og dermed dyrere.
 	public static double[] RAR = new double[]{0.34,0.50};			//1 is maksimum. Higher number gives a wider range of roof and floor around the FMA. A bigger spread of numbers gives bigger variation between agents.
 	public static double backtestminFMA = 40;						//20151130 KK: added for backtest qickfix of FMA at 2012.
 	public static double stdmediumrunpriceexpect = 0.03;    		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
 	public static double stdlongrunpriceexpect = 0.035;       		//The standard deviation (percent) in the Normaly distributed error for MPE (where mean is the perfect foresight price)
-	public static double maximumfloorprice = 80;					//The maximum floor used by SellStrategies. Even though the discointed FMA should imply a floorprice higher than this, this would be limited her. In pracis, this number can be divided on 2 to get the actual floor.
+	public static double maximumfloorprice = 60;					//The maximum floor used by SellStrategies. Even though the discointed FMA should imply a floorprice higher than this, this would be limited her. In pracis, this number can be divided on 2 to get the actual floor.
 	
 	//WIND VARIATION
 	public static double meanwindproductionfactor = getmeanwindproductionfactor();		//read from GUI

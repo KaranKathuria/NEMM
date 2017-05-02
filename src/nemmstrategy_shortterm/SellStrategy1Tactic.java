@@ -162,12 +162,12 @@ public class SellStrategy1Tactic extends GenericTactic {
 
 		}
 		//SET PRICE
-		//If the price is near zero, the price steps would be very small, hence we introduced the minimum price stem. This different up than down. 
+		//If the price is near zero, the price steps would be very small, hence we introduced the minimum price step. This different up than down. 
 		double newprice;
 		if (paramMustSellPriceMult>1){
 		newprice = Math.max(paramMustSellPriceMult*expectedprice, expectedprice+(AllVariables.minimumpricstepineuro_up*paramMustSellPriceMult));
 		} else if (paramMustSellPriceMult<1){
-			newprice = Math.max(Math.min(paramMustSellPriceMult*expectedprice, expectedprice-(AllVariables.minimumpricstepineuro_down*paramMustSellPriceMult)),0.0);	
+			newprice = Math.max(Math.min(paramMustSellPriceMult*expectedprice, expectedprice-(AllVariables.minimumpricstepineuro_down*paramMustSellPriceMult)),AllVariables.minimumscertificateprice);	//KK: added minprice 2017
 		} else {
 		newprice = paramMustSellPriceMult*expectedprice;
 		}
@@ -195,7 +195,7 @@ public class SellStrategy1Tactic extends GenericTactic {
 		if (paramRestVolPriceMult>1){
 		newprice = Math.max(paramRestVolPriceMult*expectedprice, expectedprice+(AllVariables.minimumpricstepineuro_up*paramRestVolPriceMult));
 		} else if (paramRestVolPriceMult<1){
-			newprice = Math.max(Math.min(paramRestVolPriceMult*expectedprice, expectedprice-(AllVariables.minimumpricstepineuro_down*paramRestVolPriceMult)),0.0);	
+			newprice = Math.max(Math.min(paramRestVolPriceMult*expectedprice, expectedprice-(AllVariables.minimumpricstepineuro_down*paramRestVolPriceMult)),AllVariables.minimumscertificateprice); //KK 2017. Added for transaction cost imitiaton.
 		} else { //Should also have a logic.
 		newprice = paramRestVolPriceMult*expectedprice;
 		}

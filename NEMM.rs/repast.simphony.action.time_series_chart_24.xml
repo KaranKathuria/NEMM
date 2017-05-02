@@ -33,18 +33,6 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Projects trashed</string>
-      <SeriesData>
-        <label>Projects trashed</label>
-        <color>
-          <red>255</red>
-          <green>102</green>
-          <blue>102</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
       <string>Projects identifyed</string>
       <SeriesData>
         <label>Projects identifyed</label>
@@ -57,13 +45,13 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Projects under construction</string>
+      <string>Projects trashed</string>
       <SeriesData>
-        <label>Projects under construction</label>
+        <label>Projects trashed</label>
         <color>
-          <red>0</red>
-          <green>0</green>
-          <blue>153</blue>
+          <red>255</red>
+          <green>102</green>
+          <blue>102</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>
@@ -81,6 +69,18 @@
       </SeriesData>
     </entry>
     <entry>
+      <string>Projects under construction</string>
+      <SeriesData>
+        <label>Projects under construction</label>
+        <color>
+          <red>0</red>
+          <green>0</green>
+          <blue>153</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
       <string>Powerplants Sweden</string>
       <SeriesData>
         <label>Powerplants Sweden ex over</label>
@@ -93,18 +93,6 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Potential projects</string>
-      <SeriesData>
-        <label>Potential projects</label>
-        <color>
-          <red>204</red>
-          <green>255</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
       <string>Numberownershipchange</string>
       <SeriesData>
         <label>Numberownershipchange</label>
@@ -112,6 +100,18 @@
           <red>255</red>
           <green>0</green>
           <blue>255</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Potential projects</string>
+      <SeriesData>
+        <label>Potential projects</label>
+        <color>
+          <red>204</red>
+          <green>255</green>
+          <blue>204</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>
